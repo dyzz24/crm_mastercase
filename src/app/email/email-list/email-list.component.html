@@ -1,0 +1,128 @@
+<div class="list__container">
+  <div class="header">
+    <p>Почта</p>
+    <button class='email-menu' (click)='inboxMenuShow()'>
+      <span class='la la-hamburger'></span>
+      <p class="tooltip">Меню</p>
+      <div class='hideInboxMenu' [ngClass]='{visible:inboxMenuStatus}'>
+        <button (click)='createInboxOpen()'>Создать ящик</button>
+        <button (click)='deleteInboxOpen()'>Удалить ящик</button>
+        <button>Редактировать ящик</button>
+      </div>
+    </button>
+
+    <!--попап + блок создать ящик-->
+    <div class="create-inbox" [ngClass]='{visible:createMenuStatus}'>
+      <div class="header">
+        <button class='close' (click)='closeViewer($event)'>
+          <span class='la la-close close-new-inbox'></span>
+          <p class="tooltip">Закрыть</p>
+        </button>
+      </div>
+      <div class="create__body">
+        <div class="input-ph">
+          <p class='placehold'>IMAP:</p>
+            <input type="text">
+        </div>
+      
+        <div class="input-ph">
+            <p class='placehold'>Пароль:</p>
+              <input type="text">
+          </div>
+
+          <div class="input-ph">
+              <p class='placehold'>Логин:</p>
+                <input type="text">
+            </div>
+            <div class="input-ph">
+                <p class='placehold'>ФИО:</p>
+                  <input type="text">
+              </div>
+      <button class='btn-create'>Создать</button>
+      </div>
+    </div>
+    <div class="pop" [ngClass]='{visible:createMenuStatus}'></div>
+    <!--*********************-->
+
+    <!--попап + блок удалить ящик-->
+    <div class="create-inbox" [ngClass]='{visible:deleteMenuStatus}'>
+        <div class="header">
+          <button class='close' (click)='closeViewer($event)'>
+            <span class='la la-close close-delete-inbox'></span>
+            <p class="tooltip">Закрыть</p>
+          </button>
+        </div>
+        <div class="create__body">
+          <div class="email__body" *ngFor='let email of emailItems let i = index'>
+          <p class='inboxName'>{{email.emailNames}}</p>
+          <button class='btn-create'(click)='editInbox(i)'>Редактировать</button>
+          <button class='btn-create'(click)='deleteInbox(i)'>Удалить</button>
+         
+        </div>
+        </div>
+      </div>
+      <div class="pop" [ngClass]='{visible:deleteMenuStatus}'></div>
+    <!--*********************-->
+
+    <!--попап + блок удалить ящик-->
+    <div class="create-inbox" [ngClass]='{visible:editMenuStatus}'>
+        <div class="header">
+          <button class='close' (click)='closeViewer($event)'>
+            <span class='la la-close close-edit-inbox'></span>
+            <p class="tooltip">Закрыть</p>
+          </button>
+        </div>
+        <div class="create__body">
+            <div class="email__body">
+              <p class='editName'>Cтарый логин:  {{this.inboxName}}</p>
+
+              <div class="input-ph">
+                  <p class='placehold'>Новый</p>
+                    <input class='placehold_edit' type="text">
+                </div>
+
+            </div>
+            <div class="email__body">
+              <p class='editName'>Старый пароль: {{this.inboxPassword}}</p>
+
+              <div class="input-ph">
+                  <p class='placehold'>Новый</p>
+                    <input class='placehold_edit' type="text">
+                </div>
+            </div>
+            <div class="email__body">
+              <p class='editName'>Старое имя:  {{this.inboxFullName}}</p>
+              <div class="input-ph">
+                  <p class='placehold'>Новое</p>
+                    <input class='placehold_edit' type="text">
+                </div>
+            </div>
+
+            <button class='btn-create'>Изменить</button>
+           
+        </div>
+        </div>
+      <div class="pop" [ngClass]='{visible:editMenuStatus}'></div>
+    <!--*********************-->
+
+    
+  </div>
+  <div class="emails" *ngFor='let email of emailItems let i = index'>
+
+    <a class="emails__list" (click)="goUrl('/inbox', email.idPost, 'incoming', i+1, 1, email.emailNames)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
+      <p>{{email.emailNames}}</p>
+      <span class='la la-butt-down' type='button'> </span>
+    </a>
+    <div class="hiddenMenu" [class.visibl]='visibl[i]'>
+      <a (click)="goUrl('/inbox', email.idPost, 'incoming','',1, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===1'>
+        Входящие
+         <span class='email__num'>{{email.incoming}}</span>
+      </a>
+      <a (click)="goUrl('/sent', email.idPost, 'sent','',2, email.emailNames)"[class.activeTypeMess]='emailServ.selectedMess===2'>
+        Исходящие
+        <span class='email__num'>{{email.sent}}</span>
+      </a>
+      <a>Черновики</a>
+    </div>
+  </div>
+</div>

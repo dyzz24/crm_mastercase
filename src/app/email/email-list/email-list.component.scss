@@ -1,0 +1,236 @@
+@import '../../../colors';
+@import '../mixins';
+
+.list__container {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    // overflow: hidden;
+}
+.header {
+    width: 100%;
+    height: 60px;
+    align-items: center; 
+    border: 1px solid $border;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0px 0 15px;
+}
+a,p{
+    font-size: 14px;
+    font-family: sans-serif;
+    color:black;
+}
+
+
+.emails__list {
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 25px 0 15px;
+    border: none;
+    border-bottom:1px solid $border;
+    background: #ebedef;
+    cursor: pointer;
+    position: relative;
+    transition: .4s;
+    box-sizing: border-box;
+}
+
+.hiddenMenu {
+    width: 100%;
+    height: 0px;
+    background: #cecdcd;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+    transition: .4s;
+
+     a{
+         display: block;
+         width: 100%;
+         line-height: 32px;
+         text-align: right;
+         padding: 0 15px;
+         box-sizing: border-box;
+         cursor: pointer;
+         display: flex;
+         justify-content: space-between;
+         border-bottom: 1px solid $border;
+        
+     }
+}
+
+
+.show {
+    height: auto;
+}
+
+.la-butt-down {
+    font-size: 24px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    right:5px;
+    cursor: pointer;
+}
+.email-menu {
+    font-size: 24px;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;  
+}
+.hideInboxMenu {
+    @include hideMenu(180px,80px,0px,-100%, rgba(0, 0, 0, 1)); 
+    top:100%;
+    left: 0;
+    z-index: 5;
+    
+    button {
+        color:white;
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        transition: .4s;
+        cursor: pointer;
+
+        &:hover {
+            background: #cecdcd;
+            color:black;
+        }
+
+    }
+}
+
+.create-inbox {
+    width: 640px;
+    height: 640px;
+    position: absolute;
+    background: rgb(243, 243, 243);
+    z-index: 5;
+    top: 120px;
+    left: 275px;
+    display: none;
+    animation: createInboxAnim .4s;
+    flex-direction: column;
+    box-shadow: 0 0 2px 2px  rgba(0, 0, 0, 0.5);
+    // padding: 15px;
+
+    .header {
+        padding: 0px 15px;
+        flex-direction: row-reverse;
+    }
+    .create__body {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+    }
+
+
+    .input-ph {
+        width: 100%;
+        border-radius: 2px;
+        border: solid 1px $border;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-top: 6px;
+
+        .placehold {
+            position: absolute;
+            top:0;
+            left: 10px;
+            line-height: 38px;
+            color: rgba(51, 51, 51, 0.301);
+        }
+    }
+
+    input {
+        @include inputs($padding: 0px 0px 0px 75px, $height: 38px, $m-top: 0px, $border-inp: none);
+        }
+    
+        .placehold_edit {
+            @include inputs($padding: 0px 0px 0px 65px, $height: 38px, $m-top: 0px, $border-inp: none);
+        }
+
+        
+
+    .btn-create {
+        width: 100px;
+        height: 32px;
+        margin-top: 10px;
+        border-radius: 6px;
+        border: 1px solid $border;
+    }
+}
+
+.email__body {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn-create {
+        margin-left: 20px;
+    }
+
+    .inboxName {
+        width: 140px;
+    }
+    .editName {
+        width: 50%;
+        flex-shrink: 0;
+    }
+   
+}
+
+@keyframes createInboxAnim {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.pop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(20, 20, 20, 0.5);
+    display: none;
+}
+
+
+.la-butt-down::before {
+    content: "\f107";
+}
+
+
+.visibl {
+    height: 100px;
+}
+
+
+.activeInbox {
+    background: rgb(117, 117, 117);
+}
+
+.activeTypeMess {
+background: #dddddd;
+}

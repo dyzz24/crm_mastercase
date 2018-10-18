@@ -1,0 +1,101 @@
+<div class="container__view">
+  <div class="header">
+    <div class="left__panel">
+        <button class='new__mess' (click)='newMessage()'>
+            <span class='la la-new'></span>
+            <p class="tooltip">Новое сообщение</p>
+          </button>
+          <button (click)='selectMess(-1)'>
+              <span class='la la-last' ></span>
+              <p class="tooltip">Следующее сообщение</p>
+            </button>
+              <button  (click)='selectMess(1)'>
+                  <span class='la la-next'></span>
+                  <p class="tooltip">Предыдущее сообщение</p>
+                </button>
+                <button class='menu'>
+                    <span class='la la-delete'></span>
+                    <p class="tooltip">Удалить сообщение</p>
+                  </button>
+    </div>
+    <div class="right_panel">
+      <button class='menu' (click)='hideMenuShow()'>
+      <span class='la la-ellipsis'></span>
+      <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
+      </div>
+      <p class="tooltip">Меню</p>
+    </button>
+    <button class='close' (click)='closeViewer()'>
+        <span class='la la-close'></span>
+        <p class="tooltip">Закрыть</p>
+      </button>
+    </div>
+  </div>
+  <div class="messageContainer">
+  <div class="mess__info">
+    <div class="avatar">
+      <img src={{emailServ.avatar}}>
+    </div>
+    <div class="r__info">
+    <div class="panel">
+    <div class="status_panel">
+        <span class='la la-sett' [class.visible]="emailServ.inworkLetter">
+            <p class='tooltip'>В работе</p>
+        </span>
+        <span class="la la-paperclip" [class.visible]="emailServ.haveattachLetter">
+            <p class='tooltip'>Вложения</p>
+        </span>
+        <span class="la la-flag" [class.visible]="emailServ.importantLetter">
+            <p class='tooltip'>Важное</p>
+        </span>
+    <!-- <span class="la la-active-flag"></span> -->
+  </div>
+  <p class='time'>{{emailServ.time}}</p>
+</div>
+
+<div class='from'>
+  <p class='name'>От:</p>
+  <p class='title'>Кому:</p>
+  <p class='title'>Копия:</p>
+</div>
+
+<div class="info">
+    <p class='name'>{{emailServ.senderName}}</p>
+    <p class='title'>{{emailServ.mailName}}</p>
+    <p class='title'>{{emailServ.copy}}</p>
+</div>
+</div>
+  </div>
+
+  <div class="mess__content">
+    <p class="subject">{{emailServ.caption}}</p>
+    <p class="text">{{emailServ.text}}</p>
+    <div class="attachment__block">
+      <div class="attachment__item">
+      <span class="la excel"></span>
+      <p class='filename'>file1.xls</p>
+      <p class='size'>10 KB</p>
+      </div>
+
+
+        <div class="attachment__item">
+          <span class="la ppt"></span>
+          <p class='filename'>file1.ppt</p>
+          <p class='size'>100 KB</p>
+          </div>
+    </div>
+    <quill-editor></quill-editor>
+    <div class="bottom__panel">
+    <button class='reply'>
+        <span class='la la-reply'></span>
+        Ответить
+      </button>
+
+      <button class='reply'>
+          <span class='la la-end'></span>
+          Ответить всем
+        </button>
+    </div>
+  </div>
+</div>
+</div>

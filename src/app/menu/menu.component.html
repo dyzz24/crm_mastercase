@@ -1,0 +1,15 @@
+<nav>
+        <div class="icon__menu" (click)='show($event)'>
+                <img class='icon_m' src='./assets/menu.png'>
+        </div>
+
+        <div class='nav__items'>
+                <div class="icon__nav" [class.active]='dataServ.menuActive===0'><span class="la la-post"></span></div>
+                <div class="icon__nav" [class.active]='dataServ.menuActive===1'><span class="la la-post"></span></div>
+
+                <div class="nav__buttons" [ngClass]='{hidenBlock:hidden}'>
+                        <a routerLink="email" (click)='clearLocalStorage(0, $event)'[class.active]='dataServ.menuActive===0'>Почта</a>
+                        <a routerLink="/" (click)='clearLocalStorage(1, $event)' [class.active]='dataServ.menuActive===1'>Календарь</a>
+                </div>
+        </div>
+</nav>

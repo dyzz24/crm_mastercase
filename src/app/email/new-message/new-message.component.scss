@@ -1,0 +1,48 @@
+@import '../mixins';
+@import '../../../colors';
+
+
+.header {
+    @include header(row-reverse);
+    button {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: .4s;
+        margin-left: 10px;
+        color: $icons-color;
+        &:hover {
+            background: #858585;
+        }
+    }
+}
+
+.message__body {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 120px);
+    padding: 30px;
+    box-sizing: border-box;
+
+    .inp__mess {
+        @include inputs;
+    }
+}
+
+
+
+.editor-qu {
+    width: 100%;
+}
+
+[type='submit'] {
+    margin-top: 12px;
+    width: 80px;
+    height: 30px;
+    border: solid 1px $border;
+    cursor: pointer;
+}

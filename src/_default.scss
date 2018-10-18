@@ -1,0 +1,72 @@
+body{
+    margin: 0;
+    padding: 0;
+    line-height: 28px;
+    font-family: Arial, sans-serif;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+    color:white;
+}
+
+p,h1,h2,h3,h4,h5,h6 {
+    padding: 0;
+    margin: 0;
+}
+
+main,
+header,
+section,
+footer { 
+    max-width: 1920px;
+    width: 100%; 
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+input,button {
+    outline: none;
+    padding: 0;
+    margin:0;
+    border: none;
+    background: none;
+}
+
+
+
+@font-face {
+    font-family: 'la';
+    src:url('./assets/fonts/fontawesome-webfont.ttf');
+    font-weight: bold;
+}
+
+.la {
+    font-family: 'la';
+    text-align: center;
+}
+
+
+.la-post {
+    font-size: 20px;
+    color:rgb(238, 229, 229);
+    cursor: pointer;
+    line-height: 60px;
+    z-index: 1;
+
+    &::before {
+        content: "\f0e0";
+    }
+}
+
+// @font-face {
+//     font-family: 'OpenSans-Regular';
+//     src:url('../fonts/Open_Sans/OpenSans-Regular.ttf');
+    
+// }
+

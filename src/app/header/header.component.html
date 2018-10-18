@@ -1,0 +1,37 @@
+
+
+
+<header>
+    <p class="logo">insat</p>
+    <div class="right__header">
+        <div class='butt__container'>
+            <div class='left__block' (click)='globalServ.headCompShow(1)'> 
+                
+                <app-notification-one></app-notification-one>
+            
+            </div>
+            <div class="right__block" (click)='globalServ.headCompShow(2)'>
+
+                <app-notification-two></app-notification-two>
+
+            </div>
+
+            <div class='header__hide' [ngClass]="{hiddenComp:globalServ.hidden}">
+                <div *ngIf='globalServ.activeComp===1'>
+
+                    <app-header-left></app-header-left>
+                
+                </div>
+                <div *ngIf='globalServ.activeComp===2'>  
+
+                    <app-header-right></app-header-right>
+
+                </div>
+                <div class='hideClicker' (click)='globalServ.cancelNotife()'></div>
+            </div>
+        </div>  
+        <div class="header__profile">
+            <app-header-profile></app-header-profile>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,20 @@
+<div class="left__comp">
+    <div class="header">
+        <p>Новые сообщения</p>
+    </div>
+    <div class="messages__body">
+    <div class="message__item" *ngFor='let item of items, let i = index'>
+        <div class="avatar">
+            <img src={{item.avaSrc}} >
+        </div>
+        <div class="info">
+            <p class="name">{{item.name}}</p>
+            <p class="caption">{{item.caption}}</p>
+            <p class="date">{{item.time}}</p>
+        </div>
+    </div>
+</div>
+<div class="show__all">
+    <a routerLink="/email" (click)='globalServ.cancelNotife()'>Смотреть все</a>
+</div>
+</div>

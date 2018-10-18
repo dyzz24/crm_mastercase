@@ -1,0 +1,295 @@
+@import '../../../colors';
+
+@mixin panel-mix() {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+    height: 21px;
+}
+
+%avatar {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    transition: .4s;
+    flex-shrink: 0;
+    img{
+        transition: .2s;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+}
+
+
+@mixin prev_styles($direction, $al-items, $padding) {
+    width: 100%;
+    padding: $padding;
+    display: flex;
+    flex-direction: $direction;
+    overflow: hidden;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: $al-items;
+    transition: .4s;
+}
+
+
+%name_text {
+    color: black;
+    // font-weight: bold;
+    font-size: 14px; 
+}
+
+%title_text {
+    color: $title-text-gray;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.la-letter {
+   
+    font-size: 62px;
+    color: rgba(57,81,155,.1);
+    margin-bottom: 20px;
+    line-height: 60px;
+    &::before {
+        content:'\f0e0';
+    }
+}
+
+
+.la-ellipsis,
+.la-close {
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.la-close::before{
+    content:'\f00d';
+}
+
+.la-ellipsis::before {
+    content:'\f141';
+}
+
+.la-sett,
+.la-paperclip,
+.la-flag {
+    visibility: hidden;
+    position: relative;
+    &:hover .tooltip {
+        display: block;
+     }
+}
+
+.la-sett::before {
+    content:'\f0ad';
+}
+
+.la-paperclip::before {
+    content:'\f0c6';
+}
+
+.la-flag::before {
+    content:'\f024';
+}
+
+.la-active-flag::before {
+    content:'\f024';
+    font-style: oblique;   
+}
+
+
+
+.la-delete {
+    font-size: 24px;
+    line-height: 24px;
+    color: red;
+    &::before {
+        content: '\f1f8';
+    }
+    &:hover {
+        color:rgb(15, 13, 13);
+    }
+    
+}
+
+.la-new::before {
+    content: '\f15b';
+}
+
+.la-last::before {
+    content: '\f048';
+}
+
+.la-end::before {
+    content: '\f122';
+}
+
+.la-next::before {
+    content: '\f051';
+}
+
+.la-hamburger::before {
+    content: '\f0c9';
+}
+
+.la-reply::before {
+    content: '\f044';
+}
+
+.status_panel {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+
+    span {
+        color: $status-icons-color;
+        cursor: pointer;
+        font-weight: 500;
+        margin-right: 6px;
+        height: 21px;
+        width: 21px;
+    }
+}
+
+.time {
+    color:black;
+}
+
+%all-padding {
+    padding: 0 15px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+@mixin inputs ($padding: 10px 15px, $height: 38px, $m-top: 6px, $border-inp: solid 1px $border) {
+    height:  $height;
+    width: 100%;
+    border-radius: 2px;
+    border: $border-inp;
+    font-size: 12px;
+    color: #333;
+    padding: $padding;
+    box-sizing: border-box;
+    margin-top: $m-top;
+    position: relative;
+
+    &:first-child {
+        margin-top: 0px;
+    }
+    &:focus {
+        border: solid 1px #6bb7e9;
+        box-shadow: 0px 0px 2px 2px #6bb7e9;
+    }
+}
+
+
+
+@mixin header($flex-dir){
+    @extend %all-padding;
+    width: 100%;
+    height: 60px;
+    border: 1px solid $border;
+    border-left: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: $flex-dir;
+    justify-content: space-between;
+}
+
+button {
+    position: relative;  
+    cursor: pointer;
+
+    &:hover .tooltip {
+       display: block;
+    }
+}
+
+.tooltip {
+    display: none;
+    white-space: nowrap;
+    width: auto;
+    height: 16px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff !important;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    top: 120%;
+    right: 50%;
+    opacity: 0;
+    animation: tooltipAnim .4s .5s forwards;  
+    line-height: 16px;
+    
+}
+
+
+@keyframes tooltipAnim {
+    0% {
+        opacity: 0.5;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@mixin  hideMenu ($wid, $hei, $bottom, $right, $background) {
+    position: absolute;
+    width: $wid;
+    height: $hei;
+    bottom: $bottom;
+    right: $right;
+    background: $background;
+    border-radius: 6px;
+    display: none;
+    animation: menuEffect .4s;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+@keyframes menuEffect {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+
+.visible {
+    display: flex !important;
+    visibility: visible;
+}
+
+
+button {
+    display: inline-block;
+    width: 36px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: .4s;
+    &:hover {
+        background: #858585;
+    }
+}
+
+
+

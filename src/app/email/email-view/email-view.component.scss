@@ -1,0 +1,211 @@
+@import '../mixins';
+@import '../../../colors';
+:host {
+    flex-grow: 11;
+}
+
+.container__view {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.messageContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 120px);
+}
+
+.header {
+    @include header(row);
+}
+.right_panel,
+.left__panel {
+height: 36px;
+text-align: right;
+
+
+
+span {
+    color: $icons-color;
+    line-height: 36px;
+    font-size: 24px;
+    
+}
+}
+
+
+.mess__info {
+    width: calc(100% - 60px);
+    height: 90px;
+    display: flex;
+    border-bottom: 1px solid $border;
+    align-items: center;
+}
+
+.avatar {
+    @extend %avatar;
+    margin-right: 24px;
+}
+
+.r__info {
+    @include prev_styles(row, flex-start, 0 0 0 5px);
+        flex-wrap: wrap;
+        width: 100%;
+        overflow: visible;
+}
+
+
+
+.from {
+    margin-right: 30px;
+}
+
+.name {
+    @extend %name_text;
+}
+.title {
+    @extend %title_text;
+}
+
+.panel {
+    @include panel-mix();
+}
+
+.mess__content {
+    width: 100%;
+    height: calc(100vh - 60px - 90px - 60px);
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.subject {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color:black;
+}
+
+.text {
+    width: 100%;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}
+
+.attachment__block {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    border-bottom:  1px solid $border;
+}
+
+.attachment__item {
+    
+    
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    text-align: center;
+    font-size: 45px;
+    margin-right: 10px;
+
+
+    span {
+        width: 90px;
+        height: 90px;
+        position: relative;
+        line-height: 90px;
+        border-radius: 2px;
+    background-color: #fff;
+    border: solid 1px $border;
+    margin-bottom: 5px;
+    }
+}
+
+.filename {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+.size {
+    font-size: 10px;
+    color: $micro-text_color;
+}
+
+.excel::before {
+    width: 100%;
+    content: "\f1c3";
+    color:rgb(118, 230, 27);
+}
+
+.ppt::before {
+    width: 100%;
+    content: "\f1c4";
+    color:rgb(211, 106, 36);
+}
+
+
+.menu {
+    position: relative;
+    transition: .4s;
+ 
+}
+.hideMenu {
+    margin-top: 12px;
+    position: absolute;
+    width: 180px;
+    height: 100px;
+    top:100%;
+    right: 0;
+    background: rgba(0, 0, 0, 0.541);
+    border-radius: 6px;
+    display: none;
+    animation: menuEffect .4s;
+}
+@keyframes menuEffect {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+
+.visible {
+    display: block;
+}
+
+.bottom__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.reply {
+    font-size: 18px;
+    padding: 5px 10px;
+    width: 190px;
+    border: 1px solid $border;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    transition: .4s;
+
+    &:hover {
+        background: #d3d3d3;
+    }
+}
+
+

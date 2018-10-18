@@ -1,0 +1,18 @@
+<div class="newMessage__container">
+  <div class="header">
+      <button class='close' (click)='closeViewer()'>
+          <span class='la la-close'></span>
+        </button>
+  </div>
+  <div class="message__body">
+    <input type='text' class='inp__mess from' placeholder="От" [(ngModel)]='from' required>
+    <input type='text' class='inp__mess to'placeholder="Кому" [(ngModel)]='to'>
+    <input type='text' class='inp__mess copy' placeholder="Копия" [(ngModel)]='copy'>
+    <input type='text' class='inp__mess subject' placeholder="Тема" [(ngModel)]='subject'>
+    <div class="editor-qu">
+      <quill-editor [(ngModel)]='messages'></quill-editor>
+    </div>
+    <p>{{messages}}</p>
+    <input type="submit" value='отправить'>
+  </div>
+</div>
