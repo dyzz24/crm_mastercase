@@ -71,20 +71,20 @@
             <p class='time'>{{letters.time}}</p>
             <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)">
               <span class='la la-ellipsis'></span>
-              
+              <div class="hideMenu">
+                <button class='letterMenuButt' (click)='spamMark(i,$event,true)' *ngIf='toggleSpamMark(i); else deleteSpam'>Пометить как спам</button>
+                <ng-template #deleteSpam>
+                  <button class='letterMenuButt' (click)='spamMark(i,$event,false)'>Удалить из спама</button>
+                </ng-template>
+                <button class='letterMenuButt' (click)='importantMark(i,$event, letters.messageCondition)' *ngIf='toggleImportantMark(i); else deleteImportant'>Пометить как важное</button>
+                <ng-template #deleteImportant>
+                    <button class='letterMenuButt' (click)='deleteImportMark(i,$event, letters.messageCondition)'>Удалить из важных</button>
+                </ng-template>
+                <button class='letterMenuButt' >Удалить</button>
+              </div>
               <p class='tooltip'>Меню</p>
             </button>
-            <div class="hideMenu">
-              <button class='letterMenuButt' (click)='spamMark(i,$event,true)' *ngIf='toggleSpamMark(i); else deleteSpam'>Пометить как спам</button>
-              <ng-template #deleteSpam>
-                <button class='letterMenuButt' (click)='spamMark(i,$event,false)'>Удалить из спама</button>
-              </ng-template>
-              <button class='letterMenuButt' (click)='importantMark(i,$event, letters.messageCondition)' *ngIf='toggleImportantMark(i); else deleteImportant'>Пометить как важное</button>
-              <ng-template #deleteImportant>
-                  <button class='letterMenuButt' (click)='deleteImportMark(i,$event, letters.messageCondition)'>Удалить из важных</button>
-              </ng-template>
-              <button class='letterMenuButt' >Удалить</button>
-            </div>
+            
           </div>
         </div>
       </div>
