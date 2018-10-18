@@ -70,6 +70,7 @@ this.emailServ.activeLett[this.emailServ.index] = true;
 
 this.emailServ.currentObjectLetter = this.emailServ.visibleLetters[this.emailServ.index]; // head param
 
+
 this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];
 
       this.emailServ.senderName = this.emailServ.currentObjectLetter.name;
@@ -79,7 +80,7 @@ this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];
       this.emailServ.text = this.emailServ.currentObjectLetter.text;
       this.emailServ.hiddenEmpty = true;
 
-      this.emailServ.currentId = this.emailServ.currentObjectLetter.id; // test
+      this.emailServ.currentId = this.emailServ.index; // test
       this.emailServ.copy = this.emailServ.currentObjectLetter.emailCopy;
 
       this.emailServ.messageConditionCheckerInService(this.emailServ.currentObjectLetter.messageCondition);
