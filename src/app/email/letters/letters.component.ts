@@ -116,7 +116,7 @@ export class LettersComponent implements DoCheck, OnInit {
     if (e.target.className === 'letterMenuButt') {
       return;
     } else {
-      const parent = e.target.parentNode;
+      const parent = e.target.parentNode.parentNode;
       const hiddenBlock = parent.querySelector('.hideMenu');
       hiddenBlock.classList.toggle('visible');
     }
