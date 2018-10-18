@@ -131,16 +131,14 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   toggleSpamMark(i) {
-    if (this.emailServ.typeMess !== 'sent') {
+
     if (this.emailServ.noMessages === true) {  // DEL
       return;
     }
     if ( this.emailServ.lettersList[i].spam === false ) {
       return true;
     }
-  } else {
-    return false; }
-}
+   }
 
   // *****************************************************************************
   importantMark(i, e, condition) {
