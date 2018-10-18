@@ -71,7 +71,10 @@
             <p class='time'>{{letters.time}}</p>
             <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)">
               <span class='la la-ellipsis'></span>
-              <div class="hideMenu">
+              
+              <p class='tooltip'>Меню</p>
+            </button>
+            <div class="hideMenu" *ngIf="sent_incomingChecker(i)">
               <button class='letterMenuButt' (click)='spamMark(i,$event,true)' *ngIf='toggleSpamMark(i); else deleteSpam'>Пометить как спам</button>
               <ng-template #deleteSpam>
                 <button class='letterMenuButt' (click)='spamMark(i,$event,false)'>Удалить из спама</button>
@@ -82,9 +85,6 @@
               </ng-template>
               <button class='letterMenuButt' >Удалить</button>
             </div>
-              <p class='tooltip'>Меню</p>
-            </button>
-            
           </div>
         </div>
       </div>
