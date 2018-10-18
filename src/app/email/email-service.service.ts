@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -113,9 +115,13 @@ export class EmailServiceService {
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
 
+//   public get(url: string): Observable<any> {
+//     return this.http.get(url);
+// }
+
   getHttp() {
-    const request = this.http.get('http://vdmitry.ru/').subscribe((data) => data); // http - test
-    console.log(request);
+
+    const request = this.http.get('http://10.0.1.10:3000/getmails').subscribe((data) => console.log(data)); // http - test
   }
 
   checkerTrash() {
