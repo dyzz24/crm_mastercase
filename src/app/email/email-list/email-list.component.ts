@@ -5,6 +5,7 @@ import { EmailServiceService } from '../email-service.service';
 import { lettersInbox } from '../email-list/emails';
 import { lettersSent } from '../email-list/emails';
 
+
 @Component({
   selector: 'app-email-list',
   templateUrl: './email-list.component.html',
@@ -12,6 +13,9 @@ import { lettersSent } from '../email-list/emails';
 })
 export class EmailListComponent implements OnInit, DoCheck {
   emailItems = emails;
+
+  emailList;
+
   idPost: string;
   typeMessage: any;
   inboxMenuStatus = false;
@@ -30,10 +34,12 @@ export class EmailListComponent implements OnInit, DoCheck {
   constructor(
     public element: ElementRef,
     private _rout: Router,
-    public emailServ: EmailServiceService) {
+    public emailServ: EmailServiceService,
+    ) {
    }
 
   ngOnInit() {
+    this.emailServ.getHttp();
     if (localStorage.length === 0) {
       this.emailServ.activeEl = [];
     }

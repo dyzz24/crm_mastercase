@@ -18,6 +18,7 @@ import { EmailViewComponent } from './email/email-view/email-view.component';
 import { FormsModule } from '@angular/forms';
 import { NewMessageComponent } from './email/new-message/new-message.component';
 import { QuillModule } from 'ngx-quill';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -46,7 +47,8 @@ import { QuillModule } from 'ngx-quill';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    QuillModule
+    QuillModule,
+    HttpClientModule
   ],
   providers: [DataService, EmailServiceService],
   bootstrap: [AppComponent]
