@@ -36,22 +36,11 @@ export class EmailViewComponent implements OnInit, DoCheck {
 
   selectMess(n) {
 
-    // this.emailServ.allLettersId = this.emailServ.visibleLetters.map((val, ind) => {
-    //   return ind;
-    // });
+    this.emailServ.allLettersId = this.emailServ.visibleLetters.map((val, ind) => {
+      return ind;
+    });
 
 
-
-for (const key of this.emailServ.visibleLetters) {
-
-  this.emailServ.allLettersId = [...this.emailServ.allLettersId, key.id ]; // собрал все id писем в массив
-
-}
-
-
-
-this.emailServ.allLettersId = this.emailServ.allLettersId.filter((val, ind, self) => {
-  return self.indexOf(val) === ind; } ); // фильтрую дублирование
 this.emailServ.currentInd = this.emailServ.currentId; // получаю id текущего ( открытого ) письма
 
 
@@ -79,8 +68,8 @@ this.emailServ.activeLett[i] = false;
 this.emailServ.activeLett[this.emailServ.index] = true;
 
 
-this.emailServ.currentObjectLetter = this.emailServ.lettersList[this.emailServ.index]; // head param
-
+this.emailServ.currentObjectLetter = this.emailServ.visibleLetters[this.emailServ.index]; // head param
+console.log(this.emailServ.currentObjectLetter);
 this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];
 
       this.emailServ.senderName = this.emailServ.currentObjectLetter.name;
