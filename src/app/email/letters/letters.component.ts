@@ -37,7 +37,6 @@ export class LettersComponent implements DoCheck, OnInit {
 
     // tslint:disable-next-line:max-line-length
     this.emailServ.post('http://10.0.1.10:3000/seen', {id : id, flag: true}).subscribe((data) => console.log(data));
-    console.log(id);
 
     // tslint:disable-next-line:forin
     for (const i in this.emailServ.activeLett) {
