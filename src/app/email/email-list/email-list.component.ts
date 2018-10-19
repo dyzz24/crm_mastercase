@@ -14,13 +14,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./email-list.component.scss']
 })
 export class EmailListComponent implements OnInit, DoCheck {
-  emailItems = emails;
+  emailItems;
 
-  test = [];
-
-  emailList;
 
   idPost: string;
+  idPostForHTTP;
   typeMessage: any;
   inboxMenuStatus = false;
   createMenuStatus = false;
@@ -33,7 +31,7 @@ export class EmailListComponent implements OnInit, DoCheck {
   inboxFullName;
 
   allLetters: any; // test
-  messagesForFilters = [];
+  messagesForFilters;
 
   constructor(
     public element: ElementRef,
@@ -46,15 +44,15 @@ export class EmailListComponent implements OnInit, DoCheck {
   ngOnInit() {
   //  this.emailServ.getHttp('http://10.0.1.10:3000/boxes?id=1');
 
-   this.emailServ.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => this.test = data );
-console.log(this.test);
+   this.emailServ.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => this.emailItems = data );
+
     if (localStorage.length === 0) {
       this.emailServ.activeEl = [];
     }
   }
   ngDoCheck() {
+    console.log(this.emailServ.visibleLetters);
     this.emailServ.stateServ();
-    // console.log(this.emailServ.visibleLetters); // TEST
   }
 
   showHiddenBlock(param) {
@@ -71,8 +69,13 @@ console.log(this.test);
   }
 
 
-  goUrl(paramsUrl, idMail, typeMess, activeNumber?, selectNum?, mailName?) {
-    this.idPost = idMail;
+  goUrl(index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?, mailName?) {
+    this.idPost = this.emailItems[index].address.replace('@', '');
+    this.idPostForHTTP = this.emailItems[index].address;
+    this.emailServ.get(`http://10.0.1.10:3000/mails`, {params:
+    {address: this.idPostForHTTP}}).subscribe((data) => this.emailServ.lettersList = data );
+
+
     this._rout.navigate(['email/' + this.idPost + paramsUrl]);
     this.emailServ.idBox = this.idPost;
     this.typeMessage = typeMess;
@@ -104,24 +107,22 @@ console.log(this.test);
 
     // ************************** */
 
-    if (this.emailServ.typeMess === 'incoming') {
-      this.messagesForFilters = lettersInbox;
-    }
-    if (this.emailServ.typeMess === 'sent') {
-      this.messagesForFilters = lettersSent;
-    }
-    const filters = elems => {
-      for (const keyMass of elems) {
-        // tslint:disable-next-line:forin
-        for (const i in keyMass) {
-          if (i === this.emailServ.idBox) {
-            return keyMass[i];
-          }
-        }
-      }
-    };
-
-    this.emailServ.lettersList = filters(this.messagesForFilters); // all letters
+    // if (this.emailServ.typeMess === 'incoming') {
+    //   this.messagesForFilters = lettersInbox;
+    // }
+    // if (this.emailServ.typeMess === 'sent') {
+    //   this.messagesForFilters = lettersSent;
+    // }
+    // const filters = elems => {
+    //   for (const keyMass of elems) {
+    //     // tslint:disable-next-line:forin
+    //     for (const i in keyMass) {
+    //       if (i === this.emailServ.idBox) {
+    //         return keyMass[i];
+    //       }
+    //     }
+    //   }
+    // };
     if (this.emailServ.lettersList === 'noMessages') {  // DEL
       this.emailServ.noMessages = true;
     } else {this.emailServ.noMessages = false; } // del

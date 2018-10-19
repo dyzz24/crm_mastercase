@@ -119,19 +119,23 @@ export class EmailServiceService {
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
 
-  public get(url: string): Observable<any> {
-    return this.http.get(url);
+  public get(url: string, options?): Observable<any> {
+    return this.http.get(url, options);
 }
 
-  getHttp(param) {
+public post(url: string, options?): Observable<any> {
+  return this.http.post(url, options);
+}
 
-    this.http.get(param).subscribe((data) => data );
+//   getHttp(param) {
+
+//     this.http.get(param).subscribe((data) => data );
 
 
-// const emails = this.http.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => console.log(data)); // http - test
+// // const emails = this.http.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => console.log(data)); // http - test
 
-// const mails = this.http.get('http://10.0.1.10:3000/mails?address=seo@insat.ru').subscribe((data) => console.log(data)); // http - test
-  }
+// // const mails = this.http.get('http://10.0.1.10:3000/mails?address=seo@insat.ru').subscribe((data) => console.log(data)); // http - test
+//   }
 
   checkerTrash() {
     if (this.idLetters.length > 0) {

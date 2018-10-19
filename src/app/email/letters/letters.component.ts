@@ -33,7 +33,12 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
 
-  activeEl(param) {
+  activeEl(param, id) {
+
+    // tslint:disable-next-line:max-line-length
+    this.emailServ.post('http://10.0.1.10:3000/seen', {id : id, flag: true}).subscribe((data) => console.log(data));
+    console.log(id);
+
     // tslint:disable-next-line:forin
     for (const i in this.emailServ.activeLett) {
       this.emailServ.activeLett[i] = false;
@@ -102,7 +107,7 @@ export class LettersComponent implements DoCheck, OnInit {
     }
   }
   statusMessageSpam(param) {
-    if (this.emailServ.lettersList[param].spam === true) {
+    if (this.emailServ.lettersList[param].box === 4) {
       return true;
     }
   }
@@ -124,80 +129,53 @@ export class LettersComponent implements DoCheck, OnInit {
 // ****************************************spam add - delete***************************** */
   spamMark(i, e, booleanParam) {
     // if (this.emailServ.lettersList[i].messageCondition !== undefined) {
-    this.emailServ.lettersList[i].spam = booleanParam;
+    this.emailServ.lettersList[i].box = booleanParam;
     e.target.parentNode.classList.remove('visible');
     this.rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
   }
 
-  toggleSpamMark(i) {
+  // toggleSpamMark(i) {
 
-    if (this.emailServ.noMessages === true) {  // DEL
-      return;
-    }
-    if ( this.emailServ.lettersList[i].spam === false ) {
-      return true;
-    }
-   }
+  //   if (this.emailServ.noMessages === true) {  // DEL
+  //     return;
+  //   }
+  //   if ( this.emailServ.lettersList[i].box !== 4 ) {
+  //     return true;
+  //   }
+  //  }
 
   // *****************************************************************************
-  importantMark(i, e, condition) {
 
-    if (this.emailServ.lettersList[i].messageCondition.length === 0) {
-      this.emailServ.lettersList[i].messageCondition.push('important');
-    } else {
-      this.emailServ.lettersList[i].messageCondition.filter((el, ind, arr) => {
-        if (arr.indexOf('important') === -1) {
-          arr.push('important');
-        }
-      });
-    }
-    e.target.parentNode.classList.remove('visible');    // может уберу **************************************************************
-    this.emailServ.messageConditionCheckerInService(condition); // прокидываю измененные condition на сервис
-  }
-
-  deleteImportMark(i, e, condition ) {
-    this.emailServ.lettersList[i].messageCondition.splice(this.emailServ.lettersList[i].messageCondition.indexOf('important'), 1);
-    this.emailServ.messageConditionCheckerInService(condition);
+  toggleImportantMark(i, e) {  // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
-  }
-
-  toggleImportantMark(i) {  // для переключения удалить-добавить важное
-    if (this.emailServ.noMessages === true) {  // DEL
-      return;
-    }
-    if (this.emailServ.lettersList[i].messageCondition.length === 0) {
-      return true;
-    } else {
-      if (this.emailServ.lettersList[i].messageCondition.indexOf('important') === -1) {
-        return true;
-      }
-  }
+     this.emailServ.lettersList[i].flagged = ! this.emailServ.lettersList[i].flagged;
   }
 
 
-  messageConditionChecker(i) {
-    if (this.emailServ.lettersList[i].messageCondition !== undefined) {
-    let inworkLetter = false;
-    let haveattachLetter = false;
-    let importantLetter = false;
 
-    for (const key of this.emailServ.lettersList[i].messageCondition) {
-      if (key === 'inwork') {
-        inworkLetter = true;
-      }
-      if (key === 'haveAttach') {
-        haveattachLetter = true;
-      }
-      if (key === 'important') {
-        importantLetter = true;
-      }
-    }
-    return {
-      inworkLetter, haveattachLetter, importantLetter
-    };
-  } else {return false; }
-}
+//   messageConditionChecker(i) {
+//     if (this.emailServ.lettersList[i].messageCondition !== undefined) {
+//     let inworkLetter = false;
+//     let haveattachLetter = false;
+//     let importantLetter = false;
+
+//     for (const key of this.emailServ.lettersList[i].messageCondition) {
+//       if (key === 'inwork') {
+//         inworkLetter = true;
+//       }
+//       if (key === 'haveAttach') {
+//         haveattachLetter = true;
+//       }
+//       if (key === 'important') {
+//         importantLetter = true;
+//       }
+//     }
+//     return {
+//       inworkLetter, haveattachLetter, importantLetter
+//     };
+//   } else {return false; }
+// }
 
 // tslint:disable-next-line:max-line-length
 sent_incomingChecker(i) {  // проверка на входящие - исходящие сообщения, ибо исходящие не имеют статуса спама и важных!!!! (без нее глючат исходящие)

@@ -109,8 +109,8 @@
   </div>
   <div class="emails" *ngFor='let email of emailItems let i = index'>
 
-    <a class="emails__list" (click)="goUrl('/inbox', email.idPost, 'incoming', i+1, 1, email.emailNames)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
-      <p>{{email.emailNames}}</p>
+    <a class="emails__list" (click)="goUrl(i, '/inbox', email.idPost, 'incoming', i+1, 1, email.emailNames)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
+      <p>{{email.address}}</p>
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
