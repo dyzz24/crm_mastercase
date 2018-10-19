@@ -5,6 +5,8 @@ import { EmailServiceService } from '../email-service.service';
 import { lettersInbox } from '../email-list/emails';
 import { lettersSent } from '../email-list/emails';
 
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-email-list',
@@ -13,6 +15,8 @@ import { lettersSent } from '../email-list/emails';
 })
 export class EmailListComponent implements OnInit, DoCheck {
   emailItems = emails;
+
+  test = [];
 
   emailList;
 
@@ -35,11 +39,15 @@ export class EmailListComponent implements OnInit, DoCheck {
     public element: ElementRef,
     private _rout: Router,
     public emailServ: EmailServiceService,
+    private http: HttpClient
     ) {
    }
 
   ngOnInit() {
-    this.emailServ.getHttp();
+  //  this.emailServ.getHttp('http://10.0.1.10:3000/boxes?id=1');
+
+   this.emailServ.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => this.test = data );
+console.log(this.test);
     if (localStorage.length === 0) {
       this.emailServ.activeEl = [];
     }

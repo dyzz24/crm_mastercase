@@ -5,10 +5,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import { AllEmails } from './test';
+
 @Injectable({
   providedIn: 'root'
 })
 export class EmailServiceService {
+  emails;
+
   idBox: string;
   typeMess: string;
   activeLett: Array<boolean> = [];
@@ -115,13 +119,18 @@ export class EmailServiceService {
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
 
-//   public get(url: string): Observable<any> {
-//     return this.http.get(url);
-// }
+  public get(url: string): Observable<any> {
+    return this.http.get(url);
+}
 
-  getHttp() {
+  getHttp(param) {
 
-    const request = this.http.get('http://10.0.1.10:3000/getmails').subscribe((data) => console.log(data)); // http - test
+    this.http.get(param).subscribe((data) => data );
+
+
+// const emails = this.http.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => console.log(data)); // http - test
+
+// const mails = this.http.get('http://10.0.1.10:3000/mails?address=seo@insat.ru').subscribe((data) => console.log(data)); // http - test
   }
 
   checkerTrash() {
