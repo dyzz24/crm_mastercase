@@ -37,7 +37,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
 
   selectMess(n) {
 
-    this.emailServ.allLettersId = this.emailServ.visibleLetters.map((val, ind) => {
+    this.emailServ.allLettersId = this.emailServ.lettersList.map((val, ind) => {
       return ind;
     });
 
@@ -70,7 +70,7 @@ this.emailServ.activeLett[i] = false;
 this.emailServ.activeLett[this.emailServ.index] = true;
 
 
-this.emailServ.currentObjectLetter = this.emailServ.visibleLetters[this.emailServ.index]; // head param
+this.emailServ.currentObjectLetter = this.emailServ.lettersList[this.emailServ.index]; // head param
 
 
 this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];

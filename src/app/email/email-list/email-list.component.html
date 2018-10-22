@@ -118,12 +118,12 @@
         Входящие
          <span class='email__num'>{{email.unseen}}</span>
       </a>
-      <a (click)="goUrl('/sent', email.idPost, 'sent','',2, email.emailNames)"[class.activeTypeMess]='emailServ.selectedMess===2'>
+      <a (click)="goUrl(i, '/sent', email.idPost, 'sent','',2, email.emailNames)"[class.activeTypeMess]='emailServ.selectedMess===2'>
         Исходящие
         <span class='email__num'>{{email.sent}}</span>
       </a>
 
-      <a (click)="goUrl('/spam', email.idPost, 'sent','',2, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===4'>
+      <a (click)="goUrl(i, '/spam', email.idPost, 'sent',2, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===4'>
         Спам
         <span class='email__num'>{{email.sent}}</span>
       </a>

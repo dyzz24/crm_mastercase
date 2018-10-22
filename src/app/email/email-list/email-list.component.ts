@@ -76,8 +76,10 @@ export class EmailListComponent implements OnInit, DoCheck {
     {params:
     {address: this.idPostForHTTP}}).subscribe((data) => {
       this.emailServ.lettersList = data;
-      this.emailServ.visibleLett(15); // TEST
-      this.emailServ.step = 15; } );
+      } );
+      // this.emailServ.visibleLett(15); // TEST
+      // this.emailServ.step = 15;
+
 
 
     this._rout.navigate(['email/' + this.idPost + paramsUrl]);
@@ -107,24 +109,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.activeLett = [];
     this.emailServ.allLettersId = [];
 
-    // ************************** */
 
-    // if (this.emailServ.typeMess === 'incoming') {
-    //   this.messagesForFilters = lettersInbox;
-    // }
-    // if (this.emailServ.typeMess === 'sent') {
-    //   this.messagesForFilters = lettersSent;
-    // }
-    // const filters = elems => {
-    //   for (const keyMass of elems) {
-    //     // tslint:disable-next-line:forin
-    //     for (const i in keyMass) {
-    //       if (i === this.emailServ.idBox) {
-    //         return keyMass[i];
-    //       }
-    //     }
-    //   }
-    // };
     if (this.emailServ.lettersList === 'noMessages') {  // DEL
       this.emailServ.noMessages = true;
     } else {this.emailServ.noMessages = false; } // del

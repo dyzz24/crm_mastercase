@@ -200,8 +200,35 @@ scrollDown(e) {
 
 timeParse(item) {
 const date = new Date(item);
+date.setHours(date.getHours() - 3);
+
+const nowDate = new Date();
+
+const difference = +nowDate - +date;
+
+
+if (difference < 86400000) {
+  return `${date.getHours()}:${date.getMinutes()}`;
+}
+
+if (difference > 86400000 && difference < 172800000) {
+  return `Вчера ${date.getHours()}:${date.getMinutes()}`;
+}
+
+if (difference > 172800000 && difference < 604800000) {
+  const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+  const weekDays = days[date.getDay()];
+  return `${weekDays} ${date.getHours()}:${date.getMinutes()}`;
+}
+if (difference > 604800000 ) {
+  const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
+  const months = month[date.getMonth()];
+  return `${date.getDate()} ${months} : ${date.getHours()}:${date.getMinutes()}`;
+}
+
+
 const hours = date.getHours();
-return `${date.getHours()}:${date.getMinutes()}`;
+
 }
 
 
