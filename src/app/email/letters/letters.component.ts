@@ -77,16 +77,15 @@ export class LettersComponent implements DoCheck, OnInit {
 
   selectedLetters(id, e, i) {   // множественный выбор писем в папке ****************
     if (e.target.checked) {
-      this.emailServ.idLetters = [...this.emailServ.idLetters, i];  // индексы писем (от 0 до ...)
+      this.emailServ.idLetters = [...this.emailServ.idLetters, id];  // индексы писем (от 0 до ...)
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
         (val, ind, self) => {
           return self.indexOf(val) === ind;
         }
       );
-
     } else {
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
-        item => item !== i
+        item => item !== id
       );
     }
 
@@ -198,15 +197,29 @@ scrollDown(e) {
 
 }
 
-avatarMake(item) {
-  item.toString();
-  const firstLett = item[0];
-  return firstLett;
-}
+
 timeParse(item) {
 const date = new Date(item);
 const hours = date.getHours();
 return `${date.getHours()}:${date.getMinutes()}`;
+}
+
+
+deleteLetter(id, e) {
+
+  e.target.parentNode.classList.remove('visible');
+  this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
+    if (val.id !== id) {
+      return val;
+    }
+    });
+    this.emailServ.visibleLett(15);
+
+
+}
+
+deleteLettersAll() {
+  const id_for_delete = this.emailServ.idLetters;
 }
 
 

@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: calc(100vh - 120px);
+    // height: calc(100vh - 120px);
 }
 
 .header {
@@ -79,11 +79,12 @@ span {
 
 .mess__content {
     width: 100%;
-    height: calc(100vh - 60px - 90px - 60px);
+    // height: calc(100vh - 60px - 90px - 60px);
     padding: 30px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+
 }
 
 .subject {

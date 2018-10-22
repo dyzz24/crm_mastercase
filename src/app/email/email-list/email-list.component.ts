@@ -50,7 +50,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     }
   }
   ngDoCheck() {
-    console.log(this.emailServ.visibleLetters);
+    // console.log(this.emailServ.visibleLetters);
     this.emailServ.stateServ();
   }
 
@@ -176,5 +176,6 @@ this._rout.navigate(['email/']);
   this.deleteMenuStatus = false;
   this.editMenuStatus = true;
   }
+
 
 }

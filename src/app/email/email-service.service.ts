@@ -127,15 +127,6 @@ public httpPost(url: string, options?): Observable<any> {
   return this.http.post(url, options);
 }
 
-//   getHttp(param) {
-
-//     this.http.get(param).subscribe((data) => data );
-
-
-// // const emails = this.http.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => console.log(data)); // http - test
-
-// // const mails = this.http.get('http://10.0.1.10:3000/mails?address=seo@insat.ru').subscribe((data) => console.log(data)); // http - test
-//   }
 
   checkerTrash() {
     if (this.idLetters.length > 0) {
@@ -167,9 +158,6 @@ public httpPost(url: string, options?): Observable<any> {
           this.importantLetter = true;
         }
       }
-      // return {
-      //   inworkLetter, haveattachLetter, importantLetter
-      // };
     } else {
       return false;
     }
@@ -196,5 +184,10 @@ public httpPost(url: string, options?): Observable<any> {
     div.innerHTML = text;
     const returnText = div.textContent || div.innerText || '';
     return returnText;
+  }
+  avatarMake(item) {
+    item.toString();
+    const firstLett = item[0];
+    return firstLett;
   }
 }

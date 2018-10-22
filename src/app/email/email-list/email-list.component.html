@@ -116,10 +116,15 @@
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
       <a (click)="goUrl(i, '/inbox', email.idPost, 'incoming', i+1, 1, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===1'>
         Входящие
-         <span class='email__num'>{{email.incoming}}</span>
+         <span class='email__num'>{{email.unseen}}</span>
       </a>
       <a (click)="goUrl('/sent', email.idPost, 'sent','',2, email.emailNames)"[class.activeTypeMess]='emailServ.selectedMess===2'>
         Исходящие
+        <span class='email__num'>{{email.sent}}</span>
+      </a>
+
+      <a (click)="goUrl('/spam', email.idPost, 'sent','',2, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===4'>
+        Спам
         <span class='email__num'>{{email.sent}}</span>
       </a>
       <a>Черновики</a>

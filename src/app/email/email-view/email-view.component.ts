@@ -1,6 +1,7 @@
 import { Component, OnInit, DoCheck, HostListener } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
+import { QuillEditorComponent } from 'ngx-quill';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
     });
 
 
+
 this.emailServ.currentInd = this.emailServ.currentId; // получаю id текущего ( открытого ) письма
 
 
@@ -73,11 +75,11 @@ this.emailServ.currentObjectLetter = this.emailServ.visibleLetters[this.emailSer
 
 this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];
 
-      this.emailServ.senderName = this.emailServ.currentObjectLetter.name;
-      this.emailServ.time = this.emailServ.currentObjectLetter.time;
-      this.emailServ.avatar = this.emailServ.currentObjectLetter.avaSrc;
-      this.emailServ.caption = this.emailServ.currentObjectLetter.caption;
-      this.emailServ.text = this.emailServ.currentObjectLetter.text;
+      this.emailServ.senderName = this.emailServ.currentObjectLetter.mail_from;
+      this.emailServ.time = this.emailServ.currentObjectLetter.date;
+      // this.emailServ.avatar = this.emailServ.currentObjectLetter.avaSrc;
+      this.emailServ.caption = this.emailServ.currentObjectLetter.subject;
+      this.emailServ.text = this.emailServ.currentObjectLetter.html;
       this.emailServ.hiddenEmpty = true;
 
       this.emailServ.currentId = this.emailServ.index; // test
