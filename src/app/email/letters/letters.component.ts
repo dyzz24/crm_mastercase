@@ -35,9 +35,8 @@ export class LettersComponent implements DoCheck, OnInit {
 
   activeEl(param, id) {
 
-    // tslint:disable-next-line:max-line-length
-    this.emailServ.post('http://10.0.1.10:3000/seen', {id : id, flag: true}).subscribe((data) => console.log(data));
-
+    this.emailServ.httpPost('http://10.0.1.10:3000/seen', {id : id, flag: true}).subscribe();  // перевожу в прочитанные сообщения
+    this.emailServ.lettersList[param].seen = true;
     // tslint:disable-next-line:forin
     for (const i in this.emailServ.activeLett) {
       this.emailServ.activeLett[i] = false;
@@ -57,7 +56,7 @@ export class LettersComponent implements DoCheck, OnInit {
     text,
     currentId,
     copy,
-    condition
+    mail_to
   ) {
     this.rout.navigate([this.emailServ.urlParams + '/view' + '/' + idLetter]);
     this.emailServ.senderName = senderName;
@@ -73,7 +72,7 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.lettersList[currentId].status = 'read';
     this.emailServ.copy = copy;
 
-    this.emailServ.messageConditionCheckerInService(condition); // передаю статусы (синие) в сервис для отображения в компоненте view
+    this.emailServ.mailName = mail_to; // кому сообщение
   }
 
   selectedLetters(id, e, i) {   // множественный выбор писем в папке ****************
@@ -100,11 +99,6 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.hiddenEmpty = true;
   }
 
-  statusMessageCheck(param) {
-    if (this.emailServ.lettersList[param].status === 'new') {
-      return true;
-    }
-  }
   statusMessageSpam(param) {
     if (this.emailServ.lettersList[param].box === 4) {
       return true;
@@ -126,12 +120,15 @@ export class LettersComponent implements DoCheck, OnInit {
     }
   }
 // ****************************************spam add - delete***************************** */
-  spamMark(i, e, booleanParam) {
+  spamMark(i, e, booleanParam, id) {
     // if (this.emailServ.lettersList[i].messageCondition !== undefined) {
     this.emailServ.lettersList[i].box = booleanParam;
     e.target.parentNode.classList.remove('visible');
     this.rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
+
+    this.emailServ.httpPost('http://10.0.1.10:3000/setbox', {id : id, box: booleanParam}).subscribe();
+
   }
 
   // toggleSpamMark(i) {
@@ -146,8 +143,9 @@ export class LettersComponent implements DoCheck, OnInit {
 
   // *****************************************************************************
 
-  toggleImportantMark(i, e) {  // для переключения удалить-добавить важное
+  toggleImportantMark(i, e, id) {  // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
+    this.emailServ.httpPost('http://10.0.1.10:3000/flagged', {id : id, flag: true}).subscribe();
      this.emailServ.lettersList[i].flagged = ! this.emailServ.lettersList[i].flagged;
   }
 
@@ -198,6 +196,17 @@ scrollDown(e) {
   }
 
 
+}
+
+avatarMake(item) {
+  item.toString();
+  const firstLett = item[0];
+  return firstLett;
+}
+timeParse(item) {
+const date = new Date(item);
+const hours = date.getHours();
+return `${date.getHours()}:${date.getMinutes()}`;
 }
 
 

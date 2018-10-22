@@ -228,6 +228,7 @@ $font-color: $icons-color;
 
 .avatar {
     @extend %avatar;
+
     
     &:hover img {
         transform: rotateY(270deg);
@@ -354,6 +355,9 @@ label {
 .visibleLabel {
     z-index: 1;
     opacity: 1;
+}
+.hiddenName {
+    opacity: 0;
 }
 
 

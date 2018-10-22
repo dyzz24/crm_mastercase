@@ -69,7 +69,11 @@
 
   <div class="mess__content">
     <p class="subject">{{emailServ.caption}}</p>
-    <p class="text">{{emailServ.text}}</p>
+    <p class="text">
+
+      {{this.emailServ.htmlParse(emailServ.text)}}
+    
+    </p>
     <div class="attachment__block">
       <div class="attachment__item">
       <span class="la excel"></span>

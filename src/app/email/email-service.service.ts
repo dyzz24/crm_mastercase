@@ -119,11 +119,11 @@ export class EmailServiceService {
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
 
-  public get(url: string, options?): Observable<any> {
+  public httpGet(url: string, options?): Observable<any> {
     return this.http.get(url, options);
 }
 
-public post(url: string, options?): Observable<any> {
+public httpPost(url: string, options?): Observable<any> {
   return this.http.post(url, options);
 }
 
@@ -187,5 +187,14 @@ public post(url: string, options?): Observable<any> {
     });
     const filtered = visibleLetters.filter(a => a !== undefined);
     this.visibleLetters = filtered;
+  }
+
+
+  htmlParse(item) {
+    const text = item;
+    const div = document.createElement('div');
+    div.innerHTML = text;
+    const returnText = div.textContent || div.innerText || '';
+    return returnText;
   }
 }

@@ -42,9 +42,8 @@ export class EmailListComponent implements OnInit, DoCheck {
    }
 
   ngOnInit() {
-  //  this.emailServ.getHttp('http://10.0.1.10:3000/boxes?id=1');
 
-   this.emailServ.get('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => this.emailItems = data );
+   this.emailServ.httpGet('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => this.emailItems = data );
 
     if (localStorage.length === 0) {
       this.emailServ.activeEl = [];
@@ -70,10 +69,15 @@ export class EmailListComponent implements OnInit, DoCheck {
 
 
   goUrl(index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?, mailName?) {
-    this.idPost = this.emailItems[index].address.replace('@', '');
-    this.idPostForHTTP = this.emailItems[index].address;
-    this.emailServ.get(`http://10.0.1.10:3000/mails`, {params:
-    {address: this.idPostForHTTP}}).subscribe((data) => this.emailServ.lettersList = data );
+    this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
+    this.idPostForHTTP = this.emailItems[index].address; // ID ящика
+    this.emailServ.
+    httpGet(`http://10.0.1.10:3000/mails`,
+    {params:
+    {address: this.idPostForHTTP}}).subscribe((data) => {
+      this.emailServ.lettersList = data;
+      this.emailServ.visibleLett(15); // TEST
+      this.emailServ.step = 15; } );
 
 
     this._rout.navigate(['email/' + this.idPost + paramsUrl]);
@@ -84,8 +88,6 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.urlParams = `email/${this.idPost}${paramsUrl}`;
 
     this.emailServ.fullPath = `email/${this.idPost}${paramsUrl}`;
-    // const stateUrls = this.emailServ.urlParams;
-    // localStorage.setItem('stateURL', JSON.stringify(stateUrls));
 
     if (activeNumber) {
       for (let i = 0; i < this.emailServ.activeEl.length; i++) {
@@ -126,9 +128,6 @@ export class EmailListComponent implements OnInit, DoCheck {
     if (this.emailServ.lettersList === 'noMessages') {  // DEL
       this.emailServ.noMessages = true;
     } else {this.emailServ.noMessages = false; } // del
-    this.emailServ.visibleLett(15); // TEST
-    this.emailServ.step = 15;
-
     this.emailServ.stateServ(); // save state on service
 
 
@@ -177,4 +176,5 @@ this._rout.navigate(['email/']);
   this.deleteMenuStatus = false;
   this.editMenuStatus = true;
   }
+
 }

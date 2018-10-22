@@ -114,7 +114,7 @@
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
-      <a (click)="goUrl('/inbox', email.idPost, 'incoming','',1, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===1'>
+      <a (click)="goUrl(i, '/inbox', email.idPost, 'incoming', i+1, 1, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===1'>
         Входящие
          <span class='email__num'>{{email.incoming}}</span>
       </a>
