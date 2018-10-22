@@ -126,6 +126,15 @@ export class LettersComponent implements DoCheck, OnInit {
     this.rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
 
+
+    setTimeout(() => {
+      this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
+        if (val.box !== 4) {
+          return val;
+        }
+        });
+    }, 1000);
+
     this.emailServ.httpPost('http://10.0.1.10:3000/setbox', {id : id, box: booleanParam}).subscribe();
 
   }
@@ -235,13 +244,14 @@ const hours = date.getHours();
 deleteLetter(id, e) {
 
   e.target.parentNode.classList.remove('visible');
+  e.target.closest('.letter__prev').classList.add('dellLetter');
+  setTimeout(() => {
   this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
     if (val.id !== id) {
       return val;
     }
     });
-    this.emailServ.visibleLett(15);
-
+    }, 500);
 
 }
 
