@@ -65,9 +65,14 @@
             </div>
             <p class='letter__name' [class.headText__status-new]="letters.seen === false">{{letters.mail_from}}</p>
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
-            <div class='letter__text'>
+            <!-- <div class='letter__text'>
               {{this.emailServ.htmlParse(letters.html)}}
-             </div>
+             </div> -->
+             <!-- <div [innerText]="letters.html" class='letter__text'></div> -->
+             <!-- <p class='letter__text'>{{letters.html | innerText | innerhtml }}</p> -->
+        
+             <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div>
+  
 
 
 

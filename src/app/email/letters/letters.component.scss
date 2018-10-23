@@ -200,7 +200,7 @@ $font-color: $icons-color;
     height: 90px;
 
     position: relative;
-    overflow: unset;
+    overflow: hidden;
 
     &:hover::before{
         opacity: 1;
@@ -329,6 +329,7 @@ label {
     white-space: nowrap;
     overflow: hidden;
     width: 80%;
+    height: 20px;
 }
 
 .letter__name,

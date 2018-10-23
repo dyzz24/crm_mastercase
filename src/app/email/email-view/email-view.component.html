@@ -71,12 +71,7 @@
   <div class="mess__content">
     <div class="mess__content_body">
     <p class="subject">{{emailServ.caption}}</p>
-    <p class="text">
-
-      {{this.emailServ.htmlParse(emailServ.text)}}
-
-    
-    </p>
+    <div [innerHTML]="emailServ.text | innerhtml"></div>
     <div class="attachment__block">
       <div class="attachment__item">
       <span class="la excel"></span>

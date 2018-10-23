@@ -1,6 +1,6 @@
 import { Component, DoCheck, ElementRef, OnInit, HostListener} from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
-import { Router } from '@angular/router';
+import { Router, Scroll } from '@angular/router';
 
 @Component({
   selector: 'app-letters',
@@ -180,7 +180,8 @@ sent_incomingChecker(i) {  // проверка на входящие - исхо�
     } else { return false; }
 }
 
-scrollDown(e) {
+
+scrollDown() {
   const container = document.querySelector('.letter__container');
   const maxScrollHeight = container.scrollHeight;  //     **высота скрытого блока   height 1565
   const maxHeight = container.getBoundingClientRect().height;   // **высота видимой области (849)
@@ -224,6 +225,12 @@ if (difference > 604800000 ) {
   const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
   const months = month[date.getMonth()];
   return `${date.getDate()} ${months} : ${date.getHours()}:${date.getMinutes()}`;
+}
+
+if (difference > 31556926000) {
+  const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
+  const months = month[date.getMonth()];
+    return `${date.getFullYear()} ${months}`;
 }
 
 

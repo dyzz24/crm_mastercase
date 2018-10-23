@@ -19,6 +19,9 @@ import { FormsModule } from '@angular/forms';
 import { NewMessageComponent } from './email/new-message/new-message.component';
 import { QuillModule } from 'ngx-quill';
 import { HttpClientModule } from '@angular/common/http';
+import { InnerhtmlPipe } from './email/innerhtml.pipe';
+import { InnerTextPipe } from './email/innerhtml.pipe';
+// import { InnerTextPipe } from './email/inner-text.pipe';
 
 
 
@@ -42,6 +45,8 @@ import { HttpClientModule } from '@angular/common/http';
     LettersComponent,
     EmailViewComponent,
     NewMessageComponent,
+    InnerhtmlPipe,
+    InnerTextPipe,
   ],
   imports: [
     BrowserModule,

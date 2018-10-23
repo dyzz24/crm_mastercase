@@ -133,13 +133,13 @@
   <div class="emails" *ngFor='let email of emailItems let i = index'>
 
     <a class="emails__list" (click)="goUrl('http://10.0.1.10:3000/mails', i, '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
-      <p>{{email.address}}</p>
+      <p>{{email.mail_to}}</p>
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
       <a (click)="goUrl('http://10.0.1.10:3000/mails', i , '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeTypeMess]='emailServ.selectedMess===1'>
         Входящие
-         <span class='email__num'>{{email.unseen}}</span>
+         <span class='email__num'>{{email.count}}</span>
       </a>
       <a (click)="goUrl(i, '/sent', email.idPost, 'sent','',2)"[class.activeTypeMess]='emailServ.selectedMess===2'>
         Исходящие

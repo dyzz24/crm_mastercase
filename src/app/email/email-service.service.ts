@@ -179,11 +179,12 @@ public httpPost(url: string, options?): Observable<any> {
 
 
   htmlParse(item) {
-    const text = item;
-    const div = document.createElement('div');
-    div.innerHTML = text;
-    const returnText = div.textContent || div.innerText || '';
-    return returnText;
+    // const text = item;
+    // const div = document.createElement('div');
+    // div.innerHTML = text;
+    // const returnText = div.textContent || div.innerText || '';
+    // return returnText;
+    return item.replace(/<.*?>/g, '');
   }
   avatarMake(item) {
     item.toString();

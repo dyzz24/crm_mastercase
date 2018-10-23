@@ -68,8 +68,8 @@ export class EmailListComponent implements OnInit, DoCheck {
 
 
   goUrl(adress, index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
-    this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
-    this.idPostForHTTP = this.emailItems[index].address; // ID ящика
+    this.idPost = this.emailItems[index].mail_to.replace('@', ''); // для вставки в URL
+    this.idPostForHTTP = this.emailItems[index].mail_to; // ID ящика
     this.emailServ.
     httpGet(adress,
     {params:
