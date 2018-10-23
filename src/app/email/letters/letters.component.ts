@@ -29,7 +29,6 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    this.emailServ.stateServ(); // save state on service
   }
 
 
@@ -73,6 +72,7 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.copy = copy;
 
     this.emailServ.mailName = mail_to; // кому сообщение
+    this.emailServ.stateServ();
   }
 
   selectedLetters(id, e, i) {   // множественный выбор писем в папке ****************
@@ -133,21 +133,12 @@ export class LettersComponent implements DoCheck, OnInit {
           return val;
         }
         });
-    }, 1000);
+    }, 500);
 
     this.emailServ.httpPost('http://10.0.1.10:3000/setbox', {id : id, box: booleanParam}).subscribe();
 
   }
 
-  // toggleSpamMark(i) {
-
-  //   if (this.emailServ.noMessages === true) {  // DEL
-  //     return;
-  //   }
-  //   if ( this.emailServ.lettersList[i].box !== 4 ) {
-  //     return true;
-  //   }
-  //  }
 
   // *****************************************************************************
 
@@ -199,8 +190,8 @@ scrollDown(e) {
 
 
   if (persent > 85) {
-    this.emailServ.step = this.emailServ.step += 15;
-    this.emailServ.visibleLett(this.emailServ.step);
+    // this.emailServ.step = this.emailServ.step += 15;
+    // this.emailServ.visibleLett(this.emailServ.step);
   }
 
 
@@ -235,8 +226,6 @@ if (difference > 604800000 ) {
   return `${date.getDate()} ${months} : ${date.getHours()}:${date.getMinutes()}`;
 }
 
-
-const hours = date.getHours();
 
 }
 

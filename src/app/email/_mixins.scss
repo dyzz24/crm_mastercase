@@ -75,6 +75,10 @@
     font-size: 21px;
 }
 
+.la-let::before {
+        content: '\f0e0';
+}
+
 .la-close::before{
     content:'\f00d';
 }

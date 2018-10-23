@@ -24,6 +24,7 @@ export class EmailListComponent implements OnInit, DoCheck {
   createMenuStatus = false;
   deleteMenuStatus = false;
   editMenuStatus = false;
+  createSettingStatus = false;
   visibl: Array<boolean> = [false, false, false];
 
   inboxName;
@@ -50,8 +51,6 @@ export class EmailListComponent implements OnInit, DoCheck {
     }
   }
   ngDoCheck() {
-    // console.log(this.emailServ.visibleLetters);
-    this.emailServ.stateServ();
   }
 
   showHiddenBlock(param) {
@@ -68,11 +67,11 @@ export class EmailListComponent implements OnInit, DoCheck {
   }
 
 
-  goUrl(index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?, mailName?) {
+  goUrl(adress, index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
     this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
     this.idPostForHTTP = this.emailItems[index].address; // ID ящика
     this.emailServ.
-    httpGet(`http://10.0.1.10:3000/mails`,
+    httpGet(adress,
     {params:
     {address: this.idPostForHTTP}}).subscribe((data) => {
       this.emailServ.lettersList = data;
@@ -101,7 +100,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.activeEl[activeNumber - 1] = true;
     }
     this.emailServ.hideAvatars = [];
-    this.emailServ.mailName = mailName;
+    this.emailServ.mailName = this.idPostForHTTP;
     this.emailServ.idLetters = [];
 
     this.emailServ.checkerTrash();
@@ -115,7 +114,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     } else {this.emailServ.noMessages = false; } // del
     this.emailServ.stateServ(); // save state on service
 
-
+    this.emailServ.stateServ();
 
     // ********************************/
   }
@@ -133,6 +132,9 @@ export class EmailListComponent implements OnInit, DoCheck {
   deleteInboxOpen() {
     this.deleteMenuStatus = ! this.deleteMenuStatus;
   }
+  settingOpen() {
+    this.createSettingStatus = ! this.createSettingStatus;
+  }
   closeViewer(e) {
       const checkCloser = e.target;
       if (checkCloser.classList.contains('close-new-inbox')) {
@@ -143,6 +145,9 @@ export class EmailListComponent implements OnInit, DoCheck {
       }
       if (checkCloser.classList.contains('close-edit-inbox')) {
         this.editMenuStatus = ! this.editMenuStatus;
+      }
+      if (checkCloser.classList.contains('close-setting-inbox')) {
+        this.createSettingStatus = ! this.createSettingStatus;
       }
   }
 
@@ -161,6 +166,10 @@ this._rout.navigate(['email/']);
   this.deleteMenuStatus = false;
   this.editMenuStatus = true;
   }
+
+loadAmount(count) {   // для количества загруженных писем
+  // this.emailServ.httpPost('http://10.0.1.10:3000/setbox', {id : id, box: booleanParam}).subscribe();
+}
 
 
 }
