@@ -77,7 +77,7 @@
         </div>
         <div class="create__body">
           <div class="email__body" *ngFor='let email of emailItems let i = index'>
-          <p class='inboxName'>{{email.emailNames}}</p>
+          <p class='inboxName'>{{email.mail_to}}</p>
           <button class='btn-create'(click)='editInbox(i)'>Редактировать</button>
           <button class='btn-create'(click)='deleteInbox(i)'>Удалить</button>
          
@@ -132,16 +132,16 @@
   </div>
   <div class="emails" *ngFor='let email of emailItems let i = index'>
 
-    <a class="emails__list" (click)="goUrl('http://10.0.1.10:3000/mails', i, '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
+    <a class="emails__list" (click)="goUrl('http://10.0.1.33:3000/mails', i, '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
       <p>{{email.mail_to}}</p>
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
-      <a (click)="goUrl('http://10.0.1.10:3000/mails', i , '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeTypeMess]='emailServ.selectedMess===1'>
+      <a (click)="goUrl('http://10.0.1.33:3000/mails', i , '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeTypeMess]='emailServ.selectedMess===1'>
         Входящие
          <span class='email__num'>{{email.count}}</span>
       </a>
-      <a (click)="goUrl(i, '/sent', email.idPost, 'sent','',2)"[class.activeTypeMess]='emailServ.selectedMess===2'>
+      <a (click)="goUrl('http://10.0.1.33:3000/mails', i, '/sent', email.idPost, 'sent','',2)"[class.activeTypeMess]='emailServ.selectedMess===2'>
         Исходящие
         <span class='email__num'>{{email.sent}}</span>
       </a>

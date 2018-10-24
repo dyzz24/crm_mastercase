@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { AllEmails } from './test';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +45,7 @@ export class EmailServiceService {
   importantLetter;
 
   visibleLetters: any;
-  step = 15;
+  lettersAmount = 15;
 
   noMessages = false; // DEL
 

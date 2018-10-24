@@ -26,7 +26,6 @@ export class EmailListComponent implements OnInit, DoCheck {
   editMenuStatus = false;
   createSettingStatus = false;
   visibl: Array<boolean> = [false, false, false];
-
   inboxName;
   inboxPassword;
   inboxFullName;
@@ -44,7 +43,7 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-   this.emailServ.httpGet('http://10.0.1.10:3000/boxes?id=1').subscribe((data) => this.emailItems = data );
+   this.emailServ.httpGet('http://10.0.1.33:3000/boxes?id=1').subscribe((data) => this.emailItems = data );
 
     if (localStorage.length === 0) {
       this.emailServ.activeEl = [];
@@ -71,7 +70,8 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.idPost = this.emailItems[index].mail_to.replace('@', ''); // для вставки в URL
     this.idPostForHTTP = this.emailItems[index].mail_to; // ID ящика
     this.emailServ.
-    httpGet(adress,
+    httpGet(
+    adress,
     {params:
     {address: this.idPostForHTTP}}).subscribe((data) => {
       this.emailServ.lettersList = data;
@@ -114,14 +114,13 @@ export class EmailListComponent implements OnInit, DoCheck {
     } else {this.emailServ.noMessages = false; } // del
     this.emailServ.stateServ(); // save state on service
 
-    this.emailServ.stateServ();
-
     // ********************************/
   }
 
   deleteChangesOnService() {
     this.emailServ.deleteChangesComponents();
   }
+
 
   inboxMenuShow() {
     this.inboxMenuStatus = ! this.inboxMenuStatus;
@@ -168,7 +167,8 @@ this._rout.navigate(['email/']);
   }
 
 loadAmount(count) {   // для количества загруженных писем
-  // this.emailServ.httpPost('http://10.0.1.10:3000/setbox', {id : id, box: booleanParam}).subscribe();
+  this.emailServ.lettersAmount = count;
+  // this.emailServ.httpPost('http://10.0.1.33:3000/setbox', {id : id, box: booleanParam}).subscribe();
 }
 
 

@@ -34,7 +34,7 @@ export class LettersComponent implements DoCheck, OnInit {
 
   activeEl(param, id) {
 
-    this.emailServ.httpPost('http://10.0.1.10:3000/seen', {id : id, flag: true}).subscribe();  // перевожу в прочитанные сообщения
+    this.emailServ.httpPost('http://10.0.1.33:3000/seen', {id : id, flag: true}).subscribe();  // перевожу в прочитанные сообщения
     this.emailServ.lettersList[param].seen = true;
     // tslint:disable-next-line:forin
     for (const i in this.emailServ.activeLett) {
@@ -135,7 +135,7 @@ export class LettersComponent implements DoCheck, OnInit {
         });
     }, 500);
 
-    this.emailServ.httpPost('http://10.0.1.10:3000/setbox', {id : id, box: booleanParam}).subscribe();
+    this.emailServ.httpPost('http://10.0.1.33:3000/setbox', {id : id, box: booleanParam}).subscribe();
 
   }
 
@@ -144,34 +144,9 @@ export class LettersComponent implements DoCheck, OnInit {
 
   toggleImportantMark(i, e, id) {  // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
-    this.emailServ.httpPost('http://10.0.1.10:3000/flagged', {id : id, flag: true}).subscribe();
+    this.emailServ.httpPost('http://10.0.1.33:3000/flagged', {id : id, flag: true}).subscribe();
      this.emailServ.lettersList[i].flagged = ! this.emailServ.lettersList[i].flagged;
   }
-
-
-
-//   messageConditionChecker(i) {
-//     if (this.emailServ.lettersList[i].messageCondition !== undefined) {
-//     let inworkLetter = false;
-//     let haveattachLetter = false;
-//     let importantLetter = false;
-
-//     for (const key of this.emailServ.lettersList[i].messageCondition) {
-//       if (key === 'inwork') {
-//         inworkLetter = true;
-//       }
-//       if (key === 'haveAttach') {
-//         haveattachLetter = true;
-//       }
-//       if (key === 'important') {
-//         importantLetter = true;
-//       }
-//     }
-//     return {
-//       inworkLetter, haveattachLetter, importantLetter
-//     };
-//   } else {return false; }
-// }
 
 // tslint:disable-next-line:max-line-length
 sent_incomingChecker(i) {  // проверка на входящие - исходящие сообщения, ибо исходящие не имеют статуса спама и важных!!!! (без нее глючат исходящие)
@@ -248,6 +223,8 @@ deleteLetter(id, e) {
     }
     });
     }, 500);
+    this.emailServ.hiddenEmpty = false;
+    this.rout.navigate([this.emailServ.urlParams]);
 
 }
 
