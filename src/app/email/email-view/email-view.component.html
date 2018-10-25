@@ -13,7 +13,7 @@
                   <span class='la la-next'></span>
                   <p class="tooltip">Предыдущее сообщение</p>
                 </button>
-                <button class='menu'>
+                <button class='menu' (click)='deleteLetter()'>
                     <span class='la la-delete'></span>
                     <p class="tooltip">Удалить сообщение</p>
                   </button>
@@ -35,7 +35,7 @@
   <div class="mess__info">
     <div class="avatar">
       <!-- <img src={{emailServ.avatar}}> -->
-      <p>{{this.emailServ.avatarMake(emailServ.senderName)}}</p>
+      <p>{{this.emailServ.avatarMake(emailServ.selectedLetter.mail_from)}}</p>
     </div>
     <div class="r__info">
     <div class="panel">
@@ -51,7 +51,7 @@
         </span>
     <!-- <span class="la la-active-flag"></span> -->
   </div>
-  <p class='time'>{{emailServ.time}}</p>
+  <p class='time'>{{emailServ.selectedLetter.date}}</p>
 </div>
 
 <div class='from'>
@@ -61,17 +61,17 @@
 </div>
 
 <div class="info">
-    <p class='name'>{{emailServ.senderName}}</p>
-    <p class='title'>{{emailServ.mailName}}</p>
-    <p class='title'>{{emailServ.copy}}</p>
+    <p class='name'>{{emailServ.selectedLetter.mail_from}}</p>
+    <p class='title'>{{emailServ.selectedLetter.mail_to}}</p>
+    <p class='title'>{{emailServ.selectedLetter.bcc}}</p>
 </div>
 </div>
   </div>
 
   <div class="mess__content">
     <div class="mess__content_body">
-    <p class="subject">{{emailServ.caption}}</p>
-    <div [innerHTML]="emailServ.text | innerhtml"></div>
+    <p class="subject">{{emailServ.selectedLetter.subject}}</p>
+    <div [innerHTML]="emailServ.selectedLetter.html | innerhtml"></div>
     <div class="attachment__block">
       <div class="attachment__item">
       <span class="la excel"></span>

@@ -1,6 +1,7 @@
 import { Component, DoCheck, ElementRef, OnInit, HostListener} from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-letters',
@@ -48,30 +49,18 @@ export class LettersComponent implements DoCheck, OnInit {
   }
   urlLetterView(
     idLetter,
-    senderName,
-    time,
-    avaSrc,
-    caption,
-    text,
     currentId,
-    copy,
-    mail_to
   ) {
     this.rout.navigate([this.emailServ.urlParams + '/view' + '/' + idLetter]);
-    this.emailServ.senderName = senderName;
-    this.emailServ.time = time;
-    this.emailServ.avatar = avaSrc;
-    this.emailServ.caption = caption;
-    this.emailServ.text = text;
+    this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
+    this.emailServ.index = idLetter;
+
     this.emailServ.hiddenEmpty = true;
 
     this.emailServ.fullPath =
-      this.emailServ.urlParams + '/view' + '/' + idLetter;
+    this.emailServ.urlParams + '/view' + '/' + idLetter;
     this.emailServ.currentId = currentId; // test
-    this.emailServ.lettersList[currentId].status = 'read';
-    this.emailServ.copy = copy;
 
-    this.emailServ.mailName = mail_to; // кому сообщение
     this.emailServ.stateServ();
   }
 

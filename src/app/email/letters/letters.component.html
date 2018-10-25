@@ -46,7 +46,7 @@
               <div class='checker'></div>
             </label>
           </div>
-          <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i, letters.mail_from, letters.date, letters.avaSrc, letters.subject, letters.html, i, letters.emailCopy, letters.mail_to)'>
+          <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i,i, letters.emailCopy)'>
             <div class='prev__panel'>
               <div class="status_panel">
                 <span class='la la-sett' [class.visible]="this.emailServ.lettersList[i].draft === true">

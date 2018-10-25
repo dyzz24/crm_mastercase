@@ -49,6 +49,8 @@ export class EmailServiceService {
 
   noMessages = false; // DEL
 
+  selectedLetter: any;
+
   constructor(private http: HttpClient) {
     if (localStorage.getItem('all-states') === null) {
       return;
@@ -83,6 +85,7 @@ export class EmailServiceService {
       this.importantLetter = state.importantLetter;
       this.visibleLetters = state.visibleLetters;
       this.noMessages = state.noMessages;
+      this.selectedLetter = state.selectedLetter;
     }
   }
 
@@ -113,7 +116,8 @@ export class EmailServiceService {
       haveattachLetter: this.haveattachLetter,
       importantLetter: this.importantLetter,
       visibleLetters: this.visibleLetters,
-      noMessages: this.noMessages
+      noMessages: this.noMessages,
+      selectedLetter: this.selectedLetter
     };
     localStorage.setItem('all-states', JSON.stringify(objState));
   }

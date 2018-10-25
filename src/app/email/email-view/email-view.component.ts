@@ -20,7 +20,6 @@ export class EmailViewComponent implements OnInit, DoCheck {
   ngOnInit() {
   }
   ngDoCheck() {
-    this.emailServ.stateServ();
   }
 
   closeViewer() {
@@ -37,22 +36,6 @@ export class EmailViewComponent implements OnInit, DoCheck {
 
   selectMess(n) {
 
-    this.emailServ.allLettersId = this.emailServ.lettersList.map((val, ind) => {
-      return ind;
-    });
-
-
-
-this.emailServ.currentInd = this.emailServ.currentId; // получаю id текущего ( открытого ) письма
-
-
-for (let i = 0; i < this.emailServ.allLettersId.length; i++) {
-if (this.emailServ.allLettersId[i] === this.emailServ.currentInd) {
-  this.emailServ.index = i; // текущий индекс в массиве
-  this.emailServ.activeLett = [...this.emailServ.activeLett, false];
-}
-}
-
 this.emailServ.index = this.emailServ.index + n;
 if (this.emailServ.index === this.emailServ.allLettersId.length) {
   this.emailServ.index = 0;
@@ -62,37 +45,43 @@ if (this.emailServ.index < 0) {
   this.emailServ.index = this.emailServ.allLettersId.length - 1;
 }
 
-
 for (let i = 0; i < this.emailServ.activeLett.length; i++) {
 this.emailServ.activeLett[i] = false;
 }
 
 this.emailServ.activeLett[this.emailServ.index] = true;
-
-
-this.emailServ.currentObjectLetter = this.emailServ.lettersList[this.emailServ.index]; // head param
-
-
+this.emailServ.selectedLetter = this.emailServ.lettersList[this.emailServ.index];  // текущее письмо для отображения!!!!
 this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];
-
-      this.emailServ.senderName = this.emailServ.currentObjectLetter.mail_from;
-      this.emailServ.time = this.emailServ.currentObjectLetter.date;
-      // this.emailServ.avatar = this.emailServ.currentObjectLetter.avaSrc;
-      this.emailServ.caption = this.emailServ.currentObjectLetter.subject;
-      this.emailServ.text = this.emailServ.currentObjectLetter.html;
-      this.emailServ.hiddenEmpty = true;
-
-      this.emailServ.currentId = this.emailServ.index; // test
-      this.emailServ.copy = this.emailServ.currentObjectLetter.emailCopy;
-
-      this.emailServ.messageConditionCheckerInService(this.emailServ.currentObjectLetter.messageCondition);
-
+this.emailServ.currentId = this.emailServ.index;
 
 this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.result]);
+this.emailServ.stateServ();
   }
 
   hideMenuShow() {
     this.visibleMenu = ! this.visibleMenu;
+  }
+  deleteLetter() { // удаление письма по клику
+    const messageBody = document.querySelector('.messageContainer');
+    messageBody.classList.add('dellLetter');
+    setTimeout(() => {
+      const id = this.emailServ.selectedLetter;
+
+      for (let i = 0; i < this.emailServ.lettersList.length; i++) {
+        if (this.emailServ.lettersList[i].id === id.id) {
+          this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
+          this.emailServ.index = i;
+        }
+    }
+
+    this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
+      if (val !== id) {
+        return val;
+      }
+      });
+      messageBody.classList.remove('dellLetter');
+      this.emailServ.stateServ();
+    }, 500);
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -102,6 +91,9 @@ this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.r
     }
     if (event.key === 'ArrowUp') {
       this.selectMess(-1);
+    }
+    if (event.key === 'Delete') {
+      this.deleteLetter();
     }
     event.stopPropagation();
   }
