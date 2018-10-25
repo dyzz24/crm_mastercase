@@ -59,12 +59,12 @@ export class EmailServiceService {
       this.idBox = state.idBox;
       this.typeMess = state.typeMess;
       this.activeLett = state.activeLett;
-      this.mailName = state.mailName;
-      this.senderName = state.senderName;
-      this.time = state.time;
-      this.avatar = state.avatar;
-      this.caption = state.caption;
-      this.text = state.text;
+      // this.mailName = state.mailName;
+      // this.senderName = state.senderName;
+      // this.time = state.time;
+      // this.avatar = state.avatar;
+      // this.caption = state.caption;
+      // this.text = state.text;
       this.selectedMess = state.selectedMess;
       this.urlParams = state.urlParams;
       this.messageState = state.messageState;
@@ -94,12 +94,12 @@ export class EmailServiceService {
       idBox: this.idBox,
       typeMess: this.typeMess,
       activeLett: this.activeLett,
-      mailName: this.mailName,
-      senderName: this.senderName,
-      time: this.time,
-      avatar: this.avatar,
-      caption: this.caption,
-      text: this.text,
+      // mailName: this.mailName,
+      // senderName: this.senderName,
+      // time: this.time,
+      // avatar: this.avatar,
+      // caption: this.caption,
+      // text: this.text,
       selectedMess: this.selectedMess,
       urlParams: this.urlParams,
       messageState: this.messageState,

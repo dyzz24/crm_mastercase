@@ -20,6 +20,10 @@ const routes: Routes = [
           children:
           [{path: 'view/:id', component: EmailViewComponent},
             {path: 'create', component: NewMessageComponent}]},
+    {path: ':id/spam', component: LettersComponent,
+          children:
+          [{path: 'view/:id', component: EmailViewComponent},
+            ]}
   ]
 },
 ];

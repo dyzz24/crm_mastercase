@@ -1,4 +1,4 @@
-import { Component, DoCheck, ElementRef, OnInit, HostListener} from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit} from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
 import { TouchSequence } from 'selenium-webdriver';

@@ -146,7 +146,7 @@
         <span class='email__num'>{{email.sent}}</span>
       </a>
 
-      <a (click)="goUrl(i, '/spam', email.idPost, 'sent',2, email.emailNames)" [class.activeTypeMess]='emailServ.selectedMess===4'>
+      <a (click)="goUrl('http://10.0.1.33:3000/mails', i, '/spam', email.idPost, 'spam','',3)" [class.activeTypeMess]='emailServ.selectedMess===3'>
         Спам
         <span class='email__num'>{{email.sent}}</span>
       </a>
