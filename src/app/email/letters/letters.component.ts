@@ -206,14 +206,23 @@ deleteLetter(id, e) {
   e.target.parentNode.classList.remove('visible');
   e.target.closest('.letter__prev').classList.add('dellLetter');
   setTimeout(() => {
+    const idelem = this.emailServ.selectedLetter;
+
+      for (let i = 0; i < this.emailServ.lettersList.length; i++) {
+        if (this.emailServ.lettersList[i].id === idelem.id) {
+          this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
+          this.emailServ.index = i;
+        }
+    }
+
   this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
     if (val.id !== id) {
       return val;
     }
     });
     }, 500);
-    this.emailServ.hiddenEmpty = false;
-    this.rout.navigate([this.emailServ.urlParams]);
+    // this.emailServ.hiddenEmpty = false;
+    // this.rout.navigate([this.emailServ.urlParams]);
 
 }
 

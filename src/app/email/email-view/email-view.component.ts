@@ -51,10 +51,9 @@ this.emailServ.activeLett[i] = false;
 
 this.emailServ.activeLett[this.emailServ.index] = true;
 this.emailServ.selectedLetter = this.emailServ.lettersList[this.emailServ.index];  // текущее письмо для отображения!!!!
-this.emailServ.result = this.emailServ.allLettersId[this.emailServ.index];
 this.emailServ.currentId = this.emailServ.index;
 
-this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.result]);
+this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.index]);
 this.emailServ.stateServ();
   }
 
