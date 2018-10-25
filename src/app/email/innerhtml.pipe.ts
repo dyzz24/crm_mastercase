@@ -23,13 +23,13 @@ export class InnerTextPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
   transform(html): any {
-   const page = html;
+   const pageHtml = html.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style|<.*?>|>/g, '');
 
 
     // tslint:disable-next-line:max-line-length
-    return page.replace(/[a-zA-Z\;\:\{\}\@\"\(\)\d\-\'\,\/\%\.\!\[\]\#\*\&\<\>\=\|\_\+\•\?\’]|<.*?>/g, '');
-  // const page = this.sanitizer.bypassSecurityTrustHtml(html);
-  //   return page;
+    // return page.replace(/[a-zA-Z\;\:\{\}\@\"\(\)\d\-\'\,\/\%\.\!\[\]\#\*\&\<\>\=\|\_\+\•\?\’]|<.*?>/g, '');
+  const page = this.sanitizer.bypassSecurityTrustHtml(pageHtml);
+    return page;
   }
 
 
