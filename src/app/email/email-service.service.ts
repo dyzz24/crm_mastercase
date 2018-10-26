@@ -45,9 +45,13 @@ export class EmailServiceService {
   importantLetter;
 
   visibleLetters: any;
-  lettersAmount = 15;
-
+  lettersAmount = 10; // количество подгружаемых писем
+  selectNum; // Папка писем, где 0- входящие 1 - исходящие и ТД.
+  idPostForHTTP; // ID ящика
+  adress; // адрес для URL запросов на сервак
   noMessages = false; // DEL
+
+  accessToken; // autorization
 
   selectedLetter: any;
 
@@ -86,6 +90,10 @@ export class EmailServiceService {
       this.visibleLetters = state.visibleLetters;
       this.noMessages = state.noMessages;
       this.selectedLetter = state.selectedLetter;
+      this.accessToken = state.accessToken;
+      this.selectNum = state.selectNum;
+      this.idPostForHTTP = state.idPostForHTTP;
+      this.adress = state.adress;
     }
   }
 
@@ -117,7 +125,11 @@ export class EmailServiceService {
       importantLetter: this.importantLetter,
       visibleLetters: this.visibleLetters,
       noMessages: this.noMessages,
-      selectedLetter: this.selectedLetter
+      selectedLetter: this.selectedLetter,
+      accessToken: this.accessToken,
+      selectNum: this.selectNum,
+      idPostForHTTP: this.idPostForHTTP,
+      adress: this.adress
     };
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
@@ -126,8 +138,8 @@ export class EmailServiceService {
     return this.http.get(url, options);
 }
 
-public httpPost(url: string, options?): Observable<any> {
-  return this.http.post(url, options);
+public httpPost(url: string, body, options?): Observable<any> {
+  return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.accessToken}`}});
 }
 
 

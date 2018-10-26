@@ -422,7 +422,7 @@ label {
 .letter__status-spam {
     // background: rgba(231, 6, 6, 0.116) !important;
     position: relative;
-    animation: .6s spamMarkAnimat forwards;
+    animation: .6s spamMarkAnimat;
 }
 
 @keyframes spamMarkAnimat {

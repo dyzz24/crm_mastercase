@@ -23,7 +23,9 @@
       </div>
       <div class="create__body">
         <div class='settings'>
-          <p>Загружать по: </p><button (click)='loadAmount(15)'>15 <span class='la la-let'></span></button> <button (click)='loadAmount(30)'>30 <span class='la la-let'></span></button> <button (click)='loadAmount(45)'>45 <span class='la la-let'></span></button>
+          <p>Загружать по: </p><button (click)='loadAmount(15)' [ngClass]='{activeElem:this.emailServ.lettersAmount === 15}'>15 <span class='la la-let'></span></button> 
+          <button (click)='loadAmount(30)' [ngClass]='{activeElem:this.emailServ.lettersAmount === 30}'>30 <span class='la la-let'></span></button> 
+          <button (click)='loadAmount(45)' [ngClass]='{activeElem:this.emailServ.lettersAmount === 45}'>45 <span class='la la-let'></span></button>
         </div>
        
       </div>
@@ -132,25 +134,27 @@
   </div>
   <div class="emails" *ngFor='let email of emailItems let i = index'>
 
-    <a class="emails__list" (click)="goUrl('http://10.0.1.33:3000/mails', i, '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
+    <a class="emails__list" (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
       <p>{{email.mail_to}}</p>
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
-      <a (click)="goUrl('http://10.0.1.33:3000/mails', i , '/inbox', email.idPost, 'incoming', i+1, 1)" [class.activeTypeMess]='emailServ.selectedMess===1'>
+      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i , '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeTypeMess]='emailServ.selectedMess===0'>
         Входящие
          <span class='email__num'>{{email.count}}</span>
       </a>
-      <a (click)="goUrl('http://10.0.1.33:3000/mails', i, '/sent', email.idPost, 'sent','',2)"[class.activeTypeMess]='emailServ.selectedMess===2'>
+      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/sent', email.idPost, 'sent','',1)"[class.activeTypeMess]='emailServ.selectedMess===1'>
         Исходящие
-        <span class='email__num'>{{email.sent}}</span>
+        <span class='email__num'>{{email.count}}</span>
       </a>
-
-      <a (click)="goUrl('http://10.0.1.33:3000/mails', i, '/spam', email.idPost, 'spam','',3)" [class.activeTypeMess]='emailServ.selectedMess===3'>
+      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/delete', email.idPost, 'delete','',2)" [class.activeTypeMess]='emailServ.selectedMess===2'>
+        Удаленные
+        <span class='email__num'>{{email.count}}</span>
+      </a>
+      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/spam', email.idPost, 'spam','',4)" [class.activeTypeMess]='emailServ.selectedMess===4'>
         Спам
-        <span class='email__num'>{{email.sent}}</span>
+        <span class='email__num'>{{email.count}}</span>
       </a>
-      <a>Черновики</a>
     </div>
   </div>
 </div>

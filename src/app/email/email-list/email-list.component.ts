@@ -1,9 +1,7 @@
 import { Component, OnInit, ElementRef, DoCheck} from '@angular/core';
-import { emails } from './emails';
 import { Router } from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
-import { lettersInbox } from '../email-list/emails';
-import { lettersSent } from '../email-list/emails';
+
 
 import { HttpClient } from '@angular/common/http';
 
@@ -42,14 +40,19 @@ export class EmailListComponent implements OnInit, DoCheck {
    }
 
   ngOnInit() {
+    // tslint:disable-next-line:max-line-length
+    this.emailServ.httpPost('http://10.0.1.33:3000/user/login', {email: 'seo@insat.ru', password: '12345678'}).subscribe((data) => {
+    this.emailServ.accessToken = data.accessToken;
+    this.emailServ.httpPost('http://10.0.1.33:3000/mail/boxes', {}).subscribe((data2) => this.emailItems = data2 );
+    this.emailServ.stateServ(); } );
 
-   this.emailServ.httpGet('http://10.0.1.33:3000/boxes?id=1').subscribe((data) => this.emailItems = data );
 
     if (localStorage.length === 0) {
       this.emailServ.activeEl = [];
     }
   }
   ngDoCheck() {
+    // console.log(this.emailItems);
   }
 
   showHiddenBlock(param) {
@@ -67,13 +70,15 @@ export class EmailListComponent implements OnInit, DoCheck {
 
 
   goUrl(adress, index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
+
     this.idPost = this.emailItems[index].mail_to.replace('@', ''); // для вставки в URL
     this.idPostForHTTP = this.emailItems[index].mail_to; // ID ящика
-    this.emailServ.
-    httpGet(
+    this.emailServ.selectNum = selectNum;
+    this.emailServ.idPostForHTTP = this.idPostForHTTP;
+    this.emailServ.adress = adress;
+    this.emailServ.httpPost(
     adress,
-    {params:
-    {address: this.idPostForHTTP}}).subscribe((data) => {
+    {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount}).subscribe((data) => {
       this.emailServ.lettersList = data;
       } );
       // this.emailServ.visibleLett(15); // TEST

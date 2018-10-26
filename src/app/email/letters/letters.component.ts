@@ -15,6 +15,8 @@ export class LettersComponent implements DoCheck, OnInit {
   typeMess: any;
   openLetter = true;
   visibleMenu = true;
+  counterAmount = 0;
+  stopFlag = false;
 
 
 
@@ -35,7 +37,8 @@ export class LettersComponent implements DoCheck, OnInit {
 
   activeEl(param, id) {
 
-    this.emailServ.httpPost('http://10.0.1.33:3000/seen', {id : id, flag: true}).subscribe();  // перевожу в прочитанные сообщения
+    // tslint:disable-next-line:max-line-length
+    this.emailServ.httpPost('http://10.0.1.33:3000/mail/seen', {id : id, flag: true}).subscribe();  // перевожу в прочитанные сообщения
     this.emailServ.lettersList[param].seen = true;
     // tslint:disable-next-line:forin
     for (const i in this.emailServ.activeLett) {
@@ -115,25 +118,34 @@ export class LettersComponent implements DoCheck, OnInit {
     this.rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
 
+    e.target.closest('.letter__prev').classList.add('letter__status-spam');
 
     setTimeout(() => {
+      if (booleanParam === 4) {
       this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
         if (val.box !== 4) {
           return val;
         }
         });
+      }
+      if (booleanParam === 0) {
+        this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
+          if (val.box !== 0) {
+            return val;
+          }
+          });
+        }
+        this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id, box: booleanParam}).subscribe();
     }, 500);
-
-    this.emailServ.httpPost('http://10.0.1.33:3000/setbox', {id : id, box: booleanParam}).subscribe();
 
   }
 
 
   // *****************************************************************************
 
-  toggleImportantMark(i, e, id) {  // для переключения удалить-добавить важное
+  toggleImportantMark(i, e, id, boolean) {  // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
-    this.emailServ.httpPost('http://10.0.1.33:3000/flagged', {id : id, flag: true}).subscribe();
+    this.emailServ.httpPost('http://10.0.1.33:3000/mail/flagged', {id : id, flag: boolean}).subscribe();
      this.emailServ.lettersList[i].flagged = ! this.emailServ.lettersList[i].flagged;
   }
 
@@ -152,12 +164,18 @@ scrollDown() {
   const scrollPosition = container.scrollTop; // ** величина текущей прокрутки scroll 1-716
   const maxScroll = maxScrollHeight - maxHeight;  //  100% от макс возможного скролла
   const persent = (scrollPosition * 100) / maxScroll;  // текущий скролл в процентах
-
+  console.log(this.counterAmount);
+  console.log(this.emailServ.lettersList);
 
   if (persent > 85) {
-    // this.emailServ.step = this.emailServ.step += 15;
-    // this.emailServ.visibleLett(this.emailServ.step);
-  }
+            this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
+            this.emailServ.httpPost(
+              this.emailServ.adress,
+              {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.counterAmount}).subscribe((data) => {
+                this.emailServ.lettersList = data;
+                this.stopFlag = false;
+                } );
+      }
 
 
 }
@@ -207,7 +225,7 @@ deleteLetter(id, e) {
   e.target.closest('.letter__prev').classList.add('dellLetter');
   setTimeout(() => {
     const idelem = this.emailServ.selectedLetter;
-
+    this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id, box: 2}).subscribe();
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === idelem.id) {
           this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];

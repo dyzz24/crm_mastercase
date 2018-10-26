@@ -23,6 +23,10 @@ const routes: Routes = [
     {path: ':id/spam', component: LettersComponent,
           children:
           [{path: 'view/:id', component: EmailViewComponent},
+            ]},
+            {path: ':id/delete', component: LettersComponent,
+          children:
+          [{path: 'view/:id', component: EmailViewComponent},
             ]}
   ]
 },
