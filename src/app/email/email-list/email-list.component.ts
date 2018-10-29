@@ -80,6 +80,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     adress,
     {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 10}).subscribe((data) => {
       this.emailServ.lettersList = data;
+      this.emailServ.stateServ(); // save state on service
       } );
       // this.emailServ.visibleLett(15); // TEST
       // this.emailServ.step = 15;
@@ -88,8 +89,7 @@ export class EmailListComponent implements OnInit, DoCheck {
 
     this._rout.navigate(['email/' + this.idPost + paramsUrl]);
     this.emailServ.idBox = this.idPost;
-    this.typeMessage = typeMess;
-    this.emailServ.typeMess = this.typeMessage;
+    this.emailServ.typeMess = typeMess;
     this.emailServ.selectedMess = selectNum;
     this.emailServ.urlParams = `email/${this.idPost}${paramsUrl}`;
 

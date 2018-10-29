@@ -39,7 +39,6 @@ export class EmailServiceService {
   result;
   currentObjectLetter;
   currentInd;
-
   inworkLetter;
   haveattachLetter;
   importantLetter;
@@ -97,6 +96,7 @@ export class EmailServiceService {
       this.selectNum = state.selectNum;
       this.idPostForHTTP = state.idPostForHTTP;
       this.adress = state.adress;
+
     }
   }
 
@@ -105,19 +105,13 @@ export class EmailServiceService {
       idBox: this.idBox,
       typeMess: this.typeMess,
       activeLett: this.activeLett,
-      // mailName: this.mailName,
-      // senderName: this.senderName,
-      // time: this.time,
-      // avatar: this.avatar,
-      // caption: this.caption,
-      // text: this.text,
       selectedMess: this.selectedMess,
       urlParams: this.urlParams,
       messageState: this.messageState,
       activeEl: this.activeEl,
       fullPath: this.fullPath,
       hiddenEmpty: this.hiddenEmpty,
-      lettersList: this.lettersList,
+      lettersList: this.lettersList.slice(0, this.lettersAmount),
       index: this.index,
       result: this.result,
       currentObjectLetter: this.currentObjectLetter,
@@ -132,14 +126,11 @@ export class EmailServiceService {
       accessToken: this.accessToken,
       selectNum: this.selectNum,
       idPostForHTTP: this.idPostForHTTP,
-      adress: this.adress
+      adress: this.adress,
     };
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
 
-  public httpGet(url: string, options?): Observable<any> {
-    return this.http.get(url, options);
-}
 
 public httpPost(url: string, body, options?): Observable<any> {
   return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.accessToken}`}});
@@ -159,28 +150,6 @@ public httpPost(url: string, body, options?): Observable<any> {
     this.hideAvatars = [];
   }
 
-  messageConditionCheckerInService(array) {
-    if (array !== undefined) {
-      this.inworkLetter = false;
-      this.haveattachLetter = false;
-      this.importantLetter = false;
-
-      for (const key of array) {
-        if (key === 'inwork') {
-          this.inworkLetter = true;
-        }
-        if (key === 'haveAttach') {
-          this.haveattachLetter = true;
-        }
-        if (key === 'important') {
-          this.importantLetter = true;
-        }
-      }
-    } else {
-      return false;
-    }
-  }
-
   visibleLett(param) {
     if (this.noMessages === true) {
       // DEL
@@ -195,15 +164,6 @@ public httpPost(url: string, body, options?): Observable<any> {
     this.visibleLetters = filtered;
   }
 
-
-  htmlParse(item) {
-    // const text = item;
-    // const div = document.createElement('div');
-    // div.innerHTML = text;
-    // const returnText = div.textContent || div.innerText || '';
-    // return returnText;
-    return item.replace(/<.*?>/g, '');
-  }
   avatarMake(item) {
     item.toString();
     const firstLett = item[0];

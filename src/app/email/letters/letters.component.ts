@@ -162,9 +162,9 @@ sent_incomingChecker(i) {  // проверка на входящие - исхо�
 
 scrollDown() {
   const container = document.querySelector('.letter__container');
-  const maxScrollHeight = container.scrollHeight;  //     **высота скрытого блока   height 1565
-  const maxHeight = container.getBoundingClientRect().height;   // **высота видимой области (849)
-  const scrollPosition = container.scrollTop; // ** величина текущей прокрутки scroll 1-716
+  const maxScrollHeight = container.scrollHeight;  //     **высота скрытого блока   height
+  const maxHeight = container.getBoundingClientRect().height;   // **высота видимой области
+  const scrollPosition = container.scrollTop; // ** величина текущей прокрутки scroll
   const maxScroll = maxScrollHeight - maxHeight;  //  100% от макс возможного скролла
   const persent = (scrollPosition * 100) / maxScroll;  // текущий скролл в процентах
 
@@ -183,50 +183,11 @@ scrollDown() {
                 this.emailServ.lettersList = this.emailServ.lettersList.concat(data);
                 this.emailServ.stopFlag = false;
                 this.emailServ.dataLetters = data.length;
+                console.log(data.length);
                 this.emailServ.stateServ();
                 } );
       }
     }
-
-
-}
-
-
-timeParse(item) {
-const date = new Date(item);
-date.setHours(date.getHours() - 3);
-
-const nowDate = new Date();
-
-const difference = +nowDate - +date;
-
-
-if (difference < 86400000) {
-  return `${date.getHours()}:${date.getMinutes()}`;
-}
-
-if (difference > 86400000 && difference < 172800000) {
-  return `Вчера ${date.getHours()}:${date.getMinutes()}`;
-}
-
-if (difference > 172800000 && difference < 604800000) {
-  const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
-  const weekDays = days[date.getDay()];
-  return `${weekDays} ${date.getHours()}:${date.getMinutes()}`;
-}
-if (difference > 604800000 ) {
-  const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
-  const months = month[date.getMonth()];
-  return `${date.getDate()} ${months} : ${date.getHours()}:${date.getMinutes()}`;
-}
-
-if (difference > 31556926000) {
-  const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
-  const months = month[date.getMonth()];
-    return `${date.getFullYear()} ${months}`;
-}
-
-
 }
 
 
@@ -258,8 +219,5 @@ deleteLetter(id, e) {
 deleteLettersAll() {
   const id_for_delete = this.emailServ.idLetters;
 }
-
-
-
 
 }

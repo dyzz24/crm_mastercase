@@ -145,15 +145,15 @@
       </a>
       <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/sent', email.idPost, 'sent','',1)"[class.activeTypeMess]='emailServ.selectedMess===1'>
         Исходящие
-        <span class='email__num'>{{email.count}}</span>
+        <span class='email__num'></span>
       </a>
       <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/delete', email.idPost, 'delete','',2)" [class.activeTypeMess]='emailServ.selectedMess===2'>
         Удаленные
-        <span class='email__num'>{{email.count}}</span>
+        <span class='email__num'></span>
       </a>
       <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/spam', email.idPost, 'spam','',4)" [class.activeTypeMess]='emailServ.selectedMess===4'>
         Спам
-        <span class='email__num'>{{email.count}}</span>
+        <span class='email__num'></span>
       </a>
     </div>
   </div>

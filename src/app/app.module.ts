@@ -21,7 +21,7 @@ import { QuillModule } from 'ngx-quill';
 import { HttpClientModule } from '@angular/common/http';
 import { InnerhtmlPipe } from './email/innerhtml.pipe';
 import { InnerTextPipe } from './email/innerhtml.pipe';
-// import { InnerTextPipe } from './email/inner-text.pipe';
+import { TimerPipe } from './email/innerhtml.pipe';
 
 
 
@@ -47,6 +47,7 @@ import { InnerTextPipe } from './email/innerhtml.pipe';
     NewMessageComponent,
     InnerhtmlPipe,
     InnerTextPipe,
+    TimerPipe
   ],
   imports: [
     BrowserModule,
