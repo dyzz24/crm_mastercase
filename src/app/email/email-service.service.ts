@@ -45,13 +45,16 @@ export class EmailServiceService {
   importantLetter;
 
   visibleLetters: any;
-  lettersAmount = 10; // количество подгружаемых писем
+  lettersAmount = 15; // количество подгружаемых писем - const
   selectNum; // Папка писем, где 0- входящие 1 - исходящие и ТД.
   idPostForHTTP; // ID ящика
   adress; // адрес для URL запросов на сервак
   noMessages = false; // DEL
-
+  offset;
   accessToken; // autorization
+
+  stopFlag = false; // для остановки отправки http пока не выполнится предыдущий http
+  dataLetters; // для остановки подгруза писем когда все загружены
 
   selectedLetter: any;
 

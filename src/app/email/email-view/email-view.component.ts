@@ -63,9 +63,9 @@ this.emailServ.stateServ();
   deleteLetter() { // удаление письма по клику
     const messageBody = document.querySelector('.messageContainer');
     messageBody.classList.add('dellLetter');
+    const id = this.emailServ.selectedLetter;
+    this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id.id, box: 2}).subscribe();
     setTimeout(() => {
-      const id = this.emailServ.selectedLetter;
-
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === id.id) {
           this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];

@@ -52,7 +52,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     }
   }
   ngDoCheck() {
-    // console.log(this.emailItems);
+    // console.log(this.emailServ.lettersList);
   }
 
   showHiddenBlock(param) {
@@ -78,7 +78,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.adress = adress;
     this.emailServ.httpPost(
     adress,
-    {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount}).subscribe((data) => {
+    {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 10}).subscribe((data) => {
       this.emailServ.lettersList = data;
       } );
       // this.emailServ.visibleLett(15); // TEST
@@ -118,6 +118,8 @@ export class EmailListComponent implements OnInit, DoCheck {
       this.emailServ.noMessages = true;
     } else {this.emailServ.noMessages = false; } // del
     this.emailServ.stateServ(); // save state on service
+
+    this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
 
     // ********************************/
   }

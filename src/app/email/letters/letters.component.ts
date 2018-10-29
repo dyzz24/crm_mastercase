@@ -2,6 +2,7 @@ import { Component, DoCheck, ElementRef, OnInit} from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
 import { TouchSequence } from 'selenium-webdriver';
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-letters',
@@ -17,6 +18,7 @@ export class LettersComponent implements DoCheck, OnInit {
   visibleMenu = true;
   counterAmount = 0;
   stopFlag = false;
+  dataLetters;
 
 
 
@@ -29,6 +31,7 @@ export class LettersComponent implements DoCheck, OnInit {
 
 
   ngOnInit() {
+    this.emailServ.dataLetters = this.emailServ.lettersAmount;
   }
 
   ngDoCheck() {
@@ -164,18 +167,26 @@ scrollDown() {
   const scrollPosition = container.scrollTop; // ** величина текущей прокрутки scroll 1-716
   const maxScroll = maxScrollHeight - maxHeight;  //  100% от макс возможного скролла
   const persent = (scrollPosition * 100) / maxScroll;  // текущий скролл в процентах
-  console.log(this.counterAmount);
-  console.log(this.emailServ.lettersList);
 
   if (persent > 85) {
-            this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
+        if (this.emailServ.stopFlag === false) {
+              if (this.emailServ.dataLetters !== this.emailServ.lettersAmount) {
+                this.counterAmount = 0;
+                return;
+              }
+              this.emailServ.stopFlag = true;
+              this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
             this.emailServ.httpPost(
               this.emailServ.adress,
-              {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.counterAmount}).subscribe((data) => {
-                this.emailServ.lettersList = data;
-                this.stopFlag = false;
+              // tslint:disable-next-line:max-line-length
+              {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: this.counterAmount}).subscribe((data) => {
+                this.emailServ.lettersList = this.emailServ.lettersList.concat(data);
+                this.emailServ.stopFlag = false;
+                this.emailServ.dataLetters = data.length;
+                this.emailServ.stateServ();
                 } );
       }
+    }
 
 
 }
