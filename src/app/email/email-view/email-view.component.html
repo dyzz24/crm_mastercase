@@ -74,7 +74,7 @@
     <div [innerHTML]="emailServ.selectedLetter.html | innerhtml"></div>
     <div class="attachment__block" >
       <div class="attachment__item" *ngFor="let attach of this.attachersList; let i = index">
-      <span class="la excel"></span>
+      <span [class]='attach.type | attachPipe'></span>
       <p class='filename'>{{attach.title}}</p>
       <p class='size'>{{attach.size}}</p>
       </div>
@@ -87,6 +87,7 @@
     <input type='email' placeholder="Добавьте имя" [(ngModel)]='this.nameFrom' (blur)='addFrom()'>
       </div>
       <div class="from__line">
+        
     <p>От: {{emailServ.selectedLetter.mail_to}}</p>
     </div>
     <div class="from__line theme">

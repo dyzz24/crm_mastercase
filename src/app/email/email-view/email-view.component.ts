@@ -20,7 +20,6 @@ export class EmailViewComponent implements OnInit, DoCheck {
   constructor(public emailServ: EmailServiceService, private _rout: Router) { }
 
   ngOnInit() {
-    this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.mail_from);
   }
   ngDoCheck() {
   }
@@ -57,6 +56,8 @@ this.emailServ.selectedLetter = this.emailServ.lettersList[this.emailServ.index]
 this.emailServ.currentId = this.emailServ.index;
 
 this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.index]);
+this.emailServ.mailsToArray = []; // очистил список отправителей
+this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.mail_from);  // добавил в список отправителей
 this.emailServ.stateServ();
   }
 
@@ -117,12 +118,10 @@ this.emailServ.stateServ();
   }
 
   deleteAdress(index) {
-    console.log(index);
     this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
         if (ind !== index) {
           return val;
         }
     });
   }
-
 }

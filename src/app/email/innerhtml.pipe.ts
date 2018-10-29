@@ -69,7 +69,6 @@ export class TimerPipe implements PipeTransform {
   }
 }
 
-
 @Pipe({
   name: 'attachPipe'
 })
@@ -77,14 +76,37 @@ export class AttachPipe implements PipeTransform {
 
   constructor() {}
 
-  transform(val): any {
-    console.log(val);
-  //  const pageHtml = html.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style|<.*?>|>/g, '');
-
-
-    // tslint:disable-next-line:max-line-length
-    // return page.replace(/[a-zA-Z\;\:\{\}\@\"\(\)\d\-\'\,\/\%\.\!\[\]\#\*\&\<\>\=\|\_\+\•\?\’]|<.*?>/g, '');
-  // const page = this.sanitizer.bypassSecurityTrustHtml(pageHtml);
-  //   return page;
+  transform(item): any {
+    // if (item === 'xls') {
+    // return 'la exc';
+    // }
+    // if (item === 'pdf') {
+    //   return 'la pdf';
+    //   }
+    //   if (item === 'jpg') {
+    //     return 'la img';
+    //     }
+    //     if (item === 'doc') {
+    //       return 'la doc';
+    //       }
+    //       if (item === 'txt') {
+    //         return 'la txt';
+    //         }
+    switch (item) {
+      case 'xls':
+      return 'la exc';
+      case 'pdf':
+      return 'la pdf';
+      case 'jpg':
+      case 'png':
+      return 'la img';
+      case 'doc':
+      return 'la doc';
+      case 'txt':
+      return 'la txt';
+      case 'mp3':
+      return 'la mp3';
+    }
   }
 }
+

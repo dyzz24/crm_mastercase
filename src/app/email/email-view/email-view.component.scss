@@ -108,6 +108,7 @@ span {
     padding: 20px 0;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     border-bottom:  1px solid $border;
 }
 
@@ -138,23 +139,18 @@ span {
     color: #333;
     font-size: 14px;
     font-weight: 500;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
 }
 .size {
     font-size: 10px;
     color: $micro-text_color;
 }
 
-.excel::before {
-    width: 100%;
-    content: "\f1c3";
-    color:rgb(118, 230, 27);
-}
 
-.ppt::before {
-    width: 100%;
-    content: "\f1c4";
-    color:rgb(211, 106, 36);
-}
 
 
 .menu {
@@ -270,5 +266,47 @@ span {
             height: 20px;
         }
 }
+
+.exc::before {
+    width: 100%;
+    content: "\f1c3";
+    color:rgb(118, 230, 27);
+}
+
+.ppt::before {
+    width: 100%;
+    content: "\f1c4";
+    color:rgb(211, 106, 36);
+}
+
+.pdf::before {
+    width: 100%;
+    content: "\f1c1";
+    color:rgb(22, 21, 21);
+}
+
+.img::before {
+    width: 100%;
+    content: "\f03e";
+    color:rgb(59, 58, 58);
+}
+
+.doc::before {
+    width: 100%;
+    content: "\f1c2";
+    color:rgb(23, 91, 146);
+}
+.txt::before {
+    width: 100%;
+    content: "\f031";
+    color:rgb(22, 22, 22);
+}
+.mp3::before {
+    width: 100%;
+    content: "\f001";
+    color:rgb(221, 99, 99);
+}
+
+
 
 
