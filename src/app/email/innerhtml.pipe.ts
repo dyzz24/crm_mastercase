@@ -68,3 +68,23 @@ export class TimerPipe implements PipeTransform {
     }
   }
 }
+
+
+@Pipe({
+  name: 'attachPipe'
+})
+export class AttachPipe implements PipeTransform {
+
+  constructor() {}
+
+  transform(val): any {
+    console.log(val);
+  //  const pageHtml = html.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style|<.*?>|>/g, '');
+
+
+    // tslint:disable-next-line:max-line-length
+    // return page.replace(/[a-zA-Z\;\:\{\}\@\"\(\)\d\-\'\,\/\%\.\!\[\]\#\*\&\<\>\=\|\_\+\•\?\’]|<.*?>/g, '');
+  // const page = this.sanitizer.bypassSecurityTrustHtml(pageHtml);
+  //   return page;
+  }
+}

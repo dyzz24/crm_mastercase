@@ -57,6 +57,8 @@ export class EmailServiceService {
 
   selectedLetter: any;
 
+  mailsToArray = []; // кому отправить письмо
+
   constructor(private http: HttpClient) {
     if (localStorage.getItem('all-states') === null) {
       return;

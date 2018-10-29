@@ -78,7 +78,8 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.adress = adress;
     this.emailServ.httpPost(
     adress,
-    {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 10}).subscribe((data) => {
+    // tslint:disable-next-line:max-line-length
+    {address: this.idPostForHTTP, box: `${this.emailServ.selectNum}`, limit: `${this.emailServ.lettersAmount}`, offset: '0'}).subscribe((data) => {
       this.emailServ.lettersList = data;
       this.emailServ.stateServ(); // save state on service
       } );

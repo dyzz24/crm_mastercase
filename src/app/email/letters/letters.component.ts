@@ -35,6 +35,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
+    console.log(this.emailServ.mailsToArray);
   }
 
 
@@ -48,6 +49,9 @@ export class LettersComponent implements DoCheck, OnInit {
       this.emailServ.activeLett[i] = false;
     }
     this.emailServ.activeLett[param] = !this.emailServ.activeLett[param];
+
+    this.emailServ.mailsToArray = []; // очистил список отправителей
+    this.emailServ.mailsToArray.push(this.emailServ.lettersList[param].mail_from);  // добавил в список отправителей
   }
 
   hideAva(index) {
@@ -138,7 +142,7 @@ export class LettersComponent implements DoCheck, OnInit {
           }
           });
         }
-        this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id, box: booleanParam}).subscribe();
+        this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id, box: `${booleanParam}`}).subscribe();
     }, 500);
 
   }
@@ -179,11 +183,10 @@ scrollDown() {
             this.emailServ.httpPost(
               this.emailServ.adress,
               // tslint:disable-next-line:max-line-length
-              {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: this.counterAmount}).subscribe((data) => {
+              {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: `${this.counterAmount}`}).subscribe((data) => {
                 this.emailServ.lettersList = this.emailServ.lettersList.concat(data);
                 this.emailServ.stopFlag = false;
                 this.emailServ.dataLetters = data.length;
-                console.log(data.length);
                 this.emailServ.stateServ();
                 } );
       }
@@ -197,7 +200,7 @@ deleteLetter(id, e) {
   e.target.closest('.letter__prev').classList.add('dellLetter');
   setTimeout(() => {
     const idelem = this.emailServ.selectedLetter;
-    this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id, box: 2}).subscribe();
+    this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id, box: '2'}).subscribe();
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === idelem.id) {
           this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];

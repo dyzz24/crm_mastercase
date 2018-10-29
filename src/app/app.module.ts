@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InnerhtmlPipe } from './email/innerhtml.pipe';
 import { InnerTextPipe } from './email/innerhtml.pipe';
 import { TimerPipe } from './email/innerhtml.pipe';
+import { AttachPipe} from './email/innerhtml.pipe';
 
 
 
@@ -47,7 +48,8 @@ import { TimerPipe } from './email/innerhtml.pipe';
     NewMessageComponent,
     InnerhtmlPipe,
     InnerTextPipe,
-    TimerPipe
+    TimerPipe,
+    AttachPipe
   ],
   imports: [
     BrowserModule,

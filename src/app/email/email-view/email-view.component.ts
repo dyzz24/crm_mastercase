@@ -2,6 +2,7 @@ import { Component, OnInit, DoCheck, HostListener } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
+import { attachers } from './attach';
 
 
 @Component({
@@ -12,12 +13,14 @@ import { QuillEditorComponent } from 'ngx-quill';
 export class EmailViewComponent implements OnInit, DoCheck {
 
   visibleMenu = false;
-
+  nameFrom;
+  attachersList = attachers;
 
 
   constructor(public emailServ: EmailServiceService, private _rout: Router) { }
 
   ngOnInit() {
+    this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.mail_from);
   }
   ngDoCheck() {
   }
@@ -95,6 +98,31 @@ this.emailServ.stateServ();
       this.deleteLetter();
     }
     event.stopPropagation();
+  }
+
+  addFrom() {
+    const validate = /^[\w\.\d-_]+@[\w\.\d-_]+\.\w{2,4}$/i;
+    if (this.nameFrom !== '' && validateAdress(this.nameFrom) !== -1) {
+    this.emailServ.mailsToArray.push(this.nameFrom);
+    this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
+      return self.indexOf(val) === ind;
+    });
+    this.nameFrom = '';
+  } else {
+    alert('Введите корректный имейл');
+  }
+  function validateAdress(val) {
+    return String(val).search(validate);
+  }
+  }
+
+  deleteAdress(index) {
+    console.log(index);
+    this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
+        if (ind !== index) {
+          return val;
+        }
+    });
   }
 
 }
