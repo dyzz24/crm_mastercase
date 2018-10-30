@@ -92,7 +92,7 @@
     </div>
     <div class="from__line theme">
       <p>Тема: </p>
-      <input type='text' value='{{emailServ.selectedLetter.subject}}'>
+      <input type='text' value='{{emailServ.selectedLetter.subject}}' [(ngModel)]='this.emailServ.subjectTo'>
     </div>
   </div>
     <quill-editor></quill-editor>

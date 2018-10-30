@@ -87,13 +87,14 @@ a,p{
     cursor: pointer;  
 }
 .hideInboxMenu {
-    @include hideMenu(180px,100px,0px,-100%, rgba(0, 0, 0, 1)); 
+    @include hideMenu(180px,auto,auto,-100%, rgba(0, 0, 0, 1)); 
     top:100%;
     left: 0;
     z-index: 5;
     
     button {
         color:white;
+        height: 28px;
         width: 100%;
         padding: 5px;
         box-sizing: border-box;

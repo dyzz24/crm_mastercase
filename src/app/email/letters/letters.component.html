@@ -14,10 +14,16 @@
         <input type="text" placeholder="Поиск">
         <span class='la la-search'></span>
       </div>
-      <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteLettersAll()'>
+      <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteRestoreLettersAll(2)' *ngIf="this.emailServ.typeMess !=='delete'; else restoreAll">
         <span class='la la-delete'></span>
         <p class="tooltip">Удалить</p>
       </button>
+      <ng-template #restoreAll >
+      <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteRestoreLettersAll(0)'>
+        <span class='la la-restore'></span>
+        <p class="tooltip">Восстановить</p>
+      </button>
+    </ng-template>
       <button class='letters__refresh' type='button'>
         <span class='la la-refresh'></span>
         <p class="tooltip">Обновить</p>

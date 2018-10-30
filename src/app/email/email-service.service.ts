@@ -57,7 +57,8 @@ export class EmailServiceService {
 
   selectedLetter: any;
 
-  mailsToArray = []; // кому отправить письмо
+  mailsToArray = []; // кому отправить письмо (список адресатов)
+  subjectTo;
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem('all-states') === null) {
@@ -98,7 +99,11 @@ export class EmailServiceService {
       this.selectNum = state.selectNum;
       this.idPostForHTTP = state.idPostForHTTP;
       this.adress = state.adress;
-
+      this.mailsToArray = state.mailsToArray;
+    }
+    if (this.lettersList !== undefined) {
+      this.lettersList = this.lettersList.slice(0, this.lettersAmount);
+                        // проверка, чтобы не дублировать массивы при релоад страницы и сохранением в localStorage
     }
   }
 
@@ -113,7 +118,7 @@ export class EmailServiceService {
       activeEl: this.activeEl,
       fullPath: this.fullPath,
       hiddenEmpty: this.hiddenEmpty,
-      lettersList: this.lettersList.slice(0, this.lettersAmount),
+      lettersList: this.lettersList,
       index: this.index,
       result: this.result,
       currentObjectLetter: this.currentObjectLetter,
@@ -129,6 +134,7 @@ export class EmailServiceService {
       selectNum: this.selectNum,
       idPostForHTTP: this.idPostForHTTP,
       adress: this.adress,
+      mailsToArray: this.mailsToArray
     };
     localStorage.setItem('all-states', JSON.stringify(objState));
   }

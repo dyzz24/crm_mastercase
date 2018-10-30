@@ -17,6 +17,7 @@ export class LettersComponent implements DoCheck, OnInit {
   openLetter = true;
   visibleMenu = true;
   counterAmount = 0;
+  counterFroDownload = 0;
   stopFlag = false;
   dataLetters;
 
@@ -51,6 +52,7 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.emailServ.mailsToArray = []; // очистил список отправителей
     this.emailServ.mailsToArray.push(this.emailServ.lettersList[param].mail_from);  // добавил в список отправителей
+    this.emailServ.subjectTo = this.emailServ.lettersList[param].subject;
   }
 
   hideAva(index) {
@@ -220,8 +222,34 @@ deleteRestoreLetter(id, e, box) {
 
 
 
-deleteLettersAll() {
+deleteRestoreLettersAll(box) {
   const id_for_delete = this.emailServ.idLetters;
+  this.emailServ.lettersList.filter((val , ind, arr) => {
+    for (const key of id_for_delete) {
+      if (val.id === key) {
+        this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : `${val.id}`, box: `${box}`}).subscribe();
+        arr[ind] = 'null';
+            }
+        }
+      });
+      this.emailServ.lettersList = this.emailServ.lettersList.filter(a => a !== 'null');
+      this.counterFroDownload = this.counterFroDownload + this.emailServ.idLetters.length;
+      setTimeout(() => {
+        this.emailServ.httpPost(
+          this.emailServ.adress,
+          // tslint:disable-next-line:max-line-length
+          {address: this.emailServ.idPostForHTTP, box: `${this.emailServ.selectNum}`, limit: `${this.emailServ.idLetters.length}`, offset: `${this.counterFroDownload}`}).subscribe((data) => {
+            console.log(data);
+            this.emailServ.lettersList = this.emailServ.lettersList.concat(data);
+            this.emailServ.lettersList = this.emailServ.lettersList.filter((val, ind, self) => {
+              return self.indexOf(val) === ind; } ); // фильтрую дублирование
+            this.emailServ.stateServ();
+    });
+    this.emailServ.hideAvatars = [];
+      this.emailServ.idLetters = [];
+      this.emailServ.checkerTrash();
+      this.counterFroDownload = 0;
+      }, 1000);
+}
 }
 
-}

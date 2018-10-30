@@ -125,9 +125,21 @@
     }
     &:hover {
         color:rgb(15, 13, 13);
-    }
-    
+    }   
 }
+
+.la-restore {
+    font-size: 24px;
+    line-height: 24px;
+    color: rgb(108, 196, 73);
+    &::before {
+        content: '\f2d2';
+    }
+    &:hover {
+        color:rgb(15, 13, 13);
+    }   
+}
+
 
 .la-new::before {
     content: '\f15b';
