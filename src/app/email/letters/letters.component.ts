@@ -32,7 +32,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    console.log(this.emailServ.lettersList)
+    // console.log(this.emailServ.lettersList);
   }
 
   activeEl(param, id) {
@@ -246,16 +246,16 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   deleteRestoreLettersAll(box) {
+    // const container = document.querySelector('.letter__container');
+    // const style = getComputedStyle(container).
     const id_for_delete = this.emailServ.idLetters;
-    this.emailServ.lettersList = this.emailServ.lettersList.filter((val, ind, arr) => {
+    this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
         if (val.id === key) {
-          this.emailServ
-            .httpPost('http://10.0.1.33:3000/mail/setbox', {
+          this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {
               id: `${val.id}`,
               box: `${box}`
-            })
-            .subscribe();
+            }).subscribe();
           arr[ind] = 'null';
         }
       }
@@ -263,26 +263,27 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.lettersList = this.emailServ.lettersList.filter(
       a => a !== 'null'
     );
-    if (this.emailServ.lettersList.length <= 15) {  // если подзагруза не было, восстанавливаю стартовое кол-во писем
+    setTimeout(() => {
+    if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
       this.emailServ
-      .httpPost(
-        this.emailServ.adress,
-        // tslint:disable-next-line:max-line-length
-        {
-          address: this.emailServ.idPostForHTTP,
-          box: `${this.emailServ.selectNum}`,
-          limit: `${this.emailServ.lettersAmount}`,
-          offset: `0`
-        }
-      )
-      .subscribe(data => {
-        this.emailServ.lettersList = data;
-        this.emailServ.stateServ();
-      });
-    }
-              this.emailServ.stateServ(); // save state on service
-              this.emailServ.hideAvatars = []; // чтоб инпуты работали
-              this.emailServ.idLetters = []; // обнуляю корзину на удаление
-              this.emailServ.checkerTrash(); // убираю иконку
+          .httpPost(
+            this.emailServ.adress,
+            // tslint:disable-next-line:max-line-length
+            {
+              address: this.emailServ.idPostForHTTP,
+              box: `${this.emailServ.selectNum}`,
+              limit: `${this.emailServ.lettersAmount}`,
+              offset: `${this.counterAmount}`
+            }
+          )
+          .subscribe(data => {
+            this.emailServ.lettersList = this.emailServ.lettersList.concat(data);
+    });
   }
+  this.emailServ.stateServ(); // save state on service
+  this.emailServ.hideAvatars = []; // чтоб инпуты работали
+  this.emailServ.idLetters = []; // обнуляю корзину на удаление
+  this.emailServ.checkerTrash(); // убираю иконку
+}, 10);
+}
 }
