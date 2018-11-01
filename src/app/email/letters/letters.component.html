@@ -2,7 +2,7 @@
   
   
   <div class='letter__list'>
-      <div class="no-messages" *ngIf='emailServ.noMessages; else haveMess'>
+      <div class="no-messages" *ngIf='this.emailServ.lettersList.length === 0; else haveMess'>
 <div class="header"></div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
@@ -34,7 +34,7 @@
       </button>
     </div>
 
-    <div class="letters__items">
+    <div class="letters__items" *ngIf="this.filterError === false; else searchErrorMessage">
       <div class="letter__container" (scroll)='scrollDown($event)'>
         <div class='letter__prev'
         *ngFor='let letters of emailServ.lettersList, let i = index'
@@ -51,7 +51,7 @@
               <div class='checker'></div>
             </label>
           </div>
-          <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i,i, letters.emailCopy)'>
+          <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i,i)'>
             <div class='prev__panel'>
               <div class="status_panel">
                 <span class='la la-sett' [class.visible]="this.emailServ.lettersList[i].draft === true">
@@ -68,14 +68,11 @@
 
 
             </div>
-            <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.mail_from}</p>
+            <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.mail_from}}</p>
+
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
-        
+          
              <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div>
-  
-
-
-
 
 
           </div>
@@ -104,8 +101,11 @@
           <p>Все письма загружены</p>
         </div>
       </div>
-
     </div>
+    <ng-template #searchErrorMessage> 
+      <p>Письма не найдены</p>
+      </ng-template>
+
   </ng-template>
   </div>
 

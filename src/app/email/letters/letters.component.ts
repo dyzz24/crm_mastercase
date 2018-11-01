@@ -25,7 +25,13 @@ export class LettersComponent implements DoCheck, OnInit {
   lettersCopy;
   protectToCopy = false;
   temporaryLetters = [];
-  searchFlagged = false; // del
+
+  filterError = false;
+  stopScrollingLoadFiles = false;
+
+
+
+
   searchLettersInput: FormControl = new FormControl('');
 
   constructor(
@@ -35,7 +41,7 @@ export class LettersComponent implements DoCheck, OnInit {
   ) {
 
     this.searchLettersInput.valueChanges.pipe(
-      debounceTime(500)).subscribe(data => {
+      debounceTime(0)).subscribe(data => {
         if (data === '') {
           this.searchLetterFunc(data, this.emailServ.lettersList, true);
         } else {
@@ -49,40 +55,46 @@ export class LettersComponent implements DoCheck, OnInit {
       this.lettersCopy = this.emailServ.lettersList;
       this.protectToCopy = true;
     }
-    const regExp = new RegExp (text, 'gi');
+    const regExp = new RegExp (text, 'g');
     const replacer = '<b>' + text + '</b>';
+    let flagged;
 
-    this.temporaryLetters = allLettersList.filter((val) => {
+    this.temporaryLetters = allLettersList.filter((val, ind) => {
 
       if (val.html.toLowerCase().indexOf(text) >= 0 ) {
         // val.html = val.html.replace(regExp, replacer);
-              return val;
+        flagged = true;
+            return val;
         }
         if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
-          // val.subject = val.subject.replace(regExp, replacer);
-          return val;
+          flagged = true;
+            // val.subject = val.subject.replace(regExp, replacer);
+            return val;
           }
           if (val.mail_from.toLowerCase().indexOf(text) >= 0 ) {
-            // val.mail_from = val.mail_from.replace(regExp, replacer);
+
+            flagged = true;
             return val;
       }
     });
     const stop = stopFlag;
     if (stop) {
       this.temporaryLetters = [];
-    }
-      if (this.temporaryLetters.length > 0 ) {
-        this.emailServ.lettersList = this.temporaryLetters;
-      } else {
-        this.emailServ.lettersList = this.lettersCopy;
+      this.emailServ.lettersList = this.lettersCopy;
         this.protectToCopy = false;
-       }
-    // if (letters.length > 0 ) {
-    //   this.emailServ.lettersList = letters;
-    // } else {
-
-    //  this.emailServ.lettersList = this.lettersCopy;
-    // }
+      this.filterError = false;
+      this.stopScrollingLoadFiles = false;
+      return;
+    }
+    if (!flagged) {
+      this.filterError = true;
+      this.stopScrollingLoadFiles = false;
+      return;
+    } else {
+      this.filterError = false;
+      this.stopScrollingLoadFiles = true;
+    }
+       this.emailServ.lettersList = this.temporaryLetters;
   }
 
   ngOnInit() {
@@ -234,6 +246,9 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   scrollDown() {
+    if (this.stopScrollingLoadFiles === true) {
+      return;
+    }
     const container = document.querySelector('.letter__container');
     const maxScrollHeight = container.scrollHeight; //     **высота скрытого блока   height
     const maxHeight = container.getBoundingClientRect().height; // **высота видимой области

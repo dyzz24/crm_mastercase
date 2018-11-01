@@ -110,3 +110,16 @@ export class AttachPipe implements PipeTransform {
   }
 }
 
+
+@Pipe({
+  name: 'checkedPipe'
+})
+export class CheckedPipe implements PipeTransform {
+
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(html): any {
+    return html;
+  }
+}
+
