@@ -23,6 +23,7 @@ import { InnerhtmlPipe } from './email/innerhtml.pipe';
 import { InnerTextPipe } from './email/innerhtml.pipe';
 import { TimerPipe } from './email/innerhtml.pipe';
 import { AttachPipe} from './email/innerhtml.pipe';
+import { ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -56,7 +57,8 @@ import { AttachPipe} from './email/innerhtml.pipe';
     AppRoutingModule,
     FormsModule,
     QuillModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [DataService, EmailServiceService],
   bootstrap: [AppComponent]

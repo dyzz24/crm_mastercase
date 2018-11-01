@@ -11,7 +11,7 @@
       <ng-template #haveMess>   
     <div class="header">
       <div class="header__search">
-        <input type="text" placeholder="Поиск">
+        <input type="text" placeholder="Поиск" [formControl]='searchLettersInput'>
         <span class='la la-search'></span>
       </div>
       <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteRestoreLettersAll(2)' *ngIf="this.emailServ.typeMess !=='delete'; else restoreAll">
@@ -68,7 +68,7 @@
 
 
             </div>
-            <p class='letter__name' [class.headText__status-new]="letters.seen === false">{{letters.mail_from}}</p>
+            <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.mail_from}</p>
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
         
              <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div>

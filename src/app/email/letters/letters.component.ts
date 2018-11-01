@@ -3,6 +3,8 @@ import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
 import { TouchSequence } from 'selenium-webdriver';
 import { validateConfig } from '@angular/router/src/config';
+import { FormControl, ReactiveFormsModule} from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-letters',
@@ -20,12 +22,68 @@ export class LettersComponent implements DoCheck, OnInit {
   counterFromDownload = 0;
   stopFlag = false;
   dataLetters;
+  lettersCopy;
+  protectToCopy = false;
+  temporaryLetters = [];
+  searchFlagged = false; // del
+  searchLettersInput: FormControl = new FormControl('');
 
   constructor(
     public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router
-  ) {}
+  ) {
+
+    this.searchLettersInput.valueChanges.pipe(
+      debounceTime(500)).subscribe(data => {
+        if (data === '') {
+          this.searchLetterFunc(data, this.emailServ.lettersList, true);
+        } else {
+          this.searchLetterFunc(data, this.emailServ.lettersList);
+        }
+    });
+  }
+
+  searchLetterFunc(text, allLettersList, stopFlag?) {
+    if (this.protectToCopy === false) {
+      this.lettersCopy = this.emailServ.lettersList;
+      this.protectToCopy = true;
+    }
+    const regExp = new RegExp (text, 'gi');
+    const replacer = '<b>' + text + '</b>';
+
+    this.temporaryLetters = allLettersList.filter((val) => {
+
+      if (val.html.toLowerCase().indexOf(text) >= 0 ) {
+        // val.html = val.html.replace(regExp, replacer);
+              return val;
+        }
+        if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
+          // val.subject = val.subject.replace(regExp, replacer);
+          return val;
+          }
+          if (val.mail_from.toLowerCase().indexOf(text) >= 0 ) {
+            // val.mail_from = val.mail_from.replace(regExp, replacer);
+            return val;
+      }
+    });
+    const stop = stopFlag;
+    if (stop) {
+      this.temporaryLetters = [];
+    }
+      if (this.temporaryLetters.length > 0 ) {
+        this.emailServ.lettersList = this.temporaryLetters;
+      } else {
+        this.emailServ.lettersList = this.lettersCopy;
+        this.protectToCopy = false;
+       }
+    // if (letters.length > 0 ) {
+    //   this.emailServ.lettersList = letters;
+    // } else {
+
+    //  this.emailServ.lettersList = this.lettersCopy;
+    // }
+  }
 
   ngOnInit() {
     this.emailServ.dataLetters = this.emailServ.lettersAmount;
