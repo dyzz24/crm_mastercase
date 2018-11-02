@@ -6,6 +6,7 @@ import { validateConfig } from '@angular/router/src/config';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-letters',
   templateUrl: './letters.component.html',
@@ -30,6 +31,7 @@ export class LettersComponent implements DoCheck, OnInit {
   stopScrollingLoadFiles = false;
 
   searchStringForHTTP;
+  searchIdForHTTP = [];
 
 
 
@@ -44,18 +46,31 @@ export class LettersComponent implements DoCheck, OnInit {
   ) {
 
     this.searchLettersInput.valueChanges.pipe(
-      ).subscribe(data => {
+      debounceTime(500)).subscribe(data => {
         if (data === '') {
           this.searchLetterFunc(data, this.emailServ.lettersList, true);
         } else {
           this.searchLetterFunc(data, this.emailServ.lettersList);
         }
-        // this.emailServ.httpPost(`${this.emailServ.ip}/mail/search`,
-        // { searchQuery: `${data}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum },
-        // {contentType: 'application/json'})
-        // .subscribe(data2 => console.log(data2)); // перевожу в прочитанные сообщения
           this.searchStringForHTTP = data;
     });
+  }
+
+  searchOnServer() {
+    if ( this.searchStringForHTTP === undefined) {
+        return;
+    }
+    this.emailServ.httpPost(`${this.emailServ.ip}/mail/search`,
+        { searchQuery: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum,
+        expiredIds: this.searchIdForHTTP},
+        {contentType: 'application/json'})
+        .subscribe(data => {
+          const temporaryArray = this.temporaryLetters; // временный массив с результатами поиска по клиенту
+          const allSearch = temporaryArray.concat(data.filter((item) => { // конкачу с массивом который пришел с сервера
+            return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
+           }));
+           this.emailServ.lettersList = allSearch; // в представление
+        });
   }
 
   searchLetterFunc(text, allLettersList, stopFlag?) {
@@ -66,7 +81,7 @@ export class LettersComponent implements DoCheck, OnInit {
     const regExp = new RegExp (text, 'g');
     const replacer = '<b>' + text + '</b>';
     let flagged;
-
+    this.searchIdForHTTP = [];
     this.temporaryLetters = allLettersList.filter((val, ind) => {
 
       if (val.html.toLowerCase().indexOf(text) >= 0 ) {
@@ -104,6 +119,9 @@ export class LettersComponent implements DoCheck, OnInit {
       this.stopScrollingLoadFiles = true;
     }
        this.emailServ.lettersList = this.temporaryLetters;
+       this.searchIdForHTTP = this.temporaryLetters.map(val => {
+        return +val.id;
+       });
   }
 
   ngOnInit() {
@@ -111,7 +129,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    // console.log(this.searchStringForHTTP);
+    // console.log(this.emailServ.lettersList);
   }
 
   activeEl(param, id) {
