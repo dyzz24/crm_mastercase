@@ -68,7 +68,7 @@ this.emailServ.stateServ();
     const messageBody = document.querySelector('.messageContainer');
     messageBody.classList.add('dellLetter');
     const id = this.emailServ.selectedLetter;
-    this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {id : id.id, box: 2}).subscribe();
+    this.emailServ.httpPost(`${this.emailServ.ip}/mail/setbox`, {id : +id.id, box: 2}).subscribe();
     setTimeout(() => {
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === id.id) {

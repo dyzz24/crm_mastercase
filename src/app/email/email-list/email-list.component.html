@@ -134,24 +134,24 @@
   </div>
   <div class="emails" *ngFor='let email of emailItems let i = index'>
 
-    <a class="emails__list" (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
+    <a class="emails__list" (click)="goUrl(i, '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
       <p>{{email.mail_to}}</p>
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
-      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i , '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeTypeMess]='emailServ.selectedMess===0'>
+      <a (click)="goUrl( i , '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeTypeMess]='emailServ.selectedMess===0'>
         Входящие
          <span class='email__num'>{{email.count}}</span>
       </a>
-      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/sent', email.idPost, 'sent','',1)"[class.activeTypeMess]='emailServ.selectedMess===1'>
+      <a (click)="goUrl( i, '/sent', email.idPost, 'sent','',1)"[class.activeTypeMess]='emailServ.selectedMess===1'>
         Исходящие
         <span class='email__num'></span>
       </a>
-      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/delete', email.idPost, 'delete','',2)" [class.activeTypeMess]='emailServ.selectedMess===2'>
+      <a (click)="goUrl( i, '/delete', email.idPost, 'delete','',2)" [class.activeTypeMess]='emailServ.selectedMess===2'>
         Удаленные
         <span class='email__num'></span>
       </a>
-      <a (click)="goUrl('http://10.0.1.33:3000/mail/mails', i, '/spam', email.idPost, 'spam','',4)" [class.activeTypeMess]='emailServ.selectedMess===4'>
+      <a (click)="goUrl( i, '/spam', email.idPost, 'spam','',4)" [class.activeTypeMess]='emailServ.selectedMess===4'>
         Спам
         <span class='email__num'></span>
       </a>

@@ -96,7 +96,7 @@ $font-color: $icons-color;
     box-sizing: border-box;
     border: solid 1px $border;
     border-radius: 3px;
-    padding: 0 30px 0 15px;
+    padding: 0 30px 0 0px;
     height: 36px;
     display: flex;
     justify-content: flex-end;
@@ -463,6 +463,17 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.search__inp {
+    padding-left: 12px;
+    box-sizing: border-box;
+    margin-right: 12px;
+}
+.search__inp:focus {
+background: rgba(141, 175, 255, 0.507);
+
 }
 
 

@@ -29,6 +29,9 @@ export class LettersComponent implements DoCheck, OnInit {
   filterError = false;
   stopScrollingLoadFiles = false;
 
+  searchStringForHTTP;
+
+
 
 
 
@@ -41,12 +44,17 @@ export class LettersComponent implements DoCheck, OnInit {
   ) {
 
     this.searchLettersInput.valueChanges.pipe(
-      debounceTime(0)).subscribe(data => {
+      ).subscribe(data => {
         if (data === '') {
           this.searchLetterFunc(data, this.emailServ.lettersList, true);
         } else {
           this.searchLetterFunc(data, this.emailServ.lettersList);
         }
+        // this.emailServ.httpPost(`${this.emailServ.ip}/mail/search`,
+        // { searchQuery: `${data}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum },
+        // {contentType: 'application/json'})
+        // .subscribe(data2 => console.log(data2)); // перевожу в прочитанные сообщения
+          this.searchStringForHTTP = data;
     });
   }
 
@@ -68,6 +76,7 @@ export class LettersComponent implements DoCheck, OnInit {
         }
         if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
           flagged = true;
+
             // val.subject = val.subject.replace(regExp, replacer);
             return val;
           }
@@ -102,13 +111,13 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    // console.log(this.emailServ.lettersList);
+    // console.log(this.searchStringForHTTP);
   }
 
   activeEl(param, id) {
     // tslint:disable-next-line:max-line-length
     this.emailServ
-      .httpPost('http://10.0.1.33:3000/mail/seen', { id: id, flag: true })
+      .httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
       .subscribe(); // перевожу в прочитанные сообщения
     this.emailServ.lettersList[param].seen = true;
     // tslint:disable-next-line:forin
@@ -215,9 +224,9 @@ export class LettersComponent implements DoCheck, OnInit {
         );
       }
       this.emailServ
-        .httpPost('http://10.0.1.33:3000/mail/setbox', {
-          id: id,
-          box: `${booleanParam}`
+        .httpPost(`${this.emailServ.ip}/mail/setbox`, {
+          id: +id,
+          box: booleanParam
         })
         .subscribe();
     }, 500);
@@ -229,7 +238,7 @@ export class LettersComponent implements DoCheck, OnInit {
     // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
     this.emailServ
-      .httpPost('http://10.0.1.33:3000/mail/flagged', { id: id, flag: boolean })
+      .httpPost(`${this.emailServ.ip}/mail/flagged`, { id: id, flag: boolean })
       .subscribe();
     this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
       .flagged;
@@ -270,9 +279,9 @@ export class LettersComponent implements DoCheck, OnInit {
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,
-              box: `${this.emailServ.selectNum}`,
-              limit: `${this.emailServ.lettersAmount}`,
-              offset: `${this.counterAmount}`
+              box: this.emailServ.selectNum,
+              limit: this.emailServ.lettersAmount,
+              offset: this.counterAmount
             }
           )
           .subscribe(data => {
@@ -293,9 +302,9 @@ export class LettersComponent implements DoCheck, OnInit {
     setTimeout(() => {
       const idelem = this.emailServ.selectedLetter;
       this.emailServ
-        .httpPost('http://10.0.1.33:3000/mail/setbox', {
+        .httpPost(`${this.emailServ.ip}/mail/setbox`, {
           id: id,
-          box: `${box}`
+          box: box
         })
         .subscribe();
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
@@ -325,9 +334,9 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
         if (val.id === key) {
-          this.emailServ.httpPost('http://10.0.1.33:3000/mail/setbox', {
-              id: `${val.id}`,
-              box: `${box}`
+          this.emailServ.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+              id: val.id,
+              box: box
             }).subscribe();
           arr[ind] = 'null';
         }
@@ -344,9 +353,9 @@ export class LettersComponent implements DoCheck, OnInit {
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,
-              box: `${this.emailServ.selectNum}`,
-              limit: `${this.emailServ.lettersAmount}`,
-              offset: `${this.counterAmount}`
+              box: this.emailServ.selectNum,
+              limit: this.emailServ.lettersAmount,
+              offset: this.counterAmount
             }
           )
           .subscribe(data => {

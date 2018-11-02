@@ -2,18 +2,19 @@
   
   
   <div class='letter__list'>
-      <div class="no-messages" *ngIf='this.emailServ.lettersList.length === 0; else haveMess'>
+      <!-- <div class="no-messages" *ngIf='this.emailServ.lettersList.length === 0; else haveMess'>
 <div class="header"></div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>
-      </div>
-      <ng-template #haveMess>   
+      </div> -->
+      <!-- <ng-template #haveMess>    -->
     <div class="header">
       <div class="header__search">
-        <input type="text" placeholder="Поиск" [formControl]='searchLettersInput'>
+        <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
         <span class='la la-search'></span>
       </div>
+      <!-- <button>Найти все письма</button> -->
       <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteRestoreLettersAll(2)' *ngIf="this.emailServ.typeMess !=='delete'; else restoreAll">
         <span class='la la-delete'></span>
         <p class="tooltip">Удалить</p>
@@ -106,7 +107,7 @@
       <p>Письма не найдены</p>
       </ng-template>
 
-  </ng-template>
+  <!-- </ng-template> -->
   </div>
 
 

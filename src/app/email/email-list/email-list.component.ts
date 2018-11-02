@@ -30,7 +30,7 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   allLetters: any; // test
   messagesForFilters;
-
+  adress;
   constructor(
     public element: ElementRef,
     private _rout: Router,
@@ -41,9 +41,10 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     // tslint:disable-next-line:max-line-length
-    this.emailServ.httpPost('http://10.0.1.33:3000/user/login', {email: 'seo@insat.ru', password: '12345678'}).subscribe((data) => {
+    this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
     this.emailServ.accessToken = data.accessToken;
-    this.emailServ.httpPost('http://10.0.1.33:3000/mail/boxes', {}).subscribe((data2) => this.emailItems = data2 );
+    this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
+    {contentType: 'application/json'}).subscribe((data2) => this.emailItems = data2 );
     this.emailServ.stateServ(); } );
 
 
@@ -52,7 +53,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     }
   }
   ngDoCheck() {
-    // console.log(this.emailServ.lettersList);
+    // console.log(this.emailServ.ip);
   }
 
   showHiddenBlock(param) {
@@ -69,17 +70,17 @@ export class EmailListComponent implements OnInit, DoCheck {
   }
 
 
-  goUrl(adress, index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
-
+  goUrl( index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
+    this.adress = `${this.emailServ.ip}/mail/mails`;
     this.idPost = this.emailItems[index].mail_to.replace('@', ''); // для вставки в URL
     this.idPostForHTTP = this.emailItems[index].mail_to; // ID ящика
     this.emailServ.selectNum = selectNum;
     this.emailServ.idPostForHTTP = this.idPostForHTTP;
-    this.emailServ.adress = adress;
+    this.emailServ.adress = this.adress;
     this.emailServ.httpPost(
-    adress,
+    this.adress,
     // tslint:disable-next-line:max-line-length
-    {address: this.idPostForHTTP, box: `${this.emailServ.selectNum}`, limit: `${this.emailServ.lettersAmount}`, offset: '0'}).subscribe((data) => {
+    {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
       this.emailServ.lettersList = data;
       this.emailServ.stateServ(); // save state on service
       } );
@@ -176,7 +177,6 @@ this._rout.navigate(['email/']);
 
 loadAmount(count) {   // для количества загруженных писем
   this.emailServ.lettersAmount = count;
-  // this.emailServ.httpPost('http://10.0.1.33:3000/setbox', {id : id, box: booleanParam}).subscribe();
 }
 
 
