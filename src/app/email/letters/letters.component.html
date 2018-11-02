@@ -73,12 +73,13 @@
 
 
             </div>
+            <div class="text__group">
             <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.mail_from}}</p>
 
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
           
              <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div>
-
+            </div>
 
           </div>
           <div class="settings">
@@ -112,7 +113,12 @@
       </ng-template>
 
   <!-- </ng-template> -->
+  
   </div>
+  
+    <app-splitter left min='320' max='1100'></app-splitter>
+  
+ 
 
 
   <div class="letters__view">

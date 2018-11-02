@@ -24,6 +24,7 @@ import { InnerTextPipe } from './email/innerhtml.pipe';
 import { TimerPipe } from './email/innerhtml.pipe';
 import { AttachPipe} from './email/innerhtml.pipe';
 import { ReactiveFormsModule} from '@angular/forms';
+import { SplitterComponent } from './email/splitter/splitter.component';
 
 
 
@@ -50,7 +51,8 @@ import { ReactiveFormsModule} from '@angular/forms';
     InnerhtmlPipe,
     InnerTextPipe,
     TimerPipe,
-    AttachPipe
+    AttachPipe,
+    SplitterComponent
   ],
   imports: [
     BrowserModule,

@@ -281,11 +281,10 @@ export class LettersComponent implements DoCheck, OnInit {
     const scrollPosition = container.scrollTop; // ** величина текущей прокрутки scroll
     const maxScroll = maxScrollHeight - maxHeight; //  100% от макс возможного скролла
     const persent = (scrollPosition * 100) / maxScroll; // текущий скролл в процентах
-
     if (persent > 85) {
       if (this.emailServ.stopFlag === false) {
         if (this.emailServ.dataLetters !== this.emailServ.lettersAmount) {
-          // this.counterAmount = 0;
+          this.counterAmount = 0;
           return;
         }
         this.emailServ.stopFlag = true;

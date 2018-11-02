@@ -195,6 +195,7 @@ $font-color: $icons-color;
 
 
 .letter__prev {
+    
     @include prev_styles(row, center, 5px);
     border-bottom: 1px solid $border;
     height: 90px;
@@ -474,6 +475,11 @@ label {
 .search__inp:focus {
 background: rgba(141, 175, 255, 0.507);
 
+}
+
+.splitter {
+    height: calc(100vh - 60px);
+    width: 12px;
 }
 
 

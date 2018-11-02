@@ -1,0 +1,21 @@
+/* :host{
+    width: 12px;
+    min-width: 12px;
+    background-color: darkgray;
+    cursor:w-resize;
+    height: calc(100vh - 60px);
+} */
+
+.splitters {
+    width: 20px;
+    min-width: 6px;
+    cursor:w-resize;
+    height: 20px;
+    position: absolute;
+    top: 260px;
+    z-index: 8;
+    background: url('../../../assets/arrows.png') no-repeat center rgb(61, 127, 248);
+    background-size: 18px 18px;
+    border-radius: 4px;
+    
+}
