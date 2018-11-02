@@ -45,8 +45,7 @@ export class LettersComponent implements DoCheck, OnInit {
     private rout: Router
   ) {
 
-    this.searchLettersInput.valueChanges.pipe(
-      debounceTime(500)).subscribe(data => {
+    this.searchLettersInput.valueChanges.pipe().subscribe(data => {
         if (data === '') {
           this.searchLetterFunc(data, this.emailServ.lettersList, true);
         } else {
