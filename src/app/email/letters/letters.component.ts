@@ -26,13 +26,15 @@ export class LettersComponent implements DoCheck, OnInit {
   lettersCopy;
   protectToCopy = false;
   temporaryLetters = [];
-  temporaryLettersForHTML = [];
 
   filterError = false;
   stopScrollingLoadFiles = false;
 
   searchStringForHTTP;
   searchIdForHTTP = [];
+  stopSearch = false;
+  startSearch = true;
+  successSearch = false;
 
 
 
@@ -49,11 +51,17 @@ export class LettersComponent implements DoCheck, OnInit {
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
         if (data === '') {
           this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList, true); // .toLowerCase() - отмена регистра при поиске
+              this.stopSearch = false;
+              this.startSearch = true;
+              this.successSearch = false;
+              this.searchStringForHTTP = '';
         } else {
           this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList);
-        }
           this.searchStringForHTTP = data.toLowerCase();
+        }
     });
+
+    this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
 
   searchOnServer() {
@@ -70,6 +78,9 @@ export class LettersComponent implements DoCheck, OnInit {
             return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
            }));
            this.emailServ.lettersList = allSearch; // в представление
+           this.successSearch = true;
+           this.stopSearch = false;
+           console.log(data);
         });
   }
 
@@ -78,6 +89,9 @@ export class LettersComponent implements DoCheck, OnInit {
       this.lettersCopy = this.emailServ.lettersList; // сохраняю исходные письма и сношу флаг
       this.protectToCopy = true;
     }
+    this.stopSearch = true;
+    this.startSearch = false;
+    this.successSearch = false;
     const regExp = new RegExp (text, 'g');
     const replacer = '<b>' + text + '</b>';
     let flagged;
@@ -85,7 +99,6 @@ export class LettersComponent implements DoCheck, OnInit {
     const stop = stopFlag;
     if (stop) { // если инпут пустой
       this.temporaryLetters = []; // очищаю временный массив писем
-      this.temporaryLettersForHTML = [];
       this.emailServ.lettersList = this.lettersCopy; // вставляю исходный список писем
         this.protectToCopy = false; // разрешаю снова сохранять исходные письма
       this.filterError = false; // переключатель для "Письма не найдены" в html
@@ -112,11 +125,12 @@ export class LettersComponent implements DoCheck, OnInit {
         }
     });
 
-
-
     if (!flagged) {
       this.filterError = true; // если не найдены письма выдаст сообщение в разметке
       this.stopScrollingLoadFiles = false; //
+      this.stopSearch = false;
+      this.startSearch = true;
+      this.successSearch = false;
       return;
     } else {
       this.filterError = false;
@@ -126,6 +140,7 @@ export class LettersComponent implements DoCheck, OnInit {
        this.searchIdForHTTP = this.temporaryLetters.map(val => {
         return +val.id; // массив из id найденных писем для отправки на сервер
        });
+
   }
 
   ngOnInit() {

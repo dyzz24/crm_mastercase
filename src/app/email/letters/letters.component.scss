@@ -150,8 +150,31 @@ $font-color: $icons-color;
     }
     &:hover {
         color:rgb(15, 13, 13);
+    }   
+}
+
+.la-ok {
+    font-size: 20px;
+    line-height: 20px;
+    color: $font-color;
+    &::before {
+        content: '\f00c';
     }
-    
+}
+
+.search-ref {
+    font-size: 20px;
+    line-height: 20px;
+    animation: searcher 2s infinite;
+}
+
+@keyframes searcher {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg)
+    }
 }
 
 .la-locate {
