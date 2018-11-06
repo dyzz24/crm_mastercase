@@ -47,16 +47,16 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
         if (data === '') {
-          this.searchLetterFunc(data, this.emailServ.lettersList, true);
+          this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList, true); // .toLowerCase() - отмена регистра при поиске
         } else {
-          this.searchLetterFunc(data, this.emailServ.lettersList);
+          this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList);
         }
-          this.searchStringForHTTP = data;
+          this.searchStringForHTTP = data.toLowerCase();
     });
   }
 
   searchOnServer() {
-    if ( this.searchStringForHTTP === undefined) {
+    if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
         return;
     }
     this.emailServ.httpPost(`${this.emailServ.ip}/mail/search`,
@@ -74,52 +74,52 @@ export class LettersComponent implements DoCheck, OnInit {
 
   searchLetterFunc(text, allLettersList, stopFlag?) {
     if (this.protectToCopy === false) {
-      this.lettersCopy = this.emailServ.lettersList;
+      this.lettersCopy = this.emailServ.lettersList; // сохраняю исходные письма и сношу флаг
       this.protectToCopy = true;
     }
     const regExp = new RegExp (text, 'g');
     const replacer = '<b>' + text + '</b>';
     let flagged;
     this.searchIdForHTTP = [];
-    this.temporaryLetters = allLettersList.filter((val, ind) => {
+    const stop = stopFlag;
+    if (stop) { // если инпут пустой
+      this.temporaryLetters = []; // очищаю временный массив писем
+      this.emailServ.lettersList = this.lettersCopy; // вставляю исходный список писем
+        this.protectToCopy = false; // разрешаю снова сохранять исходные письма
+      this.filterError = false; // переключатель для "Письма не найдены" в html
+      this.stopScrollingLoadFiles = false; // отменяю подгруз скроллом при работе поиска
+      return;
+    }
 
+    this.temporaryLetters = allLettersList.filter((val, ind) => {
+      if (val.mail_from.toLowerCase().indexOf(text) >= 0 ) {
+        // val.mail_from = val.mail_from.replace(regExp, replacer);
+        flagged = true;
+        return val;
+  }
+      if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
+        flagged = true;
+
+          // val.subject = val.subject.replace(regExp, replacer);
+          return val;
+        }
       if (val.html.toLowerCase().indexOf(text) >= 0 ) {
         // val.html = val.html.replace(regExp, replacer);
         flagged = true;
             return val;
         }
-        if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
-          flagged = true;
-
-            // val.subject = val.subject.replace(regExp, replacer);
-            return val;
-          }
-          if (val.mail_from.toLowerCase().indexOf(text) >= 0 ) {
-
-            flagged = true;
-            return val;
-      }
     });
-    const stop = stopFlag;
-    if (stop) {
-      this.temporaryLetters = [];
-      this.emailServ.lettersList = this.lettersCopy;
-        this.protectToCopy = false;
-      this.filterError = false;
-      this.stopScrollingLoadFiles = false;
-      return;
-    }
     if (!flagged) {
-      this.filterError = true;
-      this.stopScrollingLoadFiles = false;
+      this.filterError = true; // если не найдены письма выдаст сообщение в разметке
+      this.stopScrollingLoadFiles = false; //
       return;
     } else {
       this.filterError = false;
       this.stopScrollingLoadFiles = true;
     }
-       this.emailServ.lettersList = this.temporaryLetters;
+       this.emailServ.lettersList = this.temporaryLetters; // подставляю найденные письма в представление
        this.searchIdForHTTP = this.temporaryLetters.map(val => {
-        return +val.id;
+        return +val.id; // массив из id найденных писем для отправки на сервер
        });
   }
 
@@ -255,7 +255,7 @@ export class LettersComponent implements DoCheck, OnInit {
     // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
     this.emailServ
-      .httpPost(`${this.emailServ.ip}/mail/flagged`, { id: id, flag: boolean })
+      .httpPost(`${this.emailServ.ip}/mail/flagged`, { id: +id, flag: boolean })
       .subscribe();
     this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
       .flagged;
@@ -319,7 +319,7 @@ export class LettersComponent implements DoCheck, OnInit {
       const idelem = this.emailServ.selectedLetter;
       this.emailServ
         .httpPost(`${this.emailServ.ip}/mail/setbox`, {
-          id: id,
+          id: +id,
           box: box
         })
         .subscribe();
@@ -350,18 +350,17 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
         if (val.id === key) {
+          arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
           this.emailServ.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-              id: val.id,
-              box: box
-            }).subscribe();
-          arr[ind] = 'null';
+            id: +val.id,
+            box: box
+          }).subscribe();
         }
       }
     });
     this.emailServ.lettersList = this.emailServ.lettersList.filter(
-      a => a !== 'null'
+      a => a !== 'null' // возвращаю массив без null (удаленных элементов)
     );
-    setTimeout(() => {
     if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
       this.emailServ
           .httpPost(
@@ -375,13 +374,12 @@ export class LettersComponent implements DoCheck, OnInit {
             }
           )
           .subscribe(data => {
-            this.emailServ.lettersList = this.emailServ.lettersList.concat(data);
+            this.emailServ.lettersList = data;
     });
   }
   this.emailServ.stateServ(); // save state on service
   this.emailServ.hideAvatars = []; // чтоб инпуты работали
   this.emailServ.idLetters = []; // обнуляю корзину на удаление
-  this.emailServ.checkerTrash(); // убираю иконку
-}, 10);
+  this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
 }
 }
