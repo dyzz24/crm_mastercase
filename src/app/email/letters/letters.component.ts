@@ -26,6 +26,7 @@ export class LettersComponent implements DoCheck, OnInit {
   lettersCopy;
   protectToCopy = false;
   temporaryLetters = [];
+  temporaryLettersForHTML = [];
 
   filterError = false;
   stopScrollingLoadFiles = false;
@@ -84,6 +85,7 @@ export class LettersComponent implements DoCheck, OnInit {
     const stop = stopFlag;
     if (stop) { // если инпут пустой
       this.temporaryLetters = []; // очищаю временный массив писем
+      this.temporaryLettersForHTML = [];
       this.emailServ.lettersList = this.lettersCopy; // вставляю исходный список писем
         this.protectToCopy = false; // разрешаю снова сохранять исходные письма
       this.filterError = false; // переключатель для "Письма не найдены" в html
@@ -109,6 +111,9 @@ export class LettersComponent implements DoCheck, OnInit {
             return val;
         }
     });
+
+
+
     if (!flagged) {
       this.filterError = true; // если не найдены письма выдаст сообщение в разметке
       this.stopScrollingLoadFiles = false; //
@@ -128,7 +133,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    // console.log(this.emailServ.lettersList);
+    // console.log(this.temporaryLetters);
   }
 
   activeEl(param, id) {
@@ -154,14 +159,14 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.hideAvatars[index] = !this.emailServ.hideAvatars[index];
   }
   urlLetterView(idLetter, currentId) {
-    this.rout.navigate([this.emailServ.urlParams + '/view' + '/' + idLetter]);
+    this.rout.navigate([this.emailServ.urlParams + '/view/' + idLetter]);
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
     this.emailServ.index = idLetter;
 
     this.emailServ.hiddenEmpty = true;
 
     this.emailServ.fullPath =
-      this.emailServ.urlParams + '/view' + '/' + idLetter;
+      this.emailServ.urlParams + '/view/' + idLetter;
     this.emailServ.currentId = currentId; // test
 
     this.emailServ.stateServ();
