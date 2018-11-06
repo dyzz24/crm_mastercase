@@ -2,13 +2,13 @@
 <div class="letters">
   
   <div class='letter__list'>
-      <div class="no-messages" *ngIf='this.emailServ.lettersList === undefined || this.emailServ.lettersList.length === 0 ; else haveMess'>
+      <!-- <div class="no-messages" *ngIf='this.emailServ.lettersList === undefined || this.emailServ.lettersList.length === 0 ; else haveMess'>
 <div class="header"></div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>
-      </div>
-      <ng-template #haveMess>   
+      </div> -->
+      <!-- <ng-template #haveMess>    -->
     <div class="header">
       <div class="header__search">
         <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
@@ -16,16 +16,6 @@
         <span class='la la-refresh search-ref' *ngIf="this.stopSearch === true"></span>
         <span class='la la-ok' *ngIf="this.successSearch === true"></span>
       </div>
-      <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteRestoreLettersAll(2)' *ngIf="this.emailServ.typeMess !=='delete'; else restoreAll">
-        <span class='la la-delete'></span>
-        <p class="tooltip">Удалить</p>
-      </button>
-      <ng-template #restoreAll >
-      <button class='letters__delete' type='button' [class.hiddenTrash]='emailServ.hiddenTrash' (click)='deleteRestoreLettersAll(0)'>
-        <span class='la la-restore'></span>
-        <p class="tooltip">Восстановить</p>
-      </button>
-    </ng-template>
       <button class='letters__refresh' type='button'>
         <span class='la la-refresh'></span>
         <p class="tooltip">Обновить</p>
@@ -36,8 +26,21 @@
       </button>
     </div>
 
+    <div class="hidden__setting_panel" [class.hiddenTrash]='!emailServ.hiddenTrash'>
+        <button class='letters__delete' type='button'  (click)='deleteRestoreLettersAll(2)' *ngIf="this.emailServ.typeMess !=='delete'; else restoreAll">
+            <span class='la la-delete'></span>
+            <p class="tooltip">Удалить</p>
+          </button>
+          <ng-template #restoreAll >
+          <button class='letters__delete' type='button' (click)='deleteRestoreLettersAll(0)'>
+            <span class='la la-restore'></span>
+            <p class="tooltip">Восстановить</p>
+          </button>
+        </ng-template>
+    </div>
+
     <div class="letters__items" *ngIf="this.filterError === false; else searchErrorMessage">
-      <div class="letter__container" (scroll)='scrollDown($event)'>
+      <div class="letter__container" (scroll)='scrollDown($event)' [class.hiddenMenu_plusHeight]='!emailServ.hiddenTrash'>
         <div class='letter__prev'
         *ngFor='let letters of emailServ.lettersList, let i = index'
         [class.active]="emailServ.activeLett[i]"
@@ -107,7 +110,7 @@
     </div>
     <ng-template #searchErrorMessage> 
       <p>Письма не найдены</p>
-      </ng-template>
+      <!-- </ng-template> -->
 
   </ng-template>
   

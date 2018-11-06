@@ -190,9 +190,6 @@ $font-color: $icons-color;
 }
 
 
-.hiddenTrash {
-    width: 0px;
-}
 
 .letters__items {
     @extend %all-padding;
@@ -500,9 +497,23 @@ background: rgba(141, 175, 255, 0.507);
 
 }
 
-.splitter {
-    height: calc(100vh - 60px);
-    width: 12px;
+
+
+.hidden__setting_panel {
+    overflow: hidden;
+height: 0px;
+display: flex;
+align-items: center;
+width: 100%;
+transition: .5s;
+}
+
+.hiddenTrash {
+    height: 45px;
+}
+
+.hiddenMenu_plusHeight {
+    max-height: calc(100vh - 165px);
 }
 
 

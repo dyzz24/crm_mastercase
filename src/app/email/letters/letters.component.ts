@@ -110,14 +110,12 @@ export class LettersComponent implements DoCheck, OnInit {
         // val.mail_from = val.mail_from.replace(regExp, replacer);
         flagged = true;
         return val;
-  }
-      if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
+  } else if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
         flagged = true;
 
           // val.subject = val.subject.replace(regExp, replacer);
           return val;
-        }
-      if (val.html.toLowerCase().indexOf(text) >= 0 ) {
+        } else if (val.html.toLowerCase().indexOf(text) >= 0 ) {
         // val.html = val.html.replace(regExp, replacer);
         flagged = true;
             return val;
@@ -147,7 +145,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    // console.log(this.temporaryLetters);
+    // console.log( this.searchIdForHTTP);
   }
 
   activeEl(param, id) {
@@ -363,8 +361,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   deleteRestoreLettersAll(box) {
-    // const container = document.querySelector('.letter__container');
-    // const style = getComputedStyle(container).
+
     const id_for_delete = this.emailServ.idLetters;
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
@@ -374,6 +371,7 @@ export class LettersComponent implements DoCheck, OnInit {
             id: +val.id,
             box: box
           }).subscribe();
+          this.emailServ.lettersList = arr;
         }
       }
     });
@@ -381,7 +379,9 @@ export class LettersComponent implements DoCheck, OnInit {
       a => a !== 'null' // возвращаю массив без null (удаленных элементов)
     );
     if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
-      this.emailServ
+
+      setTimeout(() => {
+        this.emailServ
           .httpPost(
             this.emailServ.adress,
             // tslint:disable-next-line:max-line-length
@@ -394,7 +394,12 @@ export class LettersComponent implements DoCheck, OnInit {
           )
           .subscribe(data => {
             this.emailServ.lettersList = data;
+            this.emailServ.stateServ(); // save state on service
+  this.emailServ.hideAvatars = []; // чтоб инпуты работали
+  this.emailServ.idLetters = []; // обнуляю корзину на удаление
+  this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
     });
+      }, 500);
   }
   this.emailServ.stateServ(); // save state on service
   this.emailServ.hideAvatars = []; // чтоб инпуты работали

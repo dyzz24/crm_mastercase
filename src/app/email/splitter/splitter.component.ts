@@ -3,7 +3,7 @@ import { Component, OnInit, ElementRef, HostListener, Input } from '@angular/cor
 @Component({
   selector: 'app-splitter',
   templateUrl: './splitter.component.html',
-  styleUrls: ['./splitter.component.css']
+  styleUrls: ['./splitter.component.scss']
 })
 export class SplitterComponent implements OnInit {
   controller: any;
@@ -23,8 +23,12 @@ export class SplitterComponent implements OnInit {
   @Input() right: any;
   @Input() min: number;
   @Input() max: number;
+  // @Input() positionTop: number;
+  @Input() positionLeft: number;
 
   ngOnInit() {
+    // console.log(this.element.nativeElement.querySelector('.splitters'));
+    this.element.nativeElement.querySelector('.splitters').style.left = this.positionLeft + 'px';
     const a = this.element.nativeElement.parentNode;
     if (this.left === '') { this.left = true; }
     if (this.right === '') { this.right = true; }
@@ -60,7 +64,7 @@ export class SplitterComponent implements OnInit {
   onMouseUp(event: MouseEvent) {
     if (this._md) {
       this.before.style.userSelect = 'auto';
-    this.after.style.userSelect = 'auto';
+      this.after.style.userSelect = 'auto';
       this._md = false;
       window.requestAnimationFrame(() => {
         window.dispatchEvent(new Event('resize'));
