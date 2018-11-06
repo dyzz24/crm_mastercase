@@ -80,7 +80,6 @@ export class LettersComponent implements DoCheck, OnInit {
            this.emailServ.lettersList = allSearch; // в представление
            this.successSearch = true;
            this.stopSearch = false;
-           console.log(data);
         });
   }
 

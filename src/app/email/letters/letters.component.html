@@ -2,7 +2,7 @@
 <div class="letters">
   
   <div class='letter__list'>
-      <div class="no-messages" *ngIf='this.emailServ.lettersList.length === 0 || this.emailServ.lettersList === undefined; else haveMess'>
+      <div class="no-messages" *ngIf='this.emailServ.lettersList === undefined || this.emailServ.lettersList.length === 0 ; else haveMess'>
 <div class="header"></div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>

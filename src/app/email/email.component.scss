@@ -1,4 +1,4 @@
-
+@import '../../colors';
 .mail__container {
     padding:60px 0 0px 60px;
     box-sizing: border-box;
@@ -7,6 +7,16 @@
     display: flex;
     overflow: hidden;
 
+}
+
+.mails__view {
+    width: 100%;
+}
+
+.mails {
+    width: 240px;
+    flex-shrink: 0;
+    border-right: 1px solid $border;
 }
 
 
