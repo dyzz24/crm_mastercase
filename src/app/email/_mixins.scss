@@ -10,8 +10,8 @@
 }
 
 %avatar {
-    width: 48px;
-    height: 48px;
+    width: 30px;
+    height: 30px;
     position: relative;
     transition: .4s;
     flex-shrink: 0;
@@ -19,7 +19,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background: $border;
+    background: $avatar_bcg;
     img{
         transition: .2s;
         width: 100%;
@@ -27,7 +27,7 @@
         border-radius: 50%;
     }
     p {
-        font-size: 30px;
+        font-size: 14px;
     }
 }
 
@@ -47,7 +47,6 @@
 
 %name_text {
     color: black;
-    // font-weight: bold;
     font-size: 14px; 
 }
 
@@ -96,6 +95,8 @@
         display: block;
      }
 }
+
+
 
 .la-sett::before {
     content:'\f0ad';
@@ -254,6 +255,7 @@ button {
     opacity: 0;
     animation: tooltipAnim .4s .5s forwards;  
     line-height: 16px;
+    font-size: 16px;
     
 }
 

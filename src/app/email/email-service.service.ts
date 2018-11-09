@@ -44,7 +44,7 @@ export class EmailServiceService {
   importantLetter;
 
   visibleLetters: any;
-  lettersAmount = 15; // количество подгружаемых писем - const
+  lettersAmount = 25; // количество подгружаемых писем - const
   selectNum; // Папка писем, где 0- входящие 1 - исходящие и ТД.
   idPostForHTTP; // ID ящика
   adress; // адрес для URL запросов на сервак

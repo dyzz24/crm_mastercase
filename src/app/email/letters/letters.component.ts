@@ -5,12 +5,15 @@ import { TouchSequence } from 'selenium-webdriver';
 import { validateConfig } from '@angular/router/src/config';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { TimerPipe } from '../innerhtml.pipe';
+
 
 
 @Component({
   selector: 'app-letters',
   templateUrl: './letters.component.html',
-  styleUrls: ['./letters.component.scss']
+  styleUrls: ['./letters.component.scss'],
+  providers: [ TimerPipe ]
 })
 export class LettersComponent implements DoCheck, OnInit {
   idEmail: any;
@@ -45,7 +48,8 @@ export class LettersComponent implements DoCheck, OnInit {
   constructor(
     public emailServ: EmailServiceService,
     public element: ElementRef,
-    private rout: Router
+    private rout: Router,
+    private datePipe: TimerPipe
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
@@ -142,6 +146,13 @@ export class LettersComponent implements DoCheck, OnInit {
 
   ngOnInit() {
     this.emailServ.dataLetters = this.emailServ.lettersAmount;
+
+    // const map_new_time_letters = this.emailServ.lettersList.map((val) => {
+    //   const new_date = this.datePipe.transform(val.date, true);
+    //   if (this.datePipe.transform(val.date, true) === new_date) {
+    //     console.log(new_date);
+    //   }
+    // });
   }
 
   ngDoCheck() {
@@ -149,7 +160,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   activeEl(param, id) {
-    // tslint:disable-next-line:max-line-length
+
     this.emailServ
       .httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
       .subscribe(); // перевожу в прочитанные сообщения
@@ -170,7 +181,8 @@ export class LettersComponent implements DoCheck, OnInit {
   hideAva(index) {
     this.emailServ.hideAvatars[index] = !this.emailServ.hideAvatars[index];
   }
-  urlLetterView(idLetter, currentId) {
+
+  urlLetterView(idLetter) {
     this.rout.navigate([this.emailServ.urlParams + '/view/' + idLetter]);
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
     this.emailServ.index = idLetter;
@@ -179,7 +191,7 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.emailServ.fullPath =
       this.emailServ.urlParams + '/view/' + idLetter;
-    this.emailServ.currentId = currentId; // test
+    this.emailServ.currentId = idLetter; // test
 
     this.emailServ.stateServ();
   }

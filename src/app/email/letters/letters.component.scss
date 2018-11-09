@@ -20,8 +20,9 @@ $font-color: $icons-color;
 }
 
 .letter__list {
-    width: 480px;
+    width: 290px;
     flex-shrink: 0;
+    border-right:  1px solid $border;
 }
 .letters__view {
     width: 100%;
@@ -192,14 +193,11 @@ $font-color: $icons-color;
 
 
 .letters__items {
-    @extend %all-padding;
-    padding-right: 0;
+    
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #ebedef;
     overflow: hidden;
-    border: 1px solid $border;
     border-top: 0px;
     box-sizing: border-box;
 }
@@ -209,41 +207,35 @@ $font-color: $icons-color;
     max-height: calc(100vh - 120px);
     overflow: auto;
     box-sizing: border-box;
-    padding-bottom: 25px;
+    padding-bottom: 5px;
 }
 
 
 
 .letter__prev {
     
-    @include prev_styles(row, center, 5px);
+    @include prev_styles(row, center, 0px);
     border-bottom: 1px solid $border;
-    height: 90px;
+    
+    height: 50px;
 
     position: relative;
     overflow: initial;
+    transition: .5s;
 
-    &:hover::before{
-        opacity: 1;
+    &:hover{
+        background: rgba($color: #c4c4c4, $alpha: .5)
     }
 
-    &::before {
-        content: '';
-        width: 3px;
-        height: 100%;
-        background: black;
-        left: 0;
-        top:0;
-        position: absolute;
-        opacity: 0;
 
-    }
+}
 
+.avatar__group {
+    width: 45px;
+    height: 50px;
+    padding: 10px 5px 10px 10px;
+    box-sizing: border-box;
     
-    
-    p{
-        color: black;
-    }
 }
 
 
@@ -296,7 +288,7 @@ label {
   height: 100%;
   cursor: pointer;
   background: url('../../../assets/checked.png') no-repeat center;
-    background-size: 20px 20px;
+    background-size: 15px 15px;
 }
 
 .checker::before{
@@ -315,36 +307,75 @@ label {
 .checkbox:checked + .checker::before {
 
     background: url('../../../assets/checked.png') no-repeat center;
-    background-size: 20px 20px;
+    background-size: 15px 15px;
     
   }
 
+
+  .avatar__info-butt {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #cccccc;
+      border-radius: 50%;
+      top:0;
+      left: 20px;
+
+      &:hover .tooltip {
+        display: block;
+     }
+  }
+
   .info {
-      width: calc(100% - 46px - 60px );
+      width: calc(100% - 45px - 80px );
+      padding: 10px 5px;
       display: flex;
+      height: 100%;
       flex-direction: column;
-      padding-left: 24px;
+      justify-content: center;
       box-sizing: border-box;
   }
 
   .settings {
-      width: 60px;
+      width: 80px;
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: space-between;
       position: relative;
       align-items: flex-end;
-      padding-right: 6px;
-
-      .time {
-          width: 120px;
-          position: absolute;
-          top: 0;
-          right: calc(60px - 6px - 36px);
-          text-align: right;
-      }
+      padding: 5px 10px 5px 5px;
+      box-sizing: border-box;
   }
+  .time {
+          
+    color: $time-icons;
+    font-size: 9px;
+    line-height: 1;
+    text-align: right;
+}
+      
+.letter__settings {
+    color:$time-icons;
+    width: 15px;
+    height: 5px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        line-height: 0;
+    } 
+}
+.la-paperclip {
+    width: 8px;
+    height: 7px;
+    font-size: 10px;
+    line-height: 1;
+    color:$time-icons;
+}
 
 [class^='letter']{
     line-height: 18px;
@@ -361,16 +392,21 @@ label {
 
 .letter__name,
 .letter__caption {
-    @extend %name_text;
-    width: 80%;
-
+    color: black;
+    font-size: 12px; 
+    line-height: 18px;
+    width: 95%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
+.letter__caption {
+    font-size: 12px; 
+    line-height: 16px;
+}
 
 .active {
-    background: white !important;
+    background: rgba($color: #c4c4c4, $alpha: .5);
     &::before {
         opacity: 1;
     }
@@ -410,21 +446,13 @@ label {
     }
 
     .headText__status-new {
-        font-weight: bold;
-        text-shadow: 0px 0px 10px rgba(26, 113, 243, 0.4);
+        font-family: 'Roboto-Black';
+    }
+    .time-icons__status-new {
+        color: $time-icons-new;
     }
 
-    
-.letter__settings {
-    width: 36px;
-    height: 21px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    
-}
 
 
 
@@ -523,7 +551,11 @@ transition: .5s;
 }
 
 .important__background {
-    background: rgba($color: #aa3737, $alpha: .1)
+    background: #ff9999;
+}
+
+.for__presentation {
+    background: #33ccff;
 }
 
 

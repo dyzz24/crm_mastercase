@@ -46,6 +46,7 @@
         [class.active]="emailServ.activeLett[i]"
         [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         >
+        <div class="avatar__group">
           <div class="avatar" (change)='hideAva(i)' [class.ava__status-new]="letters.seen === false" >
 
               <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{this.emailServ.avatarMake(letters.mail_from)}}</p>
@@ -56,38 +57,25 @@
               <!--собираю id писем с чеккед инпутов-->
               <div class='checker'></div>
             </label>
-          </div>
-          <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i,i)'>
-            <div class='prev__panel'>
-              <div class="status_panel">
-                <span class='la la-sett' [class.visible]="this.emailServ.lettersList[i].draft === true">
-                    <p class='tooltip'>В работе</p>
-                </span>
-                <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachment === true">
-                    <p class='tooltip'>Вложения</p>
-                </span>
-                <span class="la la-flag" [class.visible]="this.emailServ.lettersList[i].flagged === true">
-                    <p class='tooltip'>Важное</p>
-                </span>
-                <!-- <span class="la la-active-flag"></span> -->
-              </div>
-
-
+            <div class="avatar__info-butt"  [class.for__presentation]="this.emailServ.lettersList[i].flagged === true">
             </div>
-            <div class="text__group">
+          </div>
+        </div>
+          <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i, emailServ.lettersList[i].id)'>
             <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.mail_from}}</p>
 
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
           
-             <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div>
-            </div>
+             <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->
 
           </div>
           <div class="settings">
-            <p class='time'>{{letters.date | timerPipe}}</p>
-            <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)">
+            <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
+            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachment === true" [class.time-icons__status-new]="letters.seen === false">
+              <p class='tooltip'>Вложения</p>
+            </span>
+            <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">
               <span class='la la-ellipsis'></span>
-              
               <p class='tooltip'>Меню</p>
             </button>
             <div class="hideMenu" *ngIf="sent_incomingChecker(i)">
@@ -117,7 +105,7 @@
   
   </div>
   
-    <app-splitter left min='320' max='1100'></app-splitter>
+    <app-splitter left min='200' max='1100'></app-splitter>
   
  
 

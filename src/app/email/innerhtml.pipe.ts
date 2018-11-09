@@ -40,7 +40,7 @@ export class TimerPipe implements PipeTransform {
 
   constructor() {}
 
-  transform(item): any {
+  transform(item, compactDateSearch?): any {
     const date = new Date(item);
     date.setHours(date.getHours() - 3);
     const nowDate = new Date();
@@ -57,9 +57,13 @@ export class TimerPipe implements PipeTransform {
       return `${weekDays} ${date.getHours()}:${date.getMinutes()}`;
     }
     if (difference > 604800000 ) {
-      const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
+      const month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
       const months = month[date.getMonth()];
-      return `${date.getDate()} ${months} : ${date.getHours()}:${date.getMinutes()}`;
+      if (compactDateSearch) {
+        return `${date.getDate()} ${months}`;
+      } else {
+      return `${date.getDate()}.${months} ${date.getHours()}:${date.getMinutes()}`;
+      }
     }
     if (difference > 31556926000) {
       const month = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'];
