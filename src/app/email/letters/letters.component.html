@@ -44,6 +44,7 @@
         <div class='letter__prev'
         *ngFor='let letters of emailServ.lettersList, let i = index'
         [class.active]="emailServ.activeLett[i]"
+        [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         >
           <div class="avatar" (change)='hideAva(i)' [class.ava__status-new]="letters.seen === false" >
 
