@@ -57,7 +57,7 @@ this.emailServ.currentId = this.emailServ.index;
 
 this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.index]);
 this.emailServ.mailsToArray = []; // очистил список отправителей
-this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.mail_from);  // добавил в список отправителей
+this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  // добавил в список отправителей
 this.emailServ.stateServ();
   }
 

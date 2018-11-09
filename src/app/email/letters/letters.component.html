@@ -47,9 +47,9 @@
         [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         >
         <div class="avatar__group">
-          <div class="avatar" (change)='hideAva(i)' [class.ava__status-new]="letters.seen === false" >
+          <div class="avatar" (change)='hideAva(i)' >
 
-              <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{this.emailServ.avatarMake(letters.mail_from)}}</p>
+              <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{this.emailServ.avatarMake(letters.from_address)}}</p>
 
             <!-- <img src='' [class.hiddenAva]='emailServ.hideAvatars[i]'> -->
             <label class='checkedLabel' [class.visibleLabel]='emailServ.hideAvatars[i]'>
@@ -62,7 +62,7 @@
           </div>
         </div>
           <div class='info' (click)='activeEl(i, emailServ.lettersList[i].id)' (click)='urlLetterView(i, emailServ.lettersList[i].id)'>
-            <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.mail_from}}</p>
+            <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.from_address}}</p>
 
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
           
@@ -71,7 +71,7 @@
           </div>
           <div class="settings">
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
-            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachment === true" [class.time-icons__status-new]="letters.seen === false">
+            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments === true" [class.time-icons__status-new]="letters.seen === false">
               <p class='tooltip'>Вложения</p>
             </span>
             <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">

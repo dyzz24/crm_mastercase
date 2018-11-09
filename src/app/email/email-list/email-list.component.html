@@ -79,7 +79,7 @@
         </div>
         <div class="create__body">
           <div class="email__body" *ngFor='let email of emailItems let i = index'>
-          <p class='inboxName'>{{email.mail_to}}</p>
+          <p class='inboxName'>{{email.address}}</p>
           <button class='btn-create'(click)='editInbox(i)'>Редактировать</button>
           <button class='btn-create'(click)='deleteInbox(i)'>Удалить</button>
          
@@ -135,7 +135,7 @@
   <div class="emails" *ngFor='let email of emailItems let i = index'>
 
     <a class="emails__list" (click)="goUrl(i, '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
-      <p>{{email.mail_to}}</p>
+      <p>{{email.address}}</p>
       <span class='la la-butt-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>

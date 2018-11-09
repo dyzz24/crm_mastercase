@@ -35,7 +35,7 @@
   <div class="mess__info">
     <div class="avatar">
       <!-- <img src={{emailServ.avatar}}> -->
-      <p>{{this.emailServ.avatarMake(emailServ.selectedLetter.mail_from)}}</p>
+      <p>{{this.emailServ.avatarMake(emailServ.selectedLetter.from_address)}}</p>
     </div>
     <div class="r__info">
     <div class="panel">
@@ -61,8 +61,8 @@
 </div>
 
 <div class="info">
-    <p class='name'>{{emailServ.selectedLetter.mail_from}}</p>
-    <p class='title'>{{emailServ.selectedLetter.mail_to}}</p>
+    <p class='name'>{{emailServ.selectedLetter.from_address}}</p>
+    <p class='title'>{{emailServ.selectedLetter.to_addresses}}</p>
     <p class='title'>{{emailServ.selectedLetter.bcc}}</p>
 </div>
 </div>
@@ -72,6 +72,7 @@
     <div class="mess__content_body">
     <p class="subject">{{emailServ.selectedLetter.subject}}</p>
     <div [innerHTML]="emailServ.selectedLetter.html | innerhtml"></div>
+    <div>{{emailServ.selectedLetter.text}}</div>
     <div class="attachment__block" >
       <div class="attachment__item" *ngFor="let attach of this.attachersList; let i = index">
       <span [class]='attach.type | attachPipe'></span>
@@ -88,7 +89,7 @@
       </div>
       <div class="from__line">
         
-    <p>От: {{emailServ.selectedLetter.mail_to}}</p>
+    <p>От: {{emailServ.selectedLetter.to_address}}</p>
     </div>
     <div class="from__line theme">
       <p>Тема: </p>

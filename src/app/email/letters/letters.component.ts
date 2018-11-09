@@ -77,6 +77,16 @@ export class LettersComponent implements DoCheck, OnInit {
         expiredIds: this.searchIdForHTTP},
         {contentType: 'application/json'})
         .subscribe(data => {
+          if (data.length === 0) {
+            this.filterError = true; // если не найдены письма выдаст сообщение в разметке
+            this.stopScrollingLoadFiles = false; //
+            this.stopSearch = false;
+            this.startSearch = true;
+            this.successSearch = false;
+            return;
+          }
+          this.filterError = false;
+          this.stopScrollingLoadFiles = true;
           const temporaryArray = this.temporaryLetters; // временный массив с результатами поиска по клиенту
           const allSearch = temporaryArray.concat(data.filter((item) => { // конкачу с массивом который пришел с сервера
             return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
@@ -97,7 +107,6 @@ export class LettersComponent implements DoCheck, OnInit {
     this.successSearch = false;
     const regExp = new RegExp (text, 'g');
     const replacer = '<b>' + text + '</b>';
-    let flagged;
     this.searchIdForHTTP = [];
     const stop = stopFlag;
     if (stop) { // если инпут пустой
@@ -110,33 +119,18 @@ export class LettersComponent implements DoCheck, OnInit {
     }
 
     this.temporaryLetters = allLettersList.filter((val, ind) => {
-      if (val.mail_from.toLowerCase().indexOf(text) >= 0 ) {
+      if (val.from_address && val.from_address.toLowerCase().indexOf(text) >= 0 ) {
         // val.mail_from = val.mail_from.replace(regExp, replacer);
-        flagged = true;
         return val;
-  } else if (val.subject.toLowerCase().indexOf(text) >= 0 ) {
-        flagged = true;
+  } else if (val.subject && val.subject.toLowerCase().indexOf(text) >= 0 ) {
 
           // val.subject = val.subject.replace(regExp, replacer);
           return val;
-        } else if (val.html.toLowerCase().indexOf(text) >= 0 ) {
+        } else if (val.text && val.text.toLowerCase().indexOf(text) >= 0 ) {
         // val.html = val.html.replace(regExp, replacer);
-        flagged = true;
             return val;
         }
     });
-
-    if (!flagged) {
-      this.filterError = true; // если не найдены письма выдаст сообщение в разметке
-      this.stopScrollingLoadFiles = false; //
-      this.stopSearch = false;
-      this.startSearch = true;
-      this.successSearch = false;
-      return;
-    } else {
-      this.filterError = false;
-      this.stopScrollingLoadFiles = true;
-    }
        this.emailServ.lettersList = this.temporaryLetters; // подставляю найденные письма в представление
        this.searchIdForHTTP = this.temporaryLetters.map(val => {
         return +val.id; // массив из id найденных писем для отправки на сервер
@@ -156,7 +150,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    // console.log( this.searchIdForHTTP);
+    // console.log( this.emailServ.lettersList);
   }
 
   activeEl(param, id) {
@@ -173,7 +167,7 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.emailServ.mailsToArray = []; // очистил список отправителей
     this.emailServ.mailsToArray.push(
-      this.emailServ.lettersList[param].mail_from
+      this.emailServ.lettersList[param].from_address
     ); // добавил в список отправителей
     this.emailServ.subjectTo = this.emailServ.lettersList[param].subject;
   }

@@ -72,8 +72,8 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   goUrl( index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
     this.adress = `${this.emailServ.ip}/mail/mails`;
-    this.idPost = this.emailItems[index].mail_to.replace('@', ''); // для вставки в URL
-    this.idPostForHTTP = this.emailItems[index].mail_to; // ID ящика
+    this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
+    this.idPostForHTTP = this.emailItems[index].address; // ID ящика
     this.emailServ.selectNum = selectNum;
     this.emailServ.idPostForHTTP = this.idPostForHTTP;
     this.emailServ.adress = this.adress;
@@ -83,6 +83,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
       this.emailServ.lettersList = data;
       this.emailServ.stateServ(); // save state on service
+
       } );
       // this.emailServ.visibleLett(15); // TEST
       // this.emailServ.step = 15;
