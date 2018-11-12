@@ -72,7 +72,7 @@
     <div class="mess__content_body">
     <p class="subject">{{emailServ.selectedLetter.subject}}</p>
     <div [innerHTML]="emailServ.selectedLetter.html | innerhtml"></div>
-    <div>{{emailServ.selectedLetter.text}}</div>
+    <div class='text__view'>{{emailServ.selectedLetter.text}}</div>
     <div class="attachment__block" >
       <div class="attachment__item" *ngFor="let attach of this.attachersList; let i = index">
       <span [class]='attach.type | attachPipe'></span>

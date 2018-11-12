@@ -39,12 +39,12 @@ export class EmailViewComponent implements OnInit, DoCheck {
   selectMess(n) {
 
 this.emailServ.index = this.emailServ.index + n;
-if (this.emailServ.index === this.emailServ.allLettersId.length) {
+if (this.emailServ.index === this.emailServ.lettersList.length) {
   this.emailServ.index = 0;
 }
 
 if (this.emailServ.index < 0) {
-  this.emailServ.index = this.emailServ.allLettersId.length - 1;
+  this.emailServ.index = this.emailServ.lettersList.length - 1;
 }
 
 for (let i = 0; i < this.emailServ.activeLett.length; i++) {

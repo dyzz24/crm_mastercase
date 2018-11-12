@@ -5,7 +5,7 @@ import { TouchSequence } from 'selenium-webdriver';
 import { validateConfig } from '@angular/router/src/config';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { TimerPipe } from '../innerhtml.pipe';
+
 
 
 
@@ -13,7 +13,7 @@ import { TimerPipe } from '../innerhtml.pipe';
   selector: 'app-letters',
   templateUrl: './letters.component.html',
   styleUrls: ['./letters.component.scss'],
-  providers: [ TimerPipe ]
+
 })
 export class LettersComponent implements DoCheck, OnInit {
   idEmail: any;
@@ -49,7 +49,6 @@ export class LettersComponent implements DoCheck, OnInit {
     public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router,
-    private datePipe: TimerPipe
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {

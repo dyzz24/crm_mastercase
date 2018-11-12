@@ -19,19 +19,12 @@ import { FormsModule } from '@angular/forms';
 import { NewMessageComponent } from './email/new-message/new-message.component';
 import { QuillModule } from 'ngx-quill';
 import { HttpClientModule } from '@angular/common/http';
-import { InnerhtmlPipe } from './email/innerhtml.pipe';
-import { InnerTextPipe } from './email/innerhtml.pipe';
-import { TimerPipe } from './email/innerhtml.pipe';
-import { AttachPipe} from './email/innerhtml.pipe';
+import { InnerhtmlPipe } from './email/email-pipes/innerhtml.pipe';
+import { InnerTextPipe } from './email/email-pipes/inner-text.pipe';
 import { ReactiveFormsModule} from '@angular/forms';
 import { SplitterComponent } from './email/splitter/splitter.component';
-
-
-
-
-
-
-
+import { TimerPipePipe } from './email/email-pipes/timer-pipe.pipe';
+import { AttachPipePipe } from './email/email-pipes/attach-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -50,9 +43,10 @@ import { SplitterComponent } from './email/splitter/splitter.component';
     NewMessageComponent,
     InnerhtmlPipe,
     InnerTextPipe,
-    TimerPipe,
-    AttachPipe,
-    SplitterComponent
+    SplitterComponent,
+    TimerPipePipe,
+    AttachPipePipe,
+
   ],
   imports: [
     BrowserModule,
