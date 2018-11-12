@@ -217,14 +217,14 @@ $font-color: $icons-color;
     @include prev_styles(row, center, 0px);
     border-bottom: 1px solid $border;
     
-    height: 50px;
+    height: 52px;
 
     position: relative;
     overflow: initial;
     transition: .5s;
 
-    &:hover{
-        background: rgba($color: #c4c4c4, $alpha: .5)
+    &:hover:not(.important__background){
+        background: #dcdcdc;
     }
 
 
@@ -328,7 +328,7 @@ label {
 
   .info {
       width: calc(100% - 45px - 80px );
-      padding: 10px 5px;
+      padding: 5px 5px;
       display: flex;
       height: 100%;
       flex-direction: column;
@@ -393,20 +393,21 @@ label {
 .letter__name,
 .letter__caption {
     color: black;
-    font-size: 12px; 
-    line-height: 18px;
+    font-size: 13px; 
+    line-height: 20px;
     width: 95%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
 .letter__caption {
-    font-size: 12px; 
-    line-height: 16px;
+    
+    font-size: 13px; 
+    line-height: 20px;
 }
 
 .active {
-    background: rgba($color: #c4c4c4, $alpha: .5);
+    background: #d0d0d0;
     &::before {
         opacity: 1;
     }
@@ -540,8 +541,16 @@ transition: .5s;
 }
 
 .important__background {
-    background: #ff9999;
+    background: #ffe5e5;
+
+    &:hover {
+        background: #edd7d7;
+    }
+    &.active {
+        background: #ff9999;
+    }
 }
+
 
 .for__presentation {
     background: #33ccff;
