@@ -1,4 +1,4 @@
-import { Component, DoCheck, ElementRef, OnInit } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
 import { TouchSequence } from 'selenium-webdriver';
@@ -40,7 +40,8 @@ export class LettersComponent implements DoCheck, OnInit {
   successSearch = false;
 
 
-
+  // @ViewChild('size_Check') // для отслеживания размера блока
+  // size_Check: ElementRef;
 
 
   searchLettersInput: FormControl = new FormControl('');
@@ -408,4 +409,10 @@ export class LettersComponent implements DoCheck, OnInit {
   this.emailServ.idLetters = []; // обнуляю корзину на удаление
   this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
 }
+
+// @HostListener('window:resize', ['$event'])
+// onResize(event) {
+//   const size = this.size_Check.nativeElement.offsetWidth;  // отслеживаем ресайз блока
+//   console.log(size);
+// }
 }
