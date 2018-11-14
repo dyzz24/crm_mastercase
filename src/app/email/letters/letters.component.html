@@ -2,13 +2,14 @@
 <div class="letters">
   
   <div class='letter__list'>
-      <!-- <div class="no-messages" *ngIf='this.emailServ.lettersList === undefined || this.emailServ.lettersList.length === 0 ; else haveMess'>
+      <div class="no-messages" *ngIf='this.emailServ.lettersList === undefined || this.emailServ.lettersList.length === 0 && this.stopSearch !== true && this.filterError !== true; 
+      else haveMess'>
 <div class="header"></div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>
-      </div> -->
-      <!-- <ng-template #haveMess>    -->
+      </div>
+      <ng-template #haveMess>   
     <div class="header">
       <div class="header__search">
         <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
@@ -99,7 +100,7 @@
     </div>
     <ng-template #searchErrorMessage> 
       <p>Письма не найдены</p>
-      <!-- </ng-template> -->
+      </ng-template>
 
   </ng-template>
   
