@@ -303,6 +303,7 @@ button {
 .visible {
     display: flex !important;
     visibility: visible;
+    z-index: 5;
     
 }
 

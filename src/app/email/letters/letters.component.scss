@@ -419,6 +419,10 @@ label {
     }
 }
 
+.active_checkboxes {
+    background: #d0d0d0;
+}
+
 
 .prev__panel {
 @include panel-mix();
@@ -554,6 +558,9 @@ transition: .5s;
         background: #edd7d7;
     }
     &.active {
+        background: #ff9999;
+    }
+    &.active_checkboxes {
         background: #ff9999;
     }
 }

@@ -72,6 +72,7 @@ span {
 .name__block {
     @extend %name_text;
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
 }
 .name {

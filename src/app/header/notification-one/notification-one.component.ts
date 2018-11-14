@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { DataService } from '../../data.service';
 import { EmailServiceService } from '../../email/email-service.service';
-import { lettersInbox } from '../../email/email-list/emails';
+
 
 @Component({
   selector: 'app-notification-one',
@@ -15,43 +15,30 @@ import { lettersInbox } from '../../email/email-list/emails';
 export class NotificationOneComponent implements OnInit, DoCheck {
 
   public newMessages = [];
-  private inboxes = lettersInbox;
-  private newMessagesCount: number;
+
+  private newMessagesCountArray = [];
+  private newMessagesCount;
+  private all_email_address;
 
   constructor(public dataServ: DataService, public emailServ: EmailServiceService) {
   }
 
   ngOnInit() {
-    this.countMessageCheck();
-    this.newMessagesCount = this.newMessages.length;
+    this.emailServ.httpPost(`${this.emailServ.ip}/user/login`,
+    {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
+      this.emailServ.accessToken = data.accessToken;
+      this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
+      {contentType: 'application/json'}).subscribe((data2) => {
+        data2.map((val) => {
+          this.all_email_address = [...val.address]; // собираю все адреса ящиков
+          this.newMessagesCountArray = [...this.newMessagesCountArray, +val.count]; // собираю их каунты
+        });
+            this.newMessagesCount = this.newMessagesCountArray.reduce((acc, val) => acc + val); // суммирую каунты
+      });
+      this.emailServ.stateServ(); } );
   }
 
   ngDoCheck() {
-    this.countMessageCheck();
-    this.newMessagesCount = this.newMessages.length;
   }
 
-
-  countMessageCheck() {
-    const mapArr = this.inboxes.map((currentValue, index) => {
-      // tslint:disable-next-line:forin
-      for (const key in currentValue) {
-        for (const key2 of currentValue[key]) {
-          if (key2.status === 'new') {
-            this.newMessages = [...this.newMessages, key2];
-          // tslint:disable-next-line:max-line-length
-          } else { this.newMessages = this.newMessages.filter(item =>  item !== key2); } // если потерял статус new - удалить элемент из массива
-        }
-      }
-      this.newMessages = this.newMessages.filter((val, ind, self) => {
-        return self.indexOf(val) === ind; } );
-
-    });
-    this.dataServ.newMessages = this.newMessages;
-  }
-
-
-  cancelNotif() {
-    this.dataServ.onClearNotifOne();
-  }
 }

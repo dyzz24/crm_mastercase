@@ -150,30 +150,34 @@ export class LettersComponent implements DoCheck, OnInit {
     // console.log( this.emailServ.lettersList);
   }
 
-  activeEl(param, id) {
 
-    this.emailServ
-      .httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
-      .subscribe(); // перевожу в прочитанные сообщения
-    this.emailServ.lettersList[param].seen = true;
-    // tslint:disable-next-line:forin
-    for (const i in this.emailServ.activeLett) {
-      this.emailServ.activeLett[i] = false;
-    }
-    this.emailServ.activeLett[param] = !this.emailServ.activeLett[param];
-
-    this.emailServ.mailsToArray = []; // очистил список отправителей
-    this.emailServ.mailsToArray.push(
-      this.emailServ.lettersList[param].from_address
-    ); // добавил в список отправителей
-    this.emailServ.subjectTo = this.emailServ.lettersList[param].subject;
-  }
 
   hideAva(index) {
     this.emailServ.hideAvatars[index] = !this.emailServ.hideAvatars[index];
   }
 
-  urlLetterView(idLetter) {
+  urlLetterView(event, idLetter, id) {
+
+    if (event.target.className === 'la la-ellipsis') {
+      return;
+    }
+
+    this.emailServ
+    .httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
+    .subscribe(); // перевожу в прочитанные сообщения
+  this.emailServ.lettersList[idLetter].seen = true;
+  // tslint:disable-next-line:forin
+  for (const i in this.emailServ.activeLett) {
+    this.emailServ.activeLett[i] = false;
+  }
+  this.emailServ.activeLett[idLetter] = !this.emailServ.activeLett[idLetter];
+
+  this.emailServ.mailsToArray = []; // очистил список отправителей
+  this.emailServ.mailsToArray.push(
+    this.emailServ.lettersList[idLetter].from_address
+  ); // добавил в список отправителей
+  this.emailServ.subjectTo = this.emailServ.lettersList[idLetter].subject;
+
     this.rout.navigate([this.emailServ.urlParams + '/view/' + idLetter]);
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
     this.emailServ.index = idLetter;

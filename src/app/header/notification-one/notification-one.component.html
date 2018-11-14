@@ -1,8 +1,8 @@
-<div class="not-one" (click)='cancelNotif()'
+<div class="not-one" (click)='this.dataServ.onClearNotifOne()'
     [class.notif-off]="dataServ.notifOne === 'not-notif'"
     [class.notif-easy]="dataServ.notifOne === 'easy'"
     [class.notif-medium]="dataServ.notifOne === 'medium'"
     [class.notif-hard]="dataServ.notifOne === 'hard'">
     <span class='la la-post'></span>
-    <span class='number'>{{newMessagesCount}}</span>
+    <span class='number'>{{this.newMessagesCount}}</span>
 </div>
