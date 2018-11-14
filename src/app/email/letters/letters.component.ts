@@ -119,14 +119,16 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.temporaryLetters = allLettersList.filter((val, ind) => {
       if (val.from_address && val.from_address.toLowerCase().indexOf(text) >= 0 ) {
-        // val.mail_from = val.mail_from.replace(regExp, replacer);
+
+        // val.new_mail_from = val.from_address.replace(regExp, replacer);
         return val;
   } else if (val.subject && val.subject.toLowerCase().indexOf(text) >= 0 ) {
 
-          // val.subject = val.subject.replace(regExp, replacer);
+
+          // val.new_subject = val.subject.replace(regExp, replacer);
           return val;
         } else if (val.text && val.text.toLowerCase().indexOf(text) >= 0 ) {
-        // val.html = val.html.replace(regExp, replacer);
+                // val.new_text = val.text.replace(regExp, replacer);
             return val;
         }
     });
