@@ -55,15 +55,21 @@
 </div>
 
 <div class='from'>
-  <p class='name'>От:</p>
-  <p class='title'>Кому:</p>
-  <p class='title'>Копия:</p>
+  <div class='name__block'>От:
+    <p class='name'>{{emailServ.selectedLetter.from_address}}</p>
+  </div>
+  <div class='name__block'>Кому:
+    <p class='name' *ngFor="let item of emailServ.selectedLetter.to_addresses">{{item}}</p>
+  </div>
+  <div class='name__block'>Копия:
+    <p class='name'>{{emailServ.selectedLetter.bcc}}</p>
+  </div>
 </div>
 
 <div class="info">
-    <p class='name'>{{emailServ.selectedLetter.from_address}}</p>
-    <p class='title'>{{emailServ.selectedLetter.to_addresses}}</p>
-    <p class='title'>{{emailServ.selectedLetter.bcc}}</p>
+    
+    
+    
 </div>
 </div>
   </div>
