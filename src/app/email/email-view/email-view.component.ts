@@ -20,8 +20,10 @@ export class EmailViewComponent implements OnInit, DoCheck {
   constructor(public emailServ: EmailServiceService, private _rout: Router) { }
 
   ngOnInit() {
+     
   }
   ngDoCheck() {
+    // console.log(this.emailServ.selectedLetter.html);
   }
 
   closeViewer() {

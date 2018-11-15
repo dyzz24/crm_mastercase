@@ -119,7 +119,7 @@ export class EmailServiceService {
       activeEl: this.activeEl,
       fullPath: this.fullPath,
       hiddenEmpty: this.hiddenEmpty,
-      lettersList: this.lettersList,
+      lettersList: this.lettersList,    // ?
       index: this.index,
       result: this.result,
       currentObjectLetter: this.currentObjectLetter,

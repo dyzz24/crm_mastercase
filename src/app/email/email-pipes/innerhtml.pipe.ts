@@ -10,6 +10,5 @@ export class InnerhtmlPipe implements PipeTransform {
 
   transform(html): any {
     return this.sanitizer.bypassSecurityTrustHtml(html);
-
   }
 }

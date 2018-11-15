@@ -41,7 +41,7 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     // tslint:disable-next-line:max-line-length
-    this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
+    this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
     this.emailServ.accessToken = data.accessToken;
     this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
     {contentType: 'application/json'}).subscribe((data2) => this.emailItems = data2 );
@@ -53,7 +53,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     }
   }
   ngDoCheck() {
-    // console.log(this.emailServ.ip);
+    // console.log(this.emailServ.lettersList);
   }
 
   showHiddenBlock(param) {

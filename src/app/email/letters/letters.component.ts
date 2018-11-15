@@ -157,7 +157,6 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   urlLetterView(event, idLetter, id) {
-
     if (event.target.className === 'la la-ellipsis') {
       return;
     }
@@ -189,6 +188,7 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.currentId = idLetter; // test
 
     this.emailServ.stateServ();
+    // console.log(this.emailServ.selectedLetter);
   }
 
   selectedLetters(id, e, i) {
