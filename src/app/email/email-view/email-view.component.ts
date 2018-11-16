@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, HostListener } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
@@ -8,7 +8,8 @@ import { attachers } from './attach';
 @Component({
   selector: 'app-email-view',
   templateUrl: './email-view.component.html',
-  styleUrls: ['./email-view.component.scss']
+  styleUrls: ['./email-view.component.scss'],
+  encapsulation: ViewEncapsulation.Native
 })
 export class EmailViewComponent implements OnInit, DoCheck {
 
@@ -20,7 +21,6 @@ export class EmailViewComponent implements OnInit, DoCheck {
   constructor(public emailServ: EmailServiceService, private _rout: Router) { }
 
   ngOnInit() {
-     
   }
   ngDoCheck() {
     // console.log(this.emailServ.selectedLetter.html);
