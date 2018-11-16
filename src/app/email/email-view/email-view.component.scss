@@ -1,8 +1,26 @@
 @import '../mixins';
 @import '../../../colors';
 @import '../../../quill';
+
+
 :host {
     flex-grow: 11;
+}
+
+
+button {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: .2s;
+    background: none;
+    border: none;
+}
+
+.la {
+    font-family: 'la';
+    text-align: center;
 }
 
 

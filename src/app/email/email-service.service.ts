@@ -35,6 +35,9 @@ export class EmailServiceService {
   currentId: any;
   copy: any;
 
+  notLettersFlag; // флаг, что писем нет
+  haveResponse;
+
   index;
   result;
   currentObjectLetter;

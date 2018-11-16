@@ -2,14 +2,37 @@
 <div class="letters">
   
   <div class='letter__list'>
-      <div class="no-messages" *ngIf='this.emailServ.lettersList === undefined || this.emailServ.lettersList.length === 0 && this.stopSearch !== true && this.filterError !== true; 
+    <div class="preloader__letters" *ngIf="this.emailServ.haveResponse === false; else messagesDownload">
+        <div class="windows8">
+            <div class="wBall" id="wBall_1">
+              <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_2">
+              <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_3">
+              <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_4">
+              <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_5">
+              <div class="wInnerBall"></div>
+            </div>
+          </div>
+        <p>ЗАГРУЗКА</p>
+      </div>
+      <ng-template #messagesDownload>  
+      <div class="no-messages" *ngIf='this.emailServ.notLettersFlag === true && this.stopSearch !== true && this.filterError !== true; 
       else haveMess'>
 <div class="header"></div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>
       </div>
+     
       <ng-template #haveMess>   
+     
     <div class="header">
       <div class="header__search">
         <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
@@ -39,6 +62,8 @@
           </button>
         </ng-template>
     </div>
+
+   
 
     <div class="letters__items" *ngIf="this.filterError === false; else searchErrorMessage">
       <div class="letter__container" (scroll)='scrollDown($event)' [class.hiddenMenu_plusHeight]='!emailServ.hiddenTrash'>
@@ -104,6 +129,10 @@
       </ng-template>
 
   </ng-template>
+
+  </ng-template>
+
+  
   
   </div>
   

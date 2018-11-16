@@ -1,5 +1,6 @@
 @import '../mixins';
 @import '../../../colors';
+@import '../preloader';
 
 :host {
     flex-grow: 11;
@@ -48,8 +49,15 @@ $font-color: $icons-color;
     width: 100%;
     height: 100%;
     background-color: #f3f5f7;
-
-
+}
+.preloader__letters {
+    width: 100%;
+    height: 100%;
+    background-color: #f3f5f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .empty__cont {

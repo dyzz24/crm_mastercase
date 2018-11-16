@@ -71,6 +71,7 @@ export class EmailListComponent implements OnInit, DoCheck {
 
 
   goUrl( index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
+    this.emailServ.haveResponse = false;
     this.adress = `${this.emailServ.ip}/mail/mails`;
     this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
     this.idPostForHTTP = this.emailItems[index].address; // ID ящика
@@ -81,6 +82,12 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.adress,
     // tslint:disable-next-line:max-line-length
     {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+this.emailServ.haveResponse = true;
+      if (data.length === 0) {
+        this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
+      } else {
+        this.emailServ.notLettersFlag = false;
+      }
       this.emailServ.lettersList = data;
       this.emailServ.stateServ(); // save state on service
 
@@ -117,9 +124,6 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.allLettersId = [];
 
 
-    if (this.emailServ.lettersList === 'noMessages') {  // DEL
-      this.emailServ.noMessages = true;
-    } else {this.emailServ.noMessages = false; } // del
     this.emailServ.stateServ(); // save state on service
 
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
