@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
@@ -12,13 +12,16 @@ import { attachers } from './attach';
   encapsulation: ViewEncapsulation.Native
 })
 export class EmailViewComponent implements OnInit, DoCheck {
-
+  @ViewChild('messageContainer')
+  messageContainer: ElementRef;
   visibleMenu = false;
   nameFrom;
   attachersList = attachers;
 
 
-  constructor(public emailServ: EmailServiceService, private _rout: Router) { }
+  constructor(public emailServ: EmailServiceService,
+    private _rout: Router,
+    private elem: ElementRef) { }
 
   ngOnInit() {
   }
@@ -67,7 +70,7 @@ this.emailServ.stateServ();
     this.visibleMenu = ! this.visibleMenu;
   }
   deleteLetter() { // удаление письма по клику
-    const messageBody = document.querySelector('.messageContainer');
+    const messageBody = this.messageContainer.nativeElement;
     messageBody.classList.add('dellLetter');
     const id = this.emailServ.selectedLetter;
     this.emailServ.httpPost(`${this.emailServ.ip}/mail/setbox`, {id : +id.id, box: 2}).subscribe();
