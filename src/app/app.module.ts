@@ -4,7 +4,6 @@ import { DataService } from './data.service';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
-import { HeaderLeftComponent } from './header/header-left/header-left.component';
 import { HeaderRightComponent } from './header/header-right/header-right.component';
 import { NotificationOneComponent } from './header/notification-one/notification-one.component';
 import { NotificationTwoComponent } from './header/notification-two/notification-two.component';
@@ -31,7 +30,6 @@ import { AttachPipePipe } from './email/email-pipes/attach-pipe.pipe';
     AppComponent,
     MenuComponent,
     HeaderComponent,
-    HeaderLeftComponent,
     HeaderRightComponent,
     NotificationOneComponent,
     NotificationTwoComponent,
