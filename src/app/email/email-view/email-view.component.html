@@ -31,52 +31,55 @@
       </button>
     </div>
   </div>
+  <p class="subject">{{emailServ.selectedLetter.subject}}</p>
   <div class="messageContainer" #messageContainer>
-  <div class="mess__info">
-    <div class="avatar">
-      <!-- <img src={{emailServ.avatar}}> -->
-      <p>{{this.emailServ.avatarMake(emailServ.selectedLetter.from_address)}}</p>
-    </div>
-    <div class="r__info">
-    <div class="panel">
-    <div class="status_panel">
-        <span class='la la-sett' [class.visible]="emailServ.inworkLetter">
-            <p class='tooltip'>В работе</p>
-        </span>
-        <span class="la la-paperclip" [class.visible]="emailServ.haveattachLetter">
-            <p class='tooltip'>Вложения</p>
-        </span>
-        <span class="la la-flag" [class.visible]="emailServ.importantLetter">
-            <p class='tooltip'>Важное</p>
-        </span>
-    <!-- <span class="la la-active-flag"></span> -->
-  </div>
-  <p class='time'>{{emailServ.selectedLetter.date | timerPipe}}</p>
-</div>
 
-<div class='from'>
-  <div class='name__block'>От:
-    <p class='name'>{{emailServ.selectedLetter.from_address}}</p>
-  </div>
-  <div class='name__block'>Кому:
-    <p class='name' *ngFor="let item of emailServ.selectedLetter.to_addresses">{{item}}</p>
-  </div>
-  <div class='name__block'>Копия:
-    <p class='name'>{{emailServ.selectedLetter.bcc}}</p>
-  </div>
-</div>
-
-<div class="info">
-    
-    
-    
-</div>
-</div>
-  </div>
 
   <div class="mess__content">
+    
     <div class="mess__content_body">
-    <p class="subject">{{emailServ.selectedLetter.subject}}</p>
+        <div class="mess__info">
+            <div class="avatar">
+              <!-- <img src={{emailServ.avatar}}> -->
+              <p>{{this.emailServ.avatarMake(emailServ.selectedLetter.from_address)}}</p>
+            </div>
+            <div class="r__info">
+            <div class="panel">
+            <div class="status_panel">
+                <span class='la la-sett' [class.visible]="emailServ.inworkLetter">
+                    <p class='tooltip'>В работе</p>
+                </span>
+                <span class="la la-paperclip" [class.visible]="emailServ.haveattachLetter">
+                    <p class='tooltip'>Вложения</p>
+                </span>
+                <span class="la la-flag" [class.visible]="emailServ.importantLetter">
+                    <p class='tooltip'>Важное</p>
+                </span>
+            <!-- <span class="la la-active-flag"></span> -->
+          </div>
+          <p class='time'>{{emailServ.selectedLetter.date | timerPipe}}</p>
+        </div>
+        
+        <div class='from'>
+          <div class='name__block'>От:
+            <p class='name'>{{emailServ.selectedLetter.from_address}}</p>
+          </div>
+          <div class='name__block'>Кому:
+            <p class='name' *ngFor="let item of emailServ.selectedLetter.to_addresses">{{item}}</p>
+          </div>
+          <div class='name__block'>Копия:
+            <p class='name'>{{emailServ.selectedLetter.bcc}}</p>
+          </div>
+        </div>
+        
+        <div class="info">
+            
+            
+            
+        </div>
+        </div>
+          </div>
+    
     <div [innerHTML]="emailServ.selectedLetter.html | innerhtml" *ngIf="emailServ.selectedLetter.html !== null; else viewText"></div>
     <ng-template #viewText >
     <div class='text__view'>{{emailServ.selectedLetter.text}}</div>
@@ -117,6 +120,9 @@
         </button>
     </div>
   </div>
+</div>
+<div class="quickResponse">
+  Быстрый ответ
 </div>
 </div>
 </div>
