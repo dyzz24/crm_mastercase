@@ -2,8 +2,7 @@ import { Component, OnInit, ElementRef, DoCheck} from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
 
-
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -35,7 +34,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     public element: ElementRef,
     private _rout: Router,
     public emailServ: EmailServiceService,
-    private http: HttpClient
+    // private http: HttpClient
     ) {
    }
 
