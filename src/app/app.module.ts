@@ -24,6 +24,8 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { SplitterComponent } from './email/splitter/splitter.component';
 import { TimerPipePipe } from './email/email-pipes/timer-pipe.pipe';
 import { AttachPipePipe } from './email/email-pipes/attach-pipe.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,10 @@ import { AttachPipePipe } from './email/email-pipes/attach-pipe.pipe';
     FormsModule,
     QuillModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ToastContainerModule
   ],
   providers: [DataService, EmailServiceService],
   bootstrap: [AppComponent]

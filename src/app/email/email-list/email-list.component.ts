@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, DoCheck} from '@angular/core';
+import { Component, OnInit, ElementRef, DoCheck, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
+import { ToastrService, ToastContainerDirective } from 'ngx-toastr';
 
-// import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -11,6 +11,7 @@ import { EmailServiceService } from '../email-service.service';
   styleUrls: ['./email-list.component.scss']
 })
 export class EmailListComponent implements OnInit, DoCheck {
+  // @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;   // настройка тостера
   emailItems;
 
 
@@ -34,11 +35,12 @@ export class EmailListComponent implements OnInit, DoCheck {
     public element: ElementRef,
     private _rout: Router,
     public emailServ: EmailServiceService,
-    // private http: HttpClient
+    private toastr: ToastrService
     ) {
    }
 
   ngOnInit() {
+    // this.toastr.overlayContainer = this.toastContainer;    // настройка тостера
     // tslint:disable-next-line:max-line-length
     this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
     this.emailServ.accessToken = data.accessToken;
@@ -53,6 +55,10 @@ export class EmailListComponent implements OnInit, DoCheck {
   }
   ngDoCheck() {
     // console.log(this.emailServ.lettersList);
+  }
+
+  showSuccess() {
+    this.toastr.success('Что-то появится тут в будущем');
   }
 
   showHiddenBlock(param) {
@@ -70,6 +76,8 @@ export class EmailListComponent implements OnInit, DoCheck {
 
 
   goUrl( index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
+    this.showSuccess(); // test TOSTER
+    //  console.log(this.emailServ.lettersList);
     this.emailServ.haveResponse = false;
     this.adress = `${this.emailServ.ip}/mail/mails`;
     this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
