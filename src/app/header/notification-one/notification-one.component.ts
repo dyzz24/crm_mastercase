@@ -25,7 +25,7 @@ export class NotificationOneComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.emailServ.httpPost(`${this.emailServ.ip}/user/login`,
-    {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
+    {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
       this.emailServ.accessToken = data.accessToken;
       this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
       {contentType: 'application/json'}).subscribe((data2) => {

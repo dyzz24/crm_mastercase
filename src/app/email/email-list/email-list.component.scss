@@ -235,6 +235,7 @@ a,p{
 
 .activeTypeMess {
 background: #dddddd;
+font-weight: bold;
 }
 
 
@@ -266,6 +267,50 @@ background: #dddddd;
 .activeElem {
     background: #77efff;
 }
+
+.presentation_folder_test {
+    width: 100%;
+    line-height: 32px;
+    text-align: right;
+    padding: 0 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c3c5c7;
+}
+
+ul {
+    width: 100%;
+    // list-style-type: inherit;
+    margin: 0;
+    
+    
+    border-bottom: 1px solid #c3c5c7;
+    opacity: .9;
+    
+}
+
+.presentation_folder_test__child {
+    padding-left: 35px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: list-item;
+    text-align: left;
+    font-size: 14px;
+    transition: .4s;
+    &:hover {
+        background: #e6e6e6;
+    }
+    
+}
+.presentation_folder_test__child > ul > li {
+    opacity: .5;
+    &:hover {
+        background: #858181;
+    }
+}
+
 
 
 

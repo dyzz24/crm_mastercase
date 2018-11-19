@@ -145,6 +145,17 @@
         Входящие
          <span class='email__num'>{{email.count}}</span>
       </a>
+      <p class='presentation_folder_test'>Папка 1</p>
+      <ul>
+      <li class='presentation_folder_test__child'>Важные
+        <ul>
+            <li class='presentation_folder_test__child'>Задачи</li>
+            <li class='presentation_folder_test__child'>Выполненные</li>
+        </ul>
+      </li>
+      <li class='presentation_folder_test__child'>По работе</li>
+      <li class='presentation_folder_test__child'>Несортированные</li>
+    </ul>
       <a (click)="goUrl( i, '/sent', email.idPost, 'sent','',1)"[class.activeTypeMess]='emailServ.selectedMess===1'>
         Исходящие
         <span class='email__num'></span>

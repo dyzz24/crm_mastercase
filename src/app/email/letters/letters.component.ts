@@ -364,6 +364,28 @@ export class LettersComponent implements DoCheck, OnInit {
       if (this.emailServ.lettersList.length === 0) {
         this.rout.navigate([this.emailServ.urlParams]);
       }
+      if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
+        setTimeout(() => {
+          this.emailServ
+            .httpPost(
+              this.emailServ.adress,
+              // tslint:disable-next-line:max-line-length
+              {
+                address: this.emailServ.idPostForHTTP,
+                box: this.emailServ.selectNum,
+                limit: this.emailServ.lettersAmount,
+                offset: this.counterAmount
+              }
+            )
+            .subscribe(data => {
+              this.emailServ.lettersList = data;
+              this.emailServ.stateServ(); // save state on service
+    this.emailServ.hideAvatars = []; // чтоб инпуты работали
+    this.emailServ.idLetters = []; // обнуляю корзину на удаление
+    this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
+      });
+        }, 500);
+    }
     }, 500);
   }
 
