@@ -121,7 +121,7 @@ box-sizing: border-box;
 
 
 
-.la-repl, .la-repl-all, .la-repl-return, .la-print, .la-last, .la-next, .la-new, .la-delete {
+.la-repl, .la-repl-all, .la-repl-return, .la-print, .la-last, .la-next, .la-new, .la-delete, .la-download {
     display: block;
     width: 20px;
     height: 14px;
@@ -156,6 +156,23 @@ box-sizing: border-box;
 .la-delete {
     background:url('../../../assets/trash.png') no-repeat center;
     background-size: cover;
+}
+
+.download {
+    border: 1px solid $border;
+    margin-left: 40px;
+}
+
+.la-download {
+    width: 30px;
+    height: 20px;
+    background:url('../../../assets/download.png') no-repeat center;
+    background-size: contain;
+}
+
+.cont_html {
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 
@@ -372,48 +389,78 @@ box-sizing: border-box;
 .attachment__block {
     width: 100%;
     padding: 20px 0;
+    padding: 24px 10px 0px 48px;
+    box-sizing: border-box;
     display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    border-bottom:  1px solid $border;
+
+   
+}
+.attach_tooltip {
+    width: 250px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    z-index: 66;
+    left: 50%;
+    background: #424242;
+    color:white;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    @extend %default_text_param;
+    transform: scale(0);
+    animation: tooltipAnim .4s .1s forwards;
 }
 
 .attachment__item {
-    
-    
     display: flex;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
-    font-size: 45px;
-    margin-right: 10px;
-
-
+    align-items: center;
+    margin-bottom: 5px;
+    transition: .4s;
+    cursor: pointer;
+    position: relative;
     span {
-        width: 90px;
-        height: 90px;
+        margin-right: 8px;
         position: relative;
-        line-height: 90px;
         border-radius: 2px;
     background-color: #fff;
-    border: solid 1px $border;
-    margin-bottom: 5px;
+    }
+    &:hover {
+            background: #dedee0;
+    }
+    &:hover .attach_tooltip {
+        display: block;
     }
 }
 
+.attach__container {
+    width: 454px;
+    display: flex;
+    flex-direction: column;
+}
+
 .filename {
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
+    @extend %default_text_param;
+    color: rgb(0, 0, 0);
+    font-size: 13px;
     width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     text-align: left;
+    line-height: 15px;
+    
 }
 .size {
     font-size: 10px;
-    color: $micro-text_color;
+    color: #b2b2b2;
+    @extend %default_text_param;
 }
 
 

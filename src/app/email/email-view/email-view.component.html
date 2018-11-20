@@ -103,19 +103,30 @@
             </div>
         </div>
           </div>
+          <div class="attachment__block" >
+            <div class="attach__container">
+              <div class="attachment__item" *ngFor="let attach of this.attachersList; let i = index">
+              <span [class]='attach.type | attachPipe'></span>
+              <p class='filename'>{{attach.title}}
+               
+              </p>
+              
+              <p class='size'>{{attach.size}}</p>
+               <p class="attach_tooltip">{{attach.title}}</p>
+              </div>
+              
+            </div>
+            <button class='download' >
+                <span class='la la-download'></span>
+                <p class="tooltip">Скачать всё</p>
+              </button>
+        
+            </div>
     
-    <div [innerHTML]="emailServ.selectedLetter.html | innerhtml" *ngIf="emailServ.selectedLetter.html !== null; else viewText"></div>
+    <div [innerHTML]="emailServ.selectedLetter.html | innerhtml" *ngIf="emailServ.selectedLetter.html !== null; else viewText" class='cont_html'></div>
     <ng-template #viewText >
-    <div class='text__view'>{{emailServ.selectedLetter.text}}</div>
+    <div class='cont_html'>{{emailServ.selectedLetter.text}}</div>
   </ng-template>
-    <div class="attachment__block" >
-      <div class="attachment__item" *ngFor="let attach of this.attachersList; let i = index">
-      <span [class]='attach.type | attachPipe'></span>
-      <p class='filename'>{{attach.title}}</p>
-      <p class='size'>{{attach.size}}</p>
-      </div>
-
-    </div>
     <div class="from__panel">
       <div class="from__line">
     <p class='from__head'>Кому: </p>
