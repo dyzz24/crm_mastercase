@@ -43,13 +43,23 @@
       <p class="tooltip">Меню</p>
     </button>
   </div>
+  <div class="left__panel end">
     <button class='close' (click)='closeViewer()'>
         <span class='la la-close'></span>
         <p class="tooltip">Закрыть</p>
       </button>
+    </div>
   </div>
   </div>
-  <p class="subject">{{emailServ.selectedLetter.subject}}</p>
+  <div class="subject"><p class='subject__theme'>Тема: {{emailServ.selectedLetter.subject}}</p>
+        <div class='who_in_work'>
+          <p class='in_work'>Иванов Иван</p>
+          <button>
+              <span class='la la-print'></span>
+              <p class="tooltip">Распечатать</p>
+            </button>
+        </div>
+  </div>
   <div class="messageContainer" #messageContainer>
 
 
@@ -57,44 +67,40 @@
     
     <div class="mess__content_body">
         <div class="mess__info">
+          <div class="avatar__block">
             <div class="avatar">
               <!-- <img src={{emailServ.avatar}}> -->
-              <p>{{this.emailServ.avatarMake(emailServ.selectedLetter.from_address)}}</p>
+              <p class='avatar__title'>{{this.emailServ.avatarMake(emailServ.selectedLetter.from_address)}}</p>
             </div>
+          </div>
             <div class="r__info">
             <div class="panel">
-            <div class="status_panel">
-                <span class='la la-sett' [class.visible]="emailServ.inworkLetter">
-                    <p class='tooltip'>В работе</p>
-                </span>
-                <span class="la la-paperclip" [class.visible]="emailServ.haveattachLetter">
-                    <p class='tooltip'>Вложения</p>
-                </span>
-                <span class="la la-flag" [class.visible]="emailServ.importantLetter">
-                    <p class='tooltip'>Важное</p>
-                </span>
-            <!-- <span class="la la-active-flag"></span> -->
-          </div>
+              <div class='panel__name'>
+                
+                <p class='full_name' *ngIf="emailServ.selectedLetter.from_name !== null">{{emailServ.selectedLetter.from_name}}</p>
+                <p class='email__name'>{{emailServ.selectedLetter.from_address}}</p>
+              </div>
           <p class='time'>{{emailServ.selectedLetter.date | timerPipe}}</p>
-        </div>
-        
-        <div class='from'>
-          <div class='name__block'>От:
-            <p class='name'>{{emailServ.selectedLetter.from_address}}</p>
-          </div>
-          <div class='name__block'>Кому:
-            <p class='name' *ngFor="let item of emailServ.selectedLetter.to_addresses">{{item}}</p>
-          </div>
-          <div class='name__block'>Копия:
-            <p class='name'>{{emailServ.selectedLetter.bcc}}</p>
-          </div>
-        </div>
-        
-        <div class="info">
-            
-            
-            
-        </div>
+            </div>
+            <div class="info__row">
+              <p class="info_head">Кому: </p>
+              <div class="info__content__block">
+              <p class='info__content_p' *ngIf="this.emailServ.selectedLetter.to_addresses.length ===1; else have_many_addresses">Вам</p>
+              <ng-template #have_many_addresses>
+              <p class='info__content_p' *ngFor="let item of this.emailServ.selectedLetter.to_addresses">{{item}}</p>
+              </ng-template>
+            </div>
+            </div>
+            <div class="info__row" *ngIf="this.emailServ.selectedLetter.cc_addresses !== null">
+                <p class="info_head">Копия:</p>
+                <div class="cut__visible_block">
+                <p class='info__content_p' *ngFor="let item of this.emailServ.cut_cc_adressess_array">{{item}}</p>
+                <input type='button' class='cc' [class.input_return]='this.emailServ.cut_cc_adressess_array.length === this.emailServ.selectedLetter.cc_addresses.length'
+                *ngIf="this.emailServ.selectedLetter.cc_addresses.length > 3"
+                (click)='all_view($event)' 
+                value='+{{this.emailServ.selectedLetter.cc_addresses.length - this.emailServ.cut_cc_adressess_array.length}}'>
+                </div>
+            </div>
         </div>
           </div>
     

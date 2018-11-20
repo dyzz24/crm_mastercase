@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class EmailServiceService {
   emails;
 
+
   idBox: string;
   typeMess: string;
   activeLett: Array<boolean> = [];
@@ -54,6 +55,7 @@ export class EmailServiceService {
   noMessages = false; // DEL
   offset;
   accessToken; // autorization
+  accessToken2;
 
   stopFlag = false; // для остановки отправки http пока не выполнится предыдущий http
   dataLetters; // для остановки подгруза писем когда все загружены
@@ -63,6 +65,10 @@ export class EmailServiceService {
 
   mailsToArray = []; // кому отправить письмо (список адресатов)
   subjectTo;
+
+  cut_cc_adressess_array;
+  cut_bcc_adressess_array;
+
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem('all-states') === null) {
@@ -85,7 +91,7 @@ export class EmailServiceService {
       this.fullPath = state.fullPath;
       this.hiddenEmpty = state.hiddenEmpty;
       this.lettersList = state.lettersList;
-
+      this.cut_cc_adressess_array = state.cut_cc_adressess_array;
       this.index = state.index;
       this.result = state.result;
       this.currentObjectLetter = state.currentObjectLetter;
@@ -138,7 +144,8 @@ export class EmailServiceService {
       selectNum: this.selectNum,
       idPostForHTTP: this.idPostForHTTP,
       adress: this.adress,
-      mailsToArray: this.mailsToArray
+      mailsToArray: this.mailsToArray,
+      cut_cc_adressess_array: this.cut_cc_adressess_array
     };
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
@@ -180,5 +187,15 @@ public httpPost(url: string, body, options?): Observable<any> {
     item.toString();
     const firstLett = item[0];
     return firstLett;
+  }
+
+
+  checkerLengthArray_bcc_cc() {
+    if (this.selectedLetter.cc_addresses === null || this.selectedLetter.bcc_addresses === null) {
+      return;
+    }
+    if (this.selectedLetter.cc_addresses.length > 3) {
+      this.cut_cc_adressess_array = this.selectedLetter.cc_addresses.slice(0, 3);
+    }
   }
 }

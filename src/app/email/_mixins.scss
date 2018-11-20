@@ -5,8 +5,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 4px;
-    height: 21px;
 }
 
 %avatar {
@@ -118,13 +116,7 @@
 
 
 
-.la-delete {
-    font-size: 17px;
-    &::before {
-        content: '\f1f8';
-    }
- 
-}
+
 
 .la-restore {
     font-size: 17px;
@@ -134,21 +126,10 @@
 }
 
 
-.la-new::before {
-    content: '\f0e0';
-}
-
-.la-last::before {
-    content: '\f053';
-}
-
 .la-end::before {
     content: '\f122';
 }
 
-.la-next::before {
-    content: '\f054';
-}
 
 .la-hamburger::before {
     content: '\f0c9';
@@ -269,7 +250,7 @@ button {
     position: absolute;
     width: $wid;
     height: $hei;
-    bottom: $bottom;
+    top: $bottom;
     right: $right;
     background: $background;
     border-radius: 6px;
@@ -305,7 +286,7 @@ button {
     border-radius: 4px;
     transition: .4s;
     &:hover {
-        background: #858585;
+        background: rgba(75, 121, 187, 0.3);
     }
 }
 

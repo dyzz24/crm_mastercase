@@ -19,6 +19,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
   attachersList = attachers;
 
 
+
   constructor(public emailServ: EmailServiceService,
     private _rout: Router,
     private elem: ElementRef) { }
@@ -26,7 +27,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
   ngOnInit() {
   }
   ngDoCheck() {
-    // console.log(this.emailServ.selectedLetter.html);
+    // console.log(this.emailServ.selectedLetter);
   }
 
   closeViewer() {
@@ -128,5 +129,20 @@ this.emailServ.stateServ();
           return val;
         }
     });
+  }
+
+
+  all_view(e) {
+    if (e.target.classList.contains('cc')) {
+      if (this.emailServ.cut_cc_adressess_array !== this.emailServ.selectedLetter.cc_addresses) {
+      this.emailServ.cut_cc_adressess_array = this.emailServ.selectedLetter.cc_addresses;
+      e.target.value = '';
+      e.target.classList.add('input_return');
+      } else {
+        e.target.classList.remove('input_return');
+        this.emailServ.checkerLengthArray_bcc_cc();
+        e.target.value = this.emailServ.selectedLetter.cc_addresses.length - this.emailServ.cut_cc_adressess_array.length;
+      }
+    }
   }
 }

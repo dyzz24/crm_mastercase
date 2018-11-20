@@ -186,7 +186,7 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.fullPath =
       this.emailServ.urlParams + '/view/' + idLetter;
     this.emailServ.currentId = idLetter; // test
-
+    this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.stateServ();
     // console.log(this.emailServ.selectedLetter);
   }
@@ -434,6 +434,13 @@ export class LettersComponent implements DoCheck, OnInit {
   this.emailServ.hideAvatars = []; // чтоб инпуты работали
   this.emailServ.idLetters = []; // обнуляю корзину на удаление
   this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
+}
+
+get_work(id, e) {
+  e.target.parentNode.classList.remove('visible');
+  this.emailServ
+  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true })
+  .subscribe();
 }
 
 // @HostListener('window:resize', ['$event'])

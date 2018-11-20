@@ -106,6 +106,7 @@
               <p class='tooltip'>Меню</p>
             </button>
             <div class="hideMenu" *ngIf="sent_incomingChecker(i)">
+                <button class='letterMenuButt' (click)='get_work(emailServ.lettersList[i].id, $event)'>Взять в работу</button>
               <button class='letterMenuButt' (click)='spamMark(i,$event,4, emailServ.lettersList[i].id)' *ngIf='this.emailServ.lettersList[i].box !== 4 && this.emailServ.lettersList[i].box !== 2 ; else deleteSpam'>Пометить как спам</button>
               <ng-template #deleteSpam >
                 <button class='letterMenuButt' (click)='spamMark(i,$event,0, emailServ.lettersList[i].id)'  *ngIf='this.emailServ.lettersList[i].box !== 2'>Удалить из спама</button>
