@@ -1,35 +1,53 @@
 <div class="container__view">
-  <div class="header">
+  <div class="header_letter__view">
+    <div class="group__one">
     <div class="left__panel">
         <button class='new__mess'>
             <span class='la la-new'></span>
             <p class="tooltip">Новое сообщение</p>
           </button>
-          <button (click)='selectMess(-1)'>
+          <button (click)='selectMess(-1)' class='arrow_group'>
               <span class='la la-last' ></span>
               <p class="tooltip">Следующее сообщение</p>
             </button>
-              <button  (click)='selectMess(1)'>
+              <button  (click)='selectMess(1)' class='arrow_group'>
                   <span class='la la-next'></span>
                   <p class="tooltip">Предыдущее сообщение</p>
                 </button>
-                <button class='menu' (click)='deleteLetter()'>
-                    <span class='la la-delete'></span>
-                    <p class="tooltip">Удалить сообщение</p>
-                  </button>
     </div>
-    <div class="right_panel">
+    <div class="left__panel">
+  <button class='menu'>
+    <span class='la la-repl'></span>
+    <p class="tooltip">Ответить</p>
+</button>
+<button class='menu'>
+  <span class='la la-repl-all'></span>
+  <p class="tooltip">Ответить всем</p>
+</button>
+<button class='menu'>
+  <span class='la la-repl-return'></span>
+  <p class="tooltip">Переслать</p>
+</button>
+    </div>
+  <button class='menu' (click)='deleteLetter()'>
+   <span class='la la-delete'></span>
+  <p class="tooltip">Удалить сообщение</p>
+  </button>
+</div>
+<div class="group__one">
+    <div class="left__panel end">
       <button class='menu' (click)='hideMenuShow()'>
       <span class='la la-ellipsis'></span>
       <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
       </div>
       <p class="tooltip">Меню</p>
     </button>
+  </div>
     <button class='close' (click)='closeViewer()'>
         <span class='la la-close'></span>
         <p class="tooltip">Закрыть</p>
       </button>
-    </div>
+  </div>
   </div>
   <p class="subject">{{emailServ.selectedLetter.subject}}</p>
   <div class="messageContainer" #messageContainer>

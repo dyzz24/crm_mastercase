@@ -71,7 +71,7 @@
 .la-ellipsis,
 .la-close {
     font-weight: bold;
-    font-size: 21px;
+    font-size: 17px;
 }
 
 .la-let::before {
@@ -111,43 +111,35 @@
 }
 
 .la-active-flag::before {
-    content:'\f024';
-    font-style: oblique;   
+    content:'\f024';  
 }
+
+
 
 
 
 .la-delete {
-    font-size: 24px;
-    line-height: 24px;
-    color: red;
+    font-size: 17px;
     &::before {
         content: '\f1f8';
     }
-    &:hover {
-        color:rgb(15, 13, 13);
-    }   
+ 
 }
 
 .la-restore {
-    font-size: 24px;
-    line-height: 24px;
-    color: rgb(108, 196, 73);
+    font-size: 17px;
     &::before {
         content: '\f2d2';
     }
-    &:hover {
-        color:rgb(15, 13, 13);
-    }   
 }
 
 
 .la-new::before {
-    content: '\f15b';
+    content: '\f0e0';
 }
 
 .la-last::before {
-    content: '\f048';
+    content: '\f053';
 }
 
 .la-end::before {
@@ -155,7 +147,7 @@
 }
 
 .la-next::before {
-    content: '\f051';
+    content: '\f054';
 }
 
 .la-hamburger::before {
@@ -215,12 +207,10 @@
 
 
 
-@mixin header($flex-dir){
+@mixin header($flex-dir,$height:60px){
     @extend %all-padding;
     width: 100%;
-    height: 60px;
-    border: 1px solid $border;
-    border-left: none;
+    height: $height;
     box-sizing: border-box;
     display: flex;
     align-items: center;

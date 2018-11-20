@@ -30,7 +30,7 @@ $font-color: $icons-color;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 60px);
-    position: relative;
+    // position: relative;
     &::before {
         content: '';
         position: absolute;
