@@ -49,20 +49,6 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
     {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2;
-      this.socket = io('ws://10.0.1.10:3000', {
-      query: {
-          // tslint:disable-next-line:max-line-length
-          token: this.emailServ.accessToken
-      }
-  });
-  this.socket.on('connect', () => {
-    this.showSuccess(`Пользователь ${this.emailItems[0].address} залогинен`);
-});
-this.socket.on('msg', (msg) => {
-  const dataStr = msg;
-  console.log(dataStr);
-  this.showSuccess(msg);
- });
     } );
     this.emailServ.stateServ(); } );
   // this.socket.on('connect_error', (error) => {
@@ -82,9 +68,6 @@ this.socket.on('msg', (msg) => {
     // console.log(this.emailServ.lettersList);
   }
 
-  showSuccess(param) {
-    this.toastr.success(param);
-  }
 
   showHiddenBlock(param) {
 

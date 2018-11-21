@@ -6,6 +6,9 @@ import { validateConfig } from '@angular/router/src/config';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
+import { ToastrService, ToastContainerDirective } from 'ngx-toastr';
+import * as io from 'socket.io-client';
+
 
 
 
@@ -16,6 +19,7 @@ import { debounceTime } from 'rxjs/operators';
 
 })
 export class LettersComponent implements DoCheck, OnInit {
+  socket: SocketIOClient.Socket;
   idEmail: any;
   messages = [];
   lettersItems: any;
@@ -50,6 +54,7 @@ export class LettersComponent implements DoCheck, OnInit {
     public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router,
+    private toastr: ToastrService
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
@@ -67,6 +72,13 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
+  showSuccess(param) {
+    this.toastr.success(param);
+  }
+  showError(param) {
+    this.toastr.error(param);
+  }
+
 
   searchOnServer() {
     if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
@@ -136,6 +148,38 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngOnInit() {
+    this.socket = io('ws://10.0.1.10:3000', {
+      query: {
+          // tslint:disable-next-line:max-line-length
+          token: this.emailServ.accessToken
+      }
+  });
+  this.socket.on('connect', () => {
+    this.showSuccess(`Пользователь ${this.emailServ.idPostForHTTP} залогинен`);
+});
+this.socket.on('msg', (msg) => {
+  const dataStr = JSON.parse(msg);
+  console.log(dataStr);
+  if (dataStr.status === 1) {
+    this.showSuccess(`Пользователь ${dataStr.address} взял письмо в работу`);
+  this.emailServ.lettersList.map((val, ind) => {
+          if (+val.id === +dataStr.mailId) {
+            val.draft = dataStr.address;
+          }
+    });
+  }
+  if (dataStr.status === 0) {
+  this.showSuccess(`Письмо снято`);
+  this.emailServ.lettersList.map((val, ind) => {
+    if (+val.id === +dataStr.mailId) {
+      val.draft = null;
+    }
+});
+  }
+  if (dataStr.status === 2) {
+this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.address}`);
+  }
+ });
     this.emailServ.dataLetters = this.emailServ.lettersAmount;
 
     // const map_new_time_letters = this.emailServ.lettersList.map((val) => {
@@ -188,7 +232,6 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.stateServ();
-    // console.log(this.emailServ.selectedLetter);
   }
 
   selectedLetters(id, e, i) {
@@ -439,17 +482,17 @@ export class LettersComponent implements DoCheck, OnInit {
 get_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
   this.emailServ
-  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true })
+  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
-  this.emailServ.lettersList[index].draft  = true;
+  // this.emailServ.lettersList[index].draft  = this.emailServ.idPostForHTTP;
 }
 
 delete_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
   this.emailServ
-  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: false })
+  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: false, address: this.emailServ.idPostForHTTP })
   .subscribe();
-  this.emailServ.lettersList[index].draft = false;
+  // this.emailServ.lettersList[index].draft = null;
 }
 
 // @HostListener('window:resize', ['$event'])

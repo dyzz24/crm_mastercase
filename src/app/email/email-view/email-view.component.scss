@@ -212,7 +212,7 @@ box-sizing: border-box;
     @extend %default_text_param;
     font-weight: 600;
     flex-shrink: 0;
-    margin-right: 15px;
+    margin-right: 15px !important;
 }
 .email__name {
     @extend %default_text_param;
