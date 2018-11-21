@@ -36,28 +36,28 @@
     <div class="header">
       <div class="header__search">
         <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
-        <span class='la la-search' *ngIf="this.startSearch === true"></span>
-        <span class='la la-refresh search-ref' *ngIf="this.stopSearch === true"></span>
-        <span class='la la-ok' *ngIf="this.successSearch === true"></span>
+        <span class='la la-min la-search' *ngIf="this.startSearch === true"></span>
+        <span class='la  la-min la-refresh search-ref' *ngIf="this.stopSearch === true"></span>
+        <span class='la la-min la-check' *ngIf="this.successSearch === true"></span>
       </div>
       <button class='letters__refresh' type='button'>
-        <span class='la la-refresh'></span>
+        <span class='la  la-refresh'></span>
         <p class="tooltip">Обновить</p>
       </button>
       <button class='letters__locate' (click)='scrollTop($event)' type='button'>
-        <span class='la la-locate'></span>
+        <span class='la  la-long-arrow-up'></span>
         <p class="tooltip">Наверх</p>
       </button>
     </div>
 
     <div class="hidden__setting_panel" [class.hiddenTrash]='!emailServ.hiddenTrash'>
         <button class='letters__delete' type='button'  (click)='deleteRestoreLettersAll(2)' *ngIf="this.emailServ.typeMess !=='delete'; else restoreAll">
-            <span class='la la-delete'></span>
+            <span class='la la-trash-o'></span>
             <p class="tooltip">Удалить</p>
           </button>
           <ng-template #restoreAll >
           <button class='letters__delete' type='button' (click)='deleteRestoreLettersAll(0)'>
-            <span class='la la-restore'></span>
+            <span class='la la-share-alt'></span>
             <p class="tooltip">Восстановить</p>
           </button>
         </ng-template>
@@ -102,7 +102,7 @@
               <p class='tooltip'>Вложения</p>
             </span>
             <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">
-              <span class='la la-ellipsis'></span>
+              <span class='la la-ellipsis-h'></span>
               <p class='tooltip'>Меню</p>
             </button>
             <div class="hideMenu" *ngIf="sent_incomingChecker(i)">
@@ -137,7 +137,7 @@
   
   </div>
   
-    <app-splitter left min='200' max='1100'></app-splitter>
+    <app-splitter left min='180' max='500'></app-splitter>
   
  
 

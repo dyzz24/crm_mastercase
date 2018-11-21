@@ -39,13 +39,6 @@ input,button {
 }
 
 
-
-@font-face {
-    font-family: 'la';
-    src:url('./assets/fonts/fontawesome-webfont.ttf');
-    font-weight: bold;
-}
-
 @font-face {
     font-family: 'Roboto-Black';
     src:url('./assets/fonts/Roboto/Roboto-Black.ttf');
@@ -63,7 +56,7 @@ input,button {
 
 
 .la-post {
-    font-size: 20px;
+    font-size: 14px;
     color:rgb(238, 229, 229);
     cursor: pointer;
     line-height: 60px;
@@ -73,6 +66,7 @@ input,button {
         content: "\f0e0";
     }
 }
+
 
 // @font-face {
 //     font-family: 'OpenSans-Regular';

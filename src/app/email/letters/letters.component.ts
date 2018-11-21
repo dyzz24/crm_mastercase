@@ -157,7 +157,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   urlLetterView(event, idLetter, id) {
-    if (event.target.className === 'la la-ellipsis') {
+    if (event.target.className === 'la la-ellipsis-h') {
       return;
     }
 

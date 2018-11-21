@@ -7,7 +7,7 @@
     <button (click)='login(2)'>Логин 2</button> -->
     <p>Почта</p>
     <button class='email-menu' (click)='inboxMenuShow()'>
-      <span class='la la-hamburger'></span>
+      <span class='la la-bars'></span>
       <p class="tooltip">Меню</p>
       <div class='hideInboxMenu' [ngClass]='{visible:inboxMenuStatus}'>
         <button (click)='createInboxOpen()'>Создать ящик</button>
@@ -141,7 +141,7 @@
 
     <a class="emails__list" (click)="goUrl(i, '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeInbox]='emailServ.activeEl[i]' (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'>
       <p>{{email.address}}</p>
-      <span class='la la-butt-down' type='button'> </span>
+      <span class='la la-lg la-angle-double-down' type='button'> </span>
     </a>
     <div class="hiddenMenu" [class.visibl]='visibl[i]'>
       <a (click)="goUrl( i , '/inbox', email.idPost, 'incoming', i+1, 0)" [class.activeTypeMess]='emailServ.selectedMess===0'>

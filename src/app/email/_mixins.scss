@@ -25,6 +25,7 @@
         border-radius: 50%;
     }
     p {
+        color:$text-color;
         font-size: 14px;
     }
 }
@@ -66,7 +67,7 @@
 }
 
 
-.la-ellipsis,
+
 .la-close {
     font-weight: bold;
     font-size: 17px;
@@ -80,9 +81,7 @@
     content:'\f00d';
 }
 
-.la-ellipsis::before {
-    content:'\f141';
-}
+
 
 .la-sett,
 .la-paperclip,
@@ -93,29 +92,6 @@
         display: block;
      }
 }
-
-
-
-.la-sett::before {
-    content:'\f0ad';
-}
-
-.la-paperclip::before {
-    content:'\f0c6';
-}
-
-.la-flag::before {
-    content:'\f024';
-}
-
-.la-active-flag::before {
-    content:'\f024';  
-}
-
-
-
-
-
 
 
 .la-restore {
@@ -188,7 +164,7 @@
 
 
 
-@mixin header($flex-dir,$height:60px){
+@mixin header($flex-dir,$height:45px){
     @extend %all-padding;
     width: 100%;
     height: $height;

@@ -4,8 +4,8 @@
         </div>
 
         <div class='nav__items'>
-                <div class="icon__nav" [class.active]='dataServ.menuActive===0'><span class="la la-post"></span></div>
-                <div class="icon__nav" [class.active]='dataServ.menuActive===1'><span class="la la-post"></span></div>
+                <div class="icon__nav" [class.active]='dataServ.menuActive===0'><span class="la la-lg la-envelope-o"></span></div>
+                <div class="icon__nav" [class.active]='dataServ.menuActive===1'><span class="la la-lg la-calendar"></span></div>
 
                 <div class="nav__buttons" [ngClass]='{hidenBlock:hidden}'>
                         <a routerLink="email" (click)='clearLocalStorage(0, $event)'[class.active]='dataServ.menuActive===0'>Почта</a>
