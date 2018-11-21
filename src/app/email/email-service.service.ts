@@ -2,7 +2,7 @@ import { Injectable} from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-
+import { Router} from '@angular/router';
 import { Observable } from 'rxjs';
 
 
@@ -70,7 +70,7 @@ export class EmailServiceService {
   cut_bcc_adressess_array;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private rout: Router) {
     if (localStorage.getItem('all-states') === null) {
       return;
     } else {
@@ -187,6 +187,12 @@ public httpPost(url: string, body, options?): Observable<any> {
     item.toString();
     const firstLett = item[0];
     return firstLett;
+  }
+
+  newMessage() {
+    this.rout.navigate([this.urlParams + '/create']);
+    this.fullPath = this.urlParams + '/create';
+    this.hiddenEmpty = true;
   }
 
 

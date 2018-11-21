@@ -249,14 +249,14 @@ box-sizing: border-box;
 }
 
 .info__content__block {
-    max-width: 600px;
+    max-width: 480px;
     width: auto;
     display: flex;
 }
 
 .cut__visible_block {
     display: flex;
-    max-width: 600px;
+    max-width: 480px;
     width: auto;
     flex-wrap: wrap;
     align-items: center;
@@ -342,7 +342,7 @@ box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 10px;
     margin-right: 5px; 
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
     line-height: 1;
     padding: 4px 6px;
@@ -420,7 +420,7 @@ box-sizing: border-box;
     font-size: 13px;
     width: 100%;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    // white-space: nowrap;
     overflow: hidden;
     text-align: left;
     line-height: 15px;
@@ -611,6 +611,10 @@ box-sizing: border-box;
     border-radius: 10px;
     border: 1px solid $border;
     outline: none;
+
+    &:focus {
+        border-color: #57a2d7;
+    }
 
 }
 

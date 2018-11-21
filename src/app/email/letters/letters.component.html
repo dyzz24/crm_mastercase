@@ -146,9 +146,9 @@
     <div class="empty" [class.hiddenBlock]='emailServ.hiddenEmpty'>
       
       <div class="empty__cont">
-        <span class="la la-letter"></span>
+        <span class="la la-envelope-o la-3x"></span>
         <p>Выберите письмо для отображения или</p>
-        <button class='main__butt' (click)='newMessage()'>Создайте новое письмо</button>
+        <button class='main__butt' (click)='this.emailServ.newMessage()'>Создайте новое письмо</button>
       </div>
 
     </div>

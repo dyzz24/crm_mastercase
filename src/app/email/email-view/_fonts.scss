@@ -416,22 +416,22 @@
   .la-female:before { content: "\f1dd"; }
   .la-fighter-jet:before { content: "\f1de"; }
   .la-file:before { content: "\f1df"; }
-  .la-file-archive-o:before { content: "\f1e0"; }
-  .la-file-audio-o:before { content: "\f1e1"; }
+  .la-file-archive-o:before { content: "\f1e0"; color: #efaf48}
+  .la-file-audio-o:before { content: "\f1e1"; color:#704996}
   .la-file-code-o:before { content: "\f1e2"; }
-  .la-file-excel-o:before { content: "\f1e3"; }
+  .la-file-excel-o:before { content: "\f1e3";  color: #219651}
   .la-file-image-o:before { content: "\f1e4"; }
   .la-file-movie-o:before { content: "\f1e5"; }
   .la-file-o:before { content: "\f1e6"; }
-  .la-file-pdf-o:before { content: "\f1e7"; }
+  .la-file-pdf-o:before { content: "\f1e7"; color: #ff2116}
   .la-file-photo-o:before { content: "\f1e8"; }
   .la-file-picture-o:before { content: "\f1e9"; }
-  .la-file-powerpoint-o:before { content: "\f1ea"; }
+  .la-file-powerpoint-o:before { content: "\f1ea"; color: #e0522c}
   .la-file-sound-o:before { content: "\f1eb"; }
   .la-file-text:before { content: "\f1ec"; }
-  .la-file-text-o:before { content: "\f1ed"; }
+  .la-file-text-o:before { content: "\f1ed"; color:#74cec6 }
   .la-file-video-o:before { content: "\f1ee"; }
-  .la-file-word-o:before { content: "\f1ef"; }
+  .la-file-word-o:before { content: "\f1ef"; color: #2d6ac7}
   .la-file-zip-o:before { content: "\f1f0"; }
   .la-files-o:before { content: "\f1f1"; }
   .la-film:before { content: "\f1f2"; }
@@ -518,7 +518,7 @@
   .la-html5:before { content: "\f243"; }
   .la-i-cursor:before { content: "\f244"; }
   .la-ils:before { content: "\f245"; }
-  .la-image:before { content: "\f246"; }
+  .la-image:before { content: "\f246"; color: #824d22}
   .la-inbox:before { content: "\f247"; }
   .la-indent:before { content: "\f248"; }
   .la-industry:before { content: "\f249"; }
