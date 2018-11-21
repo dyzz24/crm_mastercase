@@ -47,8 +47,31 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
     this.emailServ.accessToken = data.accessToken;
     this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
-    {contentType: 'application/json'}).subscribe((data2) => this.emailItems = data2 );
+    {contentType: 'application/json'}).subscribe((data2) => {
+      this.emailItems = data2;
+      this.socket = io('ws://10.0.1.10:3000', {
+      query: {
+          // tslint:disable-next-line:max-line-length
+          token: this.emailServ.accessToken
+      }
+  });
+  this.socket.on('connect', () => {
+    this.showSuccess(`Пользователь ${this.emailItems[0].address} залогинен`);
+});
+this.socket.on('msg', (msg) => {
+  const dataStr = msg;
+  console.log(dataStr);
+  this.showSuccess(msg);
+ });
+    } );
     this.emailServ.stateServ(); } );
+  // this.socket.on('connect_error', (error) => {
+  //     console.error('connect_error', error);
+  // });
+  // this.socket.on('error', (error) => {
+  //     console.error('error', error);
+  // });
+
 
 
     if (localStorage.length === 0) {
@@ -192,46 +215,4 @@ this._rout.navigate(['email/']);
 loadAmount(count) {   // для количества загруженных писем
   this.emailServ.lettersAmount = count;
 }
-
-// login(par) {
-//     if (par === 1) {
-//       // tslint:disable-next-line:max-line-length
-//       this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
-//         this.emailServ.accessToken = data.accessToken; });
-//         this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
-//           {contentType: 'application/json'}).subscribe((data2) => this.emailItems = data2 );
-//           this.emailServ.stateServ();
-//     }
-//     if (par === 2) {
-//       // tslint:disable-next-line:max-line-length
-//       this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
-//         this.emailServ.accessToken = data.accessToken; });
-//         this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
-//           {contentType: 'application/json'}).subscribe((data2) => this.emailItems = data2 );
-//           this.emailServ.stateServ();
-//     }
-//     (window as any).global = window;
-//     this.socket = io('ws://10.0.1.10:3000', {
-//            query: {
-//                // tslint:disable-next-line:max-line-length
-//                token: this.emailServ.accessToken
-//            }
-//        });
-
-//        this.socket.on('connect', () => {
-//            console.log('cli_connect');
-//            this.showSuccess('Залогинен');
-//        });
-//        this.socket.on('connect_error', (error) => {
-//            console.error('connect_error', error);
-//        });
-//        this.socket.on('error', (error) => {
-//            console.error('error', error);
-//        });
-//        this.socket.on('msg', (msg) => {
-//         this.showSuccess(msg);
-//        });
-// }
-
-
 }

@@ -178,7 +178,7 @@ $font-color: $icons-color;
     width: 100%;
     display: flex;
     flex-direction: column;
-    // overflow: hidden;
+    overflow: hidden;
     border-top: 0px;
     box-sizing: border-box;
 }
@@ -548,6 +548,11 @@ transition: .5s;
 
 .for__presentation {
     background: #33ccff;
+}
+
+
+.active_in_work {
+    background: rgb(16, 221, 85);
 }
 
 

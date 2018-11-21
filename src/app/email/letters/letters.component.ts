@@ -436,11 +436,20 @@ export class LettersComponent implements DoCheck, OnInit {
   this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
 }
 
-get_work(id, e) {
+get_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
   this.emailServ
   .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true })
   .subscribe();
+  this.emailServ.lettersList[index].draft  = true;
+}
+
+delete_work(id, e, index) {
+  e.target.parentNode.classList.remove('visible');
+  this.emailServ
+  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: false })
+  .subscribe();
+  this.emailServ.lettersList[index].draft = false;
 }
 
 // @HostListener('window:resize', ['$event'])

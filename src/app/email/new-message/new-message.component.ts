@@ -28,4 +28,8 @@ private messages;
     this.emailServ.stateServ();
   }
 
+  sendMessage() {
+    console.log(this.to, this.from, this.copy, this.messages);
+  }
+
 }
