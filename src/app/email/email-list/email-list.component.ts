@@ -42,6 +42,7 @@ export class EmailListComponent implements OnInit, DoCheck {
    }
 
   ngOnInit() {
+
     // this.toastr.overlayContainer = this.toastContainer;    // настройка тостера
     // tslint:disable-next-line:max-line-length
     this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {

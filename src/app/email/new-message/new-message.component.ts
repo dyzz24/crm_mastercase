@@ -29,7 +29,10 @@ private messages;
   }
 
   sendMessage() {
-    console.log(this.to, this.from, this.copy, this.messages);
-  }
+    this.emailServ.httpPost(
+      `${this.emailServ.ip}/mail/send`,
+      // tslint:disable-next-line:max-line-length
+      { subject: this.subject, text: this.messages, html: this.messages}).subscribe((data) => {
+  });
 
-}
+}}
