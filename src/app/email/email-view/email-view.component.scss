@@ -173,6 +173,8 @@ box-sizing: border-box;
 .cont_html {
     padding: 20px;
     box-sizing: border-box;
+    width: 100%;
+    word-break: break-all;
 }
 
 
@@ -284,13 +286,15 @@ box-sizing: border-box;
 }
 
 .info__content__block {
-    width: 500px;
+    max-width: 600px;
+    width: auto;
     display: flex;
 }
 
 .cut__visible_block {
     display: flex;
-    width: 600px;
+    max-width: 600px;
+    width: auto;
     flex-wrap: wrap;
     align-items: center;
 }
@@ -329,7 +333,7 @@ box-sizing: border-box;
 
 .mess__content {
     width: 100%;
-    height: calc(100vh - 182px);
+    height: calc(100vh - 190px);
     overflow: auto;
     box-sizing: border-box;
     display: flex;
@@ -620,18 +624,15 @@ box-sizing: border-box;
     color:rgb(221, 99, 99);
 }
 
-.text__view {
-    width: 100%;
-    word-break: break-all;
-}
 
 .quickResponse {
     width: 100%;
-    height: 42px;
+    height: 50px;
     background: #d3d3d3;
     position: absolute;
     bottom: 0;
     right: 0;
+    display: flex;
     
 
 }
