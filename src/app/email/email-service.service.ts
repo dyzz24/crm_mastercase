@@ -204,11 +204,14 @@ public httpPost(url: string, body, options?): Observable<any> {
       return;
     }
     if (this.selectedLetter.cc_addresses.length > 3) {
+      this.selectedLetter.cc_addresses = [];
       this.cut_cc_adressess_array = this.selectedLetter.cc_addresses.slice(0, 3);
     }
   }
   checkerLength_addressess() {
+
     if (this.selectedLetter.to_addresses.length > 3) {
+      this.cut_addressess_array = [];
       this.cut_addressess_array = this.selectedLetter.to_addresses.slice(0, 3);
     }
   }

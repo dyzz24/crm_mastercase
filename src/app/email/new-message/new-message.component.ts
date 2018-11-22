@@ -19,6 +19,7 @@ private messages;
   ngOnInit() {
   }
   ngDoCheck() {
+    // console.log(this.to)
   }
 
   closeViewer() {
@@ -32,7 +33,7 @@ private messages;
     this.emailServ.httpPost(
       `${this.emailServ.ip}/mail/send`,
       // tslint:disable-next-line:max-line-length
-      { subject: this.subject, text: this.messages, html: this.messages}).subscribe((data) => {
+      { subject: this.subject, text: this.messages, html: this.messages, to: this.to.split(', ')}).subscribe((data) => {
   });
 
 }}

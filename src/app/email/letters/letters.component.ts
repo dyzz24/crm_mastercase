@@ -180,6 +180,11 @@ this.socket.on('msg', (msg) => {
 this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.address}`);
   }
  });
+ this.socket.on('new', (newLett) => {
+  const dataLetter = JSON.parse(newLett);
+  console.log(dataLetter);
+  this.emailServ.lettersList.unshift(dataLetter);
+ });
     this.emailServ.dataLetters = this.emailServ.lettersAmount;
 
     // const map_new_time_letters = this.emailServ.lettersList.map((val) => {
@@ -231,8 +236,9 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
       this.emailServ.urlParams + '/view/' + idLetter;
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
-    this.emailServ.checkerLength_addressess();
+    // this.emailServ.checkerLength_addressess();
     this.emailServ.stateServ();
+    // console.log(this.emailServ.selectedLetter.to_addresses);
   }
 
   selectedLetters(id, e, i) {
