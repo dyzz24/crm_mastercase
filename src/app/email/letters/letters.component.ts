@@ -148,7 +148,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngOnInit() {
-    this.socket = io('ws://10.0.1.10:3000', {
+    this.socket = io('ws://10.0.1.33:3000', {
       query: {
           // tslint:disable-next-line:max-line-length
           token: this.emailServ.accessToken
@@ -237,7 +237,7 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
     // this.emailServ.checkerLength_addressess();
-    this.emailServ.stateServ();
+    // this.emailServ.stateServ();
     // console.log(this.emailServ.selectedLetter.to_addresses);
   }
 
@@ -380,7 +380,7 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
             );
             this.emailServ.stopFlag = false;
             this.emailServ.dataLetters = data.length;
-            this.emailServ.stateServ();
+            // this.emailServ.stateServ();
           });
       }
     }
@@ -429,7 +429,7 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
             )
             .subscribe(data => {
               this.emailServ.lettersList = data;
-              this.emailServ.stateServ(); // save state on service
+              // this.emailServ.stateServ(); // save state on service
     this.emailServ.hideAvatars = []; // чтоб инпуты работали
     this.emailServ.idLetters = []; // обнуляю корзину на удаление
     this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
@@ -473,14 +473,14 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
           )
           .subscribe(data => {
             this.emailServ.lettersList = data;
-            this.emailServ.stateServ(); // save state on service
+            // this.emailServ.stateServ(); // save state on service
   this.emailServ.hideAvatars = []; // чтоб инпуты работали
   this.emailServ.idLetters = []; // обнуляю корзину на удаление
   this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
     });
       }, 500);
   }
-  this.emailServ.stateServ(); // save state on service
+  // this.emailServ.stateServ(); // save state on service
   this.emailServ.hideAvatars = []; // чтоб инпуты работали
   this.emailServ.idLetters = []; // обнуляю корзину на удаление
   this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)

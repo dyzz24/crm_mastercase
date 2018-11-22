@@ -26,7 +26,7 @@ private messages;
     this.emailServ.hiddenEmpty = false;
     this._rout.navigate([this.emailServ.urlParams]);
     this.emailServ.fullPath = this.emailServ.urlParams;
-    this.emailServ.stateServ();
+    // this.emailServ.stateServ();
   }
 
   sendMessage() {

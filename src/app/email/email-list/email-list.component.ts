@@ -51,7 +51,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2;
     } );
-    this.emailServ.stateServ(); } );
+    } );
   // this.socket.on('connect_error', (error) => {
   //     console.error('connect_error', error);
   // });
@@ -105,7 +105,7 @@ this.emailServ.haveResponse = true;
         this.emailServ.notLettersFlag = false;
       }
       this.emailServ.lettersList = data;
-      this.emailServ.stateServ(); // save state on service
+      // this.emailServ.stateServ(); // save state on service
 
       } );
       // this.emailServ.visibleLett(15); // TEST
@@ -140,7 +140,7 @@ this.emailServ.haveResponse = true;
     this.emailServ.allLettersId = [];
 
 
-    this.emailServ.stateServ(); // save state on service
+    // this.emailServ.stateServ(); // save state on service
 
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
 

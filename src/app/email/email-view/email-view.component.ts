@@ -34,7 +34,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
     this._rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
     this.emailServ.fullPath = this.emailServ.urlParams;
-    this.emailServ.stateServ();
+    // this.emailServ.stateServ();
   }
   newMessage() {
     this._rout.navigate([this.emailServ.urlParams + '/create']);
@@ -66,7 +66,7 @@ this.emailServ.currentId = this.emailServ.index;
 this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.index]);
 this.emailServ.mailsToArray = []; // очистил список отправителей
 this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  // добавил в список отправителей
-this.emailServ.stateServ();
+// this.emailServ.stateServ();
   }
 
   hideMenuShow() {
@@ -91,7 +91,7 @@ this.emailServ.stateServ();
       }
       });
       messageBody.classList.remove('dellLetter');
-      this.emailServ.stateServ();
+      // this.emailServ.stateServ();
     }, 500);
   }
 

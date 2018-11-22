@@ -61,7 +61,7 @@ export class EmailServiceService {
   dataLetters; // для остановки подгруза писем когда все загружены
 
   selectedLetter: any;
-  ip = 'http://10.0.1.10:3000';
+  ip = 'http://10.0.1.33:3000';
 
   mailsToArray = []; // кому отправить письмо (список адресатов)
   subjectTo;
@@ -72,86 +72,87 @@ export class EmailServiceService {
 
 
   constructor(private http: HttpClient, private rout: Router) {
-    if (localStorage.getItem('all-states') === null) {
-      return;
-    } else {
-      const state = JSON.parse(localStorage.getItem('all-states'));
-      this.idBox = state.idBox;
-      this.typeMess = state.typeMess;
-      this.activeLett = state.activeLett;
-      // this.mailName = state.mailName;
-      // this.senderName = state.senderName;
-      // this.time = state.time;
-      // this.avatar = state.avatar;
-      // this.caption = state.caption;
-      // this.text = state.text;
-      this.selectedMess = state.selectedMess;
-      this.urlParams = state.urlParams;
-      this.messageState = state.messageState;
-      this.activeEl = state.activeEl;
-      this.fullPath = state.fullPath;
-      this.hiddenEmpty = state.hiddenEmpty;
-      this.lettersList = state.lettersList;
-      this.index = state.index;
-      this.result = state.result;
-      this.currentObjectLetter = state.currentObjectLetter;
-      this.currentInd = state.currentInd;
+    this.rout.navigate(['']);
+    // if (localStorage.getItem('all-states') === null) {
+    //   return;
+    // } else {
+    //   const state = JSON.parse(localStorage.getItem('all-states'));
+    //   this.idBox = state.idBox;
+    //   this.typeMess = state.typeMess;
+    //   this.activeLett = state.activeLett;
+    //   // this.mailName = state.mailName;
+    //   // this.senderName = state.senderName;
+    //   // this.time = state.time;
+    //   // this.avatar = state.avatar;
+    //   // this.caption = state.caption;
+    //   // this.text = state.text;
+    //   this.selectedMess = state.selectedMess;
+    //   this.urlParams = state.urlParams;
+    //   this.messageState = state.messageState;
+    //   this.activeEl = state.activeEl;
+    //   this.fullPath = state.fullPath;
+    //   this.hiddenEmpty = state.hiddenEmpty;
+    //   this.lettersList = state.lettersList;
+    //   this.index = state.index;
+    //   this.result = state.result;
+    //   this.currentObjectLetter = state.currentObjectLetter;
+    //   this.currentInd = state.currentInd;
 
-      this.copy = state.copy;
+    //   this.copy = state.copy;
 
-      this.inworkLetter = state.inworkLetter;
-      this.haveattachLetter = state.haveattachLetter;
-      this.importantLetter = state.importantLetter;
-      this.visibleLetters = state.visibleLetters;
-      this.noMessages = state.noMessages;
-      this.selectedLetter = state.selectedLetter;
-      this.accessToken = state.accessToken;
-      this.selectNum = state.selectNum;
-      this.idPostForHTTP = state.idPostForHTTP;
-      this.adress = state.adress;
-      this.mailsToArray = state.mailsToArray;
-      this.cut_addressess_array = state.cut_addressess_array;
-      this.cut_cc_adressess_array = state.cut_cc_adressess_array;
-    }
-    if (this.lettersList !== undefined) {
-      this.lettersList = this.lettersList.slice(0, this.lettersAmount);
-                        // проверка, чтобы не дублировать массивы при релоад страницы и сохранением в localStorage
-    }
+    //   this.inworkLetter = state.inworkLetter;
+    //   this.haveattachLetter = state.haveattachLetter;
+    //   this.importantLetter = state.importantLetter;
+    //   this.visibleLetters = state.visibleLetters;
+    //   this.noMessages = state.noMessages;
+    //   this.selectedLetter = state.selectedLetter;
+    //   this.accessToken = state.accessToken;
+    //   this.selectNum = state.selectNum;
+    //   this.idPostForHTTP = state.idPostForHTTP;
+    //   this.adress = state.adress;
+    //   this.mailsToArray = state.mailsToArray;
+    //   this.cut_addressess_array = state.cut_addressess_array;
+    //   this.cut_cc_adressess_array = state.cut_cc_adressess_array;
+    // }
+    // if (this.lettersList !== undefined) {
+    //   this.lettersList = this.lettersList.slice(0, this.lettersAmount);
+    //                     // проверка, чтобы не дублировать массивы при релоад страницы и сохранением в localStorage
+    // }
   }
 
-  stateServ() {
-    const objState = {
-      idBox: this.idBox,
-      typeMess: this.typeMess,
-      activeLett: this.activeLett,
-      selectedMess: this.selectedMess,
-      urlParams: this.urlParams,
-      messageState: this.messageState,
-      activeEl: this.activeEl,
-      fullPath: this.fullPath,
-      hiddenEmpty: this.hiddenEmpty,
-      lettersList: this.lettersList,    // ?
-      index: this.index,
-      result: this.result,
-      currentObjectLetter: this.currentObjectLetter,
-      currentInd: this.currentInd,
-      copy: this.copy,
-      inworkLetter: this.inworkLetter,
-      haveattachLetter: this.haveattachLetter,
-      importantLetter: this.importantLetter,
-      visibleLetters: this.visibleLetters,
-      noMessages: this.noMessages,
-      selectedLetter: this.selectedLetter,
-      accessToken: this.accessToken,
-      selectNum: this.selectNum,
-      idPostForHTTP: this.idPostForHTTP,
-      adress: this.adress,
-      mailsToArray: this.mailsToArray,
-      cut_cc_adressess_array: this.cut_cc_adressess_array,
-      cut_addressess_array : this.cut_addressess_array
-    };
-    localStorage.setItem('all-states', JSON.stringify(objState));
-  }
+  // stateServ() {
+  //   const objState = {
+  //     idBox: this.idBox,
+  //     typeMess: this.typeMess,
+  //     activeLett: this.activeLett,
+  //     selectedMess: this.selectedMess,
+  //     urlParams: this.urlParams,
+  //     messageState: this.messageState,
+  //     activeEl: this.activeEl,
+  //     fullPath: this.fullPath,
+  //     hiddenEmpty: this.hiddenEmpty,
+  //     lettersList: this.lettersList,    // ?
+  //     index: this.index,
+  //     result: this.result,
+  //     currentObjectLetter: this.currentObjectLetter,
+  //     currentInd: this.currentInd,
+  //     copy: this.copy,
+  //     inworkLetter: this.inworkLetter,
+  //     haveattachLetter: this.haveattachLetter,
+  //     importantLetter: this.importantLetter,
+  //     visibleLetters: this.visibleLetters,
+  //     noMessages: this.noMessages,
+  //     selectedLetter: this.selectedLetter,
+  //     accessToken: this.accessToken,
+  //     selectNum: this.selectNum,
+  //     idPostForHTTP: this.idPostForHTTP,
+  //     adress: this.adress,
+  //     mailsToArray: this.mailsToArray,
+  //     cut_cc_adressess_array: this.cut_cc_adressess_array,
+  //     cut_addressess_array : this.cut_addressess_array
+  //   };
+  //   localStorage.setItem('all-states', JSON.stringify(objState));
+  // }
 
 
 public httpPost(url: string, body, options?): Observable<any> {

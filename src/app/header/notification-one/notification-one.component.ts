@@ -35,7 +35,7 @@ export class NotificationOneComponent implements OnInit, DoCheck {
         });
             this.newMessagesCount = this.newMessagesCountArray.reduce((acc, val) => acc + val); // суммирую каунты
       });
-      this.emailServ.stateServ(); } );
+       } );
   }
 
   ngDoCheck() {
