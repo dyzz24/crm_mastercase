@@ -72,7 +72,7 @@ export class EmailServiceService {
 
 
   constructor(private http: HttpClient, private rout: Router) {
-    this.rout.navigate(['']);
+    this.rout.navigate(['/email']);
     // if (localStorage.getItem('all-states') === null) {
     //   return;
     // } else {

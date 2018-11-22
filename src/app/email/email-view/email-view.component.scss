@@ -400,6 +400,7 @@ box-sizing: border-box;
         position: relative;
         border-radius: 2px;
     background-color: #fff;
+    flex-shrink: 0;
     }
     &:hover {
             background: #dedee0;
@@ -421,7 +422,7 @@ box-sizing: border-box;
     font-size: 13px;
     width: 100%;
     text-overflow: ellipsis;
-    // white-space: nowrap;
+    white-space: nowrap;
     overflow: hidden;
     text-align: left;
     line-height: 15px;
@@ -429,6 +430,7 @@ box-sizing: border-box;
     
 }
 .size {
+    flex-shrink: 0;
     font-size: 10px;
     color: #b2b2b2;
     @extend %default_text_param;

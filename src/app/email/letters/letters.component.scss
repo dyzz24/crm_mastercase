@@ -20,6 +20,7 @@ $font-color: $icons-color;
     @include header(row);
     height: 45px;
     border-bottom: 1px solid $border;
+    overflow: hidden;
 }
 
 .letter__list {
@@ -498,6 +499,12 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+    p {
+        font-size: 13px;
+        text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    }
 }
 
 
