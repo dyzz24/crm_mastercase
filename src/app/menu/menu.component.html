@@ -8,8 +8,8 @@
                 <div class="icon__nav" [class.active]='dataServ.menuActive===1'><span class="la la-lg la-calendar"></span></div>
 
                 <div class="nav__buttons" [ngClass]='{hidenBlock:hidden}'>
-                        <a routerLink="email" (click)='clearLocalStorage(0, $event)'[class.active]='dataServ.menuActive===0'>Почта</a>
-                        <a routerLink="/" (click)='clearLocalStorage(1, $event)' [class.active]='dataServ.menuActive===1'>Календарь</a>
+                        <a routerLink="email" [class.active]='dataServ.menuActive===0'>Почта</a>
+                        <a routerLink="/"  [class.active]='dataServ.menuActive===1'>Календарь</a>
                 </div>
         </div>
 </nav>

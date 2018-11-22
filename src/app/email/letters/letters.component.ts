@@ -182,7 +182,6 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
  });
  this.socket.on('new', (newLett) => {
   const dataLetter = JSON.parse(newLett);
-  console.log(dataLetter);
   this.emailServ.lettersList.unshift(dataLetter);
  });
     this.emailServ.dataLetters = this.emailServ.lettersAmount;

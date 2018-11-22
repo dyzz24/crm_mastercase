@@ -43,15 +43,8 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    // this.toastr.overlayContainer = this.toastContainer;    // настройка тостера
-    // tslint:disable-next-line:max-line-length
-    this.emailServ.httpPost(`${this.emailServ.ip}/user/login`, {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
-    this.emailServ.accessToken = data.accessToken;
-    this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} ,
-    {contentType: 'application/json'}).subscribe((data2) => {
-      this.emailItems = data2;
-    } );
-    } );
+    this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) =>
+      this.emailItems = data2);
   // this.socket.on('connect_error', (error) => {
   //     console.error('connect_error', error);
   // });
@@ -59,11 +52,9 @@ export class EmailListComponent implements OnInit, DoCheck {
   //     console.error('error', error);
   // });
 
-
-
-    if (localStorage.length === 0) {
-      this.emailServ.activeEl = [];
-    }
+    // if (localStorage.length === 0) {
+    //   this.emailServ.activeEl = [];
+    // }
   }
   ngDoCheck() {
     // console.log(this.emailServ.lettersList);

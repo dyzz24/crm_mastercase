@@ -26,6 +26,7 @@ import { TimerPipePipe } from './email/email-pipes/timer-pipe.pipe';
 import { AttachPipePipe } from './email/email-pipes/attach-pipe.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
+import { AuthorizationService } from './authorization.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     ToastContainerModule
   ],
-  providers: [DataService, EmailServiceService],
+  providers: [AuthorizationService, DataService, EmailServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
