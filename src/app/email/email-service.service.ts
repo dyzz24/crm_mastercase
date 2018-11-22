@@ -67,7 +67,7 @@ export class EmailServiceService {
   subjectTo;
 
   cut_cc_adressess_array;
-  cut_address_array;
+  cut_addressess_array;
 
 
 
@@ -92,7 +92,6 @@ export class EmailServiceService {
       this.fullPath = state.fullPath;
       this.hiddenEmpty = state.hiddenEmpty;
       this.lettersList = state.lettersList;
-      this.cut_cc_adressess_array = state.cut_cc_adressess_array;
       this.index = state.index;
       this.result = state.result;
       this.currentObjectLetter = state.currentObjectLetter;
@@ -111,6 +110,8 @@ export class EmailServiceService {
       this.idPostForHTTP = state.idPostForHTTP;
       this.adress = state.adress;
       this.mailsToArray = state.mailsToArray;
+      this.cut_addressess_array = state.cut_addressess_array;
+      this.cut_cc_adressess_array = state.cut_cc_adressess_array;
     }
     if (this.lettersList !== undefined) {
       this.lettersList = this.lettersList.slice(0, this.lettersAmount);
@@ -146,7 +147,8 @@ export class EmailServiceService {
       idPostForHTTP: this.idPostForHTTP,
       adress: this.adress,
       mailsToArray: this.mailsToArray,
-      cut_cc_adressess_array: this.cut_cc_adressess_array
+      cut_cc_adressess_array: this.cut_cc_adressess_array,
+      cut_addressess_array : this.cut_addressess_array
     };
     localStorage.setItem('all-states', JSON.stringify(objState));
   }
@@ -198,14 +200,16 @@ public httpPost(url: string, body, options?): Observable<any> {
 
 
   checkerLengthArray_bcc_cc() {
-    if (this.selectedLetter.cc_addresses === null || this.selectedLetter.to_addresses === null) {
+    if (this.selectedLetter.cc_addresses === null) {
       return;
     }
     if (this.selectedLetter.cc_addresses.length > 3) {
       this.cut_cc_adressess_array = this.selectedLetter.cc_addresses.slice(0, 3);
     }
+  }
+  checkerLength_addressess() {
     if (this.selectedLetter.to_addresses.length > 3) {
-      this.cut_address_array = this.selectedLetter.to_addresses.slice(0, 3);
+      this.cut_addressess_array = this.selectedLetter.to_addresses.slice(0, 3);
     }
   }
 }

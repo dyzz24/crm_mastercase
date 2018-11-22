@@ -88,10 +88,14 @@
             </div>
             <div class="info__row">
               <p class="info_head">Кому: </p>
-              <div class="info__content__block">
-              <p class='info__content_p' *ngIf="this.emailServ.selectedLetter.to_addresses.length ===1; else have_many_addresses">Вам</p>
+              <div class="cut__visible_block">
+              <p class='info__content_p' *ngIf="this.emailServ.selectedLetter.to_addresses.length === 1; else have_many_addresses">Вам</p>
               <ng-template #have_many_addresses>
-              <p class='info__content_p' *ngFor="let item of this.emailServ.selectedLetter.to_addresses">{{item}}</p>
+              <p class='info__content_p' *ngFor="let item of this.emailServ.cut_addressess_array">{{item}}</p>
+              <input type='button' class='addressess' [class.input_return]='this.emailServ.cut_addressess_array.length === this.emailServ.selectedLetter.to_addresses.length'
+              *ngIf="this.emailServ.selectedLetter.to_addresses.length > 3"
+              (click)='all_view($event)' 
+              value='+{{this.emailServ.selectedLetter.to_addresses.length - this.emailServ.cut_addressess_array.length}}'>
               </ng-template>
             </div>
             </div>

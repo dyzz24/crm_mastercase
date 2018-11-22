@@ -146,5 +146,16 @@ this.emailServ.stateServ();
         e.target.value = this.emailServ.selectedLetter.cc_addresses.length - this.emailServ.cut_cc_adressess_array.length;
       }
     }
+    if (e.target.classList.contains('addressess')) {
+      if (this.emailServ.cut_addressess_array !== this.emailServ.selectedLetter.to_addresses) {
+      this.emailServ.cut_addressess_array = this.emailServ.selectedLetter.to_addresses;
+      e.target.value = '';
+      e.target.classList.add('input_return');
+      } else {
+        e.target.classList.remove('input_return');
+        this.emailServ.checkerLength_addressess();
+        e.target.value = this.emailServ.selectedLetter.to_addresses.length - this.emailServ.cut_addressess_array.length;
+      }
+    }
   }
 }
