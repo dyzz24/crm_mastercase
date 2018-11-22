@@ -8,6 +8,7 @@ header {
     height: 60px;
     box-shadow: 0 0 6px rgba(0, 0, 0, .5);
     background: $header_color;
+    background: linear-gradient(to right, #001e47, #6293db);
     color: #dbdddf;
     display: flex;
     align-items: center;

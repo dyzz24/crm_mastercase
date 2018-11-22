@@ -67,7 +67,8 @@ export class EmailServiceService {
   subjectTo;
 
   cut_cc_adressess_array;
-  cut_bcc_adressess_array;
+  cut_address_array;
+
 
 
   constructor(private http: HttpClient, private rout: Router) {
@@ -197,11 +198,14 @@ public httpPost(url: string, body, options?): Observable<any> {
 
 
   checkerLengthArray_bcc_cc() {
-    if (this.selectedLetter.cc_addresses === null || this.selectedLetter.bcc_addresses === null) {
+    if (this.selectedLetter.cc_addresses === null || this.selectedLetter.to_addresses === null) {
       return;
     }
     if (this.selectedLetter.cc_addresses.length > 3) {
       this.cut_cc_adressess_array = this.selectedLetter.cc_addresses.slice(0, 3);
+    }
+    if (this.selectedLetter.to_addresses.length > 3) {
+      this.cut_address_array = this.selectedLetter.to_addresses.slice(0, 3);
     }
   }
 }

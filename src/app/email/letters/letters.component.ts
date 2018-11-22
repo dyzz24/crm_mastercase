@@ -232,6 +232,7 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.stateServ();
+    console.log(this.emailServ.selectedLetter);
   }
 
   selectedLetters(id, e, i) {
