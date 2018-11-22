@@ -45,6 +45,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
   selectMess(n) {
 
     this.emailServ.checkerLengthArray_bcc_cc();
+    this.emailServ.checkerLength_addressess();
 
 this.emailServ.index = this.emailServ.index + n;
 if (this.emailServ.index === this.emailServ.lettersList.length) {

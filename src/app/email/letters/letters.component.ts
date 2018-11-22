@@ -236,7 +236,7 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
       this.emailServ.urlParams + '/view/' + idLetter;
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
-    // this.emailServ.checkerLength_addressess();
+    this.emailServ.checkerLength_addressess();
     // this.emailServ.stateServ();
     // console.log(this.emailServ.selectedLetter.draft);
   }
