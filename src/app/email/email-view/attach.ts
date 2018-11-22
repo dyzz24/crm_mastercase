@@ -4,8 +4,8 @@ export const attachers = [
     {title: 'lalaalla.jpg', size: '7kb', type: 'jpg'}, {title: 'Договор №11 от 7.12.2016г.word', size: '7kb', type: 'doc'},
     {title: 'text.txt', size: '7kb', type: 'txt'}, {title: 'imagepng.png', size: '700kb', type: 'png'},
     {title: 'music.mp3', size: '3900kb', type: 'mp3'},
-    {title: 'Приложение к договору подряда №774 от 18 июля 2017 года с исправленными датами на подпись', size: '7000000kb', type: 'doc'},
+    {title: 'Приложение к договору подряда №774 от 18 июля 2017 года с исправленными датами на подпись', size: '700kb', type: 'doc'},
     {title: 'Архив 12', size: '1420kb', type: 'zip'},
-    {title: 'Презентация нового продукта', size: '4524kb', type: 'ppt'},
+    {title: 'Презентация нового продукта', size: '424kb', type: 'ppt'},
 
 ];
