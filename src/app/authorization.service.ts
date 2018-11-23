@@ -28,7 +28,7 @@ export class AuthorizationService {
     }
 
     private httpPost(url: string, body, options?): Observable<any> {
-      return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.accessToken}`}});
+      return this.http.post(url, body, {headers: {}});
     }
 
     public authorization() {

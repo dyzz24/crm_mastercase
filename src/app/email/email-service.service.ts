@@ -54,7 +54,7 @@ export class EmailServiceService {
   adress; // адрес для URL запросов на сервак
   noMessages = false; // DEL
   offset;
-  accessToken; // autorization
+
 
   stopFlag = false; // для остановки отправки http пока не выполнится предыдущий http
   dataLetters; // для остановки подгруза писем когда все загружены
@@ -71,7 +71,6 @@ export class EmailServiceService {
 
 
   constructor(private http: HttpClient, private rout: Router, private authorizationServ: AuthorizationService) {
-      this.accessToken = this.authorizationServ.accessToken;
 
       // this.rout.navigate(['']);
       if (this.authorizationServ.accessToken === undefined) {
