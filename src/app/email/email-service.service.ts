@@ -75,23 +75,18 @@ export class EmailServiceService {
       this.accessToken = this.authorizationServ.accessToken;
 
       // this.rout.navigate(['']);
-      if (this.accessToken === undefined) {
+      if (this.authorizationServ.accessToken === undefined) {
         this.rout.navigate(['']);
       } else {
         this.rout.navigate(['/email']);
       }
-      const requestInterval = setInterval(() => {
-        this.accessToken = this.authorizationServ.accessToken;
-        if (this.accessToken !== undefined) {
-          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-        }
-      }, 1000);
+
 
   }
 
 
 public httpPost(url: string, body, options?): Observable<any> {
-  return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.accessToken}`}});
+  return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
 }
 
 

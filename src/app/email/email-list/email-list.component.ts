@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, DoCheck, ViewChild} from '@angular/core'
 import { Router } from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
 import { ToastrService, ToastContainerDirective } from 'ngx-toastr';
+import { AuthorizationService } from '../../authorization.service';
 import * as io from 'socket.io-client';
 
 
@@ -37,14 +38,15 @@ export class EmailListComponent implements OnInit, DoCheck {
     public element: ElementRef,
     private _rout: Router,
     public emailServ: EmailServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authorizationServ: AuthorizationService
     ) {
    }
 
   ngOnInit() {
 
       const requestInterval = setInterval(() => {
-        if (this.emailServ.accessToken !== undefined) {
+        if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
           this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) =>
       this.emailItems = data2);
