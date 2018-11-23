@@ -15,21 +15,17 @@ import { debounceTime } from 'rxjs/operators';
 
 })
 export class LettersComponent implements DoCheck, OnInit {
-  socket: SocketIOClient.Socket;
-  idEmail: any;
-  messages = [];
-  lettersItems: any;
-  typeMess: any;
-  openLetter = true;
-  visibleMenu = true;
-  counterAmount = 0;
-  counterFromDownload = 0;
-  stopFlag = false;
-  dataLetters;
-  lettersCopy;
-  protectToCopy = false;
-  temporaryLetters = [];
 
+
+
+
+
+  counterAmount = 0; // начальный счетчик подзагрузки
+
+  stopFlag = false;
+  lettersCopy; // для поиска
+  protectToCopy = false;
+  temporaryLetters = []; // временный массив поиска
   filterError = false;
   stopScrollingLoadFiles = false;
 
@@ -221,13 +217,20 @@ export class LettersComponent implements DoCheck, OnInit {
     toTopBlock.scroll(0, 0);
   }
 
-  menuShow(e) {
+  menuShow(e, i) {
     if (e.target.className === 'letterMenuButt') {
       return;
     } else {
       const parent = e.target.parentNode.parentNode;
       const hiddenBlock = parent.querySelector('.hideMenu');
-      hiddenBlock.classList.toggle('visible');
+      const allHideBlock = document.querySelectorAll('.hideMenu');
+      for (let key = 0; key < allHideBlock.length; key++) {
+        if (key === i) {
+          allHideBlock[key].classList.toggle('visible');
+          continue;
+        }
+        allHideBlock[key].classList.remove('visible');
+      }
     }
   }
   // ****************************************spam add - delete***************************** */

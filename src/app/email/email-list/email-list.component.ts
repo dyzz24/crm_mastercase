@@ -17,21 +17,21 @@ export class EmailListComponent implements OnInit, DoCheck {
   socket: SocketIOClient.Socket;
 
 
-  idPost: string;
-  idPostForHTTP;
-  typeMessage: any;
+
+
   inboxMenuStatus = false;
   createMenuStatus = false;
   deleteMenuStatus = false;
   editMenuStatus = false;
   createSettingStatus = false;
   visibl: Array<boolean> = [false, false, false];
+
   inboxName;
   inboxPassword;
   inboxFullName;
 
-  allLetters: any; // test
-  messagesForFilters;
+
+
   adress;
   constructor(
     public element: ElementRef,
@@ -51,16 +51,6 @@ export class EmailListComponent implements OnInit, DoCheck {
       this.emailItems = data2);
         }
       }, 1000);
-  // this.socket.on('connect_error', (error) => {
-  //     console.error('connect_error', error);
-  // });
-  // this.socket.on('error', (error) => {
-  //     console.error('error', error);
-  // });
-
-    // if (localStorage.length === 0) {
-    //   this.emailServ.activeEl = [];
-    // }
   }
   ngDoCheck() {
     // console.log(this.emailServ.lettersList);
@@ -86,15 +76,14 @@ export class EmailListComponent implements OnInit, DoCheck {
     //  console.log(this.emailServ.lettersList);
     this.emailServ.haveResponse = false;
     this.adress = `${this.emailServ.ip}/mail/mails`;
-    this.idPost = this.emailItems[index].address.replace('@', ''); // для вставки в URL
-    this.idPostForHTTP = this.emailItems[index].address; // ID ящика
+    this.emailServ.idBox = this.emailItems[index].address.replace('@', ''); // для вставки в URL
+    this.emailServ.idPostForHTTP = this.emailItems[index].address; // ID ящика
     this.emailServ.selectNum = selectNum;
-    this.emailServ.idPostForHTTP = this.idPostForHTTP;
     this.emailServ.adress = this.adress;
     this.emailServ.httpPost(
     this.adress,
     // tslint:disable-next-line:max-line-length
-    {address: this.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+    {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
 this.emailServ.haveResponse = true;
       if (data.length === 0) {
         this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
@@ -110,13 +99,12 @@ this.emailServ.haveResponse = true;
 
 
 
-    this._rout.navigate(['email/' + this.idPost + paramsUrl]);
-    this.emailServ.idBox = this.idPost;
+    this._rout.navigate(['email/' + this.emailServ.idBox + paramsUrl]);
     this.emailServ.typeMess = typeMess;
     this.emailServ.selectedMess = selectNum;
-    this.emailServ.urlParams = `email/${this.idPost}${paramsUrl}`;
+    this.emailServ.urlParams = `email/${this.emailServ.idBox}${paramsUrl}`;
 
-    this.emailServ.fullPath = `email/${this.idPost}${paramsUrl}`;
+    this.emailServ.fullPath = `email/${this.emailServ.idBox}${paramsUrl}`;
 
     if (activeNumber) {
       for (let i = 0; i < this.emailServ.activeEl.length; i++) {
@@ -128,7 +116,6 @@ this.emailServ.haveResponse = true;
     this.emailServ.activeEl[activeNumber - 1] = true;
     }
     this.emailServ.hideAvatars = [];
-    this.emailServ.mailName = this.idPostForHTTP;
     this.emailServ.idLetters = [];
 
     this.emailServ.checkerTrash();

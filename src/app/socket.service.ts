@@ -9,12 +9,16 @@ import * as io from 'socket.io-client';
 })
 export class SocketService {
   private socket: SocketIOClient.Socket;
+  private socketConnectedFlag = false;
 
   constructor(private authorizationServ: AuthorizationService,
     private toastrServ: ToastrService,
     private emailServ: EmailServiceService) { }
 
   lettersSocketConnect() {
+    if (this.socketConnectedFlag === true) {
+      return;
+    } else {
     this.socket = io('ws://10.0.1.33:3000', {
       query: {
           // tslint:disable-next-line:max-line-length
@@ -23,6 +27,7 @@ export class SocketService {
   });
   this.socket.on('connect', () => {
     this.showSuccess(`Пользователь ${this.emailServ.idPostForHTTP} залогинен`);
+    this.socketConnectedFlag = true;
 });
 this.socket.on('msg', (msg) => {
   const dataStr = JSON.parse(msg);
@@ -51,6 +56,17 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
   const dataLetter = JSON.parse(newLett);
   this.emailServ.lettersList.unshift(dataLetter);
  });
+}
+   // this.socket.on('connect_error', (error) => {
+  //     console.error('connect_error', error);
+  // });
+  // this.socket.on('error', (error) => {
+  //     console.error('error', error);
+  // });
+
+    // if (localStorage.length === 0) {
+    //   this.emailServ.activeEl = [];
+    // }
   }
   showSuccess(param) {
     this.toastrServ.success(param);

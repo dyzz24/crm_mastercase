@@ -101,7 +101,7 @@
             <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments === true" [class.time-icons__status-new]="letters.seen === false">
               <p class='tooltip'>Вложения</p>
             </span>
-            <button class='letter__settings' (click)='menuShow($event)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">
+            <button class='letter__settings' (click)='menuShow($event, i)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">
               <span class='la la-ellipsis-h'></span>
               <p class='tooltip'>Меню</p>
             </button>

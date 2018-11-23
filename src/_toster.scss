@@ -142,7 +142,7 @@
     pointer-events: auto;
   }
   .toast-success {
-    background-color: #51A351;
+    background-color: rgba($color: rgb(18, 19, 18), $alpha: .8)
   }
   .toast-error {
     background-color: #BD362F;
