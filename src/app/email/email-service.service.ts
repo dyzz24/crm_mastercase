@@ -72,7 +72,7 @@ export class EmailServiceService {
 
   constructor(private http: HttpClient, private rout: Router, private authorizationServ: AuthorizationService) {
 
-      // this.rout.navigate(['']);
+      this.rout.navigate(['']);
       if (this.authorizationServ.accessToken === undefined) {
         this.rout.navigate(['']);
       } else {

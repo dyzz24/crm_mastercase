@@ -16,7 +16,7 @@ export class SocketService {
     private emailServ: EmailServiceService) { }
 
   lettersSocketConnect() {
-    if (this.socketConnectedFlag === true) {
+    if (this.socketConnectedFlag === true) { // если уже был коннект, выхожу
       return;
     } else {
     this.socket = io('ws://10.0.1.33:3000', {
@@ -27,7 +27,7 @@ export class SocketService {
   });
   this.socket.on('connect', () => {
     this.showSuccess(`Пользователь ${this.emailServ.idPostForHTTP} залогинен`);
-    this.socketConnectedFlag = true;
+    this.socketConnectedFlag = true;  // как только законектился, меняю флаг чтобы не пускать кучу запросов
 });
 this.socket.on('msg', (msg) => {
   const dataStr = JSON.parse(msg);
