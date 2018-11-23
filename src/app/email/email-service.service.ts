@@ -56,7 +56,6 @@ export class EmailServiceService {
   noMessages = false; // DEL
   offset;
   accessToken; // autorization
-  accessToken2;
 
   stopFlag = false; // для остановки отправки http пока не выполнится предыдущий http
   dataLetters; // для остановки подгруза писем когда все загружены

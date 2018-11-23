@@ -43,8 +43,13 @@ export class EmailListComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) =>
+      const requestInterval = setInterval(() => {
+        if (this.emailServ.accessToken !== undefined) {
+          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+          this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) =>
       this.emailItems = data2);
+        }
+      }, 1000);
   // this.socket.on('connect_error', (error) => {
   //     console.error('connect_error', error);
   // });
