@@ -6,10 +6,6 @@ import { validateConfig } from '@angular/router/src/config';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
-import { ToastrService, ToastContainerDirective } from 'ngx-toastr';
-import * as io from 'socket.io-client';
-
-
 
 
 @Component({
@@ -54,7 +50,6 @@ export class LettersComponent implements DoCheck, OnInit {
     public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router,
-    private toastr: ToastrService
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
@@ -72,13 +67,6 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
-  showSuccess(param) {
-    this.toastr.success(param);
-  }
-  showError(param) {
-    this.toastr.error(param);
-  }
-
 
   searchOnServer() {
     if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
@@ -148,50 +136,8 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   ngOnInit() {
-    this.socket = io('ws://10.0.1.33:3000', {
-      query: {
-          // tslint:disable-next-line:max-line-length
-          token: this.emailServ.accessToken
-      }
-  });
-  this.socket.on('connect', () => {
-    this.showSuccess(`Пользователь ${this.emailServ.idPostForHTTP} залогинен`);
-});
-this.socket.on('msg', (msg) => {
-  const dataStr = JSON.parse(msg);
-  console.log(dataStr);
-  if (dataStr.status === 1) {
-    this.showSuccess(`Пользователь ${dataStr.address} взял письмо в работу`);
-  this.emailServ.lettersList.map((val, ind) => {
-          if (+val.id === +dataStr.mailId) {
-            val.draft = dataStr.address;
-          }
-    });
-  }
-  if (dataStr.status === 0) {
-  this.showSuccess(`Письмо снято`);
-  this.emailServ.lettersList.map((val, ind) => {
-    if (+val.id === +dataStr.mailId) {
-      val.draft = null;
-    }
-});
-  }
-  if (dataStr.status === 2) {
-this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.address}`);
-  }
- });
- this.socket.on('new', (newLett) => {
-  const dataLetter = JSON.parse(newLett);
-  this.emailServ.lettersList.unshift(dataLetter);
- });
-    this.emailServ.dataLetters = this.emailServ.lettersAmount;
 
-    // const map_new_time_letters = this.emailServ.lettersList.map((val) => {
-    //   const new_date = this.datePipe.transform(val.date, true);
-    //   if (this.datePipe.transform(val.date, true) === new_date) {
-    //     console.log(new_date);
-    //   }
-    // });
+    this.emailServ.dataLetters = this.emailServ.lettersAmount;
   }
 
   ngDoCheck() {

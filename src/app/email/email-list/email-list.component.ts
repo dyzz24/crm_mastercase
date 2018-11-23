@@ -1,9 +1,8 @@
 import { Component, OnInit, ElementRef, DoCheck, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
-import { ToastrService, ToastContainerDirective } from 'ngx-toastr';
 import { AuthorizationService } from '../../authorization.service';
-import * as io from 'socket.io-client';
+import { SocketService } from '../../socket.service';
 
 
 
@@ -38,8 +37,8 @@ export class EmailListComponent implements OnInit, DoCheck {
     public element: ElementRef,
     private _rout: Router,
     public emailServ: EmailServiceService,
-    private toastr: ToastrService,
-    private authorizationServ: AuthorizationService
+    private authorizationServ: AuthorizationService,
+    private socketServ: SocketService
     ) {
    }
 
@@ -141,6 +140,7 @@ this.emailServ.haveResponse = true;
     // this.emailServ.stateServ(); // save state on service
 
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
+    this.socketServ.lettersSocketConnect();
 
     // ********************************/
   }
