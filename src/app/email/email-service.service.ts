@@ -139,9 +139,7 @@ public httpPost(url: string, body, options?): Observable<any> {
   }
   checkerLength_addressess() {
 
-    if (this.selectedLetter.to_addresses.length > 3) {
       this.cut_addressess_array = [];
       this.cut_addressess_array = this.selectedLetter.to_addresses.slice(0, 3);
-    }
   }
 }
