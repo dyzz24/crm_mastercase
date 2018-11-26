@@ -14,6 +14,8 @@ import { attachers } from './attach';
 export class EmailViewComponent implements OnInit, DoCheck {
   @ViewChild('messageContainer')
   messageContainer: ElementRef;
+  @ViewChild('printBlock')
+  printBlock: ElementRef;
   visibleMenu = false;
   nameFrom;
   subject;
@@ -180,4 +182,9 @@ this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  /
       { subject: this.subject, text: this.messages, html: this.messages, to: this.nameFrom}).subscribe((data) => {
   });
   }
+
+  print() {
+    window.print();
+}
+
 }

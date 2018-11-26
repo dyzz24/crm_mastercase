@@ -6,11 +6,13 @@
   </div>
   <div class="message__body">
     <input type='text' class='inp__mess from' placeholder="От" [(ngModel)]='from' required>
-    <input type='text' class='inp__mess to'placeholder="Кому" [(ngModel)]='to'>
-    <input type='text' class='inp__mess copy' placeholder="Копия" [(ngModel)]='copy'>
-    <input type='text' class='inp__mess subject' placeholder="Тема" [(ngModel)]='subject'>
+    <input type='text' class='inp__mess to'placeholder="{{this.emailServ.to_answer}}" [(ngModel)]='to'>
+    <input type='text' class='inp__mess copy' placeholder="{{this.emailServ.to_all_answer}}" [(ngModel)]='copy'>
+    <input type='text' class='inp__mess subject' placeholder="{{this.emailServ.to_subject}}" [(ngModel)]='subject'>
     <div class="editor-qu">
       <quill-editor [(ngModel)]='messages'></quill-editor>
+
+      <div [innerHTML]="this.emailServ.to_forward | innerhtml" ></div>
     </div>
     <input type="submit" value='отправить' (click)='sendMessage()'>
   </div>

@@ -1,0 +1,24 @@
+
+@media print {
+    .mails  {
+        display: none;
+    }
+    .letter__list {
+        display: none;
+    }
+    .letters__view {
+        width: 100%;
+    }
+    .quickResponse {
+        display: none !important;
+    }
+    .attachment__block {
+        display: none !important;
+    }
+    nav, header {
+        display: none;
+    }
+    .header_letter__view {
+        display: none;
+    }
+   }

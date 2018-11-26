@@ -1,8 +1,8 @@
-<div class="container__view">
+<div class="container__view" #printBlock>
   <div class="header_letter__view">
     <div class="group__one">
     <div class="left__panel">
-        <button class='new__mess' (click)='this.emailServ.newMessage()'>
+        <button class='new__mess' (click)='this.emailServ.new_clear_message()'>
             <span class='la la-envelope-o'></span>
             <p class="tooltip">Новое сообщение</p>
           </button>
@@ -16,15 +16,18 @@
                 </button>
     </div>
     <div class="left__panel">
-  <button class='menu'>
+  <button class='menu' (click)="this.emailServ.newMessage(emailServ.selectedLetter.from_address,'',this.emailServ.selectedLetter.subject)">
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
-<button class='menu'>
+<button class='menu' 
+(click)='this.emailServ.newMessage(emailServ.selectedLetter.from_address, this.emailServ.selectedLetter.to_addresses, this.emailServ.selectedLetter.subject)'
+[class.none_display] = 'this.emailServ.selectedLetter.to_addresses.length === 1'
+>
   <span class='la la-reply-all'></span>
   <p class="tooltip">Ответить всем</p>
 </button>
-<button class='menu'>
+<button class='menu' (click)="this.emailServ.new_forward_message(this.emailServ.selectedLetter.text, this.emailServ.selectedLetter.html)">
   <span class='la la-share'></span>
   <p class="tooltip">Переслать</p>
 </button>
@@ -39,7 +42,7 @@
       <button class='one_butt' (click)='hideMenuShow()'>
       <span class='la la-ellipsis-h'></span>
       <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
-        <button class='letterMenuButt'>Распечатать</button>
+        <button class='letterMenuButt' (click)='print()'>Распечатать</button>
       </div>
       <p class="tooltip">Меню</p>
     </button>
