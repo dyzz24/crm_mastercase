@@ -16,7 +16,10 @@ export class EmailViewComponent implements OnInit, DoCheck {
   messageContainer: ElementRef;
   visibleMenu = false;
   nameFrom;
+  subject;
+  messages;
   attachersList = attachers;
+  quickResponse_active = false;
 
 
 
@@ -27,7 +30,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
   ngOnInit() {
   }
   ngDoCheck() {
-    // console.log(this.emailServ.selectedLetter);
+    // console.log(this.subject, this.nameFrom, this.messages);
   }
 
   closeViewer() {
@@ -110,21 +113,21 @@ this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  /
     event.stopPropagation();
   }
 
-  addFrom() {
-    const validate = /^[\w\.\d-_]+@[\w\.\d-_]+\.\w{2,4}$/i;
-    if (this.nameFrom !== '' && validateAdress(this.nameFrom) !== -1) {
-    this.emailServ.mailsToArray.push(this.nameFrom);
-    this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
-      return self.indexOf(val) === ind;
-    });
-    this.nameFrom = '';
-  } else {
-    alert('Введите корректный имейл');
-  }
-  function validateAdress(val) {
-    return String(val).search(validate);
-  }
-  }
+  // addFrom() {
+  //   const validate = /^[\w\.\d-_]+@[\w\.\d-_]+\.\w{2,4}$/i;
+  //   if (this.nameFrom !== '' && validateAdress(this.nameFrom) !== -1) {
+  //   this.emailServ.mailsToArray.push(this.nameFrom);
+  //   this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
+  //     return self.indexOf(val) === ind;
+  //   });
+  //   this.nameFrom = '';
+  // } else {
+  //   alert('Введите корректный имейл');
+  // }
+  // function validateAdress(val) {
+  //   return String(val).search(validate);
+  // }
+  // }
 
   deleteAdress(index) {
     this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
@@ -158,5 +161,23 @@ this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  /
         e.target.value = this.emailServ.selectedLetter.to_addresses.length - this.emailServ.cut_addressess_array.length;
       }
     }
+  }
+
+  show_quick_form(cancelFlag) {
+    if (cancelFlag === false) {
+    this.quickResponse_active = true;
+    this.nameFrom = this.emailServ.selectedLetter.from_address;
+    this.subject = this.emailServ.selectedLetter.subject;
+
+    } else {
+      this.quickResponse_active = false;
+    }
+  }
+  quick_send() {
+    this.emailServ.httpPost(
+      `${this.emailServ.ip}/mail/send`,
+      // tslint:disable-next-line:max-line-length
+      { subject: this.subject, text: this.messages, html: this.messages, to: this.nameFrom}).subscribe((data) => {
+  });
   }
 }

@@ -46,7 +46,7 @@ button {
     border: none;
     outline: none;
     padding: 0 0 0 0;
-    margin: 0 4px 0 0;
+    margin: 0 4px 0 4px;
     
 span {
     
@@ -58,6 +58,7 @@ span {
 
 .one_butt {
     margin: 0;
+    flex-shrink: 0;
 
 }
 
@@ -603,23 +604,107 @@ box-sizing: border-box;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+
+    .avatar__block {
+        display: flex;
+        align-items: center;
+    }
 }
 
+.quickResponse__content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
 .quickResponse__inp {
-    padding: 0 10px;
+    font-family: 'Roboto-Regular' ,Arial, sans-serif;
+    padding: 5px 10px;
     box-sizing: border-box;
     margin-left: 8px;
     height: 30px;
-    width: 100%;
     border-radius: 10px;
     border: 1px solid $border;
     outline: none;
+  
 
     &:focus {
         border-color: #57a2d7;
     }
 
 }
+.button__send {
+    
+    width: 94px;
+	height: 23px;
+	border-radius: 11px;
+    background-color: #fff;
+    border: 1px solid $border;
 
+    span {
+        font-size: 13px;
+        color: $text-color;
+    }
+        
+}
+
+.btn__text {
+    @extend %default_text_param;
+    margin-left: 7px;
+    transition: .4s;
+    cursor: pointer;
+    &:hover {
+            color: $text-color;
+    }
+}
+.panel__left {
+    
+    display: flex;
+    align-items: center;
+
+    button, p, span {
+        color: #cccccc;
+        transition: .4s;
+    }
+    button {
+        &:hover span {
+            color: $text-color;
+        }
+    }
+}
+
+.quickResponse__active {
+    height: 180px;
+    background: white;
+    padding: 8px 8px 8px 20px;
+}
+
+.inp__active {
+    padding: 0;
+    padding-bottom: 30px;
+    padding-top: 8px;
+    border: none;
+    flex-grow: 12;
+}
+
+.avatar__active {
+    align-items: flex-start !important;
+}
+
+.panel__active {
+    display: flex !important;
+}
+
+.quickResponse__panel {
+    margin-left: 8px;
+    @include panel-mix();
+    width: auto;
+    display: none;
+    
+}
 
 

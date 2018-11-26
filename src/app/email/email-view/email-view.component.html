@@ -39,6 +39,7 @@
       <button class='one_butt' (click)='hideMenuShow()'>
       <span class='la la-ellipsis-h'></span>
       <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
+        <button class='letterMenuButt'>Распечатать</button>
       </div>
       <p class="tooltip">Меню</p>
     </button>
@@ -56,12 +57,6 @@
          <div class='left__panel end'>
           <p class='in_work'>{{this.emailServ.selectedLetter.draft}}</p>
         </div>
-        <div class='left__panel end'>
-          <button class='one_butt'>
-              <span class='la la-print'></span>
-              <p class="tooltip">Распечатать</p>
-            </button>
-          </div>
         </div>
   </div>
   <div class="messageContainer" #messageContainer>
@@ -164,11 +159,44 @@
     </div> -->
   </div>
 </div>
-<div class="quickResponse">
+<div class="quickResponse quickResponse__active" [ngClass]='{quickResponse__active: quickResponse_active}'>
+    <div class="avatar__block" [ngClass]='{avatar__active: quickResponse_active}'>
   <div class="avatar">
     <p class='avatar__title'>{{this.emailServ.avatarMake(this.emailServ.idPostForHTTP)}}</p>
   </div>
-  <input type='text' class='quickResponse__inp' placeholder="Написать быстрый ответ">
+</div>
+<div class="quickResponse__content">
+    <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
+        <div class="info__row">
+            <p class='info_head'>Кому: </p>
+            <p class='info__content_p'>{{emailServ.selectedLetter.from_address}}</p>
+        </div>
+        <button class='one_butt' (click)='show_quick_form(true)'>
+            <span class='la la-min la-close'></span>
+        </button>
+        
+  </div>
+  <textarea  class='quickResponse__inp' 
+  placeholder="Написать быстрый ответ" 
+  [ngClass]='{inp__active: quickResponse_active}' 
+  (click)='show_quick_form(false)'
+  [(ngModel)]='messages'></textarea>
+  <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
+    <div class="panel__left">
+    <button class='button__send'><span>Отправить</span></button>
+    <div class="left__panel">
+    <button>
+        <span class='la la-paperclip visible'></span>
+      </button>
+    </div>
+
+          <p class='btn__text'>Перейти в полную версию</p>
+  </div>
+  <button class='one_butt'>
+      <span class='la la-ellipsis-h'></span>
+    </button>
+</div>
+</div>
 </div>
 </div>
 </div>

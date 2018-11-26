@@ -288,3 +288,16 @@ button {
         }
     }
 
+
+    .letterMenuButt {
+        width: 100%;
+        color:rgb(255, 255, 255);
+        padding: 5px;
+        cursor: pointer;
+        background: #4f4b4e;
+        transition: .4s;
+        &:hover {
+            background: #1a1919;
+        }
+    }
+
