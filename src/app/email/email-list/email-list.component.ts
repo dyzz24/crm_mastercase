@@ -1,8 +1,10 @@
 import { Component, OnInit, ElementRef, DoCheck, ViewChild} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
 import { AuthorizationService } from '../../authorization.service';
 import { SocketService } from '../../socket.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 
@@ -38,22 +40,28 @@ export class EmailListComponent implements OnInit, DoCheck {
     private _rout: Router,
     public emailServ: EmailServiceService,
     private authorizationServ: AuthorizationService,
-    private socketServ: SocketService
+    private socketServ: SocketService,
+    private http: HttpClient,
     ) {
    }
 
   ngOnInit() {
 
-      const requestInterval = setInterval(() => {
+   const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-          this.emailServ.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) =>
+          this.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) =>
       this.emailItems = data2);
         }
       }, 1000);
   }
   ngDoCheck() {
     // console.log(this.emailServ.lettersList);
+  }
+
+
+  public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
 
@@ -80,7 +88,7 @@ export class EmailListComponent implements OnInit, DoCheck {
     this.emailServ.idPostForHTTP = this.emailItems[index].address; // ID ящика
     this.emailServ.selectNum = selectNum;
     this.emailServ.adress = this.adress;
-    this.emailServ.httpPost(
+    this.httpPost(
     this.adress,
     // tslint:disable-next-line:max-line-length
     {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {

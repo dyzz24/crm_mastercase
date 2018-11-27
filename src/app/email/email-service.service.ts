@@ -1,10 +1,6 @@
 import { Injectable} from '@angular/core';
-
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
 import { Router} from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthorizationService } from '../authorization.service';
+
 
 
 @Injectable({
@@ -75,22 +71,13 @@ export class EmailServiceService {
 
 
 
-  constructor(private http: HttpClient, private rout: Router, private authorizationServ: AuthorizationService) {
-
-      this.rout.navigate(['']);
-      if (this.authorizationServ.accessToken === undefined) {
-        this.rout.navigate(['']);
-      } else {
-        this.rout.navigate(['/email']);
-      }
-
+  constructor( private rout: Router) {
+    this.rout.navigate(['/email']);
 
   }
 
 
-public httpPost(url: string, body, options?): Observable<any> {
-  return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
-}
+
 
 
   checkerTrash() {

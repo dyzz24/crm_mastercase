@@ -1,10 +1,13 @@
 import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
-import { TouchSequence } from 'selenium-webdriver';
-import { validateConfig } from '@angular/router/src/config';
+
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SocketService } from '../../socket.service';
+import { AuthorizationService } from '../../authorization.service';
 
 
 
@@ -46,6 +49,9 @@ export class LettersComponent implements DoCheck, OnInit {
     public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router,
+    private socketServ: SocketService,
+    private http: HttpClient,
+    private authorizationServ: AuthorizationService,
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
@@ -64,11 +70,15 @@ export class LettersComponent implements DoCheck, OnInit {
     this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
 
+  public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
+  }
+
   searchOnServer() {
     if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
         return;
     }
-    this.emailServ.httpPost(`${this.emailServ.ip}/mail/search`,
+    this.httpPost(`${this.emailServ.ip}/mail/search`,
         { searchQuery: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum,
         expiredIds: this.searchIdForHTTP},
         {contentType: 'application/json'})
@@ -151,8 +161,7 @@ export class LettersComponent implements DoCheck, OnInit {
       return;
     }
 
-    this.emailServ
-    .httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
+    this.httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
   // tslint:disable-next-line:forin
@@ -262,8 +271,7 @@ export class LettersComponent implements DoCheck, OnInit {
           }
         );
       }
-      this.emailServ
-        .httpPost(`${this.emailServ.ip}/mail/setbox`, {
+      this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           id: +id,
           box: booleanParam
         })
@@ -276,8 +284,7 @@ export class LettersComponent implements DoCheck, OnInit {
   toggleImportantMark(i, e, id, boolean) {
     // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
-    this.emailServ
-      .httpPost(`${this.emailServ.ip}/mail/flagged`, { id: +id, flag: boolean })
+    this.httpPost(`${this.emailServ.ip}/mail/flagged`, { id: +id, flag: boolean })
       .subscribe();
     this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
       .flagged;
@@ -311,8 +318,7 @@ export class LettersComponent implements DoCheck, OnInit {
         }
         this.emailServ.stopFlag = true;
         this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
-        this.emailServ
-          .httpPost(
+        this.httpPost(
             this.emailServ.adress,
             // tslint:disable-next-line:max-line-length
             {
@@ -339,8 +345,7 @@ export class LettersComponent implements DoCheck, OnInit {
     e.target.closest('.letter__prev').classList.add('dellLetter');
     setTimeout(() => {
       const idelem = this.emailServ.selectedLetter;
-      this.emailServ
-        .httpPost(`${this.emailServ.ip}/mail/setbox`, {
+      this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           id: +id,
           box: box
         })
@@ -364,8 +369,7 @@ export class LettersComponent implements DoCheck, OnInit {
       }
       if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
         setTimeout(() => {
-          this.emailServ
-            .httpPost(
+          this.httpPost(
               this.emailServ.adress,
               // tslint:disable-next-line:max-line-length
               {
@@ -394,7 +398,7 @@ export class LettersComponent implements DoCheck, OnInit {
       for (const key of id_for_delete) {
         if (val.id === key) {
           arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
-          this.emailServ.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+          this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
             id: +val.id,
             box: box
           }).subscribe();
@@ -408,8 +412,7 @@ export class LettersComponent implements DoCheck, OnInit {
     if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
 
       setTimeout(() => {
-        this.emailServ
-          .httpPost(
+        this.httpPost(
             this.emailServ.adress,
             // tslint:disable-next-line:max-line-length
             {
@@ -436,16 +439,14 @@ export class LettersComponent implements DoCheck, OnInit {
 
 get_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
-  this.emailServ
-  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true, address: this.emailServ.idPostForHTTP })
+  this.httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
   // this.emailServ.lettersList[index].draft  = this.emailServ.idPostForHTTP;
 }
 
 delete_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
-  this.emailServ
-  .httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: false, address: this.emailServ.idPostForHTTP })
+  this.httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: false, address: this.emailServ.idPostForHTTP })
   .subscribe();
   // this.emailServ.lettersList[index].draft = null;
 }

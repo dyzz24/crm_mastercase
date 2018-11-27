@@ -3,6 +3,10 @@ import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
 import { attachers } from './attach';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SocketService } from '../../socket.service';
+import { AuthorizationService } from '../../authorization.service';
 
 
 @Component({
@@ -27,12 +31,19 @@ export class EmailViewComponent implements OnInit, DoCheck {
 
   constructor(public emailServ: EmailServiceService,
     private _rout: Router,
-    private elem: ElementRef) { }
+    private elem: ElementRef,
+    private socketServ: SocketService,
+    private http: HttpClient,
+    private authorizationServ: AuthorizationService) { }
 
   ngOnInit() {
   }
   ngDoCheck() {
     // console.log(this.subject, this.nameFrom, this.messages);
+  }
+
+  public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
   closeViewer() {
@@ -82,7 +93,7 @@ this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  /
     const messageBody = this.messageContainer.nativeElement;
     messageBody.classList.add('dellLetter');
     const id = this.emailServ.selectedLetter;
-    this.emailServ.httpPost(`${this.emailServ.ip}/mail/setbox`, {id : +id.id, box: 2}).subscribe();
+    this.httpPost(`${this.emailServ.ip}/mail/setbox`, {id : +id.id, box: 2}).subscribe();
     setTimeout(() => {
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === id.id) {
@@ -176,7 +187,7 @@ this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  /
     }
   }
   quick_send() {
-    this.emailServ.httpPost(
+    this.httpPost(
       `${this.emailServ.ip}/mail/send`,
       // tslint:disable-next-line:max-line-length
       { subject: this.subject, text: this.messages, html: this.messages, to: this.nameFrom}).subscribe((data) => {

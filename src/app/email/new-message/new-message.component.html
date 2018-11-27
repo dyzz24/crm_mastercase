@@ -10,7 +10,10 @@
     <input type='text' class='inp__mess copy' placeholder="{{this.emailServ.to_all_answer}}" [(ngModel)]='copy'>
     <input type='text' class='inp__mess subject' placeholder="{{this.emailServ.to_subject}}" [(ngModel)]='subject'>
     <div class="editor-qu">
-      <quill-editor [(ngModel)]='messages'></quill-editor>
+      <quill-editor [(ngModel)]='messages'>
+      
+          
+      </quill-editor>
 
       <div [innerHTML]="this.emailServ.to_forward | innerhtml" ></div>
     </div>

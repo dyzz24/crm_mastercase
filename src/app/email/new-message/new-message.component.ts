@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SocketService } from '../../socket.service';
+import { AuthorizationService } from '../../authorization.service';
 
 
 @Component({
@@ -9,7 +13,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./new-message.component.scss']
 })
 export class NewMessageComponent implements OnInit, DoCheck {
-  constructor(public emailServ: EmailServiceService, private _rout: Router) { }
+  constructor(public emailServ: EmailServiceService, private _rout: Router,
+    private socketServ: SocketService,
+    private http: HttpClient,
+    private authorizationServ: AuthorizationService) { }
 
 private from;
 private to;
@@ -22,6 +29,11 @@ private messages;
     // console.log(this.to)
   }
 
+  public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
+  }
+
+
   closeViewer() {
     this.emailServ.hiddenEmpty = false;
     this._rout.navigate([this.emailServ.urlParams]);
@@ -30,7 +42,7 @@ private messages;
   }
 
   sendMessage() {
-    this.emailServ.httpPost(
+    this.httpPost(
       `${this.emailServ.ip}/mail/send`,
       // tslint:disable-next-line:max-line-length
       { subject: this.subject, text: this.messages, html: this.messages, to: this.to.split(', ')}).subscribe((data) => {
