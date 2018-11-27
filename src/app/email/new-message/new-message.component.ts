@@ -26,7 +26,7 @@ private messages;
   ngOnInit() {
   }
   ngDoCheck() {
-    // console.log(this.to)
+    // console.log(this.messages)
   }
 
   public httpPost(url: string, body, options?): Observable<any> {

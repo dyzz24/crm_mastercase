@@ -29,6 +29,7 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { AuthorizationService } from './authorization.service';
 import { SocketService } from './socket.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,

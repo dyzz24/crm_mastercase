@@ -134,6 +134,7 @@ export class EmailServiceService {
   }
   }
   new_clear_message() {
+    this.to_forward = '';
     this.rout.navigate([this.urlParams + '/create']);
     this.fullPath = this.urlParams + '/create';
     this.hiddenEmpty = true;

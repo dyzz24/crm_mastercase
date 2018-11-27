@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, DoCheck, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, DoCheck, ViewChild, Inject} from '@angular/core';
 import { Router} from '@angular/router';
 import { EmailServiceService } from '../email-service.service';
 import { AuthorizationService } from '../../authorization.service';
@@ -39,8 +39,8 @@ export class EmailListComponent implements OnInit, DoCheck {
     public element: ElementRef,
     private _rout: Router,
     public emailServ: EmailServiceService,
-    private authorizationServ: AuthorizationService,
-    private socketServ: SocketService,
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    @Inject(SocketService) private socketServ: SocketService,
     private http: HttpClient,
     ) {
    }
