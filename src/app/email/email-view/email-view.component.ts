@@ -14,8 +14,8 @@ import { attachers } from './attach';
 export class EmailViewComponent implements OnInit, DoCheck {
   @ViewChild('messageContainer')
   messageContainer: ElementRef;
-  @ViewChild('printBlock')
-  printBlock: ElementRef;
+  // @ViewChild('printBlock')
+  // printBlock: ElementRef;
   visibleMenu = false;
   nameFrom;
   subject;
