@@ -3,20 +3,18 @@
 
 
 .header {
-    @include header(row-reverse);
-    button {
-        display: inline-block;
-        width: 36px;
-        height: 36px;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: .4s;
-        margin-left: 10px;
-        color: $icons-color;
-        &:hover {
-            background: #858585;
-        }
-    }
+    @include header(row);
+        background: #f7fbfe;
+        padding: 0 10px;
+}
+
+%title_text {
+    color: black;
+    opacity: .5;
+    font-size: 13px;
+}
+%border-bottom {
+    border-bottom: 1px solid #e2ebfa;
 }
 
 .message__body {
@@ -25,25 +23,179 @@
     align-items: center;
     flex-direction: column;
     height: calc(100vh - 120px);
-    padding: 30px;
     box-sizing: border-box;
 
     .inp__mess {
         @include inputs;
     }
 }
+.close {
+    margin: 0;
+    padding: 0;
+}
+
+.custom__button {
+    width: auto;
+    padding-right: 10px;
+}
+
+.button__title {
+    margin-left: 10px;
+    @extend %title_text;
+}
 
 
 
 .editor-qu {
     width: 100%;
+    height: 100%;
 }
 
 [type='submit'] {
-    margin-top: 12px;
-    width: 80px;
-    height: 30px;
+    margin-top: 20px;
+    width: 100px;
+	height: 30px;
     border: solid 1px $border;
     cursor: pointer;
     flex-shrink: 0;
+    align-self: flex-start;
+    margin-left: 40px;
+    border-radius: 10px;
 }
+
+
+.avatar__block {
+    flex-shrink: 0;
+    margin-top: 10px;
+    width: 100%;
+    padding: 0 60px 0px 10px;
+    box-sizing: border-box;
+    height: 40px;  
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    @extend %avatar;
+    background: #57a2d7;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.avatar__title {
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    color:white;
+    font-size: 20px;
+    line-height: 24px;
+}
+.avatar__row_block {
+    @extend %border-bottom;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+
+.head__p {
+    @extend %title_text;
+    font-size: 13px;
+    line-height: 25px;
+    margin-right: 8px;
+}
+
+.mini_marg {
+    margin-right: 4px;
+}
+
+.row__block {
+    flex-shrink: 0;
+    @extend %border-bottom;
+    width: calc(100% - 120px);
+    margin: 0 60px;
+    box-sizing: border-box;
+    min-height: 40px;  
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+.end {
+    background: #f5f9fd;
+    width: 100%;
+    margin: 0;
+    border-bottom: none;
+    padding: 0 60px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.input_fields {
+    height: 100%;
+    resize: none;
+    line-height: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    outline: none;
+    overflow: hidden;
+    flex-grow: 1;
+    font-family: 'Roboto-Regular' ,Arial, sans-serif;
+    color:$text-color;
+    padding: 0;
+    margin: 0;
+}
+
+.new_message__bables {
+    @extend %bables;
+    max-width: 120px;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    
+    p {
+    color:$text-color;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 20px;
+    font-size: 13px;
+    margin-right: 10px;
+    }
+    span {
+        cursor: pointer;
+    }
+
+}
+
+.left__group {
+    display: flex;
+    align-items: center;
+}
+
+
+.visible {
+    display: block;
+}
+
+.other__text {
+    @extend %title_text;
+    font-size: 13px;
+}
+
+
+
+.not__addressess {
+    display: none;
+}
+
+
+

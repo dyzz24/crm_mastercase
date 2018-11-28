@@ -1,14 +1,67 @@
 <div class="newMessage__container">
   <div class="header">
+    <div class="left__group">
+      <button type='button' class='custom__button'>
+          <span class='la la-folder-open'></span>
+          <span class='button__title'>Шаблоны</span>
+        </button>
+        <button type='button'>
+            <span class='la la-ellipsis-h'></span>
+          </button>
+        </div>
+
       <button class='close' (click)='closeViewer()'>
           <span class='la la-close'></span>
         </button>
   </div>
   <div class="message__body">
+<div class="avatar__block">
+    <div class="avatar">
+        <p class='avatar__title'>{{this.emailServ.avatarMake(this.emailServ.idPostForHTTP)}}</p>
+      </div>
+      <div class="avatar__row_block">
+      <p class='head__p'>От: {{this.emailServ.idPostForHTTP}}</p>
+      </div>
+</div>
+<div class="row__block">
+    <p class='head__p'>Кому: </p>
+    <div class="new_message__bables" *ngFor="let item of this.to" [ngClass]="{not__addressess: this.to[0] === ''}">
+      <p>{{item}}</p>
+      <span class='la la-micro la-close'></span>
+    </div>
+    <textarea class='input_fields' ></textarea>
+</div>
+<div class="row__block">
+    <p class='head__p'>Копия: </p>
+    <div class="new_message__bables" *ngFor="let item of this.copy" [ngClass]="{not__addressess: this.copy.length === 0}">
+        <p>{{item}}</p>
+        <span class='la la-micro la-close'></span>
+      </div>
+    <textarea class='input_fields'></textarea>
+</div>
+<div class="row__block">
+    <p class='head__p'>Скрытая: </p>
+    <div class="new_message__bables" *ngFor="let item of this.hidden_copy" [ngClass]="{not__addressess: this.hidden_copy.length === 0}">
+        <p>{{item}}</p>
+        <span class='la la-micro la-close'></span>
+      </div>
+    <textarea class='input_fields'></textarea>
+</div>
 
-    <input type='text' class='inp__mess to'placeholder="{{this.emailServ.to_answer}}" [(ngModel)]='to'>
-    <input type='text' class='inp__mess copy' placeholder="{{this.emailServ.to_all_answer}}" [(ngModel)]='copy'>
-    <input type='text' class='inp__mess subject' placeholder="{{this.emailServ.to_subject}}" [(ngModel)]='subject'>
+<div class="row__block">
+    <p class='head__p'>Тема: </p>
+
+    <textarea class='input_fields subject' [(ngModel)]='subject' >{{this.subject}}</textarea>
+</div>
+<div class="row__block end">
+    <button type='button' class='custom__button'>
+        <span class='la la-paperclip visible'></span>
+        <span class='button__title'>Прикрепить файл</span>
+      </button>
+      <p class='other__text'>Или перетащите файлы</p>
+</div>
+
+
     <div class="editor-qu">
       <quill-editor [(ngModel)]='this.emailServ.to_forward' 
       

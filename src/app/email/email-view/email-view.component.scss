@@ -33,28 +33,7 @@ p{
 }
 
 
-button {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: .2s;
-    background: none;
-    border: none;
-    outline: none;
-    padding: 0 0 0 0;
-    margin: 0 2px 0 2px;
-    
-span {
-    
-    color: $icons-color;
-    font-size: 15px;
-    
-}
-}
+
 
 .one_butt {
     margin: 0;
@@ -158,6 +137,7 @@ margin: 0 2px;
 }
 
 .avatar__title {
+    font-weight: bold;
     padding: 0;
     margin: 0;
     line-height: 1;
@@ -247,7 +227,6 @@ margin: 0 2px;
     line-height: 20px;
     margin-right: 8px;
     margin-top: 4px;
-    // margin: 5px 8px 0 0;
 }
 
 .info__content__block {
