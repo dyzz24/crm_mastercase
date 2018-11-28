@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DataService } from './data.service';
 import { AuthorizationService } from './authorization.service';
 
 @Component({
@@ -9,6 +8,6 @@ import { AuthorizationService } from './authorization.service';
 })
 export class AppComponent {
   title = 'angular';
-  constructor (globalService: DataService, authorizationService: AuthorizationService) {
+  constructor (authorizationService: AuthorizationService) {
   }
 }

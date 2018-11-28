@@ -1,7 +1,7 @@
 <div class="container__view" #printBlock>
   <div class="header_letter__view">
     <div class="group__one">
-    <div class="left__panel">
+
         <button class='new__mess' (click)='this.emailServ.new_clear_message()'>
             <span class='la la-envelope-o'></span>
             <p class="tooltip">Новое сообщение</p>
@@ -10,11 +10,11 @@
               <span class='la la-angle-left' ></span>
               <p class="tooltip">Следующее сообщение</p>
             </button>
-              <button  (click)='selectMess(1)' >
+              <button  (click)='selectMess(1)'>
                   <span class='la la-angle-right'></span>
                   <p class="tooltip">Предыдущее сообщение</p>
                 </button>
-    </div>
+   
     <div class="left__panel">
   <button class='menu' (click)="this.emailServ.newMessage(emailServ.selectedLetter.from_address,'',this.emailServ.selectedLetter.subject)">
     <span class='la la-mail-reply'></span>
@@ -47,12 +47,12 @@
       <p class="tooltip">Меню</p>
     </button>
   </div>
-  <div class="left__panel end">
+
     <button class='one_butt' (click)='closeViewer()'>
         <span class='la la-close'></span>
         <p class="tooltip">Закрыть</p>
       </button>
-    </div>
+
   </div>
   </div>
   <div class="subject"><p class='subject__theme'>Тема: {{emailServ.selectedLetter.subject}}</p>
@@ -183,21 +183,28 @@
   placeholder="Написать быстрый ответ" 
   [ngClass]='{inp__active: quickResponse_active}' 
   (click)='show_quick_form(false)'
-  [(ngModel)]='messages'></textarea>
+  [(ngModel)]='messages'
+  #input_cleaner></textarea>
   <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
     <div class="panel__left">
-    <button class='button__send'><span>Отправить</span></button>
-    <div class="left__panel">
+    <button class='button__send' (click)='quick_send($event)'><span>Отправить</span></button>
+    <div class="left__panel end">
     <button>
         <span class='la la-paperclip visible'></span>
       </button>
     </div>
 
-          <p class='btn__text'>Перейти в полную версию</p>
+          <p class='btn__text'
+          (click)="this.emailServ.newMessage(emailServ.selectedLetter.from_address,'',this.emailServ.selectedLetter.subject)"
+          >Перейти в полную версию</p>
   </div>
   <button class='one_butt'>
       <span class='la la-ellipsis-h'></span>
     </button>
+</div>
+
+<div class="quickResponse__mail_status" *ngIf="this.sending_status === true">
+  <p>Письмо отправляется</p>
 </div>
 </div>
 </div>

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
+import { DOCUMENT } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,14 +19,15 @@ import { AuthorizationService } from '../../authorization.service';
 export class EmailViewComponent implements OnInit, DoCheck {
   @ViewChild('messageContainer')
   messageContainer: ElementRef;
-  // @ViewChild('printBlock')
-  // printBlock: ElementRef;
+  @ViewChild('input_cleaner')
+  input_cleaner: ElementRef;
   visibleMenu = false;
   nameFrom;
   subject;
   messages;
   attachersList = attachers;
   quickResponse_active = false;
+  sending_status = false;
 
 
 
@@ -34,7 +36,8 @@ export class EmailViewComponent implements OnInit, DoCheck {
     private elem: ElementRef,
     private socketServ: SocketService,
     private http: HttpClient,
-    private authorizationServ: AuthorizationService) { }
+    private authorizationServ: AuthorizationService
+    ) { }
 
   ngOnInit() {
   }
@@ -81,9 +84,7 @@ this.emailServ.selectedLetter = this.emailServ.lettersList[this.emailServ.index]
 this.emailServ.currentId = this.emailServ.index;
 
 this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.index]);
-this.emailServ.mailsToArray = []; // очистил список отправителей
-this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  // добавил в список отправителей
-// this.emailServ.stateServ();
+
   }
 
   hideMenuShow() {
@@ -177,16 +178,25 @@ this.emailServ.mailsToArray.push(this.emailServ.selectedLetter.from_address);  /
   }
 
   show_quick_form(cancelFlag) {
-    if (cancelFlag === false) {
-    this.quickResponse_active = true;
-    this.nameFrom = this.emailServ.selectedLetter.from_address;
+    if (cancelFlag === false) { // если передан отрицательный флаг
+    this.quickResponse_active = true;  // активирую стили для показа быстрой формы
+    this.nameFrom = this.emailServ.selectedLetter.from_address; // подставляю в переменные значения с активного письма
     this.subject = this.emailServ.selectedLetter.subject;
 
     } else {
-      this.quickResponse_active = false;
+      this.quickResponse_active = false; // если передан отрицательный флаг, всё прячу
     }
   }
   quick_send() {
+    this.sending_status = true;
+    setTimeout(() => {
+      this.sending_status = false;
+      this.quickResponse_active = false;
+      this.nameFrom = ''; // очищаю:  имя,
+      this.subject = ''; // тему,
+      this.messages = ''; // тело пиьма,
+      this.input_cleaner.nativeElement.value = ''; // инпут
+    }, 2000);
     this.httpPost(
       `${this.emailServ.ip}/mail/send`,
       // tslint:disable-next-line:max-line-length

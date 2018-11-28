@@ -188,7 +188,7 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.checkerLength_addressess();
     // this.emailServ.stateServ();
-    // console.log(this.emailServ.selectedLetter);
+    // console.log(this.emailServ.selectedLetter.draft);
   }
 
   selectedLetters(id, e, i) {
