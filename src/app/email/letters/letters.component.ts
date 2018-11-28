@@ -1,4 +1,4 @@
-import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild, Inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, Scroll } from '@angular/router';
 
@@ -46,12 +46,11 @@ export class LettersComponent implements DoCheck, OnInit {
   searchLettersInput: FormControl = new FormControl('');
 
   constructor(
-    public emailServ: EmailServiceService,
+    @Inject(EmailServiceService) public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router,
-    private socketServ: SocketService,
     private http: HttpClient,
-    private authorizationServ: AuthorizationService,
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {

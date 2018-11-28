@@ -549,7 +549,12 @@ transition: .5s;
 
 
 .active_in_work {
-    background: rgb(16, 221, 85);
+    background: #8ecdf6;
+}
+
+.active_in_work_notMe {
+    background: white;
+    border: 1px solid #8ecdf6;
 }
 
 

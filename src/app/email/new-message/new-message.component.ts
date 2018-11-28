@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, Inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,19 +14,18 @@ import { AuthorizationService } from '../../authorization.service';
 })
 export class NewMessageComponent implements OnInit, DoCheck {
   constructor(public emailServ: EmailServiceService, private _rout: Router,
-    private socketServ: SocketService,
     private http: HttpClient,
-    private authorizationServ: AuthorizationService) { }
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService) { }
 
 private from;
-private to;
-private copy;
-private subject;
+private to = this.emailServ.to_answer;
+private copy = this.emailServ.to_all_answer;
+private subject = this.emailServ.to_subject;
 private messages;
   ngOnInit() {
   }
   ngDoCheck() {
-    // console.log(this.messages)
+    // console.log(this.to);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {

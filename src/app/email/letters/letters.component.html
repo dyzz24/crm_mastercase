@@ -85,8 +85,9 @@
               <div class='checker'></div>
             </label>
             <div class="avatar__info-butt"  
-            [class.for__presentation]="this.emailServ.lettersList[i].flagged === true" 
-            [class.active_in_work]='this.emailServ.lettersList[i].draft'
+          
+            [class.active_in_work]='this.emailServ.lettersList[i].draft === this.emailServ.idPostForHTTP'
+            [class.active_in_work_notMe]='this.emailServ.lettersList[i].draft !== this.emailServ.idPostForHTTP'
             *ngIf="this.emailServ.lettersList[i].draft !== null"
             >
             </div>

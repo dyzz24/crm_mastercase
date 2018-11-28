@@ -1,13 +1,12 @@
-import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
-import { QuillEditorComponent } from 'ngx-quill';
 import { attachers } from './attach';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
-import { DOCUMENT } from '@angular/platform-browser';
+
 
 
 @Component({
@@ -34,9 +33,8 @@ export class EmailViewComponent implements OnInit, DoCheck {
   constructor(public emailServ: EmailServiceService,
     private _rout: Router,
     private elem: ElementRef,
-    private socketServ: SocketService,
     private http: HttpClient,
-    private authorizationServ: AuthorizationService
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService
     ) { }
 
   ngOnInit() {
@@ -55,11 +53,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
     this.emailServ.fullPath = this.emailServ.urlParams;
     // this.emailServ.stateServ();
   }
-  newMessage() {
-    this._rout.navigate([this.emailServ.urlParams + '/create']);
-    this.emailServ.fullPath = this.emailServ.urlParams + '/create';
-    this.emailServ.hiddenEmpty = true;
-  }
+
 
   selectMess(n) {
 
@@ -197,11 +191,11 @@ this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.i
       this.messages = ''; // тело пиьма,
       this.input_cleaner.nativeElement.value = ''; // инпут
     }, 2000);
-    this.httpPost(
-      `${this.emailServ.ip}/mail/send`,
-      // tslint:disable-next-line:max-line-length
-      { subject: this.subject, text: this.messages, html: this.messages, to: this.nameFrom}).subscribe((data) => {
-  });
+  //   this.httpPost(
+  //     `${this.emailServ.ip}/mail/send`,
+  //     // tslint:disable-next-line:max-line-length
+  //     { subject: this.subject, text: this.messages, html: this.messages, to: this.nameFrom}).subscribe((data) => {
+  // });
   }
 
   print() {

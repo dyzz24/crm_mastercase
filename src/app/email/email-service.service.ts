@@ -73,7 +73,6 @@ export class EmailServiceService {
 
   constructor( private rout: Router) {
     this.rout.navigate(['/email']);
-
   }
 
 
