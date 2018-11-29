@@ -20,6 +20,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 private from;
 private to = [this.emailServ.to_answer];
+private to_text;
 private copy = this.emailServ.to_all_answer;
 private hidden_copy = [];
 private subject = this.emailServ.to_subject;
@@ -29,12 +30,14 @@ private messages;
     // console.log(this.emailServ.to_all_answer.length)
   }
   ngDoCheck() {
-    // console.log(this.emailServ.to_all_answer);
+    console.log(this.to_text);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
+
+  
 
 
   closeViewer() {
@@ -45,10 +48,10 @@ private messages;
   }
 
   sendMessage() {
-    this.httpPost(
-      `${this.emailServ.ip}/mail/send`,
-      // tslint:disable-next-line:max-line-length
-      { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
-  });
+  //   this.httpPost(
+  //     `${this.emailServ.ip}/mail/send`,
+  //     // tslint:disable-next-line:max-line-length
+  //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
+  // });
 
 }}
