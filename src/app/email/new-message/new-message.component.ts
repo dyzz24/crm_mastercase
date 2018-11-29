@@ -20,14 +20,17 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 private from;
 private to = [this.emailServ.to_answer]; // array for send
-private copy = [this.emailServ.to_all_answer]; // array for send
+private copy = this.emailServ.to_all_answer; // array for send
 private hidden_copy = []; // array for send
 private subject = this.emailServ.to_subject; // тема для отправки
 
 private messages;
 
   ngOnInit() {
-    // console.log(this.copy)
+    console.log(typeof(this.copy));
+    if (typeof(this.copy) === 'string') {
+      this.copy = [];
+    }
   }
   ngDoCheck() {
     // console.log(this.to);
@@ -68,10 +71,10 @@ private messages;
   }
 
   sendMessage() {
-    this.httpPost(
-      `${this.emailServ.ip}/mail/send`,
-      // tslint:disable-next-line:max-line-length
-      { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
-  });
+  //   this.httpPost(
+  //     `${this.emailServ.ip}/mail/send`,
+  //     // tslint:disable-next-line:max-line-length
+  //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
+  // });
 
 }}

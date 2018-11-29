@@ -36,7 +36,7 @@
 </div>
 <div class="row__block">
     <p class='head__p'>Копия: </p>
-    <div class="new_message__bables" *ngFor="let item of this.copy" [ngClass]="{not__addressess: this.copy[0] === ''}">
+    <div class="new_message__bables" *ngFor="let item of this.copy" [ngClass]="{not__addressess: this.copy.length === 0}">
         <p>{{item}}</p>
         <span class='la la-micro la-close'></span>
       </div>
