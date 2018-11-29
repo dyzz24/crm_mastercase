@@ -29,15 +29,21 @@
       <p>{{item}}</p>
       <span class='la la-micro la-close'></span>
     </div>
-    <textarea class='input_fields' [(ngModel)]='to_text' ></textarea>
+    <input class='input_fields' 
+    (blur)="add_data(this.to, $event)" 
+    (keydown)=' add_data_keyEvent(this.to, $event)'
+    >
 </div>
 <div class="row__block">
     <p class='head__p'>Копия: </p>
-    <div class="new_message__bables" *ngFor="let item of this.copy" [ngClass]="{not__addressess: this.copy.length === 0}">
+    <div class="new_message__bables" *ngFor="let item of this.copy" [ngClass]="{not__addressess: this.copy[0] === ''}">
         <p>{{item}}</p>
         <span class='la la-micro la-close'></span>
       </div>
-    <textarea class='input_fields'></textarea>
+    <input class='input_fields' 
+    (blur)="add_data(this.copy, $event)" 
+    (keydown)=' add_data_keyEvent(this.copy, $event)'
+    >
 </div>
 <div class="row__block">
     <p class='head__p'>Скрытая: </p>
@@ -45,7 +51,10 @@
         <p>{{item}}</p>
         <span class='la la-micro la-close'></span>
       </div>
-    <textarea class='input_fields'></textarea>
+    <input class='input_fields' 
+    (blur)="add_data(this.hidden_copy, $event)" 
+    (keydown)=' add_data_keyEvent(this.hidden_copy, $event)'
+    >
 </div>
 
 <div class="row__block">
