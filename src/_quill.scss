@@ -12,6 +12,7 @@
     flex-grow: 1;
     margin: 0px;
     position: relative;
+    display: flex;
   }
   .ql-container.ql-disabled .ql-tooltip {
     visibility: hidden;
@@ -854,7 +855,7 @@
     background-color: #000;
   }
   .ql-toolbar.ql-snow {
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #d9e6f7;
     box-sizing: border-box;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     padding: 0 15px;
@@ -948,9 +949,4 @@
   .ql-snow a {
     color: #06c;
   }
-  .ql-container.ql-snow {
-    border: 1px solid #d9e6f7;
-  }
-
-  
-  
+ 
