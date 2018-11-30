@@ -79,7 +79,7 @@ export class EmailListComponent implements OnInit, DoCheck {
   }
 
 
-  goUrl( index, paramsUrl, idMail, typeMess, activeNumber?, selectNum?) {
+  goUrl( index, paramsUrl,  selectNum?) {
     // this.showSuccess(); // test TOSTER
     //  console.log(this.emailServ.lettersList);
     this.emailServ.haveResponse = false;
@@ -99,30 +99,16 @@ this.emailServ.haveResponse = true;
         this.emailServ.notLettersFlag = false;
       }
       this.emailServ.lettersList = data;
-      // this.emailServ.stateServ(); // save state on service
-
       } );
-      // this.emailServ.visibleLett(15); // TEST
-      // this.emailServ.step = 15;
-
 
 
     this._rout.navigate(['email/' + this.emailServ.idBox + paramsUrl]);
-    this.emailServ.typeMess = typeMess;
+
     this.emailServ.selectedMess = selectNum;
     this.emailServ.urlParams = `email/${this.emailServ.idBox}${paramsUrl}`;
 
     this.emailServ.fullPath = `email/${this.emailServ.idBox}${paramsUrl}`;
 
-    if (activeNumber) {
-      for (let i = 0; i < this.emailServ.activeEl.length; i++) {
-        if (i === (activeNumber - 1)) {
-          continue;
-        }
-        this.emailServ.activeEl[i] = false;
-      }
-    this.emailServ.activeEl[activeNumber - 1] = true;
-    }
     this.emailServ.hideAvatars = [];
     this.emailServ.idLetters = [];
 
