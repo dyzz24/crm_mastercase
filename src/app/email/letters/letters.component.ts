@@ -450,9 +450,15 @@ delete_work(id, e, index) {
   // this.emailServ.lettersList[index].draft = null;
 }
 
+new_messages_dblClick(index) {
+  const letter = this.emailServ.lettersList[index];
+  this.emailServ.newMessage_DblClick(letter.from_address, letter.to_addresses, letter.subject, letter.text, letter.html);
+  // this.emailServ.new_clear_message();
+}
+
 // @HostListener('window:resize', ['$event'])
 // onResize(event) {
-//   const size = this.size_Check.nativeElement.offsetWidth;  // отслеживаем ресайз блока
+//   const size = this.size_Check.nativeElement.offsetWidth;  // отслеживаем ресайз блока НУЖНО ПОТОМ
 //   console.log(size);
 // }
 }

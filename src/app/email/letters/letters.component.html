@@ -72,6 +72,7 @@
         [class.active]="emailServ.activeLett[i]"
         [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         [class.active_checkboxes]='emailServ.hideAvatars[i]'
+        (dblclick)="new_messages_dblClick(i)"
         >
         <div class="avatar__group">
           <div class="avatar" (change)='hideAva(i)' >

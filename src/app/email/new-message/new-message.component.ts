@@ -30,8 +30,7 @@ private messages;
 private messages_sending = false;
 
   ngOnInit() {
-    console.log(typeof(this.copy));
-    if (typeof(this.copy) === 'string') {
+    if (typeof(this.copy) === 'string') { // если строка прилетит - сделать массивом
       this.copy = [];
     }
   }

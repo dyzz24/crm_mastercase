@@ -315,6 +315,7 @@ label {
     font-size: 9px;
     line-height: 1;
     text-align: right;
+    user-select: none;
 }
       
 .letter__settings {
@@ -361,6 +362,7 @@ label {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    user-select: none;
 }
 .letter__caption {
     font-size: 13px; 

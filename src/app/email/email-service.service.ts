@@ -151,6 +151,31 @@ export class EmailServiceService {
       this.to_forward = param_html;
     }
   }
+  newMessage_DblClick(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
+    this.to_answer = '';
+    this.to_subject = '';
+    this.to_all_answer = '';
+    this.to_forward = '';
+    this.rout.navigate([this.urlParams + '/create']);
+    this.fullPath = this.urlParams + '/create';
+    this.hiddenEmpty = true;
+    this.to_answer = param_to_answer;
+    this.to_subject = param_to_subject;
+    if (param_html === null) {
+      this.to_forward = param_text;
+    } else {
+      this.to_forward = param_html;
+    }
+    if (param_to_all_answer === '') {
+      return;
+    } else {
+    this.to_all_answer = param_to_all_answer.filter(val => {
+      if (val !== this.idPostForHTTP && val !== param_to_answer) {
+        return val;
+      }
+    });
+  }
+  }
 
 
   checkerLengthArray_bcc_cc() {
