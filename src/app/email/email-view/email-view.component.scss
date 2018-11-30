@@ -15,13 +15,7 @@
     margin: 0;
 }
 
-%bables {
-    border-radius: 10px;
-    background: #dcdcdc;
-    box-sizing: border-box;
-    height: 20px;
-    padding: 0 10px;
-}
+
 
 
 :host {
@@ -73,31 +67,7 @@ p{
 .group__one {
     display: flex;
 }
-.left__panel {
-text-align: left;
 
-box-sizing: border-box;
-display: flex;
-justify-content: center;
-align-items: center;
-border-left:1px solid #c4c4c4;
-border-right:1px solid #c4c4c4;
-box-sizing: border-box; 
-
-margin: 0 2px;
-    padding: 0 2px;
-
-
-}
-
-
-.left__panel.end{
-    border:0px;
-    padding: 0px;
-    border-right:1px solid #c4c4c4;
-    margin-right:  4px;
-    padding-right: 4px; 
-}
 
 
 
@@ -188,7 +158,7 @@ margin: 0 2px;
     align-items: center;
     max-width: 300px;
     width: auto;
-    @extend %bables;
+    @include bables(auto);
 }
 .full_name {
     @extend %default_text_param;
@@ -198,7 +168,6 @@ margin: 0 2px;
 }
 .email__name {
     @extend %default_text_param;
-    opacity: .5;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -208,6 +177,7 @@ margin: 0 2px;
 .info__row {
     width: 100%;
     display: flex;
+    align-items: center;
     
 }
 .info_head {
@@ -221,12 +191,13 @@ margin: 0 2px;
     margin-top: 4px;
 }
 .info__content_p {
-    @extend %default_text_param;
-    @extend %bables;
-    color: #9b9ea6;
-    line-height: 20px;
+    
+    @include bables;
     margin-right: 8px;
     margin-top: 4px;
+    p{
+        @extend %default_text_param;
+    }
 }
 
 .info__content__block {
@@ -310,23 +281,45 @@ margin: 0 2px;
     font-weight: 600;
 }
 
-.who_in_work {
+
+.in_work {
+    height: 24px;
     display: flex;
     align-items: center;
-}
-.in_work {
-    @extend %default_text_param;
-    color: $text-color;
-    margin: 0;
-    border: 1px solid $border;
-    padding: 0 6px 0 6px;
+
+    border: 1px solid #8ecdf6;
     box-sizing: border-box;
     border-radius: 10px;
-    margin-right: 5px; 
-    font-size: 13px;
-    white-space: nowrap;
-    line-height: 1;
-    padding: 4px 6px;
+    padding: 0px 10px;
+    position: relative;
+    p {
+        white-space: nowrap;
+        font-size: 13px;
+        color: #8ecdf6;
+        @extend %default_text_param;
+    }
+}
+.in_work_not-me {
+    border: 1px solid #6b80a0;
+    p {
+        color: #6b80a0;
+    }
+}
+
+.in_work_indicator_not-me {
+
+    background: white !important;
+    border: 1px solid #6b80a0;
+}
+
+.in_work_indicator {
+    position: absolute;
+    top:-5px;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background: #8ecdf6;
+    border-radius: 50%;
 }
 
 .text {

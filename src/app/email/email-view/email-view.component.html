@@ -56,11 +56,13 @@
   </div>
   </div>
   <div class="subject"><p class='subject__theme'>Тема: {{emailServ.selectedLetter.subject}}</p>
-        <div class='who_in_work'>
-         <div class='left__panel end'>
-          <p class='in_work'>{{this.emailServ.selectedLetter.draft}}</p>
+     
+         <div class='left__panel end' *ngIf="this.emailServ.selectedLetter.draft !== null">
+          <div class='in_work' [class.in_work_not-me]="this.emailServ.selectedLetter.draft !== this.emailServ.idPostForHTTP" ><p>{{this.emailServ.selectedLetter.draft}}</p>
+          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.emailServ.selectedLetter.draft !== this.emailServ.idPostForHTTP"></div>
+          </div>
         </div>
-        </div>
+      
   </div>
   <div class="messageContainer" #messageContainer>
 
@@ -87,9 +89,9 @@
             <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
-              <p class='info__content_p' *ngIf="this.emailServ.selectedLetter.to_addresses.length === 1; else have_many_addresses">Вам</p>
+              <div class='info__content_p' *ngIf="this.emailServ.selectedLetter.to_addresses.length === 1; else have_many_addresses"><p>Вам</p></div>
               <ng-template #have_many_addresses>
-              <p class='info__content_p' *ngFor="let item of this.emailServ.cut_addressess_array">{{item}}</p>
+              <div class='info__content_p' *ngFor="let item of this.emailServ.cut_addressess_array"><p>{{item}}</p></div>
               <input type='button' class='addressess' [class.input_return]='this.emailServ.cut_addressess_array.length === this.emailServ.selectedLetter.to_addresses.length'
               *ngIf="this.emailServ.selectedLetter.to_addresses.length > 3"
               (click)='all_view($event)' 
@@ -100,7 +102,7 @@
             <div class="info__row" *ngIf="this.emailServ.selectedLetter.cc_addresses !== null">
                 <p class="info_head">Копия:</p>
                 <div class="cut__visible_block">
-                <p class='info__content_p' *ngFor="let item of this.emailServ.cut_cc_adressess_array">{{item}}</p>
+                <div class='info__content_p' *ngFor="let item of this.emailServ.cut_cc_adressess_array"><p>{{item}}</p></div>
                 <input type='button' class='cc' [class.input_return]='this.emailServ.cut_cc_adressess_array.length === this.emailServ.selectedLetter.cc_addresses.length'
                 *ngIf="this.emailServ.selectedLetter.cc_addresses.length > 3"
                 (click)='all_view($event)' 
@@ -172,7 +174,7 @@
     <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
         <div class="info__row">
             <p class='info_head'>Кому: </p>
-            <p class='info__content_p'>{{emailServ.selectedLetter.from_address}}</p>
+            <div class='info__content_p'><p>{{emailServ.selectedLetter.from_address}}</p></div>
         </div>
         <button class='one_butt' (click)='show_quick_form(true)'>
             <span class='la la-min la-close'></span>

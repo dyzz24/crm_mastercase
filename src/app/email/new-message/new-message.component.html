@@ -1,10 +1,12 @@
 <div class="newMessage__container">
   <div class="header">
     <div class="left__group">
+      <div class="left__panel end">
       <button type='button' class='custom__button'>
-          <span class='la la-folder-open'></span>
+          <span class='la la-folder'></span>
           <span class='button__title'>Шаблоны</span>
         </button>
+      </div>
         <button type='button'>
             <span class='la la-ellipsis-h'></span>
           </button>
@@ -25,35 +27,38 @@
 </div>
 <div class="row__block">
     <p class='head__p'>Кому: </p>
-    <div class="new_message__bables" *ngFor="let item of this.to" [ngClass]="{not__addressess: this.to[0] === ''}">
+    <div class="new_message__bables" *ngFor="let item of this.to,let i = index" [ngClass]="{not__addressess: this.to[0] === ''}">
       <p>{{item}}</p>
-      <span class='la la-micro la-close'></span>
+      <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.to, $event, i)'></span>
     </div>
     <input class='input_fields' 
     (blur)="add_data(this.to, $event)" 
     (keydown)=' add_data_keyEvent(this.to, $event)'
+    (keydown)='delete_data_keyEvent(this.to, $event)'
     >
 </div>
 <div class="row__block">
     <p class='head__p'>Копия: </p>
-    <div class="new_message__bables" *ngFor="let item of this.copy" [ngClass]="{not__addressess: this.copy.length === 0}">
+    <div class="new_message__bables" *ngFor="let item of this.copy,let i = index" [ngClass]="{not__addressess: this.copy.length === 0}">
         <p>{{item}}</p>
-        <span class='la la-micro la-close'></span>
+        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.copy, $event, i)'></span>
       </div>
     <input class='input_fields' 
     (blur)="add_data(this.copy, $event)" 
     (keydown)=' add_data_keyEvent(this.copy, $event)'
+    (keydown)='delete_data_keyEvent(this.copy, $event)'
     >
 </div>
 <div class="row__block">
     <p class='head__p'>Скрытая: </p>
-    <div class="new_message__bables" *ngFor="let item of this.hidden_copy" [ngClass]="{not__addressess: this.hidden_copy.length === 0}">
+    <div class="new_message__bables" *ngFor="let item of this.hidden_copy,let i = index" [ngClass]="{not__addressess: this.hidden_copy.length === 0}">
         <p>{{item}}</p>
-        <span class='la la-micro la-close'></span>
+        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.hidden_copy, $event, i)'></span>
       </div>
     <input class='input_fields' 
     (blur)="add_data(this.hidden_copy, $event)" 
     (keydown)=' add_data_keyEvent(this.hidden_copy, $event)'
+    (keydown)='delete_data_keyEvent(this.hidden_copy, $event)'
     >
 </div>
 
@@ -62,7 +67,7 @@
 
     <textarea class='input_fields subject' [(ngModel)]='subject' >{{this.subject}}</textarea>
 </div>
-<div class="row__block end">
+<div class="row__block end_group">
     <button type='button' class='custom__button'>
         <span class='la la-paperclip visible'></span>
         <span class='button__title'>Прикрепить файл</span>
@@ -82,5 +87,6 @@
 
     </div>
     <input type="submit" value='отправить' (click)='sendMessage()'>
+    <div class="message__preload" *ngIf="this.messages_sending === true"></div>
   </div>
 </div>

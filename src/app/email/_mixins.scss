@@ -322,12 +322,52 @@ span {
             background: #1a1919;
         }
     }
-
-    %bables {
+@mixin bables($max-width:120px) {
         border-radius: 10px;
+        max-width: $max-width;
         background: #dcdcdc;
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        margin: 4px 4px 4px 0px;
         height: 20px;
         padding: 0 10px;
-    }
+        p {
+            color:#9b9ea6;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            line-height: 20px;
+            font-size: 13px;
+            }
+            span {
+                cursor: pointer;
+            }
+}
+
+    .left__panel {
+        text-align: left;
+        
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left:1px solid #c4c4c4;
+        border-right:1px solid #c4c4c4;
+        box-sizing: border-box; 
+        
+        margin: 0 2px;
+            padding: 0 2px;
+        
+        
+        }
+        
+        
+        .left__panel.end{
+            border:0px;
+            padding: 0px;
+            border-right:1px solid #c4c4c4;
+            margin-right:  4px;
+            padding-right: 4px; 
+        }
 
