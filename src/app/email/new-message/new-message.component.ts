@@ -84,7 +84,7 @@ private messages_sending = false;
   }
 
   delete_data_keyEvent(arr, e) { // удаление при клике на Backspace
-    if (e.key === 'Backspace') {
+    if (e.key === 'Backspace' && e.target.value === '') {
       arr.pop();
     }
   }

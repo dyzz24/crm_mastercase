@@ -20,7 +20,6 @@ $font-color: $icons-color;
     @include header(row);
     height: 45px;
     border-bottom: 1px solid $border;
-    overflow: hidden;
 }
 
 .letter__list {
