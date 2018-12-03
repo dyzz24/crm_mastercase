@@ -286,7 +286,7 @@ span {
     }
     
     ::-webkit-scrollbar-thumb:hover{
-    background-color:black;
+    background-color:#7a91d3;
     }
     
     
@@ -330,14 +330,14 @@ span {
         display: flex;
         align-items: center;
         margin: 4px 4px 4px 0px;
-        height: 20px;
+        height: 24px;
         padding: 0 10px;
         p {
             color:#9b9ea6;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            line-height: 20px;
+            line-height: 24px;
             font-size: 13px;
             }
             span {

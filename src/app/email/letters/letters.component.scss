@@ -10,8 +10,8 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    overflow-y: auto;
-    overflow-x: hidden;
+    // overflow-y: auto;
+    // overflow-x: hidden;
 }
 
 $font-color: $icons-color;
@@ -26,19 +26,25 @@ $font-color: $icons-color;
     width: 290px;
     flex-shrink: 0;
     border-right:  1px solid $border;
+    box-shadow: -7px 0 18px 4px rgba(0,0,0,.1);
+    background: #f7fbfe;
+    z-index: 1;
+
 }
 .letters__view {
     width: 100%;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 60px);
+    box-shadow: -14px 155px 18px 4px rgba(0,0,0,.1);
+    z-index: 2;
     // position: relative;
     &::before {
         content: '';
         position: absolute;
         width: 100%;
         height: 60px;
-        border: 1px solid $border;
+        // border: 1px solid $border;
         border-left: 0px;
         top:0;
         left: 0;
@@ -50,7 +56,6 @@ $font-color: $icons-color;
 .empty {
     width: 100%;
     height: 100%;
-    background-color: #f3f5f7;
 }
 .preloader__letters {
     width: 100%;
