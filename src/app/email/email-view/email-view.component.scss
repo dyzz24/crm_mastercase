@@ -612,5 +612,16 @@ p{
     }
    }
 
+   .avatar__title {
+    font-size: 0;
+    line-height: 1;
+
+    overflow: hidden;
+       &::first-letter {
+        font-size: 13px;
+
+       }
+   }
+
 
 

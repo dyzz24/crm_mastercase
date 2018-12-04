@@ -18,21 +18,21 @@
                 </button>
    
     <div class="left__panel">
-  <button class='menu' (click)="this.emailServ.newMessage(emailServ.selectedLetter.from_address,'',this.emailServ.selectedLetter.subject)"
+  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
   routerLink="./create"
   >
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
 <button class='menu' 
-(click)='this.emailServ.newMessage(emailServ.selectedLetter.from_address, this.emailServ.selectedLetter.to_addresses, this.emailServ.selectedLetter.subject)'
-[class.none_display] = 'this.emailServ.selectedLetter.to_addresses.length === 1'
+(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.to_addresses, this.selectedLetter?.subject)'
+[class.none_display] = 'this.selectedLetter?.to_addresses.length === 1'
 routerLink="./create"
 >
   <span class='la la-reply-all'></span>
   <p class="tooltip">Ответить всем</p>
 </button>
-<button class='menu' (click)="this.emailServ.new_forward_message(this.emailServ.selectedLetter.text, this.emailServ.selectedLetter.html)"
+<button class='menu' (click)="this.emailServ.new_forward_message(this.selectedLetter?.text, this.selectedLetter?.html)"
 routerLink="./create"
 >
   <span class='la la-share'></span>
@@ -64,11 +64,11 @@ routerLink="./create"
 
   </div>
   </div>
-  <div class="subject"><p class='subject__theme'>Тема: {{emailServ.selectedLetter.subject}}</p>
+  <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
      
-         <div class='left__panel end' *ngIf="this.emailServ.selectedLetter.draft !== null">
-          <div class='in_work' [class.in_work_not-me]="this.emailServ.selectedLetter.draft !== this.emailServ.idPostForHTTP" ><p>{{this.emailServ.selectedLetter.draft}}</p>
-          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.emailServ.selectedLetter.draft !== this.emailServ.idPostForHTTP"></div>
+         <div class='left__panel end' *ngIf="this.selectedLetter?.draft !== null">
+          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.draft !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.draft}}</p>
+          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.selectedLetter?.draft !== this.emailServ.idPostForHTTP"></div>
           </div>
         </div>
       
@@ -83,22 +83,22 @@ routerLink="./create"
           <div class="avatar__block">
             <div class="avatar">
               <!-- <img src={{emailServ.avatar}}> -->
-              <p class='avatar__title'>{{this.emailServ.avatarMake(emailServ.selectedLetter.from_address)}}</p>
+              <p class='avatar__title'>{{this.selectedLetter?.from_address}}</p>
             </div>
           </div>
             <div class="r__info">
             <div class="panel">
               <div class='panel__name'>
                 
-                <p class='full_name' *ngIf="emailServ.selectedLetter.from_name !== null">{{emailServ.selectedLetter.from_name}}</p>
-                <p class='email__name'>{{emailServ.selectedLetter.from_address}}</p>
+                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
+                <p class='email__name'>{{this.selectedLetter?.from_address}}</p>
               </div>
-          <p class='time'>{{emailServ.selectedLetter.date | timerPipe}}</p>
+          <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
             </div>
-            <div class="info__row">
+            <!-- <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
-              <div class='info__content_p' *ngIf="this.emailServ.selectedLetter.to_addresses.length === 1; else have_many_addresses"><p>Вам</p></div>
+              <div class='info__content_p' *ngIf="this.selectedLetter?.to_addresses.length === 1; else have_many_addresses"><p>Вам</p></div>
               <ng-template #have_many_addresses>
               <div class='info__content_p' *ngFor="let item of this.emailServ.cut_addressess_array"><p>{{item}}</p></div>
               <input type='button' class='addressess' [class.input_return]='this.emailServ.cut_addressess_array.length === this.emailServ.selectedLetter.to_addresses.length'
@@ -107,16 +107,16 @@ routerLink="./create"
               value='+{{this.emailServ.selectedLetter.to_addresses.length - this.emailServ.cut_addressess_array.length}}'>
               </ng-template>
             </div>
-            </div>
-            <div class="info__row" *ngIf="this.emailServ.selectedLetter.cc_addresses !== null">
+            </div> -->
+            <div class="info__row" *ngIf="this.selectedLetter?.cc_addresses !== null">
                 <p class="info_head">Копия:</p>
-                <div class="cut__visible_block">
+                <!-- <div class="cut__visible_block">
                 <div class='info__content_p' *ngFor="let item of this.emailServ.cut_cc_adressess_array"><p>{{item}}</p></div>
                 <input type='button' class='cc' [class.input_return]='this.emailServ.cut_cc_adressess_array.length === this.emailServ.selectedLetter.cc_addresses.length'
                 *ngIf="this.emailServ.selectedLetter.cc_addresses.length > 3"
                 (click)='all_view($event)' 
                 value='+{{this.emailServ.selectedLetter.cc_addresses.length - this.emailServ.cut_cc_adressess_array.length}}'>
-                </div>
+                </div> -->
             </div>
         </div>
           </div>
@@ -140,9 +140,9 @@ routerLink="./create"
         
             </div>
     
-    <div [innerHTML]="emailServ.selectedLetter.html | innerhtml" *ngIf="emailServ.selectedLetter.html !== null; else viewText" class='cont_html'></div>
+    <div [innerHTML]="this.selectedLetter?.html | innerhtml" *ngIf="this.selectedLetter?.html !== null; else viewText" class='cont_html'></div>
     <ng-template #viewText >
-    <div class='cont_html'>{{emailServ.selectedLetter.text}}</div>
+    <div class='cont_html'>{{this.selectedLetter?.text}}</div>
   </ng-template>
     <!-- <div class="from__panel">
       <div class="from__line">
@@ -156,7 +156,7 @@ routerLink="./create"
     </div>
     <div class="from__line theme">
       <p>Тема: </p>
-      <input type='text' value='{{emailServ.selectedLetter.subject}}' [(ngModel)]='this.emailServ.subjectTo'>
+      <input type='text' value='{{this.selectedLetter?.subject}}' [(ngModel)]='this.emailServ.subjectTo'>
     </div>
   </div> -->
     <!-- <quill-editor></quill-editor> -->
@@ -176,14 +176,14 @@ routerLink="./create"
 <div class="quickResponse quickResponse__active" [ngClass]='{quickResponse__active: quickResponse_active}'>
     <div class="avatar__block" [ngClass]='{avatar__active: quickResponse_active}'>
   <div class="avatar">
-    <p class='avatar__title'>{{this.emailServ.avatarMake(this.emailServ.idPostForHTTP)}}</p>
+    <p class='avatar__title'>{{this.selectedLetter?.from_address}}</p>
   </div>
 </div>
 <div class="quickResponse__content">
     <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
         <div class="info__row">
             <p class='info_head'>Кому: </p>
-            <div class='info__content_p'><p>{{emailServ.selectedLetter.from_address}}</p></div>
+            <div class='info__content_p'><p>{{this.selectedLetter?.from_address}}</p></div>
         </div>
         <button class='one_butt' (click)='show_quick_form(true)'>
             <span class='la la-min la-close'></span>
@@ -206,7 +206,7 @@ routerLink="./create"
     </div>
 
           <p class='btn__text'
-          (click)="this.emailServ.newMessage(emailServ.selectedLetter.from_address,'',this.emailServ.selectedLetter.subject)"
+          (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
           >Перейти в полную версию</p>
   </div>
   <button class='one_butt'>

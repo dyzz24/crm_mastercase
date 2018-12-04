@@ -208,7 +208,7 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.emailServ.hiddenEmpty = true;
 
-    this.emailServ.fullPath =
+    // this.emailServ.fullPath =
       // this.emailServ.urlParams + '/view/' + idLetter;
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();

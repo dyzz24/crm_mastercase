@@ -7,6 +7,18 @@ import { Observable } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
 
+export interface SelectedLetter {
+  id: number;
+  from_name?: string;
+  from_address?: string;
+  to_addresses?: Array<string>;
+  cc_addresses?: any;
+  subject?: string;
+  date?: number;
+  draft?: string;
+  html?: string;
+  text: string;
+}
 
 
 @Component({
@@ -23,21 +35,28 @@ export class EmailViewComponent implements OnInit, DoCheck {
   input_cleaner: ElementRef;
   visibleMenu = false;
   nameFrom;
-  subject;
   messages;
   attachersList = attachers;
   quickResponse_active = false;
   sending_status = false;
   sub;
+  selectedLetter: SelectedLetter;
+  subject;
+
+  cut_addressess_array;
+  // subject = this.selectedLetter.subject;
+  // draft = this.selectedLetter.draft;
 
 
-  constructor(public emailServ: EmailServiceService,
+  constructor(
+    @Inject( EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
     private elem: ElementRef,
     private http: HttpClient,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     private activatedRoute: ActivatedRoute
-    ) { }
+    ) {
+    }
 
   ngOnInit() {
 
@@ -45,13 +64,15 @@ export class EmailViewComponent implements OnInit, DoCheck {
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-        this.emailServ.selectedLetter = this.emailServ.lettersList[this.sub];
+        this.selectedLetter = this.emailServ.lettersList[this.sub];
+   
         this.emailServ.hiddenEmpty = true;
+
       }
     }, 1000);
   }
   ngDoCheck() {
-    // console.log(this.subject, this.nameFrom, this.messages);
+    // console.log(this.from_address);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
