@@ -1,9 +1,9 @@
-import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { attachers } from './attach';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, UnsubscriptionError } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
 
@@ -28,7 +28,7 @@ export interface SelectedLetter {
   encapsulation: ViewEncapsulation.Native,
   // providers: [EmailServiceService]
 })
-export class EmailViewComponent implements OnInit, DoCheck {
+export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('messageContainer')
   messageContainer: ElementRef;
   @ViewChild('input_cleaner')
@@ -42,8 +42,10 @@ export class EmailViewComponent implements OnInit, DoCheck {
   sub;
   selectedLetter: SelectedLetter;
   subject;
+  subscription: Subscription;
 
   cut_addressess_array;
+  cut_cc_adressess_array;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -60,16 +62,53 @@ export class EmailViewComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    this.activatedRoute.params.subscribe(params => this.sub = params.id);
+    this.activatedRoute.params.subscribe(params => {
+      // tslint:disable-next-line:forin
+  for (const i in this.emailServ.activeLett) {
+    this.emailServ.activeLett[i] = false;
+  }
+  this.emailServ.activeLett[params.id] = true;
+      this.sub = params.id; });
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
         this.selectedLetter = this.emailServ.lettersList[this.sub];
-   
+        this.subscription = this.activatedRoute.params.subscribe(data => {
+          this.selectedLetter = this.emailServ.lettersList[data.id];
+          this.checkerLengthArray_bcc_cc();
+          this.checkerLength_addressess();
+        });
         this.emailServ.hiddenEmpty = true;
 
       }
     }, 1000);
+    // const requestInterval2 = setInterval(() => {
+    //   if (this.selectedLetter.to_addresses !== undefined) {
+    //     this.checkerLengthArray_bcc_cc();
+    //     this.checkerLength_addressess();
+    //   }
+    // }, 1000);
+  }
+
+  checkerLengthArray_bcc_cc() {
+    if (this.selectedLetter.cc_addresses === null) {
+      return;
+    }
+    if (this.selectedLetter.cc_addresses.length > 3) {
+      this.selectedLetter.cc_addresses = [];
+      this.cut_cc_adressess_array = this.selectedLetter.cc_addresses.slice(0, 3);
+    }
+  }
+  checkerLength_addressess() {
+
+      this.cut_addressess_array = [];
+      this.cut_addressess_array = this.selectedLetter.to_addresses.slice(0, 3);
+  }
+
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
   ngDoCheck() {
     // console.log(this.from_address);
@@ -180,25 +219,25 @@ this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.i
 
   all_view(e) {
     if (e.target.classList.contains('cc')) {
-      if (this.emailServ.cut_cc_adressess_array !== this.emailServ.selectedLetter.cc_addresses) {
-      this.emailServ.cut_cc_adressess_array = this.emailServ.selectedLetter.cc_addresses;
+      if (this.cut_cc_adressess_array !== this.selectedLetter.cc_addresses) {
+      this.cut_cc_adressess_array = this.selectedLetter.cc_addresses;
       e.target.value = '';
       e.target.classList.add('input_return');
       } else {
         e.target.classList.remove('input_return');
-        this.emailServ.checkerLengthArray_bcc_cc();
-        e.target.value = this.emailServ.selectedLetter.cc_addresses.length - this.emailServ.cut_cc_adressess_array.length;
+        this.checkerLengthArray_bcc_cc();
+        e.target.value = this.selectedLetter.cc_addresses.length - this.cut_cc_adressess_array.length;
       }
     }
     if (e.target.classList.contains('addressess')) {
-      if (this.emailServ.cut_addressess_array !== this.emailServ.selectedLetter.to_addresses) {
-      this.emailServ.cut_addressess_array = this.emailServ.selectedLetter.to_addresses;
+      if (this.cut_addressess_array !== this.selectedLetter.to_addresses) {
+      this.cut_addressess_array = this.selectedLetter.to_addresses;
       e.target.value = '';
       e.target.classList.add('input_return');
       } else {
         e.target.classList.remove('input_return');
-        this.emailServ.checkerLength_addressess();
-        e.target.value = this.emailServ.selectedLetter.to_addresses.length - this.emailServ.cut_addressess_array.length;
+        this.checkerLength_addressess();
+        e.target.value = this.selectedLetter.to_addresses.length - this.cut_addressess_array.length;
       }
     }
   }

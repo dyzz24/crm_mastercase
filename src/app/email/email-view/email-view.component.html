@@ -95,28 +95,28 @@ routerLink="./create"
               </div>
           <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
             </div>
-            <!-- <div class="info__row">
+            <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
               <div class='info__content_p' *ngIf="this.selectedLetter?.to_addresses.length === 1; else have_many_addresses"><p>Вам</p></div>
               <ng-template #have_many_addresses>
-              <div class='info__content_p' *ngFor="let item of this.emailServ.cut_addressess_array"><p>{{item}}</p></div>
-              <input type='button' class='addressess' [class.input_return]='this.emailServ.cut_addressess_array.length === this.emailServ.selectedLetter.to_addresses.length'
-              *ngIf="this.emailServ.selectedLetter.to_addresses.length > 3"
+              <div class='info__content_p' *ngFor="let item of this?.cut_addressess_array"><p>{{item}}</p></div>
+              <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.to_addresses.length'
+              *ngIf="this.selectedLetter?.to_addresses.length > 3"
               (click)='all_view($event)' 
-              value='+{{this.emailServ.selectedLetter.to_addresses.length - this.emailServ.cut_addressess_array.length}}'>
+              value='+{{this.selectedLetter?.to_addresses.length - this?.cut_addressess_array.length}}'>
               </ng-template>
             </div>
-            </div> -->
+            </div>
             <div class="info__row" *ngIf="this.selectedLetter?.cc_addresses !== null">
                 <p class="info_head">Копия:</p>
-                <!-- <div class="cut__visible_block">
-                <div class='info__content_p' *ngFor="let item of this.emailServ.cut_cc_adressess_array"><p>{{item}}</p></div>
-                <input type='button' class='cc' [class.input_return]='this.emailServ.cut_cc_adressess_array.length === this.emailServ.selectedLetter.cc_addresses.length'
-                *ngIf="this.emailServ.selectedLetter.cc_addresses.length > 3"
+                <div class="cut__visible_block">
+                <div class='info__content_p' *ngFor="let item of this?.cut_cc_adressess_array"><p>{{item}}</p></div>
+                <input type='button' class='cc' [class.input_return]='this?.cut_cc_adressess_array.length === this?.selectedLetter.cc_addresses.length'
+                *ngIf="this.selectedLetter?.cc_addresses.length > 3"
                 (click)='all_view($event)' 
-                value='+{{this.emailServ.selectedLetter.cc_addresses.length - this.emailServ.cut_cc_adressess_array.length}}'>
-                </div> -->
+                value='+{{this.selectedLetter?.cc_addresses.length - this?.cut_cc_adressess_array.length}}'>
+                </div>
             </div>
         </div>
           </div>
@@ -220,4 +220,5 @@ routerLink="./create"
 </div>
 </div>
 </div>
+<div class="preload_container"></div>
 </div>

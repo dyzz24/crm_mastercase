@@ -141,14 +141,14 @@
     
         <a class="emails__list" (click)="goUrl(i, '/inbox', 0)" (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'
         
-        routerLink="./{{this.emailItems[0].address.replace('@', '')}}/inbox"
+        routerLink="./{{this.emailItems[0].address}}/inbox"
         >
           <p>{{email.address}}</p>
           <span class='la la-lg la-angle-double-down' type='button'> </span>
         </a>
         <div class="hiddenMenu" [class.visibl]='visibl[i]'>
           <a (click)="goUrl( i , '/inbox', 0)" 
-          routerLink="./{{this.emailItems[0].address.replace('@', '')}}/inbox"
+          routerLink="./{{this.emailItems[0].address}}/inbox"
           [class.activeTypeMess]='emailServ.selectedMess===0'>
             Входящие
              <span class='email__num'>{{email.count}}</span>
@@ -171,13 +171,13 @@
             <span class='email__num'></span>
           </a>
           <a (click)="goUrl( i, '/delete',2)" [class.activeTypeMess]='emailServ.selectedMess===2'
-          routerLink="./{{this.emailItems[0].address.replace('@', '')}}/delete"
+          routerLink="./{{this.emailItems[0].address}}/delete"
           >
             Удаленные
             <span class='email__num'></span>
           </a>
           <a (click)="goUrl( i, '/spam',4)" [class.activeTypeMess]='emailServ.selectedMess===4'
-          routerLink="./{{this.emailItems[0].address.replace('@', '')}}/spam"
+          routerLink="./{{this.emailItems[0].address}}/spam"
           >
             Спам
             <span class='email__num'></span>

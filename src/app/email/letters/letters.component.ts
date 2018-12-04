@@ -5,7 +5,7 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
 
@@ -38,6 +38,7 @@ export class LettersComponent implements DoCheck, OnInit {
   startSearch = true;
   successSearch = false;
   sub;
+  subscription: Subscription;
 
   // @ViewChild('size_Check') // для отслеживания размера блока
   // size_Check: ElementRef;
@@ -70,13 +71,12 @@ export class LettersComponent implements DoCheck, OnInit {
     this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
   ngOnInit() {
-
+    this.emailServ.hiddenEmpty = true;
+    this.subscription = this.activatedRoute.params.subscribe(params => {
+      this.emailServ.idPostForHTTP = params.id1; }); // подписка
     const requestInterval = setInterval(() => {
       if (this.emailServ.selectNum === undefined) {
         this.emailServ.selectNum = 0;
-      }
-      if (this.emailServ.idPostForHTTP !== undefined) {
-        clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
         this.httpPost(
           `${this.emailServ.ip}/mail/mails`,
           // tslint:disable-next-line:max-line-length
@@ -88,8 +88,8 @@ export class LettersComponent implements DoCheck, OnInit {
               this.emailServ.notLettersFlag = false;
             }
             this.emailServ.lettersList = data;
-            } );
-        this.emailServ.dataLetters = this.emailServ.lettersAmount;
+            this.emailServ.dataLetters = this.emailServ.lettersAmount;
+            });
       }
     }, 1000);
     // this.sub = this.activatedRoute.params.subscribe(params => {
@@ -190,19 +190,6 @@ export class LettersComponent implements DoCheck, OnInit {
     this.httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
-  // tslint:disable-next-line:forin
-  for (const i in this.emailServ.activeLett) {
-    this.emailServ.activeLett[i] = false;
-  }
-  this.emailServ.activeLett[idLetter] = !this.emailServ.activeLett[idLetter];
-
-  this.emailServ.mailsToArray = []; // очистил список отправителей
-  // this.emailServ.mailsToArray.push(
-  //   this.emailServ.lettersList[idLetter].from_address
-  // ); // добавил в список отправителей
-  this.emailServ.subjectTo = this.emailServ.lettersList[idLetter].subject;
-
-    // this.rout.navigate([this.emailServ.urlParams + '/view/' + idLetter]);
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
     this.emailServ.index = idLetter;
 

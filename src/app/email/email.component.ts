@@ -52,6 +52,7 @@ export class EmailComponent implements OnInit, DoCheck {
           this.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2;
       this.emailServ.idPostForHTTP = this.emailItems[0].address; // ID ящика
+      this.socketServ.lettersSocketConnect();
     });
         }
       }, 1000);
@@ -122,7 +123,6 @@ this.emailServ.haveResponse = true;
     // this.emailServ.stateServ(); // save state on service
 
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
-    this.socketServ.lettersSocketConnect();
 
     // ********************************/
   }

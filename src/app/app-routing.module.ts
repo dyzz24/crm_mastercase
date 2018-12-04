@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'email', component: EmailComponent,
   children:
   [
-    {path: ':id/:id', component: LettersComponent,
+    {path: ':id1/:id', component: LettersComponent,
           children:
           [{path: 'view/:id', component: EmailViewComponent},
             {path: 'create', component: NewMessageComponent},
