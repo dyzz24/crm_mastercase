@@ -1,6 +1,6 @@
 import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild, Inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
-import { Router, Scroll } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -37,7 +37,7 @@ export class LettersComponent implements DoCheck, OnInit {
   stopSearch = false;
   startSearch = true;
   successSearch = false;
-
+  sub;
 
   // @ViewChild('size_Check') // для отслеживания размера блока
   // size_Check: ElementRef;
@@ -46,11 +46,12 @@ export class LettersComponent implements DoCheck, OnInit {
   searchLettersInput: FormControl = new FormControl('');
 
   constructor(
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     public element: ElementRef,
     private rout: Router,
     private http: HttpClient,
-    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    private activatedRoute: ActivatedRoute
   ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
@@ -68,6 +69,35 @@ export class LettersComponent implements DoCheck, OnInit {
 
     this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
+  ngOnInit() {
+
+    const requestInterval = setInterval(() => {
+      if (this.emailServ.selectNum === undefined) {
+        this.emailServ.selectNum = 0;
+      }
+      if (this.emailServ.idPostForHTTP !== undefined) {
+        clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+        this.httpPost(
+          `${this.emailServ.ip}/mail/mails`,
+          // tslint:disable-next-line:max-line-length
+          {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+      this.emailServ.haveResponse = true;
+            if (data.length === 0) {
+              this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
+            } else {
+              this.emailServ.notLettersFlag = false;
+            }
+            this.emailServ.lettersList = data;
+            } );
+        this.emailServ.dataLetters = this.emailServ.lettersAmount;
+      }
+    }, 1000);
+    // this.sub = this.activatedRoute.params.subscribe(params => {
+
+    //   this.emailServ.idPostForHTTP = params.id;
+    //     });
+  }
+
 
   public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
@@ -140,13 +170,10 @@ export class LettersComponent implements DoCheck, OnInit {
 
   }
 
-  ngOnInit() {
-
-    this.emailServ.dataLetters = this.emailServ.lettersAmount;
-  }
 
   ngDoCheck() {
     // console.log( this.emailServ.lettersList);
+    // this.activatedRoute.params.subscribe(params => console.log(params));
   }
 
 
@@ -170,19 +197,19 @@ export class LettersComponent implements DoCheck, OnInit {
   this.emailServ.activeLett[idLetter] = !this.emailServ.activeLett[idLetter];
 
   this.emailServ.mailsToArray = []; // очистил список отправителей
-  this.emailServ.mailsToArray.push(
-    this.emailServ.lettersList[idLetter].from_address
-  ); // добавил в список отправителей
+  // this.emailServ.mailsToArray.push(
+  //   this.emailServ.lettersList[idLetter].from_address
+  // ); // добавил в список отправителей
   this.emailServ.subjectTo = this.emailServ.lettersList[idLetter].subject;
 
-    this.rout.navigate([this.emailServ.urlParams + '/view/' + idLetter]);
+    // this.rout.navigate([this.emailServ.urlParams + '/view/' + idLetter]);
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
     this.emailServ.index = idLetter;
 
     this.emailServ.hiddenEmpty = true;
 
     this.emailServ.fullPath =
-      this.emailServ.urlParams + '/view/' + idLetter;
+      // this.emailServ.urlParams + '/view/' + idLetter;
     this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.checkerLength_addressess();
@@ -317,8 +344,9 @@ export class LettersComponent implements DoCheck, OnInit {
         }
         this.emailServ.stopFlag = true;
         this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
+
         this.httpPost(
-            this.emailServ.adress,
+          `${this.emailServ.ip}/mail/mails`,
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,

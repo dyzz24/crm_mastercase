@@ -73,6 +73,7 @@
         [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         [class.active_checkboxes]='emailServ.hideAvatars[i]'
         (dblclick)="new_messages_dblClick(i)"
+        routerLink="view/{{i}}"
         >
         <div class="avatar__group">
           <div class="avatar" (change)='hideAva(i)' >
@@ -94,7 +95,9 @@
             </div>
           </div>
         </div>
-          <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'>
+          <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'
+
+          >
             <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.from_address}}</p>
 
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
@@ -102,7 +105,9 @@
              <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->
 
           </div>
-          <div class="settings" (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'>
+          <div class="settings" (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'
+
+          >
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
             <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments === true" [class.time-icons__status-new]="letters.seen === false">
               <p class='tooltip'>Вложения</p>
@@ -155,7 +160,9 @@
       <div class="empty__cont">
         <span class="la la-envelope-o la-3x"></span>
         <p>Выберите письмо для отображения или</p>
-        <button class='main__butt' (click)='this.emailServ.new_clear_message()'>Создайте новое письмо</button>
+        <button class='main__butt' (click)='this.emailServ.new_clear_message()'
+        routerLink="./create"
+        >Создайте новое письмо</button>
       </div>
 
     </div>

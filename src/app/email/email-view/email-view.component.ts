@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { attachers } from './attach';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,7 +13,8 @@ import { AuthorizationService } from '../../authorization.service';
   selector: 'app-email-view',
   templateUrl: './email-view.component.html',
   styleUrls: ['./email-view.component.scss'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.Native,
+  providers: [EmailServiceService]
 })
 export class EmailViewComponent implements OnInit, DoCheck {
   @ViewChild('messageContainer')
@@ -27,17 +28,27 @@ export class EmailViewComponent implements OnInit, DoCheck {
   attachersList = attachers;
   quickResponse_active = false;
   sending_status = false;
-
+  sub;
 
 
   constructor(public emailServ: EmailServiceService,
     private _rout: Router,
     private elem: ElementRef,
     private http: HttpClient,
-    @Inject(AuthorizationService) private authorizationServ: AuthorizationService
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit() {
+
+    this.activatedRoute.params.subscribe(params => this.sub = params.id);
+    const requestInterval = setInterval(() => {
+      if (this.emailServ.lettersList !== undefined) {
+        clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+        this.emailServ.selectedLetter = this.emailServ.lettersList[this.sub];
+        this.emailServ.hiddenEmpty = true;
+      }
+    }, 1000);
   }
   ngDoCheck() {
     // console.log(this.subject, this.nameFrom, this.messages);

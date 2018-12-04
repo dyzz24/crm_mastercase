@@ -1,5 +1,5 @@
 import { Injectable} from '@angular/core';
-import { Router} from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 
 
 
@@ -68,11 +68,11 @@ export class EmailServiceService {
   to_all_answer;
   to_subject;
   to_forward;
+sub;
 
 
-
-  constructor( private rout: Router) {
-    this.rout.navigate(['/email']);
+  constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
+    // this.rout.navigate(['/email']);
   }
 
 
@@ -117,8 +117,6 @@ export class EmailServiceService {
     this.to_subject = '';
     this.to_all_answer = '';
     this.to_forward = '';
-    this.rout.navigate([this.urlParams + '/create']);
-    this.fullPath = this.urlParams + '/create';
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
     this.to_subject = param_to_subject;
@@ -137,13 +135,9 @@ export class EmailServiceService {
     this.to_subject = '';
     this.to_all_answer = '';
     this.to_forward = '';
-    this.rout.navigate([this.urlParams + '/create']);
-    this.fullPath = this.urlParams + '/create';
     this.hiddenEmpty = true;
   }
   new_forward_message(param_text, param_html) {
-    this.rout.navigate([this.urlParams + '/create']);
-    this.fullPath = this.urlParams + '/create';
     this.hiddenEmpty = true;
     if (param_html === null) {
       this.to_forward = param_text;
@@ -156,8 +150,8 @@ export class EmailServiceService {
     this.to_subject = '';
     this.to_all_answer = '';
     this.to_forward = '';
-    this.rout.navigate([this.urlParams + '/create']);
-    this.fullPath = this.urlParams + '/create';
+    // this.rout.navigate([this.idPostForHTTP + '/create']);
+    // this.fullPath = this.idPostForHTTP + '/create';
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
     this.to_subject = param_to_subject;

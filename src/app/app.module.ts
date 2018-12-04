@@ -10,7 +10,6 @@ import { NotificationTwoComponent } from './header/notification-two/notification
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderProfileComponent } from './header/header-profile/header-profile.component';
 import { EmailComponent } from './email/email.component';
-import { EmailListComponent } from './email/email-list/email-list.component';
 import { LettersComponent } from './email/letters/letters.component';
 import { EmailServiceService } from './email/email-service.service';
 import { EmailViewComponent } from './email/email-view/email-view.component';
@@ -40,7 +39,6 @@ import { SocketService } from './socket.service';
     NotificationTwoComponent,
     HeaderProfileComponent,
     EmailComponent,
-    EmailListComponent,
     LettersComponent,
     EmailViewComponent,
     NewMessageComponent,

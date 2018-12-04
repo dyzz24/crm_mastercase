@@ -182,6 +182,7 @@ $font-color: $icons-color;
     position: relative;
     overflow: initial;
     transition: .5s;
+    outline: none;
 
     &:hover:not(.important__background){
         background: #dcdcdc;
