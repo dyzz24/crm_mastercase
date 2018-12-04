@@ -1,3 +1,9 @@
+<div class="preload_container" *ngIf="this.preload_to_wait_status === true; else view_letter">
+  <p>Загрузка</p>
+</div>
+
+<ng-template #view_letter >
+
 <div class="container__view" #printBlock>
   <div class="header_letter__view">
     <div class="group__one">
@@ -8,7 +14,8 @@
             <span class='la la-envelope-o'></span>
             <p class="tooltip">Новое сообщение</p>
           </button>
-          <button (click)='selectMess(-1)' >
+          <button (click)='selectMess(-1)' 
+          >
               <span class='la la-angle-left' ></span>
               <p class="tooltip">Следующее сообщение</p>
             </button>
@@ -220,5 +227,5 @@ routerLink="./create"
 </div>
 </div>
 </div>
-<div class="preload_container"></div>
 </div>
+</ng-template>

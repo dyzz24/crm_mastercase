@@ -46,6 +46,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
   cut_addressess_array;
   cut_cc_adressess_array;
+  preload_to_wait_status = true;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -63,14 +64,20 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   ngOnInit() {
 
     this.activatedRoute.params.subscribe(params => {
-      // tslint:disable-next-line:forin
-  for (const i in this.emailServ.activeLett) {
-    this.emailServ.activeLett[i] = false;
-  }
-  this.emailServ.activeLett[params.id] = true;
+  //     const requestInterval2 = setInterval(() => {
+  //       if (this.emailServ.activeLett !== undefined) {
+  //         clearInterval(requestInterval2);
+  //             // tslint:disable-next-line:forin
+  // for (const i in this.emailServ.activeLett) {
+  //   this.emailServ.activeLett[i] = false;
+  // }
+  // this.emailServ.activeLett[params.id] = true;
+  //       }
+  //     }, 1000);
       this.sub = params.id; });
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
+        this.preload_to_wait_status = false;
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
         this.selectedLetter = this.emailServ.lettersList[this.sub];
         this.subscription = this.activatedRoute.params.subscribe(data => {
@@ -127,9 +134,10 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
 
   selectMess(n) {
+    // this.activatedRoute.params;
+    this.checkerLengthArray_bcc_cc();
+    this.checkerLength_addressess();
 
-    this.emailServ.checkerLengthArray_bcc_cc();
-    this.emailServ.checkerLength_addressess();
 
 this.emailServ.index = this.emailServ.index + n;
 if (this.emailServ.index === this.emailServ.lettersList.length) {
@@ -145,10 +153,10 @@ this.emailServ.activeLett[i] = false;
 }
 
 this.emailServ.activeLett[this.emailServ.index] = true;
-this.emailServ.selectedLetter = this.emailServ.lettersList[this.emailServ.index];  // текущее письмо для отображения!!!!
+this.selectedLetter = this.emailServ.lettersList[this.emailServ.index];  // текущее письмо для отображения!!!!
 this.emailServ.currentId = this.emailServ.index;
+this._rout.navigate([  './view' + '/' + this.emailServ.index]);
 
-this._rout.navigate([this.emailServ.urlParams + '/view' + '/' + this.emailServ.index]);
 
   }
 

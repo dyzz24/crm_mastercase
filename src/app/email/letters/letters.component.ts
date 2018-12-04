@@ -186,6 +186,11 @@ export class LettersComponent implements DoCheck, OnInit {
     if (event.target.className === 'la la-ellipsis-h') {
       return;
     }
+                  // tslint:disable-next-line:forin
+  for (const i in this.emailServ.activeLett) {
+    this.emailServ.activeLett[i] = false;
+  }
+  this.emailServ.activeLett[idLetter] = true;
 
     this.httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
     .subscribe(); // перевожу в прочитанные сообщения

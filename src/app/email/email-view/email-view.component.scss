@@ -49,6 +49,16 @@ p{
     align-items: center;
     position: relative;
 }
+.preload_container {
+    width: 100%;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
 
 .messageContainer {
     width: 100%;
@@ -615,10 +625,10 @@ p{
    .avatar__title {
     font-size: 0;
     line-height: 1;
-
     overflow: hidden;
+
        &::first-letter {
-        font-size: 13px;
+         font-size: 16px;
 
        }
    }
