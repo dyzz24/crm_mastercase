@@ -14,7 +14,7 @@ import { AuthorizationService } from '../../authorization.service';
   templateUrl: './email-view.component.html',
   styleUrls: ['./email-view.component.scss'],
   encapsulation: ViewEncapsulation.Native,
-  providers: [EmailServiceService]
+  // providers: [EmailServiceService]
 })
 export class EmailViewComponent implements OnInit, DoCheck {
   @ViewChild('messageContainer')
@@ -59,7 +59,7 @@ export class EmailViewComponent implements OnInit, DoCheck {
   }
 
   closeViewer() {
-    this._rout.navigate([this.emailServ.urlParams]);
+    // this._rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
     this.emailServ.fullPath = this.emailServ.urlParams;
     // this.emailServ.stateServ();

@@ -55,7 +55,9 @@ routerLink="./create"
     </button>
   </div>
 
-    <button class='one_butt' (click)='closeViewer()'>
+    <button class='one_butt' (click)='closeViewer()'
+   
+    >
         <span class='la la-close'></span>
         <p class="tooltip">Закрыть</p>
       </button>
@@ -64,11 +66,11 @@ routerLink="./create"
   </div>
   <div class="subject"><p class='subject__theme'>Тема: {{emailServ.selectedLetter.subject}}</p>
      
-         <!-- <div class='left__panel end' *ngIf="this.emailServ.selectedLetter.draft !== null">
+         <div class='left__panel end' *ngIf="this.emailServ.selectedLetter.draft !== null">
           <div class='in_work' [class.in_work_not-me]="this.emailServ.selectedLetter.draft !== this.emailServ.idPostForHTTP" ><p>{{this.emailServ.selectedLetter.draft}}</p>
           <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.emailServ.selectedLetter.draft !== this.emailServ.idPostForHTTP"></div>
           </div>
-        </div> -->
+        </div>
       
   </div>
   <div class="messageContainer" #messageContainer>

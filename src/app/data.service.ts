@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { lettersInbox } from './email/email-list/emails';
+
 
 
 @Injectable({
