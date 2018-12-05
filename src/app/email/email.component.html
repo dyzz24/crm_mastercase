@@ -144,11 +144,12 @@
         (click)='showHiddenBlock(i)'
         >
           <p>{{email.address}}</p>
-          <span class='la la-lg la-angle-double-down'> </span>
+          <span class='la la-lg la-angle-double-down' *ngIf="visibl[i] === false || visibl[i] === undefined"> </span>
+          <span class='la la-lg la-angle-double-up' *ngIf="visibl[i] === true"> </span>
         </a>
         <div class="hiddenMenu" [class.visibl]='visibl[i]'>
           <a (click)="goUrl(0)" 
-          routerLink="./{{this.emailItems[0].address}}/0"
+          routerLink="./{{this.emailItems[i].address}}/0"
           [class.activeTypeMess]='emailServ.selectedMess===0'>
             Входящие
              <span class='email__num'>{{email.count}}</span>
@@ -165,19 +166,19 @@
           <li class='presentation_folder_test__child'>Несортированные</li>
         </ul>
           <a (click)="goUrl(1)"[class.activeTypeMess]='emailServ.selectedMess===1'
-          routerLink="./{{this.emailItems[0].address}}/1"
+          routerLink="./{{this.emailItems[i].address}}/1"
           >
             Исходящие
             <span class='email__num'></span>
           </a>
           <a (click)="goUrl(2)" [class.activeTypeMess]='emailServ.selectedMess===2'
-          routerLink="./{{this.emailItems[0].address}}/2"
+          routerLink="./{{this.emailItems[i].address}}/2"
           >
             Удаленные
             <span class='email__num'></span>
           </a>
           <a (click)="goUrl(4)" [class.activeTypeMess]='emailServ.selectedMess===4'
-          routerLink="./{{this.emailItems[0].address}}/4"
+          routerLink="./{{this.emailItems[i].address}}/4"
           >
             Спам
             <span class='email__num'></span>
@@ -192,6 +193,7 @@
     </div>
     <app-splitter left min='240' max='450' positionLeft='-1'></app-splitter>
     <div class="mails__view">
+
     <router-outlet></router-outlet>
     </div> 
    

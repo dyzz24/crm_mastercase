@@ -5,7 +5,7 @@ import { EmailServiceService } from './email-service.service';
 import { AuthorizationService } from '../authorization.service';
 import { SocketService } from '../socket.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-email',
@@ -33,11 +33,12 @@ export class EmailComponent implements OnInit, DoCheck {
   sub;
 
 
+
   adress;
   constructor(
     public element: ElementRef,
     private _rout: Router,
-    public emailServ: EmailServiceService,
+    @Inject(EmailServiceService) public emailServ: EmailServiceService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(SocketService) private socketServ: SocketService,
     private http: HttpClient,
@@ -46,12 +47,13 @@ export class EmailComponent implements OnInit, DoCheck {
    }
 
   ngOnInit() {
+
+    // console.log(this.hiddenEmptyStatus)
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
           this.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2;
-      this.emailServ.idPostForHTTP = this.emailItems[0].address; // ID ящика
       this.socketServ.lettersSocketConnect();
     });
         }

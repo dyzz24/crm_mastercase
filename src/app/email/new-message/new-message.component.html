@@ -30,7 +30,7 @@
 </div>
 <div class="row__block">
     <p class='head__p'>Кому: </p>
-    <div class="new_message__bables" *ngFor="let item of this.to,let i = index" [ngClass]="{not__addressess: this.to[0] === ''}">
+    <div class="new_message__bables" *ngFor="let item of this.to,let i = index" [ngClass]="{not__addressess: this.to[0] === '' || this.to[0] === undefined }">
       <p>{{item}}</p>
       <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.to, $event, i)'></span>
     </div>
