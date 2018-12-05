@@ -12,14 +12,14 @@ export class EmailServiceService {
 
   idBox: string; // стринга для подставления в адр. строку браузера - имя ящика
   typeMess: string;
-  activeLett: Array<boolean> = [];
+  activeLett: Array<boolean> = []; // активное письмо в lettersList
   hideAvatars: Array<boolean> = [];
   senderName: string;
   time: string;
   avatar: any;
   caption: string;
   text: string;
-  selectedMess = 1;
+  selectedMess;
   urlParams: string;
   messageState: any;
   activeEl: Array<boolean> = [];

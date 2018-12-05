@@ -25,7 +25,7 @@ export class EmailComponent implements OnInit, DoCheck {
   deleteMenuStatus = false;
   editMenuStatus = false;
   createSettingStatus = false;
-  visibl: Array<boolean> = [false, false, false];
+  visibl: Array<boolean> = [];
 
   inboxName;
   inboxPassword;
@@ -76,41 +76,13 @@ export class EmailComponent implements OnInit, DoCheck {
       this.visibl[j] = false;
     }
     this.visibl[param] = !this.visibl[param];
-    this.emailServ.idLetters = [];
-    this.emailServ.checkerTrash();
+    console.log(this.visibl);
   }
 
 
-  goUrl( index, paramsUrl,  selectNum?) {
+  goUrl(selectNum?) {
 
-    // this.showSuccess(); // test TOSTER
-    //  console.log(this.emailServ.lettersList);
-    this.emailServ.haveResponse = false;
-    this.adress = `${this.emailServ.ip}/mail/mails`;
-    this.emailServ.idPostForHTTP = this.emailItems[index].address; // ID ящика
-    this.emailServ.selectNum = selectNum;
-    this.emailServ.adress = this.adress;
-    this.httpPost(
-    this.adress,
-    // tslint:disable-next-line:max-line-length
-    {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
-this.emailServ.haveResponse = true;
-      if (data.length === 0) {
-        this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
-      } else {
-        this.emailServ.notLettersFlag = false;
-      }
-      this.emailServ.lettersList = data;
-      } );
-
-
-    // this._rout.navigate(['email/' + this.emailServ.idBox + paramsUrl]);
-
-    this.emailServ.selectedMess = selectNum;
-    // this.emailServ.urlParams = `email/${this.emailServ.idBox}${paramsUrl}`;
-
-    // this.emailServ.fullPath = `email/${this.emailServ.idBox}${paramsUrl}`;
-
+    this.emailServ.selectedMess = selectNum; // выбор папки (вход - исх - отпр)
     this.emailServ.hideAvatars = [];
     this.emailServ.idLetters = [];
 
@@ -120,16 +92,10 @@ this.emailServ.haveResponse = true;
     this.emailServ.allLettersId = [];
 
 
-    // this.emailServ.stateServ(); // save state on service
-
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
-
     // ********************************/
   }
 
-  deleteChangesOnService() {
-    this.emailServ.deleteChangesComponents();
-  }
 
 
   inboxMenuShow() {

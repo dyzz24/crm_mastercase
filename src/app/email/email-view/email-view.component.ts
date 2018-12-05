@@ -85,6 +85,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         // this.selectedLetter = this.emailServ.lettersList[this.sub];
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.selectedLetter = this.emailServ.lettersList[data.id];
+          this.emailServ.activeLett[data.id] = true;
               // console.log(this.selectedLetter.attachments);
 
               if (this.selectedLetter.attachments !== null) {

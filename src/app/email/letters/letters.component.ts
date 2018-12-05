@@ -76,8 +76,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     this.emailServ.hiddenEmpty = true;
     this.subscription = this.activatedRoute.params.subscribe(params => {
       this.emailServ.idPostForHTTP = params.id1;
-      this.emailServ.selectNum = +params.id; }); // подписка
-
+      this.emailServ.selectedMess = +params.id;
+      this.emailServ.selectNum = +params.id;
+      this.emailServ.haveResponse = false;
       const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
@@ -85,6 +86,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             `${this.emailServ.ip}/mail/mails`,
             // tslint:disable-next-line:max-line-length
             {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+
         this.emailServ.haveResponse = true;
               if (data.length === 0) {
                 this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
@@ -96,6 +98,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               });
         }
       }, 1000);
+    }); // подписка
+
 
     // this.sub = this.activatedRoute.params.subscribe(params => {
 
@@ -200,7 +204,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   for (const i in this.emailServ.activeLett) {
     this.emailServ.activeLett[i] = false;
   }
-  this.emailServ.activeLett[idLetter] = true;
 
     this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, flag: 'seen' , value: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения

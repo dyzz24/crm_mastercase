@@ -139,15 +139,15 @@
       </div>
       <div class="emails" *ngFor='let email of emailItems let i = index'>
     
-        <a class="emails__list" (click)="goUrl(i, '/inbox', 0)" (click)='deleteChangesOnService()' (click)='showHiddenBlock(i)'
-        
-        routerLink="./{{this.emailItems[0].address}}/0"
+        <a class="emails__list" 
+       
+        (click)='showHiddenBlock(i)'
         >
           <p>{{email.address}}</p>
-          <span class='la la-lg la-angle-double-down' type='button'> </span>
+          <span class='la la-lg la-angle-double-down'> </span>
         </a>
         <div class="hiddenMenu" [class.visibl]='visibl[i]'>
-          <a (click)="goUrl( i , '/inbox', 0)" 
+          <a (click)="goUrl(0)" 
           routerLink="./{{this.emailItems[0].address}}/0"
           [class.activeTypeMess]='emailServ.selectedMess===0'>
             Входящие
@@ -164,25 +164,27 @@
           <li class='presentation_folder_test__child'>По работе</li>
           <li class='presentation_folder_test__child'>Несортированные</li>
         </ul>
-          <a (click)="goUrl( i, '/sent',1)"[class.activeTypeMess]='emailServ.selectedMess===1'
+          <a (click)="goUrl(1)"[class.activeTypeMess]='emailServ.selectedMess===1'
           routerLink="./{{this.emailItems[0].address}}/1"
           >
             Исходящие
             <span class='email__num'></span>
           </a>
-          <a (click)="goUrl( i, '/delete',2)" [class.activeTypeMess]='emailServ.selectedMess===2'
+          <a (click)="goUrl(2)" [class.activeTypeMess]='emailServ.selectedMess===2'
           routerLink="./{{this.emailItems[0].address}}/2"
           >
             Удаленные
             <span class='email__num'></span>
           </a>
-          <a (click)="goUrl( i, '/spam',4)" [class.activeTypeMess]='emailServ.selectedMess===4'
+          <a (click)="goUrl(4)" [class.activeTypeMess]='emailServ.selectedMess===4'
           routerLink="./{{this.emailItems[0].address}}/4"
           >
             Спам
             <span class='email__num'></span>
           </a>
         </div>
+
+        
       </div>
     </div>
     
