@@ -46,7 +46,7 @@ private messages_sending = false;
       if (e.target.value === undefined || e.target.value === '') { // если пустая строка - выхожу
         return;
       }
-      if (arr[0] === '') { // если первый элемент  = ""
+      if (arr[0] === '' || arr[0] === undefined) { // если первый элемент  = ""
                           // (такое бывает, когда нажимаю создать новое письмо, ибо передает '' от сервиса), удаляю его
           arr.shift();
       }
@@ -65,7 +65,7 @@ private messages_sending = false;
   }
   add_data_keyEvent(arr,  e) { // срабатывает при клике на Enter, функция принимает массив для работы, действие аналогично ф-ии сверху
     if (e.key === 'Enter' && e.target.value !== '') { // отлавливаю клик на Enter
-      if (arr[0] === '') {
+      if (arr[0] === '' || arr[0] === undefined) {
         arr.shift();
       }
       const regExsp = /[а-яё]/i;
