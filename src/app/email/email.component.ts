@@ -107,9 +107,9 @@ this.emailServ.haveResponse = true;
     // this._rout.navigate(['email/' + this.emailServ.idBox + paramsUrl]);
 
     this.emailServ.selectedMess = selectNum;
-    this.emailServ.urlParams = `email/${this.emailServ.idBox}${paramsUrl}`;
+    // this.emailServ.urlParams = `email/${this.emailServ.idBox}${paramsUrl}`;
 
-    this.emailServ.fullPath = `email/${this.emailServ.idBox}${paramsUrl}`;
+    // this.emailServ.fullPath = `email/${this.emailServ.idBox}${paramsUrl}`;
 
     this.emailServ.hideAvatars = [];
     this.emailServ.idLetters = [];

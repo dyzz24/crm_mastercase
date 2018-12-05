@@ -117,8 +117,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         return;
     }
     this.httpPost(`${this.emailServ.ip}/mail/search`,
-        { searchQuery: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum,
-        expiredIds: this.searchIdForHTTP},
+        { query: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum,
+        excludedIds: this.searchIdForHTTP},
         {contentType: 'application/json'})
         .subscribe(data => {
           if (data.length === 0 && this.temporaryLetters.length === 0) {
@@ -430,11 +430,12 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       key.checked = false;
     }
     const id_for_important = this.emailServ.idLetters;
-    // this.httpPost(`${this.emailServ.ip}/mail/set`, {
-    //   mailId: id_for_important, value: true,
-    //   flag: 'flagged',
-    //   address: this.emailServ.idPostForHTTP })
-    //   .subscribe();
+    this.httpPost(`${this.emailServ.ip}/mail/set`, {
+      mailId: id_for_important,
+      value: true,
+      flag: 'flagged',
+      address: this.emailServ.idPostForHTTP })
+      .subscribe();
 
       this.emailServ.lettersList.filter((val, ind, arr) => {
         for (const key of id_for_important) {

@@ -85,7 +85,7 @@
         <div class="avatar__group">
           <div class="avatar" (change)='hideAva(i)' >
 
-              <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{letters.from_address}}</p>
+              <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{letters.from_address.charAt(0)}}</p>
 
             <!-- <img src='' [class.hiddenAva]='emailServ.hideAvatars[i]'> -->
             <label class='checkedLabel' [class.visibleLabel]='emailServ.hideAvatars[i]'>

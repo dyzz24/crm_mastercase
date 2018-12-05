@@ -29,11 +29,12 @@
         // font-size: 16px;
         line-height: 1;
         font-weight: bold;
-        color: white;
+        color: transparent;
         font-size: 0;
         line-height: 1;
         overflow: hidden;
         &::first-letter {
+            color:white;
             font-size: 16px;
           }
     }

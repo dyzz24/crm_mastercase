@@ -110,4 +110,5 @@ private messages_sending = false;
   //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
   // });
 
-}}
+}
+}

@@ -89,7 +89,7 @@ routerLink="./create"
           <div class="avatar__block">
             <div class="avatar">
               <!-- <img src={{emailServ.avatar}}> -->
-              <p class='avatar__title'>{{this.selectedLetter?.from_address}}</p>
+              <p class='avatar__title'>{{this.selectedLetter?.from_address.charAt(0)}}</p>
             </div>
           </div>
             <div class="r__info">
@@ -182,7 +182,7 @@ routerLink="./create"
 <div class="quickResponse quickResponse__active" [ngClass]='{quickResponse__active: quickResponse_active}'>
     <div class="avatar__block" [ngClass]='{avatar__active: quickResponse_active}'>
   <div class="avatar">
-    <p class='avatar__title'>{{this.selectedLetter?.from_address}}</p>
+    <p class='avatar__title'>{{this.emailServ.idPostForHTTP.charAt(0)}}</p>
   </div>
 </div>
 <div class="quickResponse__content">
