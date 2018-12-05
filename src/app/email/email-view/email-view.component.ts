@@ -62,24 +62,24 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     }
 
   ngOnInit() {
+  //   this.activatedRoute.params.subscribe(params => {
+  // //     const requestInterval2 = setInterval(() => {
+  // //       if (this.emailServ.activeLett !== undefined) {
+  // //         clearInterval(requestInterval2);
+  // //             // tslint:disable-next-line:forin
+  // // for (const i in this.emailServ.activeLett) {
+  // //   this.emailServ.activeLett[i] = false;
+  // // }
+  // // this.emailServ.activeLett[params.id] = true;
+  // //       }
+  // //     }, 1000);
 
-    this.activatedRoute.params.subscribe(params => {
-  //     const requestInterval2 = setInterval(() => {
-  //       if (this.emailServ.activeLett !== undefined) {
-  //         clearInterval(requestInterval2);
-  //             // tslint:disable-next-line:forin
-  // for (const i in this.emailServ.activeLett) {
-  //   this.emailServ.activeLett[i] = false;
-  // }
-  // this.emailServ.activeLett[params.id] = true;
-  //       }
-  //     }, 1000);
-      this.sub = params.id; });
+  //     this.sub = params.id; });
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
         this.preload_to_wait_status = false;
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-        this.selectedLetter = this.emailServ.lettersList[this.sub];
+        // this.selectedLetter = this.emailServ.lettersList[this.sub];
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.selectedLetter = this.emailServ.lettersList[data.id];
           this.checkerLengthArray_bcc_cc();
@@ -115,7 +115,9 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+if (this.subscription) {
+  this.subscription.unsubscribe();
+}
   }
   ngDoCheck() {
     // console.log(this.from_address);
@@ -138,7 +140,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     this.checkerLengthArray_bcc_cc();
     this.checkerLength_addressess();
 
-
 this.emailServ.index = this.emailServ.index + n;
 if (this.emailServ.index === this.emailServ.lettersList.length) {
   this.emailServ.index = 0;
@@ -155,8 +156,7 @@ this.emailServ.activeLett[i] = false;
 this.emailServ.activeLett[this.emailServ.index] = true;
 this.selectedLetter = this.emailServ.lettersList[this.emailServ.index];  // текущее письмо для отображения!!!!
 this.emailServ.currentId = this.emailServ.index;
-this._rout.navigate([  './view' + '/' + this.emailServ.index]);
-
+this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activatedRoute });
 
   }
 

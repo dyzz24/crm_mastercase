@@ -71,6 +71,7 @@ export class LettersComponent implements DoCheck, OnInit {
     this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
   ngOnInit() {
+    // this.emailServ.fullPath = this.activatedRoute.snapshot.url;
     this.emailServ.hiddenEmpty = true;
     this.subscription = this.activatedRoute.params.subscribe(params => {
       this.emailServ.idPostForHTTP = params.id1; }); // подписка
@@ -262,12 +263,14 @@ export class LettersComponent implements DoCheck, OnInit {
   }
   // ****************************************spam add - delete***************************** */
   spamMark(i, e, booleanParam, id) {
+
     // if (this.emailServ.lettersList[i].messageCondition !== undefined) {
     this.emailServ.lettersList[i].box = booleanParam;
     e.target.parentNode.classList.remove('visible');
-    this.rout.navigate([this.emailServ.urlParams]);
+    // this.rout.navigate([this.emailServ.urlParams]);
+    this.rout.navigate(['./'], { relativeTo: this.activatedRoute });
     this.emailServ.hiddenEmpty = false;
-
+    console.log(id);
     e.target.closest('.letter__prev').classList.add('letter__status-spam');
 
     setTimeout(() => {
@@ -360,6 +363,7 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   deleteRestoreLetter(id, e, box) {
+    console.log(id);
     e.target.parentNode.classList.remove('visible');
     e.target.closest('.letter__prev').classList.add('dellLetter');
     setTimeout(() => {
@@ -473,6 +477,7 @@ delete_work(id, e, index) {
 new_messages_dblClick(index) {
   const letter = this.emailServ.lettersList[index];
   this.emailServ.newMessage_DblClick(letter.from_address, letter.to_addresses, letter.subject, letter.text, letter.html);
+  this.rout.navigate(['./create'], { relativeTo: this.activatedRoute });
   // this.emailServ.new_clear_message();
 }
 
