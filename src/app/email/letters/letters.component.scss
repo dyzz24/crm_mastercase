@@ -501,6 +501,7 @@ transition: .5s;
 }
 
 .hiddenTrash {
+    overflow: visible;
     height: 45px;
     border-bottom: 1px solid $border;
 }

@@ -1,4 +1,4 @@
-import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild, Inject } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute} from '@angular/router';
 
@@ -17,7 +17,7 @@ import { AuthorizationService } from '../../authorization.service';
   styleUrls: ['./letters.component.scss'],
 
 })
-export class LettersComponent implements DoCheck, OnInit {
+export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 
 
@@ -74,29 +74,36 @@ export class LettersComponent implements DoCheck, OnInit {
     // this.emailServ.fullPath = this.activatedRoute.snapshot.url;
     this.emailServ.hiddenEmpty = true;
     this.subscription = this.activatedRoute.params.subscribe(params => {
-      this.emailServ.idPostForHTTP = params.id1; }); // подписка
-    const requestInterval = setInterval(() => {
-      if (this.emailServ.selectNum === undefined) {
-        this.emailServ.selectNum = 0;
-        this.httpPost(
-          `${this.emailServ.ip}/mail/mails`,
-          // tslint:disable-next-line:max-line-length
-          {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
-      this.emailServ.haveResponse = true;
-            if (data.length === 0) {
-              this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
-            } else {
-              this.emailServ.notLettersFlag = false;
-            }
-            this.emailServ.lettersList = data;
-            this.emailServ.dataLetters = this.emailServ.lettersAmount;
-            });
-      }
-    }, 1000);
+      this.emailServ.idPostForHTTP = params.id1;
+      this.emailServ.selectNum = +params.id; }); // подписка
+
+      const requestInterval = setInterval(() => {
+        if (this.authorizationServ.accessToken !== undefined) {
+          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+          this.httpPost(
+            `${this.emailServ.ip}/mail/mails`,
+            // tslint:disable-next-line:max-line-length
+            {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+        this.emailServ.haveResponse = true;
+              if (data.length === 0) {
+                this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
+              } else {
+                this.emailServ.notLettersFlag = false;
+              }
+              this.emailServ.lettersList = data; // главный массив всех всех писем
+              this.emailServ.dataLetters = this.emailServ.lettersAmount;
+              });
+        }
+      }, 1000);
+
     // this.sub = this.activatedRoute.params.subscribe(params => {
 
     //   this.emailServ.idPostForHTTP = params.id;
     //     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 
@@ -187,13 +194,14 @@ export class LettersComponent implements DoCheck, OnInit {
     if (event.target.className === 'la la-ellipsis-h') {
       return;
     }
+    // console.log(this.emailServ.lettersList);
                   // tslint:disable-next-line:forin
   for (const i in this.emailServ.activeLett) {
     this.emailServ.activeLett[i] = false;
   }
   this.emailServ.activeLett[idLetter] = true;
 
-    this.httpPost(`${this.emailServ.ip}/mail/seen`, { id: +id, flag: true })
+    this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, flag: 'seen' , value: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
@@ -207,13 +215,13 @@ export class LettersComponent implements DoCheck, OnInit {
     this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.checkerLength_addressess();
     // this.emailServ.stateServ();
-    // console.log(this.emailServ.selectedLetter.draft);
+    // console.log(this.emailServ.selectedLetter);
   }
 
   selectedLetters(id, e, i) {
     // множественный выбор писем в папке ****************
     if (e.target.checked) {
-      this.emailServ.idLetters = [...this.emailServ.idLetters, id]; // индексы писем (от 0 до ...)
+      this.emailServ.idLetters = [...this.emailServ.idLetters, +id]; // индексы писем (от 0 до ...)
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
         (val, ind, self) => {
           return self.indexOf(val) === ind;
@@ -221,7 +229,7 @@ export class LettersComponent implements DoCheck, OnInit {
       );
     } else {
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
-        item => item !== id
+        item => item !== +id
       );
     }
 
@@ -293,8 +301,9 @@ export class LettersComponent implements DoCheck, OnInit {
         );
       }
       this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-          id: +id,
-          box: booleanParam
+          mailId: +id,
+          box: booleanParam,
+          address: this.emailServ.idPostForHTTP
         })
         .subscribe();
     }, 500);
@@ -305,7 +314,7 @@ export class LettersComponent implements DoCheck, OnInit {
   toggleImportantMark(i, e, id, boolean) {
     // для переключения удалить-добавить важное
     e.target.parentNode.classList.remove('visible');
-    this.httpPost(`${this.emailServ.ip}/mail/flagged`, { id: +id, flag: boolean })
+    this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, value: boolean, flag: 'flagged', address: this.emailServ.idPostForHTTP })
       .subscribe();
     this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
       .flagged;
@@ -363,14 +372,14 @@ export class LettersComponent implements DoCheck, OnInit {
   }
 
   deleteRestoreLetter(id, e, box) {
-    console.log(id);
     e.target.parentNode.classList.remove('visible');
     e.target.closest('.letter__prev').classList.add('dellLetter');
     setTimeout(() => {
       const idelem = this.emailServ.selectedLetter;
       this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-          id: +id,
-          box: box
+          imailId: +id,
+          box: box,
+          address: this.emailServ.idPostForHTTP
         })
         .subscribe();
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
@@ -414,6 +423,27 @@ export class LettersComponent implements DoCheck, OnInit {
     }, 500);
   }
 
+  importantMarkAll() {
+    const id_for_important = this.emailServ.idLetters;
+    // this.httpPost(`${this.emailServ.ip}/mail/set`, {
+    //   mailId: id_for_important, value: true,
+    //   flag: 'flagged',
+    //   address: this.emailServ.idPostForHTTP })
+    //   .subscribe();
+
+      this.emailServ.lettersList.filter((val, ind, arr) => {
+        for (const key of id_for_important) {
+          if (+val.id === +key) {
+              val.flagged = true;
+          }
+        }
+      });
+
+      this.emailServ.hideAvatars = []; // чтоб инпуты работали
+      this.emailServ.idLetters = []; // обнуляю корзину на удаление
+      this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
+  }
+
   deleteRestoreLettersAll(box) {
 
     const id_for_delete = this.emailServ.idLetters;
@@ -422,8 +452,9 @@ export class LettersComponent implements DoCheck, OnInit {
         if (val.id === key) {
           arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
           this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-            id: +val.id,
-            box: box
+            mailId: +val.id,
+          box: box,
+          address: this.emailServ.idPostForHTTP
           }).subscribe();
           this.emailServ.lettersList = arr;
         }
@@ -462,14 +493,14 @@ export class LettersComponent implements DoCheck, OnInit {
 
 get_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
-  this.httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: true, address: this.emailServ.idPostForHTTP })
+  this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
   // this.emailServ.lettersList[index].draft  = this.emailServ.idPostForHTTP;
 }
 
 delete_work(id, e, index) {
   e.target.parentNode.classList.remove('visible');
-  this.httpPost(`${this.emailServ.ip}/mail/draft`, { mailId: +id, flag: false, address: this.emailServ.idPostForHTTP })
+  this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: false, address: this.emailServ.idPostForHTTP })
   .subscribe();
   // this.emailServ.lettersList[index].draft = null;
 }

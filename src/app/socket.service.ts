@@ -19,7 +19,7 @@ export class SocketService {
     if (this.socketConnectedFlag === true) { // если уже был коннект, выхожу
       return;
     } else {
-    this.socket = io('ws://10.0.1.33:3000', {
+    this.socket = io('ws://10.0.1.33:3100', {
       query: {
           // tslint:disable-next-line:max-line-length
           token: this.authorizationServ.accessToken
@@ -31,6 +31,7 @@ export class SocketService {
 });
 this.socket.on('msg', (msg) => {
   const dataStr = JSON.parse(msg);
+  console.log(msg);
   if (dataStr.status === 1) {
     this.showSuccess(`Пользователь ${dataStr.address} взял письмо в работу`);
   this.emailServ.lettersList.map((val, ind) => {

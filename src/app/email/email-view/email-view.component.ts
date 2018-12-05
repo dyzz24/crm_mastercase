@@ -15,9 +15,10 @@ export interface SelectedLetter {
   cc_addresses?: any;
   subject?: string;
   date?: number;
-  draft?: string;
+  work?: string;
   html?: string;
   text: string;
+  attachments: any;
 }
 
 
@@ -47,6 +48,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   cut_addressess_array;
   cut_cc_adressess_array;
   preload_to_wait_status = true;
+  attachments_array;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -62,6 +64,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     }
 
   ngOnInit() {
+
   //   this.activatedRoute.params.subscribe(params => {
   // //     const requestInterval2 = setInterval(() => {
   // //       if (this.emailServ.activeLett !== undefined) {
@@ -82,11 +85,25 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         // this.selectedLetter = this.emailServ.lettersList[this.sub];
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.selectedLetter = this.emailServ.lettersList[data.id];
+              // console.log(this.selectedLetter.attachments);
+
+              if (this.selectedLetter.attachments !== null) {
+                this.attachments_array = [this.selectedLetter.attachments];
+                const temp_arr = [];
+                 this.attachments_array.map((val, ind, arr) => {
+
+             // tslint:disable-next-line:forin
+              for (const key in val) {
+                val[key].hash = key;
+                temp_arr.push(val[key]);
+              }
+          });
+          this.attachments_array = temp_arr;
+              }
           this.checkerLengthArray_bcc_cc();
           this.checkerLength_addressess();
         });
         this.emailServ.hiddenEmpty = true;
-
       }
     }, 1000);
     // const requestInterval2 = setInterval(() => {
@@ -128,10 +145,9 @@ if (this.subscription) {
   }
 
   closeViewer() {
-    // this._rout.navigate([this.emailServ.urlParams]);
     this.emailServ.hiddenEmpty = false;
-    this.emailServ.fullPath = this.emailServ.urlParams;
-    // this.emailServ.stateServ();
+    const navigatePath = this._rout.url.replace(/\/view.*/, '');
+    this._rout.navigate([navigatePath], { relativeTo: this.activatedRoute });
   }
 
 
@@ -166,11 +182,15 @@ this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activated
   deleteLetter() { // удаление письма по клику
     const messageBody = this.messageContainer.nativeElement;
     messageBody.classList.add('dellLetter');
-    const id = this.emailServ.selectedLetter;
-    this.httpPost(`${this.emailServ.ip}/mail/setbox`, {id : +id.id, box: 2}).subscribe();
+    const id = this.selectedLetter.id;
+    this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+          mailId: +id,
+          box: 2,
+          address: this.emailServ.idPostForHTTP
+    }).subscribe();
     setTimeout(() => {
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
-        if (this.emailServ.lettersList[i].id === id.id) {
+        if (this.emailServ.lettersList[i].id === id) {
           this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
           this.emailServ.index = i;
         }

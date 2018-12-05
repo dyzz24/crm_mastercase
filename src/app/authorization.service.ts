@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthorizationService {
   public accessToken;
-  public ip = 'http://10.0.1.33:3000';
+  public ip = 'http://10.0.1.33:3100';
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem('authorizationToken') === null) {
@@ -33,7 +33,7 @@ export class AuthorizationService {
 
     public authorization() {
       this.httpPost(`${this.ip}/user/login`,
-      {email: 'demo@insat.ru', password: '87654321'}, {contentType: 'application/json'}).subscribe((data) => {
+      {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
         this.accessToken = data.accessToken;
         this.stateServ();
     });

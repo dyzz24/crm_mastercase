@@ -97,12 +97,10 @@ private messages_sending = false;
   }
 
 
-
   closeViewer() {
     this.emailServ.hiddenEmpty = false;
-    this._rout.navigate([this.emailServ.urlParams]);
-    this.emailServ.fullPath = this.emailServ.urlParams;
-    // this.emailServ.stateServ();
+    const navigatePath = this._rout.url.replace(/\/view.*/, ''); // стартовый урл
+    this._rout.navigate([navigatePath]);
   }
 
   sendMessage() {

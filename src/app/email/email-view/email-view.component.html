@@ -63,7 +63,6 @@ routerLink="./create"
   </div>
 
     <button class='one_butt' (click)='closeViewer()'
-   
     >
         <span class='la la-close'></span>
         <p class="tooltip">Закрыть</p>
@@ -73,9 +72,9 @@ routerLink="./create"
   </div>
   <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
      
-         <div class='left__panel end' *ngIf="this.selectedLetter?.draft !== null">
-          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.draft !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.draft}}</p>
-          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.selectedLetter?.draft !== this.emailServ.idPostForHTTP"></div>
+         <div class='left__panel end' *ngIf="this.selectedLetter?.work !== null">
+          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.work}}</p>
+          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.selectedLetter?.work !== this.emailServ.idPostForHTTP"></div>
           </div>
         </div>
       
@@ -127,16 +126,16 @@ routerLink="./create"
             </div>
         </div>
           </div>
-          <div class="attachment__block" >
+          <div class="attachment__block" *ngIf="this.selectedLetter?.attachments !== null">
             <div class="attach__container">
-              <div class="attachment__item" *ngFor="let attach of this.attachersList; let i = index">
-              <span [class]='attach.type | attachPipe'></span>
-              <p class='filename'>{{attach.title}}
+              <div class="attachment__item" *ngFor="let attach of this?.attachments_array; let i = index">
+              <span [class]='attach.filename | attachPipe'></span>
+              <p class='filename'>{{attach.filename}}
                
               </p>
               
               <p class='size'>{{attach.size}}</p>
-               <p class="attach_tooltip">{{attach.title}}</p>
+               <p class="attach_tooltip">{{attach.filename}}</p>
               </div>
               
             </div>
@@ -214,6 +213,7 @@ routerLink="./create"
 
           <p class='btn__text'
           (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
+          routerLink="./create"
           >Перейти в полную версию</p>
   </div>
   <button class='one_butt'>

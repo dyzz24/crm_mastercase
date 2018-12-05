@@ -9,7 +9,9 @@ export class AttachPipePipe implements PipeTransform {
 
   transform(item): any {
 
-    switch (item) {
+    switch (item.substr(item.lastIndexOf('.') + 1)) {
+      case 'p7s':
+      return 'la la-file-o';
       case 'xls':
       return 'la la-file-excel-o';
       case 'pdf':
@@ -27,6 +29,8 @@ export class AttachPipePipe implements PipeTransform {
       return 'la la-file-archive-o';
       case 'ppt':
       return 'la la-file-powerpoint-o';
+      default:
+      return 'la la-file-o';
     }
   }
 
