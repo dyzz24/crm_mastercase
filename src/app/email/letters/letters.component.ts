@@ -1,4 +1,4 @@
-import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, HostListener, ViewChild, Inject, OnDestroy, ViewChildren } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute} from '@angular/router';
 
@@ -42,6 +42,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   // @ViewChild('size_Check') // для отслеживания размера блока
   // size_Check: ElementRef;
+
 
 
   searchLettersInput: FormControl = new FormControl('');
@@ -424,6 +425,10 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   importantMarkAll() {
+    const allInputs = document.querySelectorAll('.checkbox');
+    for (const key of <any>allInputs) {
+      key.checked = false;
+    }
     const id_for_important = this.emailServ.idLetters;
     // this.httpPost(`${this.emailServ.ip}/mail/set`, {
     //   mailId: id_for_important, value: true,

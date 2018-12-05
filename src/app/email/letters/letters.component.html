@@ -89,7 +89,7 @@
 
             <!-- <img src='' [class.hiddenAva]='emailServ.hideAvatars[i]'> -->
             <label class='checkedLabel' [class.visibleLabel]='emailServ.hideAvatars[i]'>
-              <input type='checkbox' class='checkbox' (change)='selectedLetters(letters.id, $event, i)' #checkbox>
+              <input type='checkbox' class='checkbox' (change)='selectedLetters(letters.id, $event, i)'>
               <!--собираю id писем с чеккед инпутов-->
               <div class='checker'></div>
             </label>
