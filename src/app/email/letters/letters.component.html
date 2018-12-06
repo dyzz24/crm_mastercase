@@ -3,23 +3,7 @@
   
   <div class='letter__list'>
     <div class="preloader__letters" *ngIf="this.emailServ.haveResponse === false; else messagesDownload">
-        <div class="windows8">
-            <div class="wBall" id="wBall_1">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_2">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_3">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_4">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_5">
-              <div class="wInnerBall"></div>
-            </div>
-          </div>
+        <div class="cssload-speeding-wheel"></div>
         <p>ЗАГРУЗКА</p>
       </div>
       <ng-template #messagesDownload>  

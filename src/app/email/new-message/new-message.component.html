@@ -91,6 +91,7 @@
     </div>
     <input type="submit" value='отправить' (click)='sendMessage()'>
     <div class="message__preload" *ngIf="this.messages_sending === true">
+        <div class="cssload-speeding-wheel"></div>
       <p>Отправка письма</p>
     </div>
   </div>

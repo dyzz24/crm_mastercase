@@ -1,5 +1,6 @@
 @import '../mixins';
 @import '../../../colors';
+@import '../preloader';
 
 
 .header {
@@ -201,6 +202,7 @@ button {
     height: 100%;
     background: rgba($color: #000000, $alpha: .8);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
