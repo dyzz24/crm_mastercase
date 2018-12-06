@@ -78,7 +78,6 @@ export class EmailComponent implements OnInit, DoCheck {
       this.visibl[j] = false;
     }
     this.visibl[param] = !this.visibl[param];
-    console.log(this.visibl);
   }
 
 

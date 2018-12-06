@@ -30,6 +30,7 @@ private messages;
 private messages_sending = false;
 
   ngOnInit() {
+    this.emailServ.hiddenEmpty = true;
     if (typeof(this.copy) === 'string') { // если строка прилетит - сделать массивом
       this.copy = [];
     }
@@ -109,6 +110,12 @@ private messages_sending = false;
   //     // tslint:disable-next-line:max-line-length
   //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
   // });
-
+this.messages_sending = true;
+setTimeout(() => {
+  const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
+    this._rout.navigate([navigatePath]);
+  this.messages_sending = false;
+  this.emailServ.hiddenEmpty = false;
+}, 3000);
 }
 }

@@ -90,6 +90,8 @@
 
     </div>
     <input type="submit" value='отправить' (click)='sendMessage()'>
-    <div class="message__preload" *ngIf="this.messages_sending === true"></div>
+    <div class="message__preload" *ngIf="this.messages_sending === true">
+      <p>Отправка письма</p>
+    </div>
   </div>
 </div>

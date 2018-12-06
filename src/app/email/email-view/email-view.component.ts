@@ -64,7 +64,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     }
 
   ngOnInit() {
-
+    this.emailServ.hiddenEmpty = true;
   //   this.activatedRoute.params.subscribe(params => {
   // //     const requestInterval2 = setInterval(() => {
   // //       if (this.emailServ.activeLett !== undefined) {
