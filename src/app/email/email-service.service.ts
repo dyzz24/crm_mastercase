@@ -33,7 +33,7 @@ export class EmailServiceService {
   copy: any;
 
   notLettersFlag; // флаг, что писем нет
-  haveResponse;
+  haveResponse = false;
 
   index;
   result;

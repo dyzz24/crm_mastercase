@@ -64,20 +64,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     }
 
   ngOnInit() {
-    this.emailServ.hiddenEmpty = true;
-  //   this.activatedRoute.params.subscribe(params => {
-  // //     const requestInterval2 = setInterval(() => {
-  // //       if (this.emailServ.activeLett !== undefined) {
-  // //         clearInterval(requestInterval2);
-  // //             // tslint:disable-next-line:forin
-  // // for (const i in this.emailServ.activeLett) {
-  // //   this.emailServ.activeLett[i] = false;
-  // // }
-  // // this.emailServ.activeLett[params.id] = true;
-  // //       }
-  // //     }, 1000);
+    this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
 
-  //     this.sub = params.id; });
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
         this.preload_to_wait_status = false;
@@ -107,12 +95,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.emailServ.hiddenEmpty = true;
       }
     }, 1000);
-    // const requestInterval2 = setInterval(() => {
-    //   if (this.selectedLetter.to_addresses !== undefined) {
-    //     this.checkerLengthArray_bcc_cc();
-    //     this.checkerLength_addressess();
-    //   }
-    // }, 1000);
   }
 
   checkerLengthArray_bcc_cc() {

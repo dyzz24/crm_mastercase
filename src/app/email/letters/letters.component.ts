@@ -78,10 +78,39 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       this.emailServ.idPostForHTTP = params.id1;
       this.emailServ.selectedMess = +params.id;
       this.emailServ.selectNum = +params.id;
-      this.emailServ.haveResponse = false;
-      const requestInterval = setInterval(() => {
-        if (this.authorizationServ.accessToken !== undefined) {
-          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+      this.emailServ.haveResponse = false; // если убрать - не будет индикации при навигации по папкам (хз грузит или нет)
+      if (this.authorizationServ.accessToken === undefined) { // если авторизации не было, будет опрашивать сервис авторизации по интервалу
+        this.loading_list_letters(true);
+      } else {
+        this.loading_list_letters(false);
+      }
+    }); // подписка
+
+  }
+
+    loading_list_letters(boolean) {
+        if (boolean) {
+          const requestInterval = setInterval(() => {
+            if (this.authorizationServ.accessToken !== undefined) {
+              clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации ()
+              this.httpPost(
+                `${this.emailServ.ip}/mail/mails`,
+                // tslint:disable-next-line:max-line-length
+                {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+
+            this.emailServ.haveResponse = true;
+                  if (data.length === 0) {
+                    this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
+                  } else {
+                    this.emailServ.notLettersFlag = false;
+                  }
+                  this.emailServ.lettersList = data; // главный массив всех всех писем
+                  this.emailServ.dataLetters = this.emailServ.lettersAmount;
+                  });
+            }
+          }, 1000);
+        }
+        if (!boolean) {
           this.httpPost(
             `${this.emailServ.ip}/mail/mails`,
             // tslint:disable-next-line:max-line-length
@@ -97,15 +126,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
               });
         }
-      }, 1000);
-    }); // подписка
-
-
-    // this.sub = this.activatedRoute.params.subscribe(params => {
-
-    //   this.emailServ.idPostForHTTP = params.id;
-    //     });
-  }
+    }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
