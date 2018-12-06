@@ -26,7 +26,7 @@ export class SocketService {
       }
   });
   this.socket.on('connect', () => {
-    this.showSuccess(`Пользователь ${this.emailServ.idPostForHTTP} залогинен`);
+    this.showSuccess(`Пользователь  залогинен`);
     this.socketConnectedFlag = true;  // как только законектился, меняю флаг чтобы не пускать кучу запросов
 });
 this.socket.on('msg', (msg) => {

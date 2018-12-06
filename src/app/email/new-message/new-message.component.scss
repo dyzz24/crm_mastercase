@@ -25,7 +25,7 @@
     flex-direction: column;
     height: calc(100vh - 120px);
     box-sizing: border-box;
-    position: relative;
+
 
     .inp__mess {
         @include inputs;
@@ -210,6 +210,19 @@ button {
         color:white;
     }
 }
+
+.newMessage__container {
+    height: calc(100vh - 60px);
+        position: relative;
+}
+
+.cssload-speeding-wheel {
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
 
 
 

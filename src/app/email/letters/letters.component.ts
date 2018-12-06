@@ -88,7 +88,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   }
 
-    loading_list_letters(boolean) {
+    private loading_list_letters(boolean) {
         if (boolean) {
           const requestInterval = setInterval(() => {
             if (this.authorizationServ.accessToken !== undefined) {

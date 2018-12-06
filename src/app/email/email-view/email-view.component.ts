@@ -97,6 +97,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     }, 1000);
   }
 
+
+
   checkerLengthArray_bcc_cc() {
     if (this.selectedLetter.cc_addresses === null) {
       return;

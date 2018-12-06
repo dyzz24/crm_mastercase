@@ -151,33 +151,6 @@ routerLink="./create"
     <ng-template #viewText >
     <div class='cont_html'>{{this.selectedLetter?.text}}</div>
   </ng-template>
-    <!-- <div class="from__panel">
-      <div class="from__line">
-    <p class='from__head'>Кому: </p>
-    <div class='li__'><p *ngFor="let mails of this.emailServ.mailsToArray; let i = index">{{mails}}<span class='la la-close' (click)='deleteAdress(i)'></span></p></div>
-    <input type='email' placeholder="Добавьте имя" [(ngModel)]='this.nameFrom' (blur)='addFrom()'>
-      </div>
-      <div class="from__line">
-        
-    <p>От: {{emailServ.selectedLetter.to_address}}</p>
-    </div>
-    <div class="from__line theme">
-      <p>Тема: </p>
-      <input type='text' value='{{this.selectedLetter?.subject}}' [(ngModel)]='this.emailServ.subjectTo'>
-    </div>
-  </div> -->
-    <!-- <quill-editor></quill-editor> -->
-    <!-- <div class="bottom__panel">
-    <button class='reply'>
-        <span class='la la-mail-reply'></span>
-        Ответить
-      </button>
-
-      <button class='reply'>
-          <span class='la la-reply-all'></span>
-          Ответить всем
-        </button>
-    </div> -->
   </div>
 </div>
 <div class="quickResponse quickResponse__active" [ngClass]='{quickResponse__active: quickResponse_active}'>
