@@ -100,7 +100,7 @@ private messages_sending = false;
 
   closeViewer() {
     this.emailServ.hiddenEmpty = false;
-    const navigatePath = this._rout.url.replace(/\/view.*/, ''); // стартовый урл
+    const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
     this._rout.navigate([navigatePath]);
   }
 
