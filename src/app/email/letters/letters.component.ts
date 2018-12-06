@@ -79,6 +79,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       this.emailServ.selectedMess = +params.id;
       this.emailServ.selectNum = +params.id;
       this.emailServ.haveResponse = false; // если убрать - не будет индикации при навигации по папкам (хз грузит или нет)
+      // tslint:disable-next-line:forin
       if (this.authorizationServ.accessToken === undefined) { // если авторизации не было, будет опрашивать сервис авторизации по интервалу
         this.loading_list_letters(true);
       } else {
@@ -89,6 +90,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
     private loading_list_letters(boolean) {
+
+
         if (boolean) {
           const requestInterval = setInterval(() => {
             if (this.authorizationServ.accessToken !== undefined) {
@@ -217,10 +220,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   urlLetterView(event, idLetter, id) {
-    if (event.target.className === 'la la-ellipsis-h') {
+    if (event.target.className === 'letter__settings') {
       return;
     }
-    // console.log(this.emailServ.lettersList);
                   // tslint:disable-next-line:forin
   for (const i in this.emailServ.activeLett) {
     this.emailServ.activeLett[i] = false;

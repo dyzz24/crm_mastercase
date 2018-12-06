@@ -104,6 +104,10 @@ private messages_sending = false;
     this._rout.navigate([navigatePath]);
   }
 
+  showSuccess(param) {
+    this.toastrServ.success(param);
+  }
+
   sendMessage() {
   //   this.httpPost(
   //     `${this.emailServ.ip}/mail/send`,
@@ -116,6 +120,7 @@ setTimeout(() => {
     this._rout.navigate([navigatePath]);
   this.messages_sending = false;
   this.emailServ.hiddenEmpty = false;
+  this.showSuccess('Письмо отправлено');
 }, 3000);
 }
 }
