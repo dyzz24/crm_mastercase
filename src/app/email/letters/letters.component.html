@@ -63,7 +63,6 @@
         [class.active_checkboxes]='emailServ.hideAvatars[i]'
         (dblclick)="new_messages_dblClick(i)"
 
-        routerLink="view/{{i}}"
         
         >
         <div class="avatar__group">
@@ -86,6 +85,9 @@
             </div>
           </div>
         </div>
+        <div class="link_activ"
+        routerLink="view/{{i}}"
+        >
           <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'
 
           >
@@ -122,6 +124,7 @@
               <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].id, $event, 0)' *ngIf='this.emailServ.lettersList[i].box === 2'>Восстановить</button>
             </div>
           </div>
+        </div>
         </div>
         <div class="letters__end" *ngIf="this.emailServ.dataLetters !== this.emailServ.lettersAmount">
           <p>Все письма загружены</p>
