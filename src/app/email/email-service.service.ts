@@ -56,7 +56,7 @@ export class EmailServiceService {
   dataLetters; // для остановки подгруза писем когда все загружены
 
   selectedLetter: any;
-  ip = 'http://10.0.1.33:3100';
+  ip = 'http://10.0.1.33:3000';
 
   mailsToArray = []; // кому отправить письмо (список адресатов)
   subjectTo;
