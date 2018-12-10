@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, DoCheck, Inject } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, Inject, HostListener } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { ToastrService} from 'ngx-toastr';
+
 
 
 @Component({
@@ -18,7 +19,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
     private _rout: Router,
     private http: HttpClient,
     @Inject(ToastrService) private toastrServ: ToastrService,
-    @Inject(AuthorizationService) private authorizationServ: AuthorizationService) { }
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService
+    ) {
+     }
 
 private from;
 private to = [this.emailServ.to_answer]; // array for send
@@ -28,6 +31,10 @@ private subject = this.emailServ.to_subject; // тема для отправки
 
 private messages;
 private messages_sending = false;
+private files; // файлы с инпута
+private files_for_view; // имена файлов для HTML
+private formData; // дата для отправки на серв файлов
+
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
@@ -47,7 +54,7 @@ private messages_sending = false;
       if (e.target.value === undefined || e.target.value === '') { // если пустая строка - выхожу
         return;
       }
-      if (arr[0] === '' || arr[0] === undefined) { // если первый элемент  = ""
+      if (arr[0] === '' || arr[0] === undefined) { // если первый элемент  = ''
                           // (такое бывает, когда нажимаю создать новое письмо, ибо передает '' от сервиса), удаляю его
           arr.shift();
       }
@@ -123,4 +130,30 @@ setTimeout(() => {
   this.showSuccess('Письмо отправлено');
 }, 3000);
 }
+onFileChange(event) {
+  this.files = event.target.files; // отловил файлы прикрепления
+
+    this.files_for_view = [this.files]; // засунул в массив для работы
+    const temp_arr = []; // временный массив
+    this.files_for_view.map((val) => {
+
+ // tslint:disable-next-line:forin
+  for (const key in val) { // пробегаюсь по файлам
+    if (val[key].name !== 'item' && val[key].name !== undefined) { // если имя файла не item и und
+    temp_arr.push(val[key].name); // пушу в массив
+    }
+  }
+  this.files_for_view = temp_arr; // приравниваю к временному массиву для отображения в HTML
+});
+
+  this.formData = new FormData();
+  for (let i = 0; i < this.files.length; i++) {
+       this.formData.append('file', this.files[i]);
+  }
+  this.httpPost(`${this.emailServ.ip}/mail/files`, this.formData).subscribe(resp => {
+
+});
+}
+
+
 }

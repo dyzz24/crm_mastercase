@@ -1,7 +1,6 @@
 import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { attachers } from './attach';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription, UnsubscriptionError } from 'rxjs';
 import { SocketService } from '../../socket.service';
@@ -37,7 +36,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   visibleMenu = false;
   nameFrom;
   messages;
-  attachersList = attachers;
   quickResponse_active = false;
   sending_status = false;
   sub;

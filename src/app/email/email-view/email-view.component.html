@@ -26,14 +26,14 @@
                 </button>
    
     <div class="left__panel">
-  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
+  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, true)"
   routerLink="./create"
   >
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
 <button class='menu' 
-(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.to_addresses, this.selectedLetter?.subject)'
+(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.to_addresses, this.selectedLetter?.subject, true)'
 [class.none_display] = 'this.selectedLetter?.to_addresses.length === 1'
 routerLink="./create"
 >

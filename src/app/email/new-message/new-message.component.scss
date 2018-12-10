@@ -224,6 +224,27 @@ button {
 }
 
 
+label {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    box-sizing: border-box;
+    width: auto;
+    height: 30px;
+    transition: .2s;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+        background: rgba(75, 121, 187, 0.3);
+    }
+}
+
+.file_btn {
+   display: none;
+}
+
+
+
 
 
 

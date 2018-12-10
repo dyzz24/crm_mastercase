@@ -112,14 +112,18 @@ sub;
     return firstLett;
   }
 
-  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?) {
+  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?) {
     this.to_answer = '';
     this.to_subject = '';
     this.to_all_answer = '';
     this.to_forward = '';
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
-    this.to_subject = param_to_subject;
+    if (request) {
+    this.to_subject = `RE: ${param_to_subject}`;
+    } else {
+      this.to_subject = param_to_subject;
+    }
     if (param_to_all_answer === '') {
       return;
     } else {
@@ -138,6 +142,10 @@ sub;
     this.hiddenEmpty = true;
   }
   new_forward_message(param_text, param_html) {
+    this.to_answer = '';
+    this.to_subject = '';
+    this.to_all_answer = '';
+    this.to_forward = '';
     this.hiddenEmpty = true;
     if (param_html === null) {
       this.to_forward = param_text;
