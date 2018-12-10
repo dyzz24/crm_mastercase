@@ -4,12 +4,17 @@
         </div>
 
         <div class='nav__items'>
-                <div class="icon__nav" [class.active]='dataServ.menuActive===0'><span class="la la-lg la-envelope-o"></span></div>
-                <div class="icon__nav" [class.active]='dataServ.menuActive===1'><span class="la la-lg la-calendar"></span></div>
+                <div class="icon__nav"
+                        routerLink="email"
+                        routerLinkActive="active"
+                ><span class="la la-lg la-envelope-o"></span></div>
+                <div class="icon__nav"><span class="la la-lg la-calendar"></span></div>
 
                 <div class="nav__buttons" [ngClass]='{hidenBlock:hidden}'>
-                        <a routerLink="email" [class.active]='dataServ.menuActive===0'>Почта</a>
-                        <a routerLink="/" (click)='clearLocalStorage(1, $event)' [class.active]='dataServ.menuActive===1'>Календарь</a>
+                        <a routerLink="email"
+                        routerLinkActive="active"
+                        >Почта</a>
+                        <a routerLink="/" (click)='clearLocalStorage(1, $event)' >Календарь</a>
                 </div>
         </div>
 </nav>
