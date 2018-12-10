@@ -48,7 +48,7 @@ export class EmailComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    // console.log(this.hiddenEmptyStatus)
+    // console.log(this._rout.config)
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
@@ -91,7 +91,6 @@ export class EmailComponent implements OnInit, DoCheck {
     this.emailServ.hiddenEmpty = false;
     this.emailServ.activeLett = [];
     this.emailServ.allLettersId = [];
-
 
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
     // ********************************/

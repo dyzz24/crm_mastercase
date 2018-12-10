@@ -140,17 +140,16 @@
       <div class="emails" *ngFor='let email of emailItems let i = index'>
     
         <a class="emails__list" 
-       
-        (click)='showHiddenBlock(i)'
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
-        
-        >
+        (click)='showHiddenBlock(i)'>
           <p>{{email.address}}</p>
-          <span class='la la-lg la-angle-double-down' *ngIf="visibl[i] === false || visibl[i] === undefined"> </span>
-          <span class='la la-lg la-angle-double-up' *ngIf="visibl[i] === true"> </span>
-        </a>
-        <div class="hiddenMenu" [class.visibl]='visibl[i]'>
+          <span class='la la-lg la-angle-double-down' *ngIf="visibl[i] === false || visibl[i] === undefined"
+          > </span>
+          <span class='la la-lg la-angle-double-up' *ngIf="visibl[i] === true"
+          > </span>
+      </a>
+        <div class="hiddenMenu" [class.visibl]='visibl[i]'
+        routerLinkActive="visibl"
+        >
           <a (click)="goUrl(0)" 
           routerLink="./{{this.emailItems[i].address}}/0"
           routerLinkActive="activeTypeMess"

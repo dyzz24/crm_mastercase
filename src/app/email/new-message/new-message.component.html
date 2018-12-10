@@ -67,7 +67,7 @@
 
     <textarea class='input_fields subject' [(ngModel)]='subject' >{{this.subject}}</textarea>
 </div>
-<div class="row__block end_group" >
+<div class="row__block end_group" (dragover)='dragStart($event)'>
   <label>
       <span class='la la-paperclip visible'></span>
   <input type='file' class='file_btn' (change)='onFileChange($event)' multiple>
@@ -75,9 +75,10 @@
 </label>
 <input type="text"  class="filename" disabled 
 *ngFor="let file of this.files_for_view" 
-value={{file}}>
+value={{file.name}}>
 
       <p class='other__text'>Или перетащите файлы</p>
+
 </div>
 
 
@@ -93,8 +94,11 @@ value={{file}}>
     </div>
     <input type="submit" value='отправить' (click)='sendMessage()'>
     <div class="message__preload" *ngIf="this.messages_sending === true">
-        <div class="cssload-speeding-wheel"></div>
+        <div class="cssload-speeding-wheel" ></div>
       <p>Отправка письма</p>
     </div>
+  </div>
+  <div class="drag_region"  (dragleave)='dragEnd($event)' (dragover)='dragStart($event)' (drop)='drop($event)'>
+    <p>Брось файл тут</p>
   </div>
 </div>

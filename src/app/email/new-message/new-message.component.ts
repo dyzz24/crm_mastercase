@@ -132,28 +132,62 @@ setTimeout(() => {
 }
 onFileChange(event) {
   this.files = event.target.files; // отловил файлы прикрепления
+  this.add_drag_input_data(this.files);
+}
 
-    this.files_for_view = [this.files]; // засунул в массив для работы
+
+dragStart(e) {
+  e.preventDefault();
+
+
+  const hidden_drag_region = document.querySelector('.drag_region');
+  hidden_drag_region.style.display = 'flex';
+}
+dragEnd(e) {
+  e.preventDefault();
+
+  const hidden_drag_region = document.querySelector('.drag_region');
+  hidden_drag_region.style = '';
+
+}
+drop(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+
+  const hidden_drag_region = document.querySelector('.drag_region');
+  hidden_drag_region.style = '';
+
+  this.files = e.dataTransfer.files;
+  this.add_drag_input_data(this.files);
+}
+
+
+
+add_drag_input_data(objForData) {
+  this.files_for_view = [objForData]; // засунул в массив для работы
     const temp_arr = []; // временный массив
     this.files_for_view.map((val) => {
 
  // tslint:disable-next-line:forin
   for (const key in val) { // пробегаюсь по файлам
     if (val[key].name !== 'item' && val[key].name !== undefined) { // если имя файла не item и und
-    temp_arr.push(val[key].name); // пушу в массив
+
+    temp_arr.push(val[key]); // пушу в массив
     }
   }
   this.files_for_view = temp_arr; // приравниваю к временному массиву для отображения в HTML
 });
 
   this.formData = new FormData();
-  for (let i = 0; i < this.files.length; i++) {
-       this.formData.append('file', this.files[i]);
+  for (let i = 0; i < objForData.length; i++) {
+       this.formData.append('file', objForData[i]);
   }
-  this.httpPost(`${this.emailServ.ip}/mail/files`, this.formData).subscribe(resp => {
+//   this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
 
-});
+// });
 }
+
 
 
 }
