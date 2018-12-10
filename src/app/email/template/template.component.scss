@@ -1,0 +1,25 @@
+@import '../mixins';
+@import '../../../colors';
+
+.custom__button {
+    position: relative;
+}
+
+.hidden_template {
+    display: none;
+    position: absolute;
+    top:0;
+    left: 100%;
+    width: 100px;
+    height: 300px;
+    background: white;
+    z-index: 2;
+    cursor: default;
+}
+
+.visibl_templ {
+    display: flex;
+}
+.active_btn {
+    background: rgba(75, 121, 187, 0.3);
+}

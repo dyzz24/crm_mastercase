@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { AuthorizationService } from './authorization.service';
 import { SocketService } from './socket.service';
+import { TemplateComponent } from './email/template/template.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { SocketService } from './socket.service';
     SplitterComponent,
     TimerPipePipe,
     AttachPipePipe,
+    TemplateComponent,
 
   ],
   imports: [

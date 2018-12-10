@@ -86,6 +86,7 @@ p{
 .download {
     border: 1px solid $border;
     margin-left: 40px;
+    flex-shrink: 0;
 }
 
 
