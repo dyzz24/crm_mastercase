@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class PreserverComponent implements OnInit {
 
   hidden_preserver = false;
-  urls_array = [];
+  urls_array = [{url_states: ''}];
 
   constructor(private rout: Router) { }
 
@@ -41,6 +41,13 @@ export class PreserverComponent implements OnInit {
     this.urls_array = temp_arr;
     localStorage.setItem('bookmark-states', JSON.stringify(this.urls_array));
   }
+}
+
+state_url_go(i) {
+  this.rout.navigate(['/']); // костыль, но работает
+  setTimeout(() => {
+    this.rout.navigate([this.urls_array[i].url_states]);
+  }, 200);
 }
 
 }
