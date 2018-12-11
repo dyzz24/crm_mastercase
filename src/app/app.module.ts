@@ -28,6 +28,7 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { AuthorizationService } from './authorization.service';
 import { SocketService } from './socket.service';
 import { TemplateComponent } from './email/template/template.component';
+import { PreserverComponent } from './preserver/preserver.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { TemplateComponent } from './email/template/template.component';
     TimerPipePipe,
     AttachPipePipe,
     TemplateComponent,
+    PreserverComponent,
 
   ],
   imports: [

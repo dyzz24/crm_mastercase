@@ -443,6 +443,7 @@ p{
     background: rgba(0, 0, 0, 0.541);
     border-radius: 6px;
     display: none;
+    flex-direction: column;
     animation: menuEffect .4s;
 }
 @keyframes menuEffect {

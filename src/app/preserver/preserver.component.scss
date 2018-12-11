@@ -1,0 +1,34 @@
+@import '../email/mixins';
+.preserver_starter {
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    z-index: 16;
+    
+}
+
+.hidden_preserver {
+    position: absolute;
+    width: 100%;
+    height: 800px;
+    left: 0;
+    background: rgba($color: #4b4545, $alpha: .5);
+    bottom:100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+        background: rgb(233, 129, 129);
+        border-radius: 0px;
+    }
+}
+
+.open_preserver {
+    display: flex; 
+    
+}
+
+.active_btn {
+    background: rgba(75, 121, 187, 0.3);
+}

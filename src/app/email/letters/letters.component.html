@@ -58,7 +58,7 @@
       <div class="letter__container" (scroll)='scrollDown($event)' [class.hiddenMenu_plusHeight]='!emailServ.hiddenTrash'>
         <div class='letter__prev'
         *ngFor='let letters of emailServ.lettersList, let i = index'
-        [class.active]="emailServ.activeLett[i]"
+        routerLinkActive="active"
         [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         [class.active_checkboxes]='emailServ.hideAvatars[i]'
         (dblclick)="new_messages_dblClick(i)"
@@ -102,7 +102,7 @@
 
           >
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
-            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments === true" [class.time-icons__status-new]="letters.seen === false">
+            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments !== null" [class.time-icons__status-new]="letters.seen === false">
               <p class='tooltip'>Вложения</p>
             </span>
             <button class='letter__settings' (click)='menuShow($event, i)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">

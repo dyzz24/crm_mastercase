@@ -224,9 +224,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       return;
     }
                   // tslint:disable-next-line:forin
-  for (const i in this.emailServ.activeLett) {
-    this.emailServ.activeLett[i] = false;
-  }
+  // for (const i in this.emailServ.activeLett) {
+  //   this.emailServ.activeLett[i] = false;
+  // }
 
     this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, flag: 'seen' , value: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения

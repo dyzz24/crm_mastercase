@@ -1,0 +1,13 @@
+<button class='preserver_starter'
+[ngClass]="{active_btn: hidden_preserver}"
+(click)='toggle_state_pres()'
+>
+  <span class='la la-bookmark'></span>
+        <p class="tooltip">Закладки</p>
+        <div class="hidden_preserver"
+        [ngClass]="{open_preserver: hidden_preserver}">
+          <button *ngFor="let urls of this.urls_array"
+          routerLink="{{urls.url_states}}"
+          ><span class='la la-bookmark'></span></button>
+      </div>
+</button>

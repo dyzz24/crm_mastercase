@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription, UnsubscriptionError } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
+import { PreserverComponent } from '../../preserver/preserver.component';
 
 export interface SelectedLetter {
   id: number;
@@ -33,6 +34,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   messageContainer: ElementRef;
   @ViewChild('input_cleaner')
   input_cleaner: ElementRef;
+  @ViewChild(PreserverComponent)  preserver_component: PreserverComponent;
   visibleMenu = false;
   nameFrom;
   messages;
@@ -203,21 +205,6 @@ this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activated
     event.stopPropagation();
   }
 
-  // addFrom() {
-  //   const validate = /^[\w\.\d-_]+@[\w\.\d-_]+\.\w{2,4}$/i;
-  //   if (this.nameFrom !== '' && validateAdress(this.nameFrom) !== -1) {
-  //   this.emailServ.mailsToArray.push(this.nameFrom);
-  //   this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
-  //     return self.indexOf(val) === ind;
-  //   });
-  //   this.nameFrom = '';
-  // } else {
-  //   alert('Введите корректный имейл');
-  // }
-  // function validateAdress(val) {
-  //   return String(val).search(validate);
-  // }
-  // }
 
   deleteAdress(index) {
     this.emailServ.mailsToArray = this.emailServ.mailsToArray.filter((val, ind, self) => {
@@ -282,6 +269,10 @@ this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activated
 
   print() {
     window.print();
+}
+
+preserv_saver() {
+  this.preserver_component.save_bookmark();
 }
 
 }

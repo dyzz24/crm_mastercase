@@ -58,6 +58,7 @@ routerLink="./create"
       <span class='la la-ellipsis-h'></span>
       <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
         <button class='letterMenuButt' (click)='print()'>Распечатать</button>
+        <button class='letterMenuButt' (click)='preserv_saver()'>Сохранить в закладках</button>
       </div>
       <p class="tooltip">Меню</p>
     </button>
@@ -202,4 +203,5 @@ routerLink="./create"
 </div>
 </div>
 </div>
+<app-preserver></app-preserver>
 </ng-template>
