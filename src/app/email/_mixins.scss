@@ -329,6 +329,8 @@ span {
         &:hover {
             background: #1a1919;
         }
+        margin: 0;
+        
     }
 @mixin bables($max-width:120px) {
         border-radius: 10px;

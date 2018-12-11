@@ -1,4 +1,4 @@
-<div class="newMessage__container">
+<div class="newMessage__container" (dragover)='dragStart($event)'>
   <div class="header">
     <div class="left__group">
       <div class="left__panel end">
@@ -67,18 +67,21 @@
 
     <textarea class='input_fields subject' [(ngModel)]='subject' >{{this.subject}}</textarea>
 </div>
-<div class="row__block end_group" (dragover)='dragStart($event)'>
+<div class="row__block end_group" >
   <label>
       <span class='la la-paperclip visible'></span>
   <input type='file' class='file_btn' (change)='onFileChange($event)' multiple>
   <span class='button__title'>Прикрепить файл</span>
 </label>
-<input type="text"  class="filename" disabled 
-*ngFor="let file of this.files_for_view" 
-value={{file.name}}>
+
 
       <p class='other__text'>Или перетащите файлы</p>
 
+</div>
+<div class="attach_group">
+    <input type="text"  class="filename" disabled 
+    *ngFor="let file of this.files_for_view" 
+    value={{file.name}}>
 </div>
 
 
