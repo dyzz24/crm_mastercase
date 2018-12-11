@@ -28,6 +28,7 @@ export interface SelectedLetter {
   styleUrls: ['./email-view.component.scss'],
   encapsulation: ViewEncapsulation.Native,
   // providers: [EmailServiceService]
+
 })
 export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('messageContainer')
@@ -178,13 +179,13 @@ this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activated
     setTimeout(() => {
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === id) {
-          this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
+          this.selectedLetter = this.emailServ.lettersList[i + 1];
           this.emailServ.index = i;
         }
     }
 
     this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
-      if (val !== id) {
+      if (val.id !== id) {
         return val;
       }
       });

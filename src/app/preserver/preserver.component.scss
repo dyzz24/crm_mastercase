@@ -32,3 +32,22 @@
 .active_btn {
     background: rgba(75, 121, 187, 0.3);
 }
+
+.add_bookmark {
+    animation: add_b_anim .6s;
+}
+
+@keyframes add_b_anim {
+    0% {
+        transform: scale(1);
+        
+    }
+    50% {
+        transform: scale(1.6);
+        background: rgb(233, 129, 129);
+    }
+    100% {
+        transform: scale(1)
+        
+    }
+}

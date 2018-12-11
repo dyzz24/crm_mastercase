@@ -403,14 +403,13 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     setTimeout(() => {
       const idelem = this.emailServ.selectedLetter;
       this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-          imailId: +id,
-          box: box,
+          mailId: +id,
+          box: +box,
           address: this.emailServ.idPostForHTTP
-        })
-        .subscribe();
+        }).subscribe();
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
         if (this.emailServ.lettersList[i].id === idelem.id) {
-          this.emailServ.selectedLetter = this.emailServ.lettersList[i];
+          this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
           this.emailServ.index = i;
         }
       }

@@ -41,13 +41,15 @@ export class PreserverComponent implements OnInit {
     this.urls_array = temp_arr;
     localStorage.setItem('bookmark-states', JSON.stringify(this.urls_array));
   }
+  // const add_btn = document.querySelector('.preserver_starter');
+  // add_btn.classList.add('add_b_anim')
 }
 
 state_url_go(i) {
   this.rout.navigate(['/']); // костыль, но работает
   setTimeout(() => {
     this.rout.navigate([this.urls_array[i].url_states]);
-  }, 200);
+  }, 10);
 }
 
 }
