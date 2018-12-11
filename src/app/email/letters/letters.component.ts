@@ -128,6 +128,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               this.emailServ.lettersList = data; // главный массив всех всех писем
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
               });
+
         }
     }
 
@@ -234,11 +235,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
     this.emailServ.index = idLetter;
 
-    this.emailServ.hiddenEmpty = true;
 
     // this.emailServ.fullPath =
       // this.emailServ.urlParams + '/view/' + idLetter;
-    this.emailServ.currentId = idLetter; // test
     this.emailServ.checkerLengthArray_bcc_cc();
     this.emailServ.checkerLength_addressess();
     // this.emailServ.stateServ();

@@ -73,7 +73,9 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         // this.selectedLetter = this.emailServ.lettersList[this.sub];
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.selectedLetter = this.emailServ.lettersList[data.id];
+          this.emailServ.currentId = data.id;
           this.emailServ.activeLett[data.id] = true;
+
               // console.log(this.selectedLetter.attachments);
 
               if (this.selectedLetter.attachments !== null) {
@@ -92,7 +94,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
           this.checkerLengthArray_bcc_cc();
           this.checkerLength_addressess();
         });
-        this.emailServ.hiddenEmpty = true;
+        // console.log(this.emailServ.lettersList);
       }
     }, 1000);
   }
