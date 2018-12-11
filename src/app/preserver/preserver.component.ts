@@ -41,8 +41,11 @@ export class PreserverComponent implements OnInit {
     this.urls_array = temp_arr;
     localStorage.setItem('bookmark-states', JSON.stringify(this.urls_array));
   }
-  // const add_btn = document.querySelector('.preserver_starter');
-  // add_btn.classList.add('add_b_anim')
+  const add_btn = document.querySelector('.preserver_starter');
+  add_btn.classList.add('add_bookmark');
+  setTimeout(() => {
+    add_btn.classList.remove('add_bookmark');
+  }, 600);
 }
 
 state_url_go(i) {

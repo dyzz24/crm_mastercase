@@ -414,12 +414,18 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         }
       }
 
+      const navigatePath = this.rout.url.replace(/\/view\/.*/, ''); // стартовый урл
+      if (this.emailServ.currentId <= 0) { // если урл равен или меньше нуля
+        const new_url = navigatePath + '/view/' + 0; // ставлю в ноль
+        this.rout.navigate([new_url]); // перехожу
+      } else {
+        const new_url = navigatePath + '/view/' + (+this.emailServ.currentId - 1); // иначе при удалении перехожу к предыдущему элементу let
+        this.rout.navigate([new_url]);
+      }
 
-      this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
-        if (val.id !== id) {
-          return val;
-        }
-        });
+        this.emailServ.lettersList.splice(this.emailServ.currentId, 1); // удаляю из представления
+
+
       if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
         setTimeout(() => {
           this.httpPost(
