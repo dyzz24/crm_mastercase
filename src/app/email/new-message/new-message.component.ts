@@ -141,13 +141,13 @@ dragStart(e) {
 
 
   const hidden_drag_region = document.querySelector('.drag_region');
-  hidden_drag_region.style.display = 'flex';
+  hidden_drag_region.classList.add('open');
 }
 dragEnd(e) {
   e.preventDefault();
 
   const hidden_drag_region = document.querySelector('.drag_region');
-  hidden_drag_region.style = '';
+  hidden_drag_region.classList.remove('open');
 
 }
 drop(e) {
@@ -156,7 +156,7 @@ drop(e) {
 
 
   const hidden_drag_region = document.querySelector('.drag_region');
-  hidden_drag_region.style = '';
+  hidden_drag_region.classList.remove('open');
 
   this.files = e.dataTransfer.files;
   this.add_drag_input_data(this.files);
