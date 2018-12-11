@@ -414,20 +414,16 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         }
       }
 
-      this.emailServ.lettersList = this.emailServ.lettersList.filter(
-        (val, ind) => {
-          if (val.id !== id) {
-            return val;
-          }
+
+      this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
+        if (val.id !== id) {
+          return val;
         }
-      );
-      if (this.emailServ.lettersList.length === 0) {
-        this.rout.navigate([this.emailServ.urlParams]);
-      }
+        });
       if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
         setTimeout(() => {
           this.httpPost(
-              this.emailServ.adress,
+            `${this.emailServ.ip}/mail/mails`,
               // tslint:disable-next-line:max-line-length
               {
                 address: this.emailServ.idPostForHTTP,
@@ -437,8 +433,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               }
             )
             .subscribe(data => {
+
               this.emailServ.lettersList = data;
-              // this.emailServ.stateServ(); // save state on service
     this.emailServ.hideAvatars = []; // чтоб инпуты работали
     this.emailServ.idLetters = []; // обнуляю корзину на удаление
     this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
