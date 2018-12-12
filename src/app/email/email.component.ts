@@ -48,7 +48,6 @@ export class EmailComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    // console.log(this._rout.config)
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
