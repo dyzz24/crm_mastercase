@@ -32,6 +32,9 @@ export class EmailComponent implements OnInit, DoCheck {
   inboxFullName;
   sub;
 
+  // folders = [
+  //   {name: '1level', child: [{name: '2level', child: [{name: '3level', child: [{name: '4level'}]}]}]} ];
+
 
 
   adress;
