@@ -147,6 +147,7 @@
       <div class="emails" *ngFor='let email of emailItems let i = index'>
     
         <div class="emails__list"
+        [ngClass]="{left_activ_strip:email.address === this.emailServ.idPostForHTTP}"
         routerLinkActive="left_activ_strip"
         (click)='showHiddenBlock(i)'>
         <div class="accaunt_info">
@@ -180,6 +181,63 @@
           </button>
           </div>
 
+
+          <div class="hidden__folders">
+
+          <div (click)="goUrl(0)" class='type_message wrap'>
+          <div class="link_area one_level_fold" >
+                <span class='la la-lg la-square-o'></span><p>Папка мать</p>
+          </div>
+          <button>
+              <span class='la la-lg la-angle-down'></span>
+          </button>
+        </div>
+        <div (click)="goUrl(0)" class='type_message wrap'>
+          <div class="hidden_subfolder">
+              <div class="link_area two_level_fold" >
+                  <span class='la la-lg la-square-o'></span>
+                  <p>Папка ребенок</p>
+            </div>
+            <button>
+                <span class='la la-lg la-angle-down'></span>
+            </button>
+          
+          </div>
+        </div>
+        <div (click)="goUrl(0)" class='type_message wrap'>
+            <div class="hidden_subfolder">
+                <div class="link_area three_level_fold" >
+                    <span class='la la-lg la-square-o'></span>
+                    <p>Папка ребенок</p>
+              </div>
+              <button>
+                  <span class='la la-lg la-angle-down'></span>
+              </button>
+            </div>
+          </div>
+          <div (click)="goUrl(0)" class='type_message wrap'>
+              <div class="hidden_subfolder">
+                  <div class="link_area four_level_fold" >
+                      <span class='la la-lg la-square-o'></span>
+                      <p>Ребенок ребенка</p>
+                </div>
+                <button>
+                    <span class='la la-lg la-angle-down'></span>
+                </button>
+              </div>
+            </div>
+            <div (click)="goUrl(0)" class='type_message wrap'>
+                <div class="hidden_subfolder">
+                    <div class="link_area five_level_fold" >
+                        <span class='la la-lg la-square-o'></span>
+                        <p>Ребенок ребенка и тд</p>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+
+
           <div (click)="goUrl(1)"
           routerLinkActive="active_typeMess"
           class='type_message'
@@ -211,7 +269,16 @@
           >
             <p>Спам</p>
           </div>
-    </div>
+        </div>
+        <div class='type_message'>
+        <div class="link_area">
+          <p>Создать папку</p>
+          <button class='plus'>
+          <span class='la la-lg la-plus'></span>
+        </button>
+        </div>
+      </div>
+
         </div>
 
         

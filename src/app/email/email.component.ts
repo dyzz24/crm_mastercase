@@ -54,7 +54,6 @@ export class EmailComponent implements OnInit, DoCheck {
           this.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2;
       this.socketServ.lettersSocketConnect();
-      console.log(this.emailServ.idPostForHTTP);
     });
         }
       }, 1000);
