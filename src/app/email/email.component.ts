@@ -99,6 +99,8 @@ export class EmailComponent implements OnInit, DoCheck {
 
 
 
+
+
   inboxMenuShow() {
     this.inboxMenuStatus = ! this.inboxMenuStatus;
   }
