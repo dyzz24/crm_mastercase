@@ -19,6 +19,7 @@
     flex-shrink: 0;
     border-right: 1px solid $border;
     background: #f7fbfe;
+    box-sizing: border-box;
 }
 
 
@@ -40,35 +41,87 @@
 
 .header {
     width: 100%;
-    height: 45px;
+    height: 40px;
     align-items: center; 
     // border-bottom: 1px solid $border;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 0px 0 15px;
+    padding: 0 4px 0 20px;
+    transition: .4s;
+    &:hover .email-menu{
+        width: 30px;
+        overflow: visible;
+    }
+    &:hover {
+        background: #d9e6f7;
+    }
 }
 a,p{
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 20px;
     color:$text-color;
+}
+.head_titl {
+    color: #002d48;
+}
+
+.header_leftGroup {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.email-menu {
+    overflow: hidden;
+    width: 0;
+    transition: .4s;
+    margin-left: 4px;
 }
 
 
 .emails__list {
-    height: 45px;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0 25px 0 15px;
-    border: none;
-    // border-bottom:1px solid $border;
-    background: #d9e6f7;
-    cursor: pointer;
+    padding: 0 4px 0 20px;
+    border-bottom: 1px solid #d9e6f7;
+    border-top: 1px solid #d9e6f7;
     position: relative;
     transition: .4s;
     box-sizing: border-box;
+    outline: none;
+
+    &:hover {
+        background: #d9e6f7;
+    } 
+}
+
+.left_activ_strip {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 100%;
+        width: 4px;
+        background: #074b86;
+    }
+}
+
+.avatar {
+    @extend %avatar;
+    margin-right: 10px;
+    border: 2px solid #3eb5f1;
+    box-sizing: border-box;
+
+}
+.accaunt_info {
+    display: flex;
+    align-items: center;
 }
 
 .hiddenMenu {
@@ -99,22 +152,8 @@ a,p{
     height: auto;
 }
 
-.la-butt-down {
-    font-size: 24px;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top:50%;
-    transform: translateY(-50%);
-    right:5px;
-    cursor: pointer;
-}
-.email-menu {
-    font-size: 24px;
-    padding: 5px;
-    box-sizing: border-box;
-    cursor: pointer;  
-}
+
+
 .hideInboxMenu {
     @include hideMenu(180px,auto,auto,-100%, rgba(0, 0, 0, 1)); 
     top:100%;
@@ -258,9 +297,7 @@ a,p{
 }
 
 
-.activeInbox {
-    background: rgb(117, 117, 117);
-}
+
 
 .activeTypeMess {
 background: #dddddd;

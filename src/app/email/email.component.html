@@ -5,7 +5,8 @@
         <!-- <div toastContainer>
         </div> -->
       <div class="header">
-        <p>Почта</p>
+        <p class='head_titl'>Почта</p>
+        <div class="header_leftGroup">
         <button class='email-menu' (click)='inboxMenuShow()'>
           <span class='la la-bars'></span>
           <p class="tooltip">Меню</p>
@@ -16,6 +17,12 @@
             <button (click)='settingOpen()'>Настройки</button>
           </div>
         </button>
+        <button class='email-menu' >
+            <span class='la la-pencil-square-o'></span>
+            <p class="tooltip">Что-то</p>
+            </button>
+          </div>
+
         
     
         <!--Настройки -->
@@ -139,18 +146,23 @@
       </div>
       <div class="emails" *ngFor='let email of emailItems let i = index'>
     
-        <a class="emails__list" 
-        (click)='showHiddenBlock(i)'
-
-        
-        
-        >
+        <div class="emails__list" 
+        routerLink="./{{this.emailItems[i].address}}/0"
+        routerLinkActive="left_activ_strip"
+        (click)='showHiddenBlock(i)'>
+        <div class="accaunt_info">
+        <div class="avatar" >
+            <p>{{email.address.charAt(0)}}</p>
+        </div>
           <p>{{email.address}}</p>
-          <span class='la la-lg la-angle-double-down' *ngIf="visibl[i] === false || visibl[i] === undefined"
+        </div>
+        <button>
+          <span class='la la-lg la-angle-down' *ngIf="visibl[i] === false || visibl[i] === undefined"
           > </span>
-          <span class='la la-lg la-angle-double-up' *ngIf="visibl[i] === true"
+          <span class='la la-lg la-angle-up' *ngIf="visibl[i] === true"
           > </span>
-      </a>
+        </button>
+      </div>
         <div class="hiddenMenu" [class.visibl]='visibl[i]'
         routerLinkActive="visibl"
         >

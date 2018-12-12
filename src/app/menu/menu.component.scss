@@ -67,7 +67,6 @@ nav {
     width: 0px;
     height: 100%;
     background: $nav-bg;
-    border-right: 1px solid #4b4d4f;
     transition: .5s;
     display: flex;
     flex-direction: column;
@@ -104,10 +103,10 @@ nav {
                 z-index: 14;
         }
         &:hover {
-            background: #0b0d0f;
+            background: #074b86;
         }
         &:hover::before {
-            background: #0b0d0f;
+            background: #074b86;
         }
     }
 }
@@ -124,14 +123,27 @@ nav {
 }
 
 .active {
-    background: #0b0d0f;
+    background: #074b86;
+    
     &::before {
-        background: #0b0d0f;
+        background: #074b86;
+        
     }
+    span {
+        color:#fcffff;
+    }
+
+    
 }
 
 .la-lg {
     color:white;
     z-index: 1;
 }
+
+.la:not(.active) {
+    color: #6b80a0;
+}
+
+
 

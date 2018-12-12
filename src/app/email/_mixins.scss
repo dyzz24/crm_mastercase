@@ -259,7 +259,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 4px;
     cursor: pointer;
     transition: .2s;
     background: none;
@@ -277,7 +277,7 @@ span {
             color: $text-color;
         }
 &:hover {
-            background: rgba(75, 121, 187, 0.3);
+            background: #a2b3cc;
         }
 }
 
