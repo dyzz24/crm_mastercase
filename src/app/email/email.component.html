@@ -146,8 +146,7 @@
       </div>
       <div class="emails" *ngFor='let email of emailItems let i = index'>
     
-        <div class="emails__list" 
-        routerLink="./{{this.emailItems[i].address}}/0"
+        <div class="emails__list"
         routerLinkActive="left_activ_strip"
         (click)='showHiddenBlock(i)'>
         <div class="accaunt_info">
@@ -166,45 +165,53 @@
         <div class="hiddenMenu" [class.visibl]='visibl[i]'
         routerLinkActive="visibl"
         >
-          <a (click)="goUrl(0)" 
+          <div (click)="goUrl(0)" 
+          class='type_message'
+          routerLinkActive="active_typeMess"
+          >
+          <div class="link_area"
           routerLink="./{{this.emailItems[i].address}}/0"
-          routerLinkActive="activeTypeMess"
           >
-            Входящие
-             <span class='email__num'>{{email.count}}</span>
-          </a>
-          <p class='presentation_folder_test'>Папка 1</p>
-          <ul>
-          <li class='presentation_folder_test__child'>Важные
-            <ul>
-                <li class='presentation_folder_test__child'>Задачи</li>
-                <li class='presentation_folder_test__child'>Выполненные</li>
-            </ul>
-          </li>
-          <li class='presentation_folder_test__child'>По работе</li>
-          <li class='presentation_folder_test__child'>Несортированные</li>
-        </ul>
-          <a (click)="goUrl(1)"
+                <p>Входящие</p>
+                <p class='email__num'>{{email.count}}</p>
+          </div>
+          <button>
+              <span class='la la-lg la-angle-down'></span>
+          </button>
+          </div>
+
+          <div (click)="goUrl(1)"
+          routerLinkActive="active_typeMess"
+          class='type_message'
+          >
+          <div class="link_area"
           routerLink="./{{this.emailItems[i].address}}/1"
-          routerLinkActive="activeTypeMess"
           >
-            Исходящие
-            <span class='email__num'></span>
-          </a>
-          <a (click)="goUrl(2)" 
+            <p>Исходящие</p>
+          </div>
+        </div>
+          <div (click)="goUrl(2)" 
+          routerLinkActive="active_typeMess"
+          class='type_message'
+          >
+          <div class="link_area"
           routerLink="./{{this.emailItems[i].address}}/2"
-          routerLinkActive="activeTypeMess"
           >
-            Удаленные
-            <span class='email__num'></span>
-          </a>
-          <a (click)="goUrl(4)"
+            <p>Удаленные</p>
+          </div>
+
+      </div>
+          <div (click)="goUrl(4)"
+          routerLinkActive="active_typeMess"
+          class='type_message'
+          >
+
+          <div class="link_area"
           routerLink="./{{this.emailItems[i].address}}/4"
-          routerLinkActive="activeTypeMess"
           >
-            Спам
-            <span class='email__num'></span>
-          </a>
+            <p>Спам</p>
+          </div>
+    </div>
         </div>
 
         
