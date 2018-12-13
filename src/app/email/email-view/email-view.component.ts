@@ -81,7 +81,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.subscription = this.activatedRoute.params.subscribe(data => {
 
           this.emailServ.currentId = +data.id;
-          
+
           this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
           this.selected_letter_part2 = this.emailServ.lettersList[this.emailServ.currentId];
           // console.log(this.selected_letter_part2);
@@ -93,7 +93,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.emailServ.haveResponse = true;
         this.selectedLetter = dataMails;
-        console.log(this.selectedLetter);
+        // console.log(this.selected_letter_part2);
         this.emailServ.dataLetters = this.emailServ.lettersAmount;
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
@@ -157,7 +157,7 @@ if (this.subscription) {
     this.checkerLength_addressess();
 
     this.emailServ.currentId = this.emailServ.currentId + n;
-    console.log(this.emailServ.currentId);
+
 if (this.emailServ.currentId === this.emailServ.lettersList.length) {
   this.emailServ.currentId = 0;
 }
@@ -166,15 +166,7 @@ if (this.emailServ.currentId < 0) {
   this.emailServ.currentId = this.emailServ.lettersList.length - 1;
 }
 
-for (let i = 0; i < this.emailServ.activeLett.length; i++) {
-this.emailServ.activeLett[i] = false;
-}
-
-this.emailServ.activeLett[this.emailServ.index] = true;
-this.selectedLetter = this.emailServ.lettersList[this.emailServ.index];  // текущее письмо для отображения!!!!
-this.emailServ.currentId = this.emailServ.index;
-this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activatedRoute });
-
+this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activatedRoute });
   }
 
   hideMenuShow() {

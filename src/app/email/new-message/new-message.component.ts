@@ -197,7 +197,7 @@ add_drag_input_data(objForData) {
   this.files_for_view = temp_arr; // приравниваю к временному массиву для отображения в HTML
 });
 
- 
+
   for (let i = 0; i < objForData.length; i++) {
        this.formData.append('files', objForData[i]);
 
