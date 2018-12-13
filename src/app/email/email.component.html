@@ -188,6 +188,7 @@
           [class.visibl]="visibl[i]"
           routerLinkActive="visibl"
         >
+        <div class="folders__child">
           <div
             (click)="goUrl(0)"
             class="type_message"
@@ -200,69 +201,91 @@
               <p>Входящие</p>
               <p class="email__num">{{ email.count }}</p>
             </div>
-            <button><span class="la la-lg la-angle-down"></span></button>
+            <button (click)='open_hidden_folders($event)'><span class="la la-lg la-angle-down"></span></button>
           </div>
 
-          <div class="hidden__folders first_level" *ngFor="let folder of this.folders">
-            <div (click)="goUrl(0)" class="type_message">
+          <div class="hidden_subfolder" 
+          routerLinkActive="visibl_hidden_folders"
+          >
+              <div class="folders__child" *ngFor="let folder of this.folders">
+            <div (click)="goUrl(0)" class="type_message"
+            routerLinkActive="active_typeMess"
+            >
               <div class="link_area one_level_fold"
               routerLink="./{{this.emailItems[i].address}}/{{folder.id}}"
-              routerLinkActive="active_typeMess"
+              
               >
                 <span class="la la-lg la-square-o"></span>
                 <p>{{folder.name}}</p>
               </div>
-              <button><span class="la la-lg la-angle-down"></span></button>
+              <button (click)='open_hidden_folders($event)'><span class="la la-lg la-angle-down"></span></button>
             </div>
-            <div class="hidden_subfolder">
+            <div class="hidden_subfolder"
+            routerLinkActive="visibl_hidden_folders"
+            
+            >
        
               <div class="folders__child" *ngFor="let folder_1level of folder.child">
-                <div (click)="goUrl(0)" class="type_message">
+                <div (click)="goUrl(0)" class="type_message"
+                routerLinkActive="active_typeMess"
+                >
                   <div class="link_area two_level_fold"
                   routerLink="./{{this.emailItems[i].address}}/{{folder_1level.id}}"
-                  routerLinkActive="active_typeMess"
+                  
                   >
                     <span class="la la-lg la-square-o"></span>
                     <p>{{folder_1level.name}}</p>
                   </div>
-                  <button><span class="la la-lg la-angle-down"></span></button>
+                  <button (click)='open_hidden_folders($event)'><span class="la la-lg la-angle-down"></span></button>
                 </div>
 
-                <div class="hidden_subfolder">
+                <div class="hidden_subfolder"
+                routerLinkActive="visibl_hidden_folders"
+                >
                   <div class="folders__child" *ngFor="let folder_2level of folder_1level.child">
-                    <div (click)="goUrl(0)" class="type_message">
+                    <div (click)="goUrl(0)" class="type_message"
+                    routerLinkActive="active_typeMess"
+                    >
                       <div class="link_area three_level_fold"
                       routerLink="./{{this.emailItems[i].address}}/{{folder_2level.id}}"
-                      routerLinkActive="active_typeMess"
+                      
                       >
                         <span class="la la-lg la-square-o"></span>
                         
                         <p>{{folder_2level.name}}</p>
                       </div>
-                      <button>
+                      <button (click)='open_hidden_folders($event)'>
                         <span class="la la-lg la-angle-down"></span>
                       </button>
                     </div>
-                    <div class="hidden_subfolder">
+                    <div class="hidden_subfolder"
+                    routerLinkActive="visibl_hidden_folders"
+                    >
                       <div class="folders__child" *ngFor="let folder_3level of folder_2level.child">
-                        <div (click)="goUrl(0)" class="type_message">
+                        <div (click)="goUrl(0)" class="type_message"
+                        routerLinkActive="active_typeMess"
+                        >
                           <div class="link_area four_level_fold"
                           routerLink="./{{this.emailItems[i].address}}/{{folder_3level.id}}"
-                          routerLinkActive="active_typeMess"
+                          
                           >
                             <span class="la la-lg la-square-o"></span>
                             <p>{{folder_3level.name}}</p>
                           </div>
-                          <button>
+                          <button (click)='open_hidden_folders($event)'>
                             <span class="la la-lg la-angle-down"></span>
                           </button>
                         </div>
-                        <div class="hidden_subfolder">
+                        <div class="hidden_subfolder"
+                        routerLinkActive="visibl_hidden_folders"
+                        >
                           <div class="folders__child" *ngFor="let folder_4level of folder_3level.child">
-                            <div (click)="goUrl(0)" class="type_message">
+                            <div (click)="goUrl(0)" class="type_message"
+                            routerLinkActive="active_typeMess"
+                            >
                               <div class="link_area five_level_fold"
                               routerLink="./{{this.emailItems[i].address}}/{{folder_4level.id}}"
-                              routerLinkActive="active_typeMess"
+                              
                               >
                                 <span class="la la-lg la-square-o"></span>
                                 <p>{{folder_4level.name}}</p>
@@ -277,7 +300,8 @@
               </div>
             </div>
           </div>
-
+          </div>
+        </div>
           <div
             (click)="goUrl(1)"
             routerLinkActive="active_typeMess"

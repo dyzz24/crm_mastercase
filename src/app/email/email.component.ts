@@ -38,11 +38,7 @@ export class EmailComponent implements OnInit, DoCheck {
     [{name: '3level', id: '14', child:
     [{name: '4level', id: '7', child: [{name: 'test21', id: '8'},
     {name: 'test22', id: '33'}]}]}]}, {name: '2level-2', id: '22', child: [{name: '3level-2', id: '38'}]}]}];
-
-
-
-
-  adress;
+adress;
   constructor(
     public element: ElementRef,
     private _rout: Router,
@@ -70,6 +66,14 @@ export class EmailComponent implements OnInit, DoCheck {
   }
   ngDoCheck() {
     // console.log(this.emailServ.idPostForHTTP);
+  }
+
+  open_hidden_folders(e) {
+      const parent = e.target.closest('.folders__child');
+      const hiddenFolders = parent.querySelector('.hidden_subfolder');
+      hiddenFolders.classList.toggle('visibl_hidden_folders');
+      console.log(hiddenFolders);
+
   }
 
 

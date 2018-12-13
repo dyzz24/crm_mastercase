@@ -260,10 +260,7 @@ a,p{
         box-sizing: border-box;
 
 
-        &.first_level {
-            padding-right: 0px;
-        }
-    
+       
 
     
 }
@@ -272,16 +269,22 @@ a,p{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
 
 
 
 
 }
 .hidden_subfolder {
-    width: 100%;    
+    width: 100%; 
+    display: none;
+    
 }
 
-
+.active__folder {
+    background: #77efff;
+}
 
 .hiddenMenu {
     width: 100%;
@@ -422,7 +425,11 @@ a,p{
 .visibl {
     display: flex;
     animation: createInboxAnim .4s;
-    
+}
+
+.visibl_hidden_folders {
+    display: block;
+    animation: createInboxAnim .4s;
 }
 
 
