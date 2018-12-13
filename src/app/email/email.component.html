@@ -207,7 +207,7 @@
           <div class="hidden_subfolder" 
           routerLinkActive="visibl_hidden_folders"
           >
-              <div class="folders__child" *ngFor="let folder of this.folders">
+              <div class="folders__child" *ngFor="let folder of this.user_folders">
             <div (click)="goUrl(1)" class="type_message"
             routerLinkActive="active_typeMess"
             >
@@ -216,10 +216,10 @@
               
               >
                 <span class="la la-lg la-square-o"></span>
-                <p>{{folder.name}}</p>
+                <p>{{folder.title}}</p>
               </div>
               <button (click)='open_hidden_folders($event)'
-              *ngIf="folder.child"
+              *ngIf="folder.childs"
 
               ><span class="la la-lg la-angle-down"
  
@@ -230,7 +230,7 @@
             
             >
        
-              <div class="folders__child" *ngFor="let folder_1level of folder.child">
+              <div class="folders__child" *ngFor="let folder_1level of folder.childs">
                 <div (click)="goUrl(0)" class="type_message"
                 routerLinkActive="active_typeMess"
                 >
@@ -239,10 +239,10 @@
 
                   >
                     <span class="la la-lg la-square-o"></span>
-                    <p>{{folder_1level.name}}</p>
+                    <p>{{folder_1level.title}}</p>
                   </div>
                   <button (click)='open_hidden_folders($event)'
-                  *ngIf="folder_1level.child"
+                  *ngIf="folder_1level.childs"
                   ><span class="la la-lg la-angle-down"
 
                   ></span></button>
@@ -251,7 +251,7 @@
                 <div class="hidden_subfolder"
                 routerLinkActive="visibl_hidden_folders"
                 >
-                  <div class="folders__child" *ngFor="let folder_2level of folder_1level.child">
+                  <div class="folders__child" *ngFor="let folder_2level of folder_1level.childs">
                     <div (click)="goUrl(0)" class="type_message"
                     routerLinkActive="active_typeMess"
                     >
@@ -261,10 +261,10 @@
                       >
                         <span class="la la-lg la-square-o"></span>
                         
-                        <p>{{folder_2level.name}}</p>
+                        <p>{{folder_2level.title}}</p>
                       </div>
                       <button (click)='open_hidden_folders($event)'
-                      *ngIf="folder_2level.child"
+                      *ngIf="folder_2level.childs"
                       >
                         <span class="la la-lg la-angle-down"></span>
                       </button>
@@ -272,7 +272,7 @@
                     <div class="hidden_subfolder"
                     routerLinkActive="visibl_hidden_folders"
                     >
-                      <div class="folders__child" *ngFor="let folder_3level of folder_2level.child">
+                      <div class="folders__child" *ngFor="let folder_3level of folder_2level.childs">
                         <div (click)="goUrl(0)" class="type_message"
                         routerLinkActive="active_typeMess"
                         >
@@ -281,10 +281,10 @@
                           
                           >
                             <span class="la la-lg la-square-o"></span>
-                            <p>{{folder_3level.name}}</p>
+                            <p>{{folder_3level.title}}</p>
                           </div>
                           <button (click)='open_hidden_folders($event)'
-                          *ngIf="folder_3level.child"
+                          *ngIf="folder_3level.childs"
                           >
                             <span class="la la-lg la-angle-down"></span>
                           </button>
@@ -292,7 +292,7 @@
                         <div class="hidden_subfolder"
                         routerLinkActive="visibl_hidden_folders"
                         >
-                          <div class="folders__child" *ngFor="let folder_4level of folder_3level.child">
+                          <div class="folders__child" *ngFor="let folder_4level of folder_3level.childs">
                             <div (click)="goUrl(0)" class="type_message"
                             routerLinkActive="active_typeMess"
                             >
@@ -301,7 +301,7 @@
                               
                               >
                                 <span class="la la-lg la-square-o"></span>
-                                <p>{{folder_4level.name}}</p>
+                                <p>{{folder_4level.title}}</p>
                               </div>
                             </div>
                           </div>

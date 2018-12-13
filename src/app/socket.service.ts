@@ -19,7 +19,7 @@ export class SocketService {
     if (this.socketConnectedFlag === true) { // если уже был коннект, выхожу
       return;
     } else {
-    this.socket = io('ws://10.0.1.33:3000', {
+    this.socket = io('ws://10.0.1.33:3001', {
       query: {
           // tslint:disable-next-line:max-line-length
           token: this.authorizationServ.accessToken

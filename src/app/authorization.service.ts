@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthorizationService {
   public accessToken;
-  public ip = 'http://10.0.1.10:3000';
+  public ip = 'http://10.0.1.33:3001';
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem('authorizationToken') === null) {

@@ -56,15 +56,17 @@ adress;
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-          this.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) => {
-      this.emailItems = data2;
+          this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
+      this.emailItems = data2.boxes;
       this.socketServ.lettersSocketConnect();
     });
 
     this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((dataFolders) => {
 
      this.user_folders = dataFolders.boxes[0].boxes;
-     console.log(this.user_folders);
+     console.log(dataFolders.boxes);
+
+
 
     });
         }
