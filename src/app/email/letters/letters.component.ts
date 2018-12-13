@@ -548,6 +548,16 @@ delete_work(id, e, index) {
 
 new_messages_dblClick(index) {
   const letter = this.emailServ.lettersList[index];
+  // const id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
+  // this.httpPost(
+  //   `${this.emailServ.ip}/mail/mail`,
+  //   // tslint:disable-next-line:max-line-length
+  //   {address: this.emailServ.idPostForHTTP, mailId: id_for_request}).subscribe((dataMails) => {
+  //     const letter2part = dataMails;
+  //     const copytwo = Object.assign(dataMails, letter);
+  //     console.log(copytwo);
+  //   }) ;
+  // console.log(letter);
   this.emailServ.newMessage_DblClick(letter.from_address, letter.to_addresses, letter.subject, letter.text, letter.html);
   this.rout.navigate(['./create'], { relativeTo: this.activatedRoute });
   // this.emailServ.new_clear_message();

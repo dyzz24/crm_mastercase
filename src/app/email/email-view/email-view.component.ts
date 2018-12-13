@@ -84,13 +84,15 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
           this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
           this.selected_letter_part2 = this.emailServ.lettersList[this.emailServ.currentId];
+
           // console.log(this.selected_letter_part2);
 
             this.httpPost(
       `${this.emailServ.ip}/mail/mail`,
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP, mailId: this.id_for_request}).subscribe((dataMails) => {
-
+        // const test = this.selected_letter_part2.push(dataMails);
+        console.log(this.selected_letter_part2);
         this.emailServ.haveResponse = true;
         this.selectedLetter = dataMails;
         // console.log(this.selected_letter_part2);
