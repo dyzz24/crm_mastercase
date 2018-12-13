@@ -33,10 +33,11 @@ export class EmailComponent implements OnInit, DoCheck {
   sub;
 
   folders = [
-    {name: '1level', child:
-    [{name: '2level', child:
-    [{name: '3level', child:
-    [{name: '4level', child: [{name: 'test21'}, {name: 'test22'}]}]}]}, {name: '2level-2', child: [{name: '3level-2'}]}]}];
+    {name: '1level', id: '12', child:
+    [{name: '2level', id: '13', child:
+    [{name: '3level', id: '14', child:
+    [{name: '4level', id: '7', child: [{name: 'test21', id: '8'},
+    {name: 'test22', id: '33'}]}]}]}, {name: '2level-2', id: '22', child: [{name: '3level-2', id: '38'}]}]}];
 
 
 

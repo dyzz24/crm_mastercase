@@ -205,7 +205,10 @@
 
           <div class="hidden__folders first_level" *ngFor="let folder of this.folders">
             <div (click)="goUrl(0)" class="type_message">
-              <div class="link_area one_level_fold">
+              <div class="link_area one_level_fold"
+              routerLink="./{{this.emailItems[i].address}}/{{folder.id}}"
+              routerLinkActive="active_typeMess"
+              >
                 <span class="la la-lg la-square-o"></span>
                 <p>{{folder.name}}</p>
               </div>
@@ -215,7 +218,10 @@
        
               <div class="folders__child" *ngFor="let folder_1level of folder.child">
                 <div (click)="goUrl(0)" class="type_message">
-                  <div class="link_area two_level_fold">
+                  <div class="link_area two_level_fold"
+                  routerLink="./{{this.emailItems[i].address}}/{{folder_1level.id}}"
+                  routerLinkActive="active_typeMess"
+                  >
                     <span class="la la-lg la-square-o"></span>
                     <p>{{folder_1level.name}}</p>
                   </div>
@@ -225,7 +231,10 @@
                 <div class="hidden_subfolder">
                   <div class="folders__child" *ngFor="let folder_2level of folder_1level.child">
                     <div (click)="goUrl(0)" class="type_message">
-                      <div class="link_area three_level_fold">
+                      <div class="link_area three_level_fold"
+                      routerLink="./{{this.emailItems[i].address}}/{{folder_2level.id}}"
+                      routerLinkActive="active_typeMess"
+                      >
                         <span class="la la-lg la-square-o"></span>
                         
                         <p>{{folder_2level.name}}</p>
@@ -237,7 +246,10 @@
                     <div class="hidden_subfolder">
                       <div class="folders__child" *ngFor="let folder_3level of folder_2level.child">
                         <div (click)="goUrl(0)" class="type_message">
-                          <div class="link_area four_level_fold">
+                          <div class="link_area four_level_fold"
+                          routerLink="./{{this.emailItems[i].address}}/{{folder_3level.id}}"
+                          routerLinkActive="active_typeMess"
+                          >
                             <span class="la la-lg la-square-o"></span>
                             <p>{{folder_3level.name}}</p>
                           </div>
@@ -248,7 +260,10 @@
                         <div class="hidden_subfolder">
                           <div class="folders__child" *ngFor="let folder_4level of folder_3level.child">
                             <div (click)="goUrl(0)" class="type_message">
-                              <div class="link_area five_level_fold">
+                              <div class="link_area five_level_fold"
+                              routerLink="./{{this.emailItems[i].address}}/{{folder_4level.id}}"
+                              routerLinkActive="active_typeMess"
+                              >
                                 <span class="la la-lg la-square-o"></span>
                                 <p>{{folder_4level.name}}</p>
                               </div>
