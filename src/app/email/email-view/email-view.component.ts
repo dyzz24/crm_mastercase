@@ -181,18 +181,14 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
           address: this.emailServ.idPostForHTTP
     }).subscribe();
     setTimeout(() => {
-      for (let i = 0; i < this.emailServ.lettersList.length; i++) {
-        if (this.emailServ.lettersList[i].mail_id === id) {
-          this.selectedLetter = this.emailServ.lettersList[i + 1];
-          this.emailServ.index = i;
-        }
-    }
+
 
     this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
       if (val.mail_id !== id) {
         return val;
       }
       });
+
       const navigatePath = this._rout.url.replace(/\/view\/.*/, ''); // стартовый урл
       if (this.emailServ.currentId <= 0) { // если урл равен или меньше нуля
         const new_url = navigatePath + '/view/' + 0; // ставлю в ноль
