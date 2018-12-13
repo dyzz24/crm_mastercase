@@ -72,7 +72,6 @@ adress;
       const parent = e.target.closest('.folders__child');
       const hiddenFolders = parent.querySelector('.hidden_subfolder');
       hiddenFolders.classList.toggle('visibl_hidden_folders');
-      console.log(hiddenFolders);
 
   }
 

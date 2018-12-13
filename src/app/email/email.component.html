@@ -218,7 +218,12 @@
                 <span class="la la-lg la-square-o"></span>
                 <p>{{folder.name}}</p>
               </div>
-              <button (click)='open_hidden_folders($event)'><span class="la la-lg la-angle-down"></span></button>
+              <button (click)='open_hidden_folders($event)'
+              *ngIf="folder.child"
+
+              ><span class="la la-lg la-angle-down"
+ 
+              ></span></button>
             </div>
             <div class="hidden_subfolder"
             routerLinkActive="visibl_hidden_folders"
@@ -231,12 +236,16 @@
                 >
                   <div class="link_area two_level_fold"
                   routerLink="./{{this.emailItems[i].address}}/{{folder_1level.id}}"
-                  
+
                   >
                     <span class="la la-lg la-square-o"></span>
                     <p>{{folder_1level.name}}</p>
                   </div>
-                  <button (click)='open_hidden_folders($event)'><span class="la la-lg la-angle-down"></span></button>
+                  <button (click)='open_hidden_folders($event)'
+                  *ngIf="folder_1level.child"
+                  ><span class="la la-lg la-angle-down"
+
+                  ></span></button>
                 </div>
 
                 <div class="hidden_subfolder"
@@ -254,7 +263,9 @@
                         
                         <p>{{folder_2level.name}}</p>
                       </div>
-                      <button (click)='open_hidden_folders($event)'>
+                      <button (click)='open_hidden_folders($event)'
+                      *ngIf="folder_2level.child"
+                      >
                         <span class="la la-lg la-angle-down"></span>
                       </button>
                     </div>
@@ -272,7 +283,9 @@
                             <span class="la la-lg la-square-o"></span>
                             <p>{{folder_3level.name}}</p>
                           </div>
-                          <button (click)='open_hidden_folders($event)'>
+                          <button (click)='open_hidden_folders($event)'
+                          *ngIf="folder_3level.child"
+                          >
                             <span class="la la-lg la-angle-down"></span>
                           </button>
                         </div>
