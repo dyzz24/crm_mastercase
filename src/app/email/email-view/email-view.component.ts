@@ -9,7 +9,6 @@ import { PreserverComponent } from '../../preserver/preserver.component';
 
 export interface SelectedLetter {
   id: any;
-  subject?: string;
   date?: number;
   work_user_id?: string;
   html?: string;
@@ -20,6 +19,7 @@ export interface SelectedLetter {
     attachments: any;
     cc: any;
     bcc: any;
+    subject?: string;
   };
 }
 
@@ -53,7 +53,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   preload_to_wait_status = true;
   attachments_array;
   id_for_request;
-  selected_letter_part2;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -83,32 +82,28 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
           this.emailServ.currentId = +data.id;
 
           this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
-          this.selected_letter_part2 = this.emailServ.lettersList[this.emailServ.currentId];
+          const part_one_data = this.emailServ.lettersList[this.emailServ.currentId];
 
-          // console.log(this.selected_letter_part2);
+
 
             this.httpPost(
       `${this.emailServ.ip}/mail/mail`,
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP, mailId: this.id_for_request}).subscribe((dataMails) => {
         // const test = this.selected_letter_part2.push(dataMails);
-        console.log(this.selected_letter_part2);
         this.emailServ.haveResponse = true;
-        this.selectedLetter = dataMails;
+
+        this.selectedLetter = Object.assign(part_one_data, dataMails);
+console.log(this.selectedLetter);
         // console.log(this.selected_letter_part2);
         this.emailServ.dataLetters = this.emailServ.lettersAmount;
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
         // console.log(this.selectedLetter);
 
-
         });
-
-
-          // this.selectedLetter = this.emailServ.lettersList[data.id];
           this.emailServ.activeLett[data.id] = true;
         });
-        // console.log(this.emailServ.lettersList);
       }
     }, 1000);
   }

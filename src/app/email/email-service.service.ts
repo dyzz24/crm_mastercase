@@ -65,7 +65,7 @@ export class EmailServiceService {
   cut_addressess_array;
 
   to_answer;
-  to_all_answer;
+  to_all_answer = [];
   to_subject;
   to_forward;
 sub;
@@ -113,9 +113,10 @@ sub;
   }
 
   newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?) {
+    
     this.to_answer = '';
     this.to_subject = '';
-    this.to_all_answer = '';
+    this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
@@ -128,23 +129,27 @@ sub;
       return;
     } else {
     this.to_all_answer = param_to_all_answer.filter(val => {
+
       if (val !== this.idPostForHTTP && val !== param_to_answer) {
-        return val;
+
+        this.to_all_answer.push(val.address);
       }
+      console.log(this.to_all_answer);
+
     });
   }
   }
   new_clear_message() {
     this.to_answer = '';
     this.to_subject = '';
-    this.to_all_answer = '';
+    this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
   }
   new_forward_message(param_text, param_html) {
     this.to_answer = '';
     this.to_subject = '';
-    this.to_all_answer = '';
+    this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
     if (param_html === null) {
@@ -156,7 +161,7 @@ sub;
   newMessage_DblClick(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
     this.to_answer = '';
     this.to_subject = '';
-    this.to_all_answer = '';
+    this.to_all_answer = [];
     this.to_forward = '';
     // this.rout.navigate([this.idPostForHTTP + '/create']);
     // this.fullPath = this.idPostForHTTP + '/create';

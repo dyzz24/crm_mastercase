@@ -25,7 +25,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 private from;
 private to = [this.emailServ.to_answer]; // array for send
-private copy = this.emailServ.to_all_answer; // array for send
+private copy; // array for send
 private hidden_copy = []; // array for send
 private subject = this.emailServ.to_subject; // тема для отправки
 
@@ -38,9 +38,11 @@ private formData = new FormData(); // дата для отправки на се
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
-    if (typeof(this.copy) === 'string') { // если строка прилетит - сделать массивом
-      this.copy = [];
-    }
+    this.copy = this.emailServ.to_all_answer;
+    // if (typeof(this.copy) === 'string') { // если строка прилетит - сделать массивом
+    //   this.copy = [];
+    // }
+    console.log(this.copy);
   }
   ngDoCheck() {
     // console.log(this.messages);
