@@ -203,61 +203,54 @@
             <button><span class="la la-lg la-angle-down"></span></button>
           </div>
 
-          <div class="hidden__folders first_level">
+          <div class="hidden__folders first_level" *ngFor="let folder of this.folders">
             <div (click)="goUrl(0)" class="type_message">
               <div class="link_area one_level_fold">
                 <span class="la la-lg la-square-o"></span>
-                <p>Папка мать</p>
+                <p>{{folder.name}}</p>
               </div>
               <button><span class="la la-lg la-angle-down"></span></button>
             </div>
             <div class="hidden_subfolder">
-              <div class="folders__child">
+       
+              <div class="folders__child" *ngFor="let folder_1level of folder.child">
                 <div (click)="goUrl(0)" class="type_message">
                   <div class="link_area two_level_fold">
                     <span class="la la-lg la-square-o"></span>
-                    <p>Папка ребенок 21</p>
-                  </div>
-                  <button><span class="la la-lg la-angle-down"></span></button>
-                </div>
-              </div>
-              <div class="folders__child">
-                <div (click)="goUrl(0)" class="type_message">
-                  <div class="link_area two_level_fold">
-                    <span class="la la-lg la-square-o"></span>
-                    <p>Папка ребенок</p>
+                    <p>{{folder_1level.name}}</p>
                   </div>
                   <button><span class="la la-lg la-angle-down"></span></button>
                 </div>
 
                 <div class="hidden_subfolder">
-                  <div class="folders__child">
+                  <div class="folders__child" *ngFor="let folder_2level of folder_1level.child">
                     <div (click)="goUrl(0)" class="type_message">
                       <div class="link_area three_level_fold">
                         <span class="la la-lg la-square-o"></span>
-                        <p>Cын ребенка</p>
+                        
+                        <p>{{folder_2level.name}}</p>
                       </div>
                       <button>
                         <span class="la la-lg la-angle-down"></span>
                       </button>
                     </div>
                     <div class="hidden_subfolder">
-                      <div class="folders__child">
+                      <div class="folders__child" *ngFor="let folder_3level of folder_2level.child">
                         <div (click)="goUrl(0)" class="type_message">
                           <div class="link_area four_level_fold">
                             <span class="la la-lg la-square-o"></span>
-                            <p>Дочь</p>
+                            <p>{{folder_3level.name}}</p>
                           </div>
                           <button>
                             <span class="la la-lg la-angle-down"></span>
                           </button>
                         </div>
                         <div class="hidden_subfolder">
-                          <div class="folders__child">
+                          <div class="folders__child" *ngFor="let folder_4level of folder_3level.child">
                             <div (click)="goUrl(0)" class="type_message">
                               <div class="link_area five_level_fold">
                                 <span class="la la-lg la-square-o"></span>
-                                <p>Ребенок ребенка и тд</p>
+                                <p>{{folder_4level.name}}</p>
                               </div>
                             </div>
                           </div>
