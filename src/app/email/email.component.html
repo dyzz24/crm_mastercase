@@ -206,8 +206,9 @@
 
           <div class="hidden_subfolder" 
           routerLinkActive="visibl_hidden_folders"
+
           >
-              <div class="folders__child" *ngFor="let folder of this.user_folders">
+              <div class="folders__child" *ngFor="let folder of this?.user_folders[i].boxes">
             <div (click)="goUrl(1)" class="type_message"
             routerLinkActive="active_typeMess"
             >

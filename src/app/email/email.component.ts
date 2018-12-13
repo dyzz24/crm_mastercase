@@ -63,10 +63,7 @@ adress;
 
     this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((dataFolders) => {
 
-     this.user_folders = dataFolders.boxes[0].boxes;
-     console.log(dataFolders.boxes);
-
-
+     this.user_folders = dataFolders.boxes;
 
     });
         }
