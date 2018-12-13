@@ -33,7 +33,7 @@ private messages;
 private messages_sending = false;
 private files; // файлы с инпута
 private files_for_view; // имена файлов для HTML
-private formData; // дата для отправки на серв файлов
+private formData = new FormData(); // дата для отправки на серв файлов
 
 
   ngOnInit() {
@@ -121,6 +121,24 @@ private formData; // дата для отправки на серв файлов
   //     // tslint:disable-next-line:max-line-length
   //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
   // });
+  this.formData.append('json', JSON.stringify({
+    from: [
+      {address: this.emailServ.idPostForHTTP}
+    ],
+    to: [
+      {
+        address: this.to
+      }
+    ],
+    subject: this.subject,
+    html: this.messages
+  }));
+
+  this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
+
+});
+
+
 this.messages_sending = true;
 setTimeout(() => {
   const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
@@ -179,9 +197,10 @@ add_drag_input_data(objForData) {
   this.files_for_view = temp_arr; // приравниваю к временному массиву для отображения в HTML
 });
 
-  this.formData = new FormData();
+ 
   for (let i = 0; i < objForData.length; i++) {
-       this.formData.append('file', objForData[i]);
+       this.formData.append('files', objForData[i]);
+
   }
 //   this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
 

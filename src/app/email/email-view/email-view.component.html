@@ -26,15 +26,15 @@
                 </button>
    
     <div class="left__panel">
-  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, true)"
+  <button class='menu' (click)="this.emailServ.newMessage(this.selected_letter_part2?.from_address,'',this.selectedLetter?.subject, true)"
   routerLink="./create"
   >
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
 <button class='menu' 
-(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.to_addresses, this.selectedLetter?.subject, true)'
-[class.none_display] = 'this.selectedLetter?.to_addresses.length === 1'
+(click)='this.emailServ.newMessage(this.selected_letter_part2?.from_address, this.selectedLetter.recipients.to, this.selectedLetter?.subject, true)'
+[class.none_display] = 'this.selectedLetter?.recipients.to.length === 1'
 routerLink="./create"
 >
   <span class='la la-reply-all'></span>
@@ -74,9 +74,9 @@ routerLink="./create"
   </div>
   <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
      
-         <div class='left__panel end' *ngIf="this.selectedLetter?.work !== null">
-          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.work}}</p>
-          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.selectedLetter?.work !== this.emailServ.idPostForHTTP"></div>
+         <div class='left__panel end' *ngIf="this.selectedLetter?.work_user_id !== null">
+          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.work_user_id}}</p>
+          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.selectedLetter?.work_user_id !== this.emailServ.idPostForHTTP"></div>
           </div>
         </div>
       
@@ -91,53 +91,53 @@ routerLink="./create"
           <div class="avatar__block">
             <div class="avatar">
               <!-- <img src={{emailServ.avatar}}> -->
-              <p class='avatar__title'>{{this.selectedLetter?.from_address.charAt(0)}}</p>
+              <p class='avatar__title'>{{this.selected_letter_part2?.from_address.charAt(0)}}</p>
             </div>
           </div>
             <div class="r__info">
             <div class="panel">
               <div class='panel__name'>
                 
-                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
-                <p class='email__name'>{{this.selectedLetter?.from_address}}</p>
+                <p class='full_name' *ngIf="this.selected_letter_part2?.from_name !== null">{{this.selected_letter_part2?.from_name}}</p>
+                <p class='email__name'>{{this.selected_letter_part2?.from_address}}</p>
               </div>
-          <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
+          <p class='time'>{{this.selected_letter_part2?.date | timerPipe}}</p>
             </div>
             <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
-              <div class='info__content_p' *ngIf="this.selectedLetter?.to_addresses.length === 1; else have_many_addresses"><p>Вам</p></div>
+              <div class='info__content_p' *ngIf="this.selectedLetter?.recipients.to.length === 1; else have_many_addresses"><p>Вам</p></div>
               <ng-template #have_many_addresses>
-              <div class='info__content_p' *ngFor="let item of this?.cut_addressess_array"><p>{{item}}</p></div>
-              <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.to_addresses.length'
-              *ngIf="this.selectedLetter?.to_addresses.length > 3"
+              <div class='info__content_p' *ngFor="let item of this?.cut_addressess_array"><p>{{item.address}}</p></div>
+              <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.recipients.to.length'
+              *ngIf="this.selectedLetter?.recipients.to.length > 3"
               (click)='all_view($event)' 
-              value='+{{this.selectedLetter?.to_addresses.length - this?.cut_addressess_array.length}}'>
+              value='+{{this.selectedLetter?.recipients.to.length - this?.cut_addressess_array.length}}'>
               </ng-template>
             </div>
             </div>
-            <div class="info__row" *ngIf="this.selectedLetter?.cc_addresses !== null">
+            <div class="info__row" *ngIf="this.selectedLetter?.recipients.cc !== undefined">
                 <p class="info_head">Копия:</p>
                 <div class="cut__visible_block">
-                <div class='info__content_p' *ngFor="let item of this?.cut_cc_adressess_array"><p>{{item}}</p></div>
-                <input type='button' class='cc' [class.input_return]='this?.cut_cc_adressess_array.length === this?.selectedLetter.cc_addresses.length'
-                *ngIf="this.selectedLetter?.cc_addresses.length > 3"
+                <div class='info__content_p' *ngFor="let item of this?.cut_cc_adressess_array"><p>{{item.address}}</p></div>
+                <input type='button' class='cc' [class.input_return]='this?.cut_cc_adressess_array.length === this.selectedLetter?.recipients.cc.length'
+                *ngIf="this.selectedLetter?.recipients.cc.length > 3"
                 (click)='all_view($event)' 
-                value='+{{this.selectedLetter?.cc_addresses.length - this?.cut_cc_adressess_array.length}}'>
+                value='+{{this.selectedLetter?.recipients.cc.length - this?.cut_cc_adressess_array.length}}'>
                 </div>
             </div>
         </div>
           </div>
-          <div class="attachment__block" *ngIf="this.selectedLetter?.attachments !== null">
+          <div class="attachment__block" *ngIf="selected_letter_part2.attachments !== false">
             <div class="attach__container">
-              <div class="attachment__item" *ngFor="let attach of this?.attachments_array; let i = index">
-              <span [class]='attach.filename | attachPipe'></span>
-              <p class='filename'>{{attach.filename}}
+              <div class="attachment__item" *ngFor="let attach of this.selectedLetter?.recipients.attachments; let i = index">
+              <span [class]='attach.name | attachPipe'></span>
+              <p class='filename'>{{attach.name}}
                
               </p>
               
               <p class='size'>{{attach.size}}</p>
-               <p class="attach_tooltip">{{attach.filename}}</p>
+               <p class="attach_tooltip">{{attach.name}}</p>
               </div>
               
             </div>
@@ -164,7 +164,7 @@ routerLink="./create"
     <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
         <div class="info__row">
             <p class='info_head'>Кому: </p>
-            <div class='info__content_p'><p>{{this.selectedLetter?.from_address}}</p></div>
+            <div class='info__content_p'><p>{{selected_letter_part2?.from_address}}</p></div>
         </div>
         <button class='one_butt' (click)='show_quick_form(true)'>
             <span class='la la-min la-close'></span>
@@ -187,7 +187,7 @@ routerLink="./create"
     </div>
 
           <p class='btn__text'
-          (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
+          (click)="this.emailServ.newMessage(this.selected_letter_part2?.from_address,'',this.selectedLetter?.subject)"
           routerLink="./create"
           >Перейти в полную версию</p>
   </div>

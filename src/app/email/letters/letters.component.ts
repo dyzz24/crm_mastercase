@@ -127,6 +127,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               }
               this.emailServ.lettersList = data; // главный массив всех всех писем
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
+              // console.log(data);
+
               });
 
         }
@@ -134,6 +136,13 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  get_message() {
+    this.httpPost(
+      `${this.emailServ.ip}/mail/sync`,
+      // tslint:disable-next-line:max-line-length
+      {address: this.emailServ.idPostForHTTP}).subscribe((data) => {});
   }
 
 
@@ -238,8 +247,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
     // this.emailServ.fullPath =
       // this.emailServ.urlParams + '/view/' + idLetter;
-    this.emailServ.checkerLengthArray_bcc_cc();
-    this.emailServ.checkerLength_addressess();
+    // this.emailServ.checkerLengthArray_bcc_cc();
+    // this.emailServ.checkerLength_addressess();
     // this.emailServ.stateServ();
     // console.log(this.emailServ.selectedLetter);
   }

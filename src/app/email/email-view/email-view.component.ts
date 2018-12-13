@@ -8,17 +8,19 @@ import { AuthorizationService } from '../../authorization.service';
 import { PreserverComponent } from '../../preserver/preserver.component';
 
 export interface SelectedLetter {
-  id: number;
-  from_name?: string;
-  from_address?: string;
-  to_addresses?: Array<string>;
-  cc_addresses?: any;
+  id: any;
   subject?: string;
   date?: number;
-  work?: string;
+  work_user_id?: string;
   html?: string;
   text: string;
-  attachments: any;
+  recipients: {
+    reply_to: any;
+    to: any;
+    attachments: any;
+    cc: any;
+    bcc: any;
+  };
 }
 
 
@@ -50,6 +52,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   cut_cc_adressess_array;
   preload_to_wait_status = true;
   attachments_array;
+  id_for_request;
+  selected_letter_part2;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -67,33 +71,40 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   ngOnInit() {
     this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
 
+
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
+
         this.preload_to_wait_status = false;
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-        // this.selectedLetter = this.emailServ.lettersList[this.sub];
+
         this.subscription = this.activatedRoute.params.subscribe(data => {
-          this.selectedLetter = this.emailServ.lettersList[data.id];
-          this.emailServ.currentId = data.id;
+
+          this.emailServ.currentId = +data.id;
+          
+          this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
+          this.selected_letter_part2 = this.emailServ.lettersList[this.emailServ.currentId];
+          // console.log(this.selected_letter_part2);
+
+            this.httpPost(
+      `${this.emailServ.ip}/mail/mail`,
+      // tslint:disable-next-line:max-line-length
+      {address: this.emailServ.idPostForHTTP, mailId: this.id_for_request}).subscribe((dataMails) => {
+
+        this.emailServ.haveResponse = true;
+        this.selectedLetter = dataMails;
+        console.log(this.selectedLetter);
+        this.emailServ.dataLetters = this.emailServ.lettersAmount;
+        this.checkerLengthArray_bcc_cc();
+        this.checkerLength_addressess();
+        // console.log(this.selectedLetter);
+
+
+        });
+
+
+          // this.selectedLetter = this.emailServ.lettersList[data.id];
           this.emailServ.activeLett[data.id] = true;
-
-              // console.log(this.selectedLetter.attachments);
-
-              if (this.selectedLetter.attachments !== null) {
-                this.attachments_array = [this.selectedLetter.attachments];
-                const temp_arr = [];
-                 this.attachments_array.map((val, ind, arr) => {
-
-             // tslint:disable-next-line:forin
-              for (const key in val) {
-                val[key].hash = key;
-                temp_arr.push(val[key]);
-              }
-          });
-          this.attachments_array = temp_arr;
-              }
-          this.checkerLengthArray_bcc_cc();
-          this.checkerLength_addressess();
         });
         // console.log(this.emailServ.lettersList);
       }
@@ -103,18 +114,19 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
 
   checkerLengthArray_bcc_cc() {
-    if (this.selectedLetter.cc_addresses === null) {
+    if (this.selectedLetter.recipients.cc === null || this.selectedLetter.recipients.cc === undefined) {
       return;
     }
-    if (this.selectedLetter.cc_addresses.length > 3) {
-      this.selectedLetter.cc_addresses = [];
-      this.cut_cc_adressess_array = this.selectedLetter.cc_addresses.slice(0, 3);
+    if (this.selectedLetter.recipients.cc.length > 3) {
+      this.selectedLetter.recipients.cc = [];
+      this.cut_cc_adressess_array = this.selectedLetter.recipients.cc.slice(0, 3);
     }
   }
   checkerLength_addressess() {
 
       this.cut_addressess_array = [];
-      this.cut_addressess_array = this.selectedLetter.to_addresses.slice(0, 3);
+      this.cut_addressess_array = this.selectedLetter.recipients.to.slice(0, 3);
+
   }
 
 
@@ -125,7 +137,7 @@ if (this.subscription) {
 }
   }
   ngDoCheck() {
-    // console.log(this.from_address);
+    // console.log(this.selectedLetter.recipients.to);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -144,13 +156,14 @@ if (this.subscription) {
     this.checkerLengthArray_bcc_cc();
     this.checkerLength_addressess();
 
-this.emailServ.index = this.emailServ.index + n;
-if (this.emailServ.index === this.emailServ.lettersList.length) {
-  this.emailServ.index = 0;
+    this.emailServ.currentId = this.emailServ.currentId + n;
+    console.log(this.emailServ.currentId);
+if (this.emailServ.currentId === this.emailServ.lettersList.length) {
+  this.emailServ.currentId = 0;
 }
 
-if (this.emailServ.index < 0) {
-  this.emailServ.index = this.emailServ.lettersList.length - 1;
+if (this.emailServ.currentId < 0) {
+  this.emailServ.currentId = this.emailServ.lettersList.length - 1;
 }
 
 for (let i = 0; i < this.emailServ.activeLett.length; i++) {
@@ -220,25 +233,25 @@ this._rout.navigate(['../' + this.emailServ.index], { relativeTo: this.activated
 
   all_view(e) {
     if (e.target.classList.contains('cc')) {
-      if (this.cut_cc_adressess_array !== this.selectedLetter.cc_addresses) {
-      this.cut_cc_adressess_array = this.selectedLetter.cc_addresses;
+      if (this.cut_cc_adressess_array !== this.selectedLetter.recipients.cc) {
+      this.cut_cc_adressess_array = this.selectedLetter.recipients.cc;
       e.target.value = '';
       e.target.classList.add('input_return');
       } else {
         e.target.classList.remove('input_return');
         this.checkerLengthArray_bcc_cc();
-        e.target.value = this.selectedLetter.cc_addresses.length - this.cut_cc_adressess_array.length;
+        e.target.value = this.selectedLetter.recipients.cc.length - this.cut_cc_adressess_array.length;
       }
     }
     if (e.target.classList.contains('addressess')) {
-      if (this.cut_addressess_array !== this.selectedLetter.to_addresses) {
-      this.cut_addressess_array = this.selectedLetter.to_addresses;
+      if (this.cut_addressess_array !== this.selectedLetter.recipients.to) {
+      this.cut_addressess_array = this.selectedLetter.recipients.to;
       e.target.value = '';
       e.target.classList.add('input_return');
       } else {
         e.target.classList.remove('input_return');
         this.checkerLength_addressess();
-        e.target.value = this.selectedLetter.to_addresses.length - this.cut_addressess_array.length;
+        e.target.value = this.selectedLetter.recipients.to.length - this.cut_addressess_array.length;
       }
     }
   }

@@ -196,7 +196,7 @@
           >
             <div
               class="link_area"
-              routerLink="./{{this.emailItems[i].address}}/0"
+              routerLink="./{{this.emailItems[i].address}}/1"
             >
               <p>Входящие</p>
               <p class="email__num">{{ email.count }}</p>
@@ -208,7 +208,7 @@
           routerLinkActive="visibl_hidden_folders"
           >
               <div class="folders__child" *ngFor="let folder of this.folders">
-            <div (click)="goUrl(0)" class="type_message"
+            <div (click)="goUrl(1)" class="type_message"
             routerLinkActive="active_typeMess"
             >
               <div class="link_area one_level_fold"
@@ -322,31 +322,31 @@
           >
             <div
               class="link_area"
-              routerLink="./{{this.emailItems[i].address}}/1"
+              routerLink="./{{this.emailItems[i].address}}/2"
             >
               <p>Исходящие</p>
             </div>
           </div>
           <div
-            (click)="goUrl(2)"
+            (click)="goUrl(3)"
             routerLinkActive="active_typeMess"
             class="type_message"
           >
             <div
               class="link_area"
-              routerLink="./{{this.emailItems[i].address}}/2"
+              routerLink="./{{this.emailItems[i].address}}/3"
             >
               <p>Удаленные</p>
             </div>
           </div>
           <div
-            (click)="goUrl(4)"
+            (click)="goUrl(5)"
             routerLinkActive="active_typeMess"
             class="type_message"
           >
             <div
               class="link_area"
-              routerLink="./{{this.emailItems[i].address}}/4"
+              routerLink="./{{this.emailItems[i].address}}/5"
             >
               <p>Спам</p>
             </div>

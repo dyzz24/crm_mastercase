@@ -24,7 +24,7 @@
         <span class='la  la-min la-refresh search-ref' *ngIf="this.stopSearch === true"></span>
         <span class='la la-min la-check' *ngIf="this.successSearch === true"></span>
       </div>
-      <button class='letters__refresh' type='button'>
+      <button class='letters__refresh' type='button' (click)='get_message()'>
         <span class='la  la-refresh'></span>
         <p class="tooltip">Обновить</p>
       </button>
@@ -88,21 +88,21 @@
         <div class="link_activ"
         routerLink="view/{{i}}"
         >
-          <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'
+          <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].mail_id)'
 
           >
             <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.from_address}}</p>
 
-            <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.subject}}</p>
+            <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.preview}}...</p>
           
              <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->
 
           </div>
-          <div class="settings" (click)='urlLetterView($event, i, emailServ.lettersList[i].id)'
+          <div class="settings" (click)='urlLetterView($event, i, emailServ.lettersList[i].mail_id)'
 
           >
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
-            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments !== null" [class.time-icons__status-new]="letters.seen === false">
+            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments !== false" [class.time-icons__status-new]="letters.seen === false">
               <p class='tooltip'>Вложения</p>
             </span>
             <button class='letter__settings' (click)='menuShow($event, i)' *ngIf="sent_incomingChecker(i)" [class.time-icons__status-new]="letters.seen === false">
@@ -110,18 +110,18 @@
               <p class='tooltip'>Меню</p>
             </button>
             <div class="hideMenu" *ngIf="sent_incomingChecker(i)">
-                <button class='letterMenuButt' *ngIf="!this.emailServ.lettersList[i].work" (click)='get_work(emailServ.lettersList[i].id, $event, i)'>Взять в работу</button>
-                <button class='letterMenuButt' *ngIf="this.emailServ.lettersList[i].work" (click)='delete_work(emailServ.lettersList[i].id, $event, i)'>Удалить из работы</button>
-              <button class='letterMenuButt' (click)='spamMark(i,$event,4, this.emailServ.lettersList[i].id)' *ngIf='this.emailServ.lettersList[i].box !== 4 && this.emailServ.lettersList[i].box !== 2 ; else deleteSpam'>Пометить как спам</button>
+                <button class='letterMenuButt' *ngIf="!this.emailServ.lettersList[i].work" (click)='get_work(emailServ.lettersList[i].mail_id, $event, i)'>Взять в работу</button>
+                <button class='letterMenuButt' *ngIf="this.emailServ.lettersList[i].work" (click)='delete_work(emailServ.lettersList[i].mail_id, $event, i)'>Удалить из работы</button>
+              <button class='letterMenuButt' (click)='spamMark(i,$event,4, this.emailServ.lettersList[i].mail_id)' *ngIf='this.emailServ.lettersList[i].box !== 4 && this.emailServ.lettersList[i].box !== 2 ; else deleteSpam'>Пометить как спам</button>
               <ng-template #deleteSpam >
-                <button class='letterMenuButt' (click)='spamMark(i,$event,0, this.emailServ.lettersList[i].id)'  *ngIf='this.emailServ.lettersList[i].box !== 2'>Удалить из спама</button>
+                <button class='letterMenuButt' (click)='spamMark(i,$event,0, this.emailServ.lettersList[i].mail_id)'  *ngIf='this.emailServ.lettersList[i].box !== 2'>Удалить из спама</button>
               </ng-template>
-              <button class='letterMenuButt' (click)='toggleImportantMark(i,$event, this.emailServ.lettersList[i].id, true)' *ngIf="this.emailServ.lettersList[i].flagged !== true && this.emailServ.typeMess !== 'spam'; else deleteImportant">Пометить как важное</button>
+              <button class='letterMenuButt' (click)='toggleImportantMark(i,$event, this.emailServ.lettersList[i].mail_id, true)' *ngIf="this.emailServ.lettersList[i].flagged !== true && this.emailServ.typeMess !== 'spam'; else deleteImportant">Пометить как важное</button>
               <ng-template #deleteImportant>
-                  <button class='letterMenuButt' (click)='toggleImportantMark(i,$event, this.emailServ.lettersList[i].id, false)' *ngIf="this.emailServ.typeMess !== 'spam'">Удалить из важных</button>
+                  <button class='letterMenuButt' (click)='toggleImportantMark(i,$event, this.emailServ.lettersList[i].mail_id, false)' *ngIf="this.emailServ.typeMess !== 'spam'">Удалить из важных</button>
               </ng-template>
-              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].id, $event, 2)' *ngIf='this.emailServ.lettersList[i].box !== 2'>Удалить</button>
-              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].id, $event, 0)' *ngIf='this.emailServ.lettersList[i].box === 2'>Восстановить</button>
+              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 2)' *ngIf='this.emailServ.lettersList[i].box !== 2'>Удалить</button>
+              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 0)' *ngIf='this.emailServ.lettersList[i].box === 2'>Восстановить</button>
             </div>
           </div>
         </div>
