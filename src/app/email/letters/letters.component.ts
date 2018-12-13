@@ -508,7 +508,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
       setTimeout(() => {
         this.httpPost(
-            this.emailServ.adress,
+          `${this.emailServ.ip}/mail/mails`,
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,

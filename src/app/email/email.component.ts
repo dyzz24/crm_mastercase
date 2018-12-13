@@ -31,6 +31,7 @@ export class EmailComponent implements OnInit, DoCheck {
   inboxPassword;
   inboxFullName;
   sub;
+  user_folders;
 
   folders = [
     {name: '1level', id: '12', child:
@@ -58,6 +59,13 @@ adress;
           this.httpPost(`${this.emailServ.ip}/mail/boxes`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2;
       this.socketServ.lettersSocketConnect();
+    });
+
+    this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((dataFolders) => {
+
+     this.user_folders = dataFolders.boxes[0].boxes;
+     console.log(this.user_folders);
+
     });
         }
       }, 1000);

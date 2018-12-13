@@ -8,6 +8,7 @@ import { AuthorizationService } from '../../authorization.service';
 import { PreserverComponent } from '../../preserver/preserver.component';
 
 export interface SelectedLetter {
+  mail_id: number;
   from_address: any;
   id: any;
   date?: number;
@@ -173,7 +174,7 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
   deleteLetter() { // удаление письма по клику
     const messageBody = this.messageContainer.nativeElement;
     messageBody.classList.add('dellLetter');
-    const id = this.selectedLetter.id;
+    const id = this.selectedLetter.mail_id;
     this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           mailId: +id,
           boxId: 2,
@@ -181,17 +182,25 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
     }).subscribe();
     setTimeout(() => {
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
-        if (this.emailServ.lettersList[i].id === id) {
+        if (this.emailServ.lettersList[i].mail_id === id) {
           this.selectedLetter = this.emailServ.lettersList[i + 1];
           this.emailServ.index = i;
         }
     }
 
     this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
-      if (val.id !== id) {
+      if (val.mail_id !== id) {
         return val;
       }
       });
+      const navigatePath = this._rout.url.replace(/\/view\/.*/, ''); // стартовый урл
+      if (this.emailServ.currentId <= 0) { // если урл равен или меньше нуля
+        const new_url = navigatePath + '/view/' + 0; // ставлю в ноль
+        this._rout.navigate([new_url]); // перехожу
+      } else {
+        const new_url = navigatePath + '/view/' + (+this.emailServ.currentId - 1); // иначе при удалении перехожу к предыдущему элементу let
+        this._rout.navigate([new_url]);
+      }
       messageBody.classList.remove('dellLetter');
       // this.emailServ.stateServ();
     }, 500);
