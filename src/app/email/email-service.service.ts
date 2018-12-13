@@ -113,10 +113,9 @@ sub;
   }
 
   newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?) {
-    
+    const newArray = [];
     this.to_answer = '';
     this.to_subject = '';
-    this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
@@ -128,13 +127,14 @@ sub;
     if (param_to_all_answer === '') {
       return;
     } else {
-    this.to_all_answer = param_to_all_answer.filter(val => {
+    param_to_all_answer.filter(val => {
+      if (val.address !== this.idPostForHTTP && val.address !== param_to_answer) {
 
-      if (val !== this.idPostForHTTP && val !== param_to_answer) {
-
-        this.to_all_answer.push(val.address);
+        newArray.push(val.address);
       }
-      console.log(this.to_all_answer);
+      this.to_all_answer = newArray;
+
+
 
     });
   }

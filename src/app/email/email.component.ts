@@ -72,6 +72,7 @@ adress;
       const parent = e.target.closest('.folders__child');
       const hiddenFolders = parent.querySelector('.hidden_subfolder');
       hiddenFolders.classList.toggle('visibl_hidden_folders');
+      // this.emailServ.hiddenEmpty = false;
 
   }
 
@@ -101,11 +102,11 @@ adress;
 
     this.emailServ.checkerTrash();
     this.emailServ.hiddenEmpty = false;
-    this.emailServ.activeLett = [];
+
     this.emailServ.allLettersId = [];
 
     this.emailServ.dataLetters = this.emailServ.lettersAmount; // для рестарка функции подгруза писем
-    // ********************************/
+
   }
 
 

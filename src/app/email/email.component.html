@@ -190,12 +190,12 @@
         >
         <div class="folders__child">
           <div
-            (click)="goUrl(0)"
             class="type_message"
             routerLinkActive="active_typeMess"
           >
             <div
               class="link_area"
+              (click)="goUrl(0)"
               routerLink="./{{this.emailItems[i].address}}/1"
             >
               <p>Входящие</p>

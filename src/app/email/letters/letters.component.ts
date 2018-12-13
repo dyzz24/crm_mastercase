@@ -99,7 +99,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               this.httpPost(
                 `${this.emailServ.ip}/mail/mails`,
                 // tslint:disable-next-line:max-line-length
-                {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+                {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
 
             this.emailServ.haveResponse = true;
                   if (data.length === 0) {
@@ -117,7 +117,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           this.httpPost(
             `${this.emailServ.ip}/mail/mails`,
             // tslint:disable-next-line:max-line-length
-            {address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+            {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
 
         this.emailServ.haveResponse = true;
               if (data.length === 0) {
@@ -127,7 +127,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               }
               this.emailServ.lettersList = data; // главный массив всех всех писем
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
-              // console.log(data);
 
               });
 
@@ -155,7 +154,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         return;
     }
     this.httpPost(`${this.emailServ.ip}/mail/search`,
-        { query: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, box: this.emailServ.selectNum,
+        { query: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum,
         excludedIds: this.searchIdForHTTP},
         {contentType: 'application/json'})
         .subscribe(data => {
@@ -278,7 +277,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   statusMessageSpam(param) {
-    if (this.emailServ.lettersList[param].box === 4) {
+    if (this.emailServ.lettersList[param].box_id === 4) {
       return true;
     }
   }
@@ -308,19 +307,19 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   spamMark(i, e, booleanParam, id) {
 
     // if (this.emailServ.lettersList[i].messageCondition !== undefined) {
-    this.emailServ.lettersList[i].box = booleanParam;
+    this.emailServ.lettersList[i].box_id = booleanParam;
     e.target.parentNode.classList.remove('visible');
     // this.rout.navigate([this.emailServ.urlParams]);
     this.rout.navigate(['./'], { relativeTo: this.activatedRoute });
     this.emailServ.hiddenEmpty = false;
-    console.log(id);
+
     e.target.closest('.letter__prev').classList.add('letter__status-spam');
 
     setTimeout(() => {
       if (booleanParam === 4) {
         this.emailServ.lettersList = this.emailServ.lettersList.filter(
           (val, ind) => {
-            if (val.box !== 4) {
+            if (val.box_id !== 4) {
               return val;
             }
           }
@@ -337,7 +336,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       }
       this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           mailId: +id,
-          box: booleanParam,
+          boxId: booleanParam,
           address: this.emailServ.idPostForHTTP
         })
         .subscribe();
@@ -389,7 +388,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,
-              box: this.emailServ.selectNum,
+              boxId: this.emailServ.selectNum,
               limit: this.emailServ.lettersAmount,
               offset: this.counterAmount
             }
@@ -413,7 +412,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       const idelem = this.emailServ.selectedLetter;
       this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           mailId: +id,
-          box: +box,
+          boxId: +box,
           address: this.emailServ.idPostForHTTP
         }).subscribe();
       for (let i = 0; i < this.emailServ.lettersList.length; i++) {
@@ -442,7 +441,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               // tslint:disable-next-line:max-line-length
               {
                 address: this.emailServ.idPostForHTTP,
-                box: this.emailServ.selectNum,
+                boxId: this.emailServ.selectNum,
                 limit: this.emailServ.lettersAmount,
                 offset: this.counterAmount
               }
@@ -488,13 +487,14 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   deleteRestoreLettersAll(box) {
 
     const id_for_delete = this.emailServ.idLetters;
+
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
-        if (val.id === key) {
+        if (val.mail_id === key) {
           arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
           this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-            mailId: +val.id,
-          box: box,
+            mailId: +val.mail_id,
+          boxId: +box,
           address: this.emailServ.idPostForHTTP
           }).subscribe();
           this.emailServ.lettersList = arr;
@@ -512,7 +512,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,
-              box: this.emailServ.selectNum,
+              boxId: this.emailServ.selectNum,
               limit: this.emailServ.lettersAmount,
               offset: this.counterAmount
             }

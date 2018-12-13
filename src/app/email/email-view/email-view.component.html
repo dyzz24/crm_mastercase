@@ -72,7 +72,7 @@ routerLink="./create"
 
   </div>
   </div>
-  <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.recipients.subject}}</p>
+  <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
      
          <div class='left__panel end' *ngIf="this.selectedLetter?.work_user_id !== null">
           <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.work_user_id}}</p>
@@ -98,7 +98,7 @@ routerLink="./create"
             <div class="panel">
               <div class='panel__name'>
                 
-                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
+                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== ''">{{this.selectedLetter?.from_name}}</p>
                 <p class='email__name'>{{this.selectedLetter?.from_address}}</p>
               </div>
           <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
@@ -187,7 +187,7 @@ routerLink="./create"
     </div>
 
           <p class='btn__text'
-          (click)="this.emailServ.newMessage(this.this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
+          (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
           routerLink="./create"
           >Перейти в полную версию</p>
   </div>

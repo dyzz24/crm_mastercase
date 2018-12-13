@@ -39,13 +39,9 @@ private formData = new FormData(); // дата для отправки на се
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
     this.copy = this.emailServ.to_all_answer;
-    // if (typeof(this.copy) === 'string') { // если строка прилетит - сделать массивом
-    //   this.copy = [];
-    // }
-    console.log(this.copy);
   }
   ngDoCheck() {
-    // console.log(this.messages);
+
   }
 
   public httpPost(url: string, body, options?): Observable<any> {

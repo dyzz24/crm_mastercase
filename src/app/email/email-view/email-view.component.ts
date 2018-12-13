@@ -8,18 +8,19 @@ import { AuthorizationService } from '../../authorization.service';
 import { PreserverComponent } from '../../preserver/preserver.component';
 
 export interface SelectedLetter {
+  from_address: any;
   id: any;
   date?: number;
   work_user_id?: string;
   html?: string;
   text: string;
+  subject?: string;
   recipients: {
     reply_to: any;
     to: any;
     attachments: any;
     cc: any;
     bcc: any;
-    subject?: string;
   };
 }
 
@@ -80,6 +81,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.subscription = this.activatedRoute.params.subscribe(data => {
 
           this.emailServ.currentId = +data.id;
+          console.log(this.emailServ.currentId);
 
           this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
           const part_one_data = this.emailServ.lettersList[this.emailServ.currentId];
@@ -94,13 +96,12 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.emailServ.haveResponse = true;
 
         this.selectedLetter = Object.assign(part_one_data, dataMails);
-console.log(this.selectedLetter);
         // console.log(this.selected_letter_part2);
         this.emailServ.dataLetters = this.emailServ.lettersAmount;
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
-        // console.log(this.selectedLetter);
-
+        console.log(this.selectedLetter);
+        this.emailServ.hiddenEmpty = true;
         });
           this.emailServ.activeLett[data.id] = true;
         });
@@ -175,7 +176,7 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
     const id = this.selectedLetter.id;
     this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           mailId: +id,
-          box: 2,
+          boxId: 2,
           address: this.emailServ.idPostForHTTP
     }).subscribe();
     setTimeout(() => {
@@ -248,14 +249,32 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
   show_quick_form(cancelFlag) {
     if (cancelFlag === false) { // если передан отрицательный флаг
     this.quickResponse_active = true;  // активирую стили для показа быстрой формы
-    this.nameFrom = this.emailServ.selectedLetter.from_address; // подставляю в переменные значения с активного письма
-    this.subject = this.emailServ.selectedLetter.subject;
+    this.nameFrom = this.selectedLetter.from_address; // подставляю в переменные значения с активного письма
+    this.subject = this.selectedLetter.subject;
+    console.log(this.subject);
 
     } else {
       this.quickResponse_active = false; // если передан отрицательный флаг, всё прячу
     }
   }
   quick_send() {
+    const formData = new FormData;
+    formData.append('json', JSON.stringify({
+      from: [
+        {address: this.emailServ.idPostForHTTP}
+      ],
+      to: [
+        {
+          address: this.nameFrom
+        }
+      ],
+      subject: this.subject,
+      text: this.messages
+    }));
+
+    this.httpPost(`${this.emailServ.ip}/mail/send`, formData).subscribe(resp => {
+  });
+
     this.sending_status = true;
     setTimeout(() => {
       this.sending_status = false;
@@ -265,11 +284,7 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
       this.messages = ''; // тело пиьма,
       this.input_cleaner.nativeElement.value = ''; // инпут
     }, 2000);
-  //   this.httpPost(
-  //     `${this.emailServ.ip}/mail/send`,
-  //     // tslint:disable-next-line:max-line-length
-  //     { subject: this.subject, text: this.messages, html: this.messages, to: this.nameFrom}).subscribe((data) => {
-  // });
+
   }
 
   print() {
