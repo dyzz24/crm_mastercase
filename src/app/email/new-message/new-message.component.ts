@@ -119,6 +119,10 @@ private formData = new FormData(); // дата для отправки на се
   //     // tslint:disable-next-line:max-line-length
   //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
   // });
+  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
+    this.formData.append('files', this.files_for_view[i]);
+}
+
   this.formData.append('json', JSON.stringify({
     from: [
       {address: this.emailServ.idPostForHTTP}
@@ -133,15 +137,13 @@ private formData = new FormData(); // дата для отправки на се
   }));
 
   this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
-
 });
 
-
-this.messages_sending = true;
+this.messages_sending = true; // крутилка on
 setTimeout(() => {
   const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
     this._rout.navigate([navigatePath]);
-  this.messages_sending = false;
+  this.messages_sending = false; // крутилка off
   this.emailServ.hiddenEmpty = false;
   this.showSuccess('Письмо отправлено');
 }, 3000);
@@ -178,9 +180,13 @@ drop(e) {
   this.add_drag_input_data(this.files);
 }
 
+delete_attach(index) {
+  this.files_for_view.splice(index, 1);
+}
 
 
 add_drag_input_data(objForData) {
+  // console.log(obj)
   this.files_for_view = [objForData]; // засунул в массив для работы
     const temp_arr = []; // временный массив
     this.files_for_view.map((val) => {
@@ -196,13 +202,6 @@ add_drag_input_data(objForData) {
 });
 
 
-  for (let i = 0; i < objForData.length; i++) {
-       this.formData.append('files', objForData[i]);
-
-  }
-//   this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
-
-// });
 }
 
 

@@ -85,11 +85,14 @@
 <div class="attachments" *ngIf="this.files_for_view">
   <div class="attach_scrollBar">
     <div class="attach_group" *ngFor="let file of this.files_for_view; let i = index">
+      <div class="name__block">
       <span [class]='file.name | attachPipe'></span>
-      <p class='filename'>{{file.name}}
-      </p>
-      <p class='size'>{{file.size}}</p>
-      <span class='la la-micro la-close'></span>
+      <p class='filename'>{{file.name}}</p>
+      
+      
+    </div>
+    <p class='size'>{{file.size}}</p>
+      <span class='la la-micro la-close' (click)='delete_attach(i)'></span>
       </div>
     </div>
   </div>
