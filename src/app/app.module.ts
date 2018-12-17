@@ -29,6 +29,7 @@ import { AuthorizationService } from './authorization.service';
 import { SocketService } from './socket.service';
 import { TemplateComponent } from './email/template/template.component';
 import { PreserverComponent } from './preserver/preserver.component';
+import { FoldersComponent } from './email/folders/folders.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { PreserverComponent } from './preserver/preserver.component';
     AttachPipePipe,
     TemplateComponent,
     PreserverComponent,
+    FoldersComponent,
 
   ],
   imports: [

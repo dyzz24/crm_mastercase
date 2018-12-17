@@ -1,0 +1,28 @@
+ <!-- Создать удалить папку -->
+ 
+ <div class="folder_creater_btn" (click)='open_folders_settings()'>
+
+        <p>Создать папку</p>
+        <button class="plus">
+          <span class="la la-lg la-plus"></span>
+        </button>
+
+ </div>
+ 
+ <div class="pop" [ngClass]="{ visible: folder_create }">
+    <div class="create-inbox" [ngClass]="{ visible: folder_create }">
+      <p class='title'>Создаем папку</p>
+      <div class="row__names">
+        <p>Название</p>
+        <input type="text">
+      </div>
+      <p class="to_invest_sett">Вложить в другую папку</p>
+      <button class='settings'><span class='la la-cog'></span>Настроить автоматическую сортировку</button>
+        <!-- <div class="header">
+          <button class="close" (click)="closeViewer($event)">
+            <span class="la la-close close-edit-inbox"></span>
+            <p class="tooltip">Закрыть</p>
+          </button>
+        </div> -->
+      </div>
+</div>

@@ -119,46 +119,7 @@
         <div class="pop" [ngClass]="{ visible: deleteMenuStatus }"></div>
         <!-- ********************* -->
 
-        <!-- Создать удалить папку -->
-        
-        <div class="pop" [ngClass]="{ visible: folder_create }">
-            <div class="create-inbox" [ngClass]="{ visible: folder_create }">
-                <div class="header">
-                  <button class="close" (click)="closeViewer($event)">
-                    <span class="la la-close close-edit-inbox"></span>
-                    <p class="tooltip">Закрыть</p>
-                  </button>
-                </div>
-                <div class="create__body">
-                  <div class="email__body">
-                    <p class="editName">Cтарый логин: {{ this.inboxName }}</p>
-      
-                    <div class="input-ph">
-                      <p class="placehold">Новый</p>
-                      <input class="placehold_edit" type="text" />
-                    </div>
-                  </div>
-                  <div class="email__body">
-                    <p class="editName">Старый пароль: {{ this.inboxPassword }}</p>
-      
-                    <div class="input-ph">
-                      <p class="placehold">Новый</p>
-                      <input class="placehold_edit" type="text" />
-                    </div>
-                  </div>
-                  <div class="email__body">
-                    <p class="editName">Старое имя: {{ this.inboxFullName }}</p>
-                    <div class="input-ph">
-                      <p class="placehold">Новое</p>
-                      <input class="placehold_edit" type="text" />
-                    </div>
-                  </div>
-      
-                  <button class="btn-create">Изменить</button>
-                </div>
-              </div>
-        </div>
-        <!-- ********************* -->
+       
       </div>
       <div class="emails" *ngFor="let email of emailItems; let i = index">
         <div
@@ -355,12 +316,9 @@
             </div>
           </div>
           <div class="type_message">
-            <div class="link_area">
-              <p>Создать папку</p>
-              <button class="plus">
-                <span class="la la-lg la-plus"></span>
-              </button>
-            </div>
+            <app-folders [user_folders]='this.user_folders'>
+
+            </app-folders>
           </div>
         </div>
       </div>
