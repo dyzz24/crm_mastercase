@@ -18,17 +18,24 @@ $font-color: $icons-color;
 
 .header {
     @include header(row);
-    height: 45px;
+    height: 40px;
     border-bottom: 1px solid $border;
+    background: #f7fbfe;
+    padding: 0 10px;
+
+    span {
+        color: #092955;
+    }
 }
 
 .letter__list {
-    width: 290px;
+    width: 350px;
     flex-shrink: 0;
     border-right:  1px solid $border;
     box-shadow: -7px 0 18px 4px rgba(0,0,0,.1);
     background: #f7fbfe;
     z-index: 1;
+    box-sizing: border-box;
 
 }
 .letters__view {
@@ -95,13 +102,15 @@ $font-color: $icons-color;
     box-sizing: border-box;
     border: solid 1px $border;
     border-radius: 3px;
-    padding: 0 30px 0 0px;
-    height: 28px;
+    height: 24px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     color: $font-color;
     transition: .2s;
+    position: relative;
+    margin-right: 10px;
+    
 
     &:hover {
         border-color: rgb(8, 7, 7);
@@ -114,6 +123,31 @@ $font-color: $icons-color;
         box-sizing: border-box; 
     }
 }
+
+.search__icons {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    align-items: center;
+
+    span {
+        color: #9cabc1;
+    }
+}
+
+
+
+.search__inp {
+    box-sizing: border-box;
+    padding: 0 10px;
+    background: #d9e6f7;
+    
+}
+.search__inp:focus {
+background: rgba(141, 175, 255, 0.507);
+
+}
+
 
 
 
@@ -168,6 +202,7 @@ $font-color: $icons-color;
     overflow: auto;
     box-sizing: border-box;
     padding-bottom: 30px;
+    overflow-x: hidden;
 }
 
 
@@ -175,10 +210,9 @@ $font-color: $icons-color;
 .letter__prev {
     
     @include prev_styles(row, center, 0px);
-    border-bottom: 1px solid $border;
-    
-    height: 52px;
 
+    
+    height: 50px;
     position: relative;
     overflow: initial;
     transition: .5s;
@@ -192,9 +226,9 @@ $font-color: $icons-color;
 }
 
 .avatar__group {
-    width: 45px;
+    width: 66px;
     height: 50px;
-    padding: 10px 5px 10px 10px;
+    padding: 10px 16px 10px 20px;
     box-sizing: border-box;
     
 }
@@ -294,26 +328,28 @@ label {
   }
 
   .info {
-      width: calc(100% - 45px - 80px );
-      padding: 5px 5px;
+      
+      padding: 5px 5px 5px 0;
       display: flex;
       height: 100%;
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
       flex: 1;
+      overflow: hidden;
   }
 
   .settings {
-      width: 80px;
+  
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       align-items: flex-end;
-      padding: 5px 10px 5px 5px;
+      padding: 10px 8px 0px 5px;
       box-sizing: border-box;
+      flex-shrink: 0;
 
   }
   .time {
@@ -327,9 +363,10 @@ label {
       
 .letter__settings {
     color:$time-icons;
-    width: 15px;
-    height: 5px;
-    line-height: 1;
+    width: 20px;
+    height: 14px;
+    line-height: 14px;
+    box-sizing: border-box;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -362,7 +399,7 @@ label {
 
 .letter__name,
 .letter__caption {
-    color: $text-color;
+    color: #929292;
     font-size: 13px; 
     line-height: 20px;
     width: 100%;
@@ -410,10 +447,11 @@ label {
 
 
     .headText__status-new {
-        font-family: 'Roboto-Black';
+        font-family: 'Roboto-Bold';
+        color: $text-color;
     }
     .time-icons__status-new {
-        color: $time-icons-new;
+        color: $text-color;
     }
 
 
@@ -465,9 +503,10 @@ label {
 
 
 .letters__end {
+    padding-top: 30px;
+    box-sizing: border-box;
     font-weight: 600;
     font-size: 20px;
-    height: 40px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -477,19 +516,11 @@ label {
         text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    color: #929292;
     }
 }
 
 
-.search__inp {
-    padding-left: 12px;
-    box-sizing: border-box;
-    margin-right: 12px;
-}
-.search__inp:focus {
-background: rgba(141, 175, 255, 0.507);
-
-}
 
 
 
@@ -504,7 +535,7 @@ transition: .5s;
 
 .hiddenTrash {
     overflow: visible;
-    height: 45px;
+    height: 40px;
     border-bottom: 1px solid $border;
 }
 
@@ -545,6 +576,7 @@ transition: .5s;
     width: 100%;
     height: 100%;
     justify-content: space-between;
-    width: calc(100% - 45px);
     outline: none;
+    box-sizing: border-box;
+    border-bottom: 1px solid $border;
 }

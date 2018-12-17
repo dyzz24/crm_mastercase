@@ -164,7 +164,7 @@ routerLink="./create"
     <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
         <div class="info__row">
             <p class='info_head'>Кому: </p>
-            <div class='info__content_p'><p>{{this.selectedLetter?.from_address}}</p></div>
+            <div class='info__content_p mrg_off'><p>{{this.selectedLetter?.from_address}}</p></div>
         </div>
         <button class='one_butt' (click)='show_quick_form(true)'>
             <span class='la la-min la-close'></span>

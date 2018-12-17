@@ -70,9 +70,9 @@ p{
 }
 
 .header_letter__view {
-    @include header(row,45px);
+    @include header(row,40px);
     border:0px;
-    border-bottom: 1px solid #abc7ee;
+    border-bottom: 1px solid $border;
     padding: 0 10px;
 }
 .group__one {
@@ -104,7 +104,7 @@ p{
     width: 100%;
     display: flex;
     border-bottom: 1px solid $border;
-    padding: 10px;
+    padding: 5px 10px;
     box-sizing: border-box;
 }
 
@@ -161,7 +161,7 @@ p{
 .panel {
     @include panel-mix();
     box-sizing: border-box;
-    margin-bottom: 4px;
+   
 }
 
 .panel__name {
@@ -171,6 +171,8 @@ p{
     max-width: 300px;
     width: auto;
     @include bables(auto);
+    margin-top: 0px;
+
 }
 .full_name {
     @extend %default_text_param;
@@ -184,6 +186,9 @@ p{
     white-space: nowrap;
     overflow: hidden;
     line-height: 15px;
+    color: #989898 !important;
+
+   
 }
 
 .info__row {
@@ -200,13 +205,13 @@ p{
     line-height: 1;
     display: flex;
     align-items: center;
-    margin-top: 4px;
+    margin-bottom: 4px;
 }
 .info__content_p {
     
     @include bables;
-    margin-right: 8px;
-    margin-top: 4px;
+    margin-right: 4px;
+
     p{
         @extend %default_text_param;
     }
@@ -239,12 +244,16 @@ p{
     font-size: 12px;
     color: #b2b2b2;
     outline: none;
-    margin-top: 4px;
+    margin-bottom: 4px;
     &:hover:not(.input_return) {
         background:url('../../../assets/arr_down.png') no-repeat center;
         background-size: 80% auto;
         color:rgba(255, 255, 255, 0);
     }
+}
+
+.mrg_off {
+    margin: 0;
 }
 
 .input_return {
@@ -256,6 +265,7 @@ p{
 
 .time {
     @extend %default_text_param;
+    color: #929292;
 }
 
 .mess__content {
@@ -496,7 +506,7 @@ p{
     margin-left: 8px;
     height: 30px;
     border-radius: 10px;
-    border: 1px solid $border;
+    border: 1px solid #929292;
     outline: none;
     resize: none;
   
@@ -512,7 +522,7 @@ p{
 	height: 23px;
 	border-radius: 11px;
     background-color: #fff;
-    border: 1px solid $border;
+    border: 1px solid #000000;
 
     span {
         font-size: 13px;
@@ -549,7 +559,7 @@ p{
 .quickResponse__active {
     height: 180px;
     background: white;
-    padding: 8px 8px 8px 20px;
+    padding: 10px;
 }
 
 .inp__active {

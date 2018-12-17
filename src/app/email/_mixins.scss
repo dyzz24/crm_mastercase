@@ -26,13 +26,13 @@
     }
     p {
         text-transform: uppercase;
-        // font-size: 16px;
         line-height: 1;
         font-weight: bold;
         color: transparent;
         font-size: 0;
         line-height: 1;
         overflow: hidden;
+        font-family: 'Roboto-Bold';
         &::first-letter {
             color:white;
             font-size: 16px;
@@ -333,17 +333,17 @@ span {
         
     }
 @mixin bables($max-width:120px) {
-        border-radius: 10px;
+        border-radius: 12px;
         max-width: $max-width;
-        background: #dcdcdc;
+        background: #f1f1f1;
         box-sizing: border-box;
         display: flex;
         align-items: center;
-        margin: 4px 4px 4px 0px;
+        margin: 0px 4px 4px 0px;
         height: 24px;
         padding: 0 10px;
         p {
-            color:#9b9ea6;
+            color: $text-color;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -362,8 +362,8 @@ span {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-left:1px solid #c4c4c4;
-        border-right:1px solid #c4c4c4;
+        border-left:1px solid #d9e6f7;
+        border-right:1px solid #d9e6f7;
         box-sizing: border-box; 
         
         margin: 0 2px;
@@ -376,7 +376,7 @@ span {
         .left__panel.end{
             border:0px;
             padding: 0px;
-            border-right:1px solid #c4c4c4;
+            border-right:1px solid #d9e6f7;
             margin-right:  4px;
             padding-right: 4px; 
         }

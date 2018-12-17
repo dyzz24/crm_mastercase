@@ -60,6 +60,7 @@ button {
     justify-content: space-between;
     padding: 0 4px 0 20px;
     transition: .4s;
+    border-bottom: 1px solid #d9e6f7;
     &:hover .email-menu{
         width: 30px;
         overflow: visible;
@@ -98,7 +99,6 @@ a,p{
     flex-wrap: wrap;
     padding: 0 4px 0 20px;
     border-bottom: 1px solid #d9e6f7;
-    border-top: 1px solid #d9e6f7;
     position: relative;
     transition: .4s;
     box-sizing: border-box;
@@ -326,6 +326,7 @@ a,p{
     .header {
         padding: 0px 15px;
         flex-direction: row-reverse;
+        
     }
     .create__body {
             width: 100%;
