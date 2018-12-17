@@ -68,8 +68,8 @@ export class EmailServiceService {
   to_all_answer = [];
   to_subject;
   to_forward;
-sub;
-files = []; // для прокидывания файлов из компонента в компонент
+  sub;
+  files = []; // для прокидывания файлов из компонента в компонент, нужно явно посылать пустым
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
@@ -126,7 +126,7 @@ files = []; // для прокидывания файлов из компоне�
       this.files = []; // иначе чистит стэйт
     }
 
-    if (request) {
+    if (request) { // если нажали ОТВЕТИТЬ
     this.to_subject = `RE: ${param_to_subject}`;
     } else {
       this.to_subject = param_to_subject;

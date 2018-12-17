@@ -40,7 +40,7 @@ private formData = new FormData(); // дата для отправки на се
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
     this.copy = this.emailServ.to_all_answer;
-    if (this.emailServ.files.length > 0) { // если стэйт не пуст
+    if (this.emailServ.files.length > 0) { // если стэйт сервиса не пуст
       this.files = this.emailServ.files; // берет файлы из него
       this.add_drag_input_data(this.files); // загоняет в файлы для отправки
     }

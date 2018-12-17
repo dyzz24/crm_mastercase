@@ -12,7 +12,6 @@
             <span class="la la-bars"></span>
             <p class="tooltip">Меню</p>
             <div class="hideInboxMenu" [ngClass]="{ visible: inboxMenuStatus }">
-              <button (click)="createInboxOpen()">Создать ящик</button>
               <button (click)="deleteInboxOpen()">Удалить ящик</button>
               <!-- <button>Редактировать ящик</button> -->
               <button (click)="settingOpen()">Настройки</button>
@@ -61,36 +60,37 @@
         <!-- ********************* -->
 
         <!-- попап + блок создать ящик -->
-        <div class="create-inbox" [ngClass]="{ visible: createMenuStatus }">
-          <div class="header">
-            <button class="close" (click)="closeViewer($event)">
-              <span class="la la-close close-new-inbox"></span>
-              <p class="tooltip">Закрыть</p>
-            </button>
-          </div>
-          <div class="create__body">
-            <div class="input-ph">
-              <p class="placehold">IMAP:</p>
-              <input type="text" />
-            </div>
+        
+        <div class="pop" [ngClass]="{ visible: createMenuStatus }">
+            <div class="create-inbox" [ngClass]="{ visible: createMenuStatus }">
+              <img class='acc_logo' src='../../assets/logo.png'>
+              <p>Авторизация</p>
 
-            <div class="input-ph">
-              <p class="placehold">Пароль:</p>
-              <input type="text" />
-            </div>
+                <input type="text"  placeholder="Логин (e-mail)"/>
 
-            <div class="input-ph">
-              <p class="placehold">Логин:</p>
-              <input type="text" />
-            </div>
-            <div class="input-ph">
-              <p class="placehold">ФИО:</p>
-              <input type="text" />
-            </div>
-            <button class="btn-create">Создать</button>
-          </div>
+                <div class="header">
+                  <button class="close" (click)="closeViewer($event)">
+                    <span class="la la-close close-new-inbox"></span>
+                    <p class="tooltip">Закрыть</p>
+                  </button>
+                </div>
+                <div class="create__body">
+
+      
+                  <div class="input-ph">
+                    <p class="placehold">Пароль:</p>
+                    <input type="text" />
+                  </div>
+      
+                  
+                  <div class="input-ph">
+                    <p class="placehold">ФИО:</p>
+                    <input type="text" />
+                  </div>
+                  <button class="btn-create">Создать</button>
+                </div>
+              </div>
         </div>
-        <div class="pop" [ngClass]="{ visible: createMenuStatus }"></div>
         <!-- ********************* -->
 
         <!-- попап + блок удалить ящик -->
@@ -119,43 +119,45 @@
         <div class="pop" [ngClass]="{ visible: deleteMenuStatus }"></div>
         <!-- ********************* -->
 
-        <!-- попап + блок удалить ящик -->
-        <div class="create-inbox" [ngClass]="{ visible: editMenuStatus }">
-          <div class="header">
-            <button class="close" (click)="closeViewer($event)">
-              <span class="la la-close close-edit-inbox"></span>
-              <p class="tooltip">Закрыть</p>
-            </button>
-          </div>
-          <div class="create__body">
-            <div class="email__body">
-              <p class="editName">Cтарый логин: {{ this.inboxName }}</p>
-
-              <div class="input-ph">
-                <p class="placehold">Новый</p>
-                <input class="placehold_edit" type="text" />
+        <!-- Создать удалить папку -->
+        
+        <div class="pop" [ngClass]="{ visible: folder_create }">
+            <div class="create-inbox" [ngClass]="{ visible: folder_create }">
+                <div class="header">
+                  <button class="close" (click)="closeViewer($event)">
+                    <span class="la la-close close-edit-inbox"></span>
+                    <p class="tooltip">Закрыть</p>
+                  </button>
+                </div>
+                <div class="create__body">
+                  <div class="email__body">
+                    <p class="editName">Cтарый логин: {{ this.inboxName }}</p>
+      
+                    <div class="input-ph">
+                      <p class="placehold">Новый</p>
+                      <input class="placehold_edit" type="text" />
+                    </div>
+                  </div>
+                  <div class="email__body">
+                    <p class="editName">Старый пароль: {{ this.inboxPassword }}</p>
+      
+                    <div class="input-ph">
+                      <p class="placehold">Новый</p>
+                      <input class="placehold_edit" type="text" />
+                    </div>
+                  </div>
+                  <div class="email__body">
+                    <p class="editName">Старое имя: {{ this.inboxFullName }}</p>
+                    <div class="input-ph">
+                      <p class="placehold">Новое</p>
+                      <input class="placehold_edit" type="text" />
+                    </div>
+                  </div>
+      
+                  <button class="btn-create">Изменить</button>
+                </div>
               </div>
-            </div>
-            <div class="email__body">
-              <p class="editName">Старый пароль: {{ this.inboxPassword }}</p>
-
-              <div class="input-ph">
-                <p class="placehold">Новый</p>
-                <input class="placehold_edit" type="text" />
-              </div>
-            </div>
-            <div class="email__body">
-              <p class="editName">Старое имя: {{ this.inboxFullName }}</p>
-              <div class="input-ph">
-                <p class="placehold">Новое</p>
-                <input class="placehold_edit" type="text" />
-              </div>
-            </div>
-
-            <button class="btn-create">Изменить</button>
-          </div>
         </div>
-        <div class="pop" [ngClass]="{ visible: editMenuStatus }"></div>
         <!-- ********************* -->
       </div>
       <div class="emails" *ngFor="let email of emailItems; let i = index">
@@ -362,6 +364,17 @@
           </div>
         </div>
       </div>
+      <div
+          class="emails__list"
+          (click)="createInboxOpen()"
+        >
+          <div class="accaunt_info">
+            <div class="avatar create_new_account">
+              <span class='la la-plus'></span>
+            </div>
+            <p>Добавить аккаунт</p>
+          </div>
+        </div>
     </div>
   </div>
   <app-splitter left min="240" max="450" positionLeft="-1"></app-splitter>

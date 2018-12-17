@@ -23,7 +23,7 @@ export class EmailComponent implements OnInit, DoCheck {
   inboxMenuStatus = false;
   createMenuStatus = false;
   deleteMenuStatus = false;
-  editMenuStatus = false;
+  folder_create = false;
   createSettingStatus = false;
   visibl: Array<boolean> = [];
 
@@ -141,7 +141,7 @@ adress;
         this.deleteMenuStatus = ! this.deleteMenuStatus;
       }
       if (checkCloser.classList.contains('close-edit-inbox')) {
-        this.editMenuStatus = ! this.editMenuStatus;
+        this.folder_create = ! this.folder_create;
       }
       if (checkCloser.classList.contains('close-setting-inbox')) {
         this.createSettingStatus = ! this.createSettingStatus;
@@ -161,7 +161,7 @@ this._rout.navigate(['email/']);
 
     this.createMenuStatus = false;
   this.deleteMenuStatus = false;
-  this.editMenuStatus = true;
+  this.folder_create = true;
   }
 
 loadAmount(count) {   // для количества загруженных писем
