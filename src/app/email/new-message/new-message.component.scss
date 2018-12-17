@@ -53,6 +53,7 @@
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
 }
 .quill_styles {
     flex: 1;
@@ -68,7 +69,6 @@
     cursor: pointer;
     flex-shrink: 0;
     align-self: flex-start;
-    margin-left: 40px;
     border-radius: 10px;
 }
 
@@ -137,13 +137,14 @@
 }
 .end_group {
     background: #f5f9fd;
+    height: 40px;
     width: 100%;
     margin: 0;
     border-bottom: none;
     padding: 0 60px;
     box-sizing: border-box;
     justify-content: space-between;
-    margin-bottom: 20px;
+
     
 }
 
@@ -271,15 +272,49 @@ label {
             }
 }
 
+.attachments {
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+}
+.attach_scrollBar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    max-height: 200px;
+    overflow: auto;
+    padding: 20px 0;
+    box-sizing: border-box;
+    
+}
+
 .attach_group {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: row;
     flex-shrink: 0;
+    padding: 0 60px;
+    height: 40px;
+    box-sizing: border-box;
 }
 .filename {
-    min-height: 40px;
+    color: $text-color;
+    font-size: 13px;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+    line-height: 15px;
+    margin-right: 15px;
+    
+}
+
+.size {
+    flex-shrink: 0;
+    font-size: 10px;
+    color: #b2b2b2;
 }
 
 

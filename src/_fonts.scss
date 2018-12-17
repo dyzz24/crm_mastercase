@@ -48,6 +48,7 @@
   /* makes the font 33% larger relative to the icon container */
   .la-micro {
     font-size: 12px;
+    flex-shrink: 0;
   }
 
   .la-min {

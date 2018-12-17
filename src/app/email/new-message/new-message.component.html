@@ -78,11 +78,22 @@
       <p class='other__text'>Или перетащите файлы</p>
 
 </div>
-<div class="attach_group">
-    <input type="text"  class="filename" disabled 
+
+    <!-- <input type="text"  class="filename" disabled 
     *ngFor="let file of this.files_for_view" 
-    value={{file.name}}>
-</div>
+    value={{file.name}}> -->
+<div class="attachments" *ngIf="this.files_for_view">
+  <div class="attach_scrollBar">
+    <div class="attach_group" *ngFor="let file of this.files_for_view; let i = index">
+      <span [class]='file.name | attachPipe'></span>
+      <p class='filename'>{{file.name}}
+      </p>
+      <p class='size'>{{file.size}}</p>
+      <span class='la la-micro la-close'></span>
+      </div>
+    </div>
+  </div>
+
 
 
     <div class="editor-qu">
@@ -91,11 +102,11 @@
       
       [(ngModel)]='messages'>
       
-          
+      
       </quill-editor>
-
+      <input type="submit" value='отправить' (click)='sendMessage()'> 
     </div>
-    <input type="submit" value='отправить' (click)='sendMessage()'>
+    
     <div class="message__preload" *ngIf="this.messages_sending === true">
         <div class="cssload-speeding-wheel" ></div>
       <p>Отправка письма</p>
