@@ -276,8 +276,10 @@ label {
     height: 200px;
     width: 100%;
     overflow: hidden;
-    padding: 20px 0;
     box-sizing: border-box;
+    background: #f5f9fd;
+    margin-bottom: 5px;
+    border-bottom: 1px solid $border;
 }
 .attach_scrollBar {
     display: flex;

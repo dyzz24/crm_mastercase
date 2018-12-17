@@ -256,7 +256,7 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
     this.quickResponse_active = true;  // активирую стили для показа быстрой формы
     this.nameFrom = this.selectedLetter.from_address; // подставляю в переменные значения с активного письма
     this.subject = this.selectedLetter.subject;
-    console.log(this.subject);
+
 
     } else {
       this.quickResponse_active = false; // если передан отрицательный флаг, всё прячу
@@ -298,6 +298,20 @@ this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activ
 
 preserv_saver() {
   this.preserver_component.save_bookmark();
+}
+
+
+onFileChange(event) {
+  const files  = event.target.files; // отловил файлы прикрепления
+  if (files.length > 0) {
+
+    this.emailServ.newMessage(this.selectedLetter.from_address,
+      this.selectedLetter.recipients.to, this.selectedLetter.subject,
+      true,
+      files);
+      this._rout.navigate(['./create'], { relativeTo: this.activatedRoute });
+  }
+
 }
 
 }

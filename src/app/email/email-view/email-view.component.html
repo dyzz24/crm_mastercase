@@ -26,14 +26,14 @@
                 </button>
    
     <div class="left__panel">
-  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, true)"
+  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, true, [])"
   routerLink="./create"
   >
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
 <button class='menu' 
-(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, true)'
+(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, true, [])'
 [class.none_display] = 'this.selectedLetter?.recipients.to.length === 1'
 routerLink="./create"
 >
@@ -183,11 +183,12 @@ routerLink="./create"
     <div class="left__panel end">
     <button>
         <span class='la la-paperclip visible'></span>
+        <input type='file' class='quickResponse__files_btn' multiple (change)='onFileChange($event)'>
       </button>
     </div>
 
           <p class='btn__text'
-          (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject)"
+          (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, false, [])"
           routerLink="./create"
           >Перейти в полную версию</p>
   </div>

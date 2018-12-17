@@ -32,13 +32,19 @@ private subject = this.emailServ.to_subject; // тема для отправки
 private messages;
 private messages_sending = false;
 private files; // файлы с инпута
-private files_for_view; // имена файлов для HTML
+private files_for_view = []; // имена файлов для HTML
 private formData = new FormData(); // дата для отправки на серв файлов
+
 
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
     this.copy = this.emailServ.to_all_answer;
+    if (this.emailServ.files.length > 0) { // если стэйт не пуст
+      this.files = this.emailServ.files; // берет файлы из него
+      this.add_drag_input_data(this.files); // загоняет в файлы для отправки
+    }
+
   }
   ngDoCheck() {
 
@@ -187,19 +193,25 @@ delete_attach(index) {
 
 add_drag_input_data(objForData) {
   // console.log(obj)
-  this.files_for_view = [objForData]; // засунул в массив для работы
-    const temp_arr = []; // временный массив
-    this.files_for_view.map((val) => {
+  const newArray = [objForData]; // засунул в массив для работы
 
+
+  newArray.map((val) => {
  // tslint:disable-next-line:forin
   for (const key in val) { // пробегаюсь по файлам
     if (val[key].name !== 'item' && val[key].name !== undefined) { // если имя файла не item и und
-
-    temp_arr.push(val[key]); // пушу в массив
+    this.files_for_view.push(val[key]);
     }
   }
-  this.files_for_view = temp_arr; // приравниваю к временному массиву для отображения в HTML
 });
+
+
+
+    // const unizue = arrayF.filter((val, ind, self) => {
+    // return self.indexOf(val.name) === ind; } );
+
+    // console.log(unizue);
+
 
 
 }

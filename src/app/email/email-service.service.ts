@@ -69,6 +69,7 @@ export class EmailServiceService {
   to_subject;
   to_forward;
 sub;
+files = []; // для прокидывания файлов из компонента в компонент
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
@@ -112,13 +113,19 @@ sub;
     return firstLett;
   }
 
-  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?) {
+  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?, files?) {
     const newArray = [];
     this.to_answer = '';
     this.to_subject = '';
     this.to_forward = '';
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
+    if (files.length > 0) { // если файл есть
+      this.files = files; // ставит его в стэйт
+    } else {
+      this.files = []; // иначе чистит стэйт
+    }
+
     if (request) {
     this.to_subject = `RE: ${param_to_subject}`;
     } else {
@@ -145,6 +152,7 @@ sub;
     this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
+    this.files = [];
   }
   new_forward_message(param_text, param_html) {
     this.to_answer = '';
@@ -152,6 +160,7 @@ sub;
     this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
+    this.files = [];
     if (param_html === null) {
       this.to_forward = param_text;
     } else {
