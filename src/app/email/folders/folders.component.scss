@@ -23,6 +23,7 @@
     animation: createInboxAnim .4s;
     flex-direction: column;
     border-radius: 4px;
+    position: relative;
     
 
 .folder_creater_btn {
@@ -103,11 +104,89 @@
 }
 
 .to_invest_sett {
+    width: 170px;
     color: #9cabc1;
     font-size: 13px;
     padding-left: 68px;
-    cursor: pointer;
-    margin-bottom: 20px;
+    cursor: pointer;   
+    position: relative;
+    user-select: none;
+
+    
+}
+
+.title_inv {
+    transition: .4s;
+    &:hover {
+        color: #092955;
+    }  
+}
+
+.to_invest_folders {
+    position: absolute;
+    width: 360px;
+    height: 450px;
+    background: white;
+    left: 100%;
+    top: 100%;
+    z-index: 4;
+    cursor: auto;
+    box-sizing: border-box;
+    
+    display: none;
+    flex-direction: column;
+
+    &.visible {
+        display: flex;
+    }
+}
+
+.title_txt {
+    height: 50px;
+    padding-top: 20px;
+    padding-left: 10px;
+    color:#092955;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.folders_body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    ul {
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        padding-left: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    li {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+
+    }
+    span {
+        margin-right: 4px;
+        flex-shrink: 0;
+    }
+}
+
+.folders_name {
+        flex: 1;
+        height: 30px;
+        line-height: 30px;
+        transition: .4s;
+        cursor: pointer;
+        &:hover {
+            background: #d9e6f7;
+        }
 }
 
 .settings {
@@ -116,5 +195,48 @@
     width: 285px;
     align-items: center;
     color: #092955;
+
+    span {
+        margin-right: 5px;
+    }
+}
+
+.bottom__panel {
+    position: absolute;
+    width: 100%;
+    height: 67px;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+    border-top: 1px solid #9cabc1;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+.create,
+.cancel {
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    color:white;
+    font-size: 13px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #092955,  #0472be);
+    box-sizing: border-box;
+}
+
+.cancel {
+    background: white;
+    border: 1px solid #083161;
+    color: #193760;
+    margin-left: 10px;
+}
+
+.where_invest_txt {
+
+    color: #9cabc1;
+    font-size: 13px;
+    padding-left: 68px;
+    margin-bottom: 20px; 
 }
 

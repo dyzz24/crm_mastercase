@@ -14,15 +14,47 @@
       <p class='title'>Создаем папку</p>
       <div class="row__names">
         <p>Название</p>
-        <input type="text">
+        <input type="text" [(ngModel)]="this.folder_name_for_post">
       </div>
-      <p class="to_invest_sett">Вложить в другую папку</p>
+      <div class="to_invest_sett" (click)='to_invest_open($event)'>
+        <p class='title_inv'>Вложить в другую папку</p>
+          <div class="to_invest_folders" [ngClass]="{ visible: folder_invest }">
+            <p class='title_txt'>Выберите папку</p>
+            <div class="folders_body">
+              <ul *ngFor="let folder of this.user_folders">
+                    <li><span class='la la-lg la-square-o'></span>
+                          <p class='folders_name' data-id={{folder.id}} (click)='get_folder_id($event)'>{{folder.title}}</p>
+
+                                  <ul *ngFor="let folder_1level of folder.childs">
+                                  <li><span class='la la-lg la-square-o'></span>
+                                  <p class='folders_name' data-id={{folder_1level.id}} (click)='get_folder_id($event)'>{{folder_1level.title}}</p>
+                                      <ul *ngFor="let folder_2level of folder_1level.childs">
+                                        <li>
+                                            <span class='la la-lg la-square-o'></span>
+                                          <p class='folders_name' data-id={{folder_2level.id}} (click)='get_folder_id($event)'>{{folder_2level.title}}</p>
+                                          <ul *ngFor="let folder_3level of folder_2level.childs">
+                                              <li>
+                                                  <span class='la la-lg la-square-o'></span>
+                                                <p class='folders_name' data-id={{folder_3level.id}} (click)='get_folder_id($event)'>{{folder_3level.title}}</p>
+
+                                              </li>
+                                            </ul>
+                                        </li>
+                                      </ul>
+                                  </li>
+                                  </ul>
+                    </li>
+                    
+              </ul>
+            </div>
+          </div>
+      </div>
+      <p class='where_invest_txt'>Будет вложено в папку: {{this.folder_name}}</p>
       <button class='settings'><span class='la la-cog'></span>Настроить автоматическую сортировку</button>
-        <!-- <div class="header">
-          <button class="close" (click)="closeViewer($event)">
-            <span class="la la-close close-edit-inbox"></span>
-            <p class="tooltip">Закрыть</p>
-          </button>
-        </div> -->
+    
+        <div class="bottom__panel">
+          <button class='create' (click)='create_folder()'>Создать</button>
+          <button class='cancel' (click)="closeViewer($event)">Отмена</button>
+        </div>
       </div>
 </div>

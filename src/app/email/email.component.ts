@@ -33,6 +33,9 @@ export class EmailComponent implements OnInit, DoCheck {
   sub;
   user_folders;
 
+  selected_box;
+  selected_folders;
+
   folders = [
     {name: '1level', id: '12', child:
     [{name: '2level', id: '13', child:
@@ -73,6 +76,11 @@ adress;
   }
   ngDoCheck() {
     // console.log(this.emailServ.idPostForHTTP);
+  }
+
+  selected_box_id(id, folders) {
+    this.selected_box = id;
+    this.selected_folders = folders;
   }
 
   open_hidden_folders(e) {
