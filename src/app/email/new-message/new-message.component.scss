@@ -317,8 +317,8 @@ label {
 .filename {
     color: $text-color;
     font-size: 13px;
-    // text-overflow: ellipsis;
-    // white-space: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
     text-align: left;
     line-height: 15px;

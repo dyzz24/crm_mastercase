@@ -11,6 +11,7 @@ import { AuthorizationService } from '../../authorization.service';
 
 
 
+
 @Component({
   selector: 'app-letters',
   templateUrl: './letters.component.html',
@@ -18,7 +19,6 @@ import { AuthorizationService } from '../../authorization.service';
 
 })
 export class LettersComponent implements DoCheck, OnInit, OnDestroy {
-
 
 
 
@@ -570,4 +570,8 @@ new_messages_dblClick(index) {
 //   const size = this.size_Check.nativeElement.offsetWidth;  // отслеживаем ресайз блока НУЖНО ПОТОМ
 //   console.log(size);
 // }
+
+move_folder() {
+  // this.folders_component.move_letter();
+}
 }

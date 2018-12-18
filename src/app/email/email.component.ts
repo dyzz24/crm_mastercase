@@ -7,12 +7,14 @@ import { SocketService } from '../socket.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
   styleUrls: ['./email.component.scss']
 })
 export class EmailComponent implements OnInit, DoCheck {
+
 
   emailItems;
   socket: SocketIOClient.Socket;

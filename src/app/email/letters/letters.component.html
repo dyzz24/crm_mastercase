@@ -45,12 +45,17 @@
               <span class='la la-exclamation'></span>
               <p class="tooltip">Отметить как важные</p>
             </button>
-
+            <button  type='button' (click)='move_folder()'>
+                <span class='la la-hand-o-right'></span>
+                <p class="tooltip">Поместить в папку</p>
+            </button>
           <ng-template #restoreAll >
           <button  type='button' (click)='deleteRestoreLettersAll(1)'>
             <span class='la la-share-alt'></span>
             <p class="tooltip">Восстановить</p>
           </button>
+
+          
         </ng-template>
     </div>
 

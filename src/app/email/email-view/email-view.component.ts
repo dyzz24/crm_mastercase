@@ -73,63 +73,54 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
 
 
-    
-
 
     const requestInterval = setInterval(() => {
       if (this.emailServ.lettersList !== undefined) {
+        // if (this.activatedRoute.snapshot.params.id > this.emailServ.lettersAmount - 1) {
+        //       this.httpPost(
+        //         `${this.emailServ.ip}/mail/mails`,
+        //           // tslint:disable-next-line:max-line-length
+        //           {
+        //             address: this.emailServ.idPostForHTTP,
+        //             boxId: this.emailServ.selectNum,
+        //             limit: +this.activatedRoute.snapshot.params.id,
+        //             offset: 0
+        //           }
+        //         ).subscribe(data2 => {
+        //           console.log(this.emailServ.dataLetters, this.emailServ.lettersAmount);
+        //           this.emailServ.lettersList = this.emailServ.lettersList.concat(data2);
+        //           this.preload_to_wait_status = false;
+        //           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
 
-        clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
-
-      //   if (this.activatedRoute.snapshot.params.id > this.emailServ.lettersAmount - 1) {
-      //     this.httpPost(
-      //       `${this.emailServ.ip}/mail/mails`,
-      //         // tslint:disable-next-line:max-line-length
-      //         {
-      //           address: this.emailServ.idPostForHTTP,
-      //           boxId: this.emailServ.selectNum,
-      //           limit: +this.activatedRoute.snapshot.params.id,
-      //           offset: 0
-      //         }
-      //       ).subscribe(data2 => {
-      //         this.preload_to_wait_status = false;
-      //         this.emailServ.currentId = +this.activatedRoute.snapshot.params.id;
-
-      //         this.emailServ.lettersList = this.emailServ.lettersList.concat(data2);
-      //         this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
-      //         const part_one_data = this.emailServ.lettersList[this.emailServ.currentId];
-      //         this.httpPost(
-      //           `${this.emailServ.ip}/mail/mail`,
-      //           // tslint:disable-next-line:max-line-length
-      //           {address: this.emailServ.idPostForHTTP, mailId: this.id_for_request}).subscribe((dataMails) => {
-      //             // const test = this.selected_letter_part2.push(dataMails);
-
-      //             this.emailServ.haveResponse = true;
-
-      //             this.selectedLetter = Object.assign(part_one_data, dataMails);
-      //             // console.log(this.selectedLetter);
-      //             // this.emailServ.dataLetters = this.emailServ.lettersAmount;
-      //             this.checkerLengthArray_bcc_cc();
-      //             this.checkerLength_addressess();
-
-      //             this.emailServ.hiddenEmpty = true;
-      //             });
-      //   });
-      // }
+        //           this.subscription = this.activatedRoute.params.subscribe(data => {
+        //             this.emailServ.currentId = +data.id;
+        //             this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
+        //             const part_one_data = this.emailServ.lettersList[this.emailServ.currentId];
 
 
 
+        //               this.httpPost(
+        //         `${this.emailServ.ip}/mail/mail`,
+        //         // tslint:disable-next-line:max-line-length
+        //         {address: this.emailServ.idPostForHTTP, mailId: this.id_for_request}).subscribe((dataMails) => {
+        //           // const test = this.selected_letter_part2.push(dataMails);
+        //           this.emailServ.haveResponse = true;
+        //           this.selectedLetter = Object.assign(part_one_data, dataMails);
+        //           this.checkerLengthArray_bcc_cc();
+        //           this.checkerLength_addressess();
+        //           this.emailServ.hiddenEmpty = true;
+        //           });
+        //             this.emailServ.activeLett[data.id] = true;
+        //           });
+        //         });
+        //       } else {
 
         this.preload_to_wait_status = false;
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
-
           this.emailServ.currentId = +data.id;
-
-
           this.id_for_request = this.emailServ.lettersList[this.emailServ.currentId].mail_id;
-
           const part_one_data = this.emailServ.lettersList[this.emailServ.currentId];
 
 
@@ -141,10 +132,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         // const test = this.selected_letter_part2.push(dataMails);
 
         this.emailServ.haveResponse = true;
-
         this.selectedLetter = Object.assign(part_one_data, dataMails);
-        // console.log(this.selectedLetter);
-        // this.emailServ.dataLetters = this.emailServ.lettersAmount;
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
 
@@ -152,7 +140,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         });
           this.emailServ.activeLett[data.id] = true;
         });
-      }
+
+              }
     }, 1000);
 
   }

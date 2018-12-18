@@ -135,5 +135,9 @@ export class FoldersComponent implements OnInit, DoCheck {
       return number; // если нет возвращаю число
   }
 
+  move_letter() {
+      console.log('run');
+  }
+
 }
 
