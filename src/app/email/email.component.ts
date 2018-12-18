@@ -113,7 +113,7 @@ adress;
 
   goUrl(selectNum?) {
 
-    this.emailServ.selectedMess = selectNum; // выбор папки (вход - исх - отпр)
+    // this.emailServ.selectedMess = selectNum; // выбор папки (вход - исх - отпр)
     this.emailServ.hideAvatars = [];
     this.emailServ.idLetters = [];
 

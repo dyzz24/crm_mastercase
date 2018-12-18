@@ -312,36 +312,22 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     this.emailServ.lettersList[i].box_id = booleanParam;
     e.target.parentNode.classList.remove('visible');
     // this.rout.navigate([this.emailServ.urlParams]);
-    this.rout.navigate(['./'], { relativeTo: this.activatedRoute });
-    this.emailServ.hiddenEmpty = false;
+
 
     e.target.closest('.letter__prev').classList.add('letter__status-spam');
 
+
     setTimeout(() => {
-      if (booleanParam === 4) {
-        this.emailServ.lettersList = this.emailServ.lettersList.filter(
-          (val, ind) => {
-            if (val.box_id !== 4) {
-              return val;
-            }
-          }
-        );
-      }
-      if (booleanParam === 0) {
-        this.emailServ.lettersList = this.emailServ.lettersList.filter(
-          (val, ind) => {
-            if (val.box !== 0) {
-              return val;
-            }
-          }
-        );
-      }
+      this.emailServ.lettersList.splice(i, 1);
+
       this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           mailId: +id,
           boxId: booleanParam,
           address: this.emailServ.idPostForHTTP
         })
         .subscribe();
+        this.rout.navigate(['./'], { relativeTo: this.activatedRoute });
+        this.emailServ.hiddenEmpty = false;
     }, 500);
   }
 

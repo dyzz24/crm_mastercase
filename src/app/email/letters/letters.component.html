@@ -119,9 +119,9 @@
             <div class="hideMenu" *ngIf="sent_incomingChecker(i)">
                 <button class='letterMenuButt' *ngIf="!this.emailServ.lettersList[i].work_user_id" (click)='get_work(emailServ.lettersList[i].mail_id, $event, i)'>Взять в работу</button>
                 <button class='letterMenuButt' *ngIf="this.emailServ.lettersList[i].work_user_id" (click)='delete_work(emailServ.lettersList[i].mail_id, $event, i)'>Удалить из работы</button>
-              <button class='letterMenuButt' (click)='spamMark(i,$event,4, this.emailServ.lettersList[i].mail_id)' *ngIf='this.emailServ.lettersList[i].box_id !== 5 && this.emailServ.lettersList[i].box_id !== 3 ; else deleteSpam'>Пометить как спам</button>
+              <button class='letterMenuButt' (click)='spamMark(i,$event,5, this.emailServ.lettersList[i].mail_id)' *ngIf='this.emailServ.lettersList[i].box_id !== 5 && this.emailServ.lettersList[i].box_id !== 3 ; else deleteSpam'>Пометить как спам</button>
               <ng-template #deleteSpam >
-                <button class='letterMenuButt' (click)='spamMark(i,$event,0, this.emailServ.lettersList[i].mail_id)'  *ngIf='this.emailServ.lettersList[i].box_id !== 3'>Удалить из спама</button>
+                <button class='letterMenuButt' (click)='spamMark(i,$event,1, this.emailServ.lettersList[i].mail_id)'  *ngIf='this.emailServ.lettersList[i].box_id !== 3'>Удалить из спама</button>
               </ng-template>
               <button class='letterMenuButt' (click)='toggleImportantMark(i,$event, this.emailServ.lettersList[i].mail_id, true)' *ngIf="this.emailServ.lettersList[i].flagged !== true && this.emailServ.typeMess !== 'spam'; else deleteImportant">Пометить как важное</button>
               <ng-template #deleteImportant>
