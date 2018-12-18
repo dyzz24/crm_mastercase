@@ -36,14 +36,13 @@ export class FoldersComponent implements OnInit, DoCheck {
   open_folders_settings() {
     this.folder_create = true;
   }
-  closeViewer(e) {
+  closeViewer() {
     this.folder_create = false;
     this.folder_invest = false;
-
-      this.id_folder = null;
-      this.folder_name = 'Входящие';
-      this.folder_name_for_post = '';
-      this.all_folders_id = [];
+    this.id_folder = null;
+    this.folder_name = 'Входящие';
+    this.folder_name_for_post = '';
+    this.all_folders_id = [];
   }
 
   to_invest_open(e) {
@@ -59,6 +58,8 @@ export class FoldersComponent implements OnInit, DoCheck {
     this.id_folder = target.getAttribute('id');
     this.folder_name = target.innerText;
     this.folder_invest = ! this.folder_invest;
+    this.randomizer(this.user_folders);
+    this.random_nums_id(this.all_folders_id);
     // this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
     //   this.emailItems = data2.boxes;
     //   this.user_folders = data2.boxes;
@@ -68,24 +69,72 @@ export class FoldersComponent implements OnInit, DoCheck {
   }
 
   create_folder() {
-    //   this.httpPost(`${this.ip}/mail/box`, {
-    //     address: this.box_id
-    //   } , {contentType: 'application/json'}).subscribe((data2) => {
-    // });
-    this.deepSearch(this.user_folders);
+
+      this.randomizer(this.user_folders); // собираю все айдишники в массив
+      this.deepSearch(this.user_folders, this.id_folder);
+      this.closeViewer(); // закрыть
+      this.httpPost(`${this.ip}/mail/box`, {
+        address: this.box_id, boxes: this.user_folders
+      } , {contentType: 'application/json'}).subscribe((data2) => {
+    });
 
 
   }
-  deepSearch(arr) {
+  deepSearch(arr, id_folders_select) {
+
+    if (id_folders_select === null) { // если вложенная папка не выбрана
+      arr.push({title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)}); // пушу в нее объект
+      return false; // выхожу из ф-ии
+    }
+
     for (let i = 0; i < arr.length; i++) {
       if (Array.isArray(arr[i].childs)) {
-        this.deepSearch(arr[i].childs);
+        this.deepSearch(arr[i].childs, id_folders_select);
+    }
+    this.all_folders_id.push(arr[i].id);
+
+    if (arr[i].id === +id_folders_select) {
+      this.all_folders_id.push(arr[i].id);
+
+
+        if (arr[i].childs !== undefined) {
+          arr[i].childs.push({title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)});
+        } else {
+          arr[i].childs = [{title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)}];
+        }
+        // arr[i].childs = []
+    }
+    // this.all_folders_id.push(arr[i].id);
+  }
+
+
+  }
+
+  randomizer(arr?) {
+
+    for (let i = 0; i < arr.length; i++) {
+      if (Array.isArray(arr[i].childs)) {
+        this.randomizer(arr[i].childs);
     }
     this.all_folders_id.push(arr[i].id);
   }
 
-    console.log(this.all_folders_id);
 
+    // const number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5;
+    // return number;
+  }
+
+  random_nums_id(arr) {
+    let number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === number) {
+          number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5;
+            i = 0;
+        }
+
+      }
+      return number;
   }
 
 }
+
