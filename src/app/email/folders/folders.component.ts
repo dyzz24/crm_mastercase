@@ -71,7 +71,7 @@ export class FoldersComponent implements OnInit, DoCheck {
   create_folder() {
 
       this.randomizer(this.user_folders); // собираю все айдишники в массив
-      this.deepSearch(this.user_folders, this.id_folder);
+      this.deepSearch(this.user_folders, this.id_folder); // главная функция
       this.closeViewer(); // закрыть
       this.httpPost(`${this.ip}/mail/box`, {
         address: this.box_id, boxes: this.user_folders
@@ -83,28 +83,27 @@ export class FoldersComponent implements OnInit, DoCheck {
   deepSearch(arr, id_folders_select) {
 
     if (id_folders_select === null) { // если вложенная папка не выбрана
-      arr.push({title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)}); // пушу в нее объект
+      arr.push({title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)}); // пушу в корень объект
       return false; // выхожу из ф-ии
     }
 
     for (let i = 0; i < arr.length; i++) {
-      if (Array.isArray(arr[i].childs)) {
+      if (Array.isArray(arr[i].childs)) { // пробегаюсь по всем массивам - чилдам
         this.deepSearch(arr[i].childs, id_folders_select);
     }
-    this.all_folders_id.push(arr[i].id);
-
-    if (arr[i].id === +id_folders_select) {
-      this.all_folders_id.push(arr[i].id);
 
 
-        if (arr[i].childs !== undefined) {
+    if (arr[i].id === +id_folders_select) { // ищу вложенный чилд
+
+
+        if (arr[i].childs !== undefined) { // если ключ childs есть -
           arr[i].childs.push({title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)});
+          // пушу в него объект с именем и ID
         } else {
-          arr[i].childs = [{title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)}];
+          arr[i].childs = [{title: this.folder_name_for_post, id: this.random_nums_id(this.all_folders_id)}]; // иначе создаю ребенка
         }
-        // arr[i].childs = []
+
     }
-    // this.all_folders_id.push(arr[i].id);
   }
 
 
@@ -116,7 +115,7 @@ export class FoldersComponent implements OnInit, DoCheck {
       if (Array.isArray(arr[i].childs)) {
         this.randomizer(arr[i].childs);
     }
-    this.all_folders_id.push(arr[i].id);
+    this.all_folders_id.push(arr[i].id); // собираю все ID-шки которые есть
   }
 
 
@@ -125,15 +124,15 @@ export class FoldersComponent implements OnInit, DoCheck {
   }
 
   random_nums_id(arr) {
-    let number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5;
+    let number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5; // создаю рандом
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === number) {
-          number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5;
-            i = 0;
+        if (arr[i] === number) { // если рандом есть в объекте -
+          number = Math.floor(Math.random() * (1000 - 100 + 1)) + 5; // новый рандом
+            i = 0; // обнуляю счетчик
         }
 
       }
-      return number;
+      return number; // если нет возвращаю число
   }
 
 }

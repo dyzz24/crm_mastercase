@@ -85,6 +85,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       } else {
         this.loading_list_letters(false);
       }
+
     }); // подписка
 
   }
@@ -110,6 +111,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
                   this.emailServ.lettersList = data; // главный массив всех всех писем
                   this.emailServ.dataLetters = this.emailServ.lettersAmount;
                   });
+
             }
           }, 1000);
         }
@@ -464,12 +466,12 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       key.checked = false;
     }
     const id_for_important = this.emailServ.idLetters;
-    this.httpPost(`${this.emailServ.ip}/mail/set`, {
-      mailId: id_for_important,
-      value: true,
-      flag: 'flagged',
-      address: this.emailServ.idPostForHTTP })
-      .subscribe();
+    // this.httpPost(`${this.emailServ.ip}/mail/set`, {
+    //   mailId: id_for_important,
+    //   value: true,
+    //   flag: 'flagged',
+    //   address: this.emailServ.idPostForHTTP })
+    //   .subscribe();
 
       this.emailServ.lettersList.filter((val, ind, arr) => {
         for (const key of id_for_important) {
