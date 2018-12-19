@@ -34,9 +34,24 @@ this.socket.on('mail/work', (msg) => {
   console.log(dataStr);
   if (dataStr.status === 4) {
     this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  взял письмо в работу`);
+    this.emailServ.lettersList.map((val, ind) => {
+      if (+val.mail_id === +dataStr.mailId) {
+        val.work_user_id = {
+          email: this.emailServ.idPostForHTTP,
+          firstName: this.authorizationServ.firstName,
+          lastName: this.authorizationServ.lastName,
+          userId: this.authorizationServ.userId};
+      }
+  });
   }
   if (dataStr.status === 0) {
     this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  удалил письмо из работы`);
+    this.emailServ.lettersList.map((val, ind) => {
+      if (+val.mail_id === +dataStr.mailId) {
+        val.work_user_id = null;
+      }
+  });
+
   }
   if (dataStr.status === 2) {
 this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.firstName} ${dataStr.lastName}`);

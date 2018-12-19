@@ -128,7 +128,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
                 this.emailServ.notLettersFlag = false;
               }
               this.emailServ.lettersList = data; // главный массив всех всех писем
-              // console.log(data);
+              console.log(data);
 
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
 
@@ -524,37 +524,37 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 get_work(id, e, index) {
 
-  if (this.emailServ.lettersList[index].work_user_id === null ||
-    this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId
-  ) {
+  // if (this.emailServ.lettersList[index].work_user_id === null ||
+  //   this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId
+  // ) {
   e.target.parentNode.classList.remove('visible');
   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
-  this.emailServ.lettersList[index].work_user_id = {email: this.emailServ.idPostForHTTP,
-    firstName: this.authorizationServ.firstName,
-    lastName: this.authorizationServ.lastName,
-    userId: this.authorizationServ.userId};
+  // this.emailServ.lettersList[index].work_user_id = {email: this.emailServ.idPostForHTTP,
+  //   firstName: this.authorizationServ.firstName,
+  //   lastName: this.authorizationServ.lastName,
+  //   userId: this.authorizationServ.userId};
   // this.emailServ.lettersList[index].draft  = this.emailServ.idPostForHTTP;
-  } else {
-    e.target.parentNode.classList.remove('visible');
-    this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
-  .subscribe();
-    return;
-  }
+  // } else {
+  //   e.target.parentNode.classList.remove('visible');
+  //   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
+  // .subscribe();
+  //   return;
+  // }
 }
 
 delete_work(id, e, index) {
-  if (this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId) {
+  // if (this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId) {
   e.target.parentNode.classList.remove('visible');
   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: false, address: this.emailServ.idPostForHTTP })
   .subscribe();
-  this.emailServ.lettersList[index].work_user_id = null;
-    } else {
-      e.target.parentNode.classList.remove('visible');
-      this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: false, address: this.emailServ.idPostForHTTP })
-      .subscribe();
-       return;
-    }
+  // this.emailServ.lettersList[index].work_user_id = null;
+    // } else {
+    //   e.target.parentNode.classList.remove('visible');
+    //   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: false, address: this.emailServ.idPostForHTTP })
+    //   .subscribe();
+    //    return;
+    // }
 
 }
 

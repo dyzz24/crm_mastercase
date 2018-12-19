@@ -69,7 +69,6 @@ adress;
 
          return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
       });
-      console.log(this.user_folders);
       // console.log(this.emailItems)
       this.socketServ.lettersSocketConnect();
     });
