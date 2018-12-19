@@ -322,27 +322,14 @@ p{
     }
 }
 .in_work_not-me {
+    border: 0px solid white;
     background: #2d5a81;
     p {
         color: #ffffff;
     }
 }
 
-.in_work_indicator_not-me {
 
-    background: white !important;
-    border: 1px solid #6b80a0;
-}
-
-.in_work_indicator {
-    position: absolute;
-    top:-5px;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    background: #8ecdf6;
-    border-radius: 50%;
-}
 
 .text {
     width: 100%;

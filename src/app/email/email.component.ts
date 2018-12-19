@@ -64,7 +64,12 @@ adress;
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
           this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
-      this.user_folders = data2.boxes;
+
+      this.user_folders = data2.boxes.map(item => {
+
+         return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
+      });
+      console.log(this.user_folders);
       // console.log(this.emailItems)
       this.socketServ.lettersSocketConnect();
     });

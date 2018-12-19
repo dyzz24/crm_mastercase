@@ -142,6 +142,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         });
 
               }
+
     }, 1000);
 
   }

@@ -29,6 +29,7 @@ export class FoldersComponent implements OnInit, DoCheck {
   }
   ngDoCheck() {
     // console.log(this.folder_name_for_post);
+    // console.log(this.user_folders);
   }
   public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
@@ -56,7 +57,7 @@ export class FoldersComponent implements OnInit, DoCheck {
   get_folder_id(e) {
     const target = e.target;
     this.id_folder = target.getAttribute('id');
-    this.folder_name = target.innerText;
+    this.folder_name = target.innerHTML;
     this.folder_invest = ! this.folder_invest;
     this.randomizer(this.user_folders);
     this.random_nums_id(this.all_folders_id);
@@ -73,8 +74,9 @@ export class FoldersComponent implements OnInit, DoCheck {
       this.randomizer(this.user_folders); // собираю все айдишники в массив
       this.deepSearch(this.user_folders, this.id_folder); // главная функция
       this.closeViewer(); // закрыть
+      const obj_for_resp = [{id: 1, childs: this.user_folders}];
       this.httpPost(`${this.ip}/mail/box`, {
-        address: this.box_id, boxes: this.user_folders
+        address: this.box_id, boxes: obj_for_resp
       } , {contentType: 'application/json'}).subscribe((data2) => {
     });
 

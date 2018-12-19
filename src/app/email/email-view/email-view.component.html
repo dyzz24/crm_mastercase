@@ -75,8 +75,7 @@ routerLink="./create"
   <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
      
          <div class='left__panel end' *ngIf="this.selectedLetter?.work_user_id !== null">
-          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id !== this.emailServ.idPostForHTTP" ><p>{{this.selectedLetter?.work_user_id}}</p>
-          <div class="in_work_indicator" [class.in_work_indicator_not-me]="this.selectedLetter?.work_user_id !== this.emailServ.idPostForHTTP"></div>
+          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id.userId !== this.authorizationServ.userId" ><p>{{this.selectedLetter?.work_user_id.firstName}} {{this.selectedLetter?.work_user_id.lastName}}</p>
           </div>
         </div>
       

@@ -169,9 +169,8 @@
 
           <div class="hidden_subfolder" 
           routerLinkActive="visibl_hidden_folders"
-
           >
-              <div class="folders__child" *ngFor="let folder of this?.user_folders[i].boxes">
+              <div class="folders__child" *ngFor="let folder of this?.user_folders[i]">
             <div class="type_message"
             routerLinkActive="active_typeMess"
             >
@@ -318,7 +317,7 @@
               <p>Спам</p>
             </div>
           </div>
-          <div class="type_message" (click)='selected_box_id(this.emailItems[i].address, this.user_folders[i].boxes)'>
+          <div class="type_message" (click)='selected_box_id(this.emailItems[i].address, this.user_folders[i])'>
             <app-folders [user_folders]='this.selected_folders' [box_id]='this.selected_box' [ip]='this.emailServ.ip'>
 
             </app-folders>

@@ -19,7 +19,7 @@ export class SocketService {
     if (this.socketConnectedFlag === true) { // если уже был коннект, выхожу
       return;
     } else {
-    this.socket = io('ws://10.0.1.33:3000', {
+    this.socket = io('ws://10.0.1.10:3000', {
       query: {
           // tslint:disable-next-line:max-line-length
           token: this.authorizationServ.accessToken
@@ -29,27 +29,17 @@ export class SocketService {
     this.showSuccess(`Пользователь  залогинен`);
     this.socketConnectedFlag = true;  // как только законектился, меняю флаг чтобы не пускать кучу запросов
 });
-this.socket.on('msg', (msg) => {
+this.socket.on('mail/work', (msg) => {
   const dataStr = JSON.parse(msg);
-  console.log(msg);
-  if (dataStr.status === 1) {
-    this.showSuccess(`Пользователь ${dataStr.address} взял письмо в работу`);
-  this.emailServ.lettersList.map((val, ind) => {
-          if (+val.id === +dataStr.mailId) {
-            val.draft = dataStr.address;
-          }
-    });
+  console.log(dataStr);
+  if (dataStr.status === 4) {
+    this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  взял письмо в работу`);
   }
   if (dataStr.status === 0) {
-  this.showSuccess(`Письмо снято`);
-  this.emailServ.lettersList.map((val, ind) => {
-    if (+val.id === +dataStr.mailId) {
-      val.draft = null;
-    }
-});
+    this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  удалил письмо из работы`);
   }
   if (dataStr.status === 2) {
-this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.address}`);
+this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.firstName} ${dataStr.lastName}`);
   }
  });
 
