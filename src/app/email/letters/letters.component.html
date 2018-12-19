@@ -9,7 +9,24 @@
       <ng-template #messagesDownload>  
       <div class="no-messages" *ngIf='this.emailServ.notLettersFlag === true && this.stopSearch !== true && this.filterError !== true; 
       else haveMess'>
-<div class="header"></div>
+      <div class="header">
+          <div class="header__search">
+            <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
+            <div class="search__icons">
+            <span class='la la-min la-search' *ngIf="this.startSearch === true"></span>
+            <span class='la  la-min la-refresh search-ref' *ngIf="this.stopSearch === true"></span>
+            <span class='la la-min la-check' *ngIf="this.successSearch === true"></span>
+            </div>
+          </div>
+          <button class='letters__refresh' type='button' (click)='get_message()'>
+            <span class='la  la-refresh'></span>
+            <p class="tooltip">Обновить</p>
+          </button>
+          <button class='letters__locate' (click)='scrollTop($event)' type='button'>
+            <span class='la  la-long-arrow-up'></span>
+            <p class="tooltip">Наверх</p>
+          </button>
+        </div>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>

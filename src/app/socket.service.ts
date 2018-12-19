@@ -31,21 +31,21 @@ export class SocketService {
 });
 this.socket.on('mail/work', (msg) => {
   const dataStr = JSON.parse(msg);
-  // console.log(dataStr);
+  console.log(dataStr);
   if (dataStr.status === 4) {
-    this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  взял письмо в работу`);
+    this.showSuccess(`Пользователь ${dataStr.firstName} ${dataStr.lastName}  взял письмо в работу`);
     this.emailServ.lettersList.map((val, ind) => {
       if (+val.mail_id === +dataStr.mailId) {
         val.work_user_id = {
-          email: this.emailServ.idPostForHTTP,
-          firstName: this.authorizationServ.firstName,
-          lastName: this.authorizationServ.lastName,
-          userId: this.authorizationServ.userId};
+          email: dataStr.email,
+          firstName: dataStr.firstName,
+          lastName: dataStr.lastName,
+          userId: dataStr.userId === this.authorizationServ.userId && this.authorizationServ.userId || 100};
       }
   });
   }
   if (dataStr.status === 0) {
-    this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  удалил письмо из работы`);
+    this.showSuccess(`Пользователь  удалил письмо из работы`);
     this.emailServ.lettersList.map((val, ind) => {
       if (+val.mail_id === +dataStr.mailId) {
         val.work_user_id = null;
@@ -58,9 +58,13 @@ this.showError(`Письмо УЖЕ взято в работу пользова�
   }
  });
 
- this.socket.on('new', (newLett) => {
+ this.socket.on('mail/sync', (newLett) => {
   const dataLetter = JSON.parse(newLett);
-  this.emailServ.lettersList.unshift(dataLetter);
+  console.log(dataLetter);
+  dataLetter.map(val => {
+    this.emailServ.lettersList.unshift(val);
+  });
+  // this.emailServ.lettersList.unshift(dataLetter);
  });
 }
    // this.socket.on('connect_error', (error) => {

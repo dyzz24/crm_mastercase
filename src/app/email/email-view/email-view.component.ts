@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable, Subscription, UnsubscriptionError } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
@@ -353,13 +353,36 @@ onFileChange(event) {
 }
 
 gownload_attach(e, attach) {
-  this.httpPost(`${this.emailServ.ip}/mail/download`, {
+
+
+
+
+  this.httpDownload(`${this.emailServ.ip}/mail/download`, {
     hashes: [attach.hash]
 }).subscribe(data => {
 
-  console.log(data);
+
+const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(data);
+            downloadLink.download = attach.name;
+            downloadLink.click();
+
+
 });
 
 }
+
+public httpDownload(url: string, body, options?): Observable<any> {
+
+  return this.http.post(url, body, {headers: {
+    Authorization: `Bearer ${this.authorizationServ.accessToken}`,
+    }, responseType: 'blob' as 'json'});
+}
+
+
+
+
+
+
 
 }

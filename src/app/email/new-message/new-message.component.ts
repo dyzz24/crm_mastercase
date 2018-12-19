@@ -127,7 +127,10 @@ private formData = new FormData(); // дата для отправки на се
   // });
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
     this.formData.append('files', this.files_for_view[i]);
+
 }
+
+
 
   this.formData.append('json', JSON.stringify({
     from: [
@@ -141,6 +144,7 @@ private formData = new FormData(); // дата для отправки на се
     subject: this.subject,
     html: this.messages
   }));
+
 
   this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
 });
@@ -204,6 +208,8 @@ add_drag_input_data(objForData) {
     }
   }
 });
+
+
 
 
 
