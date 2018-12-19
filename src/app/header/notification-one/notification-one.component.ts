@@ -48,6 +48,9 @@ export class NotificationOneComponent implements OnInit, DoCheck {
   getInfo() {
     this.httpPost(`${this.authorizationServ.ip}/mail/boxes`, {} ,
       {contentType: 'application/json'}).subscribe((data2) => {
+        if (data2.length === 0) {
+          return;
+        }
         data2.map((val) => {
           this.all_email_address = [...val.address]; // собираю все адреса ящиков
           this.newMessagesCountArray = [...this.newMessagesCountArray, +val.count]; // собираю их каунты

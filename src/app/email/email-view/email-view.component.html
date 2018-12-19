@@ -128,8 +128,10 @@ routerLink="./create"
         </div>
           </div>
           <div class="attachment__block" *ngIf="this.selectedLetter?.attachments !== false">
-            <div class="attach__container">
-              <div class="attachment__item" *ngFor="let attach of this.selectedLetter?.recipients.attachments; let i = index">
+            <div class="attach__container" >
+              <div class="attachment__item" *ngFor="let attach of this.selectedLetter?.recipients.attachments; let i = index"
+              (click)='gownload_attach($event, attach)'
+              >
               <span [class]='attach.name | attachPipe'></span>
               <p class='filename'>{{attach.name}}
                

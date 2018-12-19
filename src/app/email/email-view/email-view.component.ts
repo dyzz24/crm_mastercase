@@ -351,4 +351,13 @@ onFileChange(event) {
 
 }
 
+gownload_attach(e, attach) {
+  this.httpPost(`${this.emailServ.ip}/mail/download`, {
+    hashes: [attach.hash]
+}).subscribe(data => {
+  console.log(data);
+});
+
+}
+
 }

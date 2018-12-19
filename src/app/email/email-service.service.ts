@@ -118,6 +118,7 @@ export class EmailServiceService {
     this.to_answer = '';
     this.to_subject = '';
     this.to_forward = '';
+    this.to_all_answer = [];
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
     if (files.length > 0) { // если файл есть

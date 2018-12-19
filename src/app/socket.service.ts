@@ -31,7 +31,7 @@ export class SocketService {
 });
 this.socket.on('mail/work', (msg) => {
   const dataStr = JSON.parse(msg);
-  console.log(dataStr);
+  // console.log(dataStr);
   if (dataStr.status === 4) {
     this.showSuccess(`Пользователь ${this.authorizationServ.firstName} ${this.authorizationServ.lastName}  взял письмо в работу`);
     this.emailServ.lettersList.map((val, ind) => {
