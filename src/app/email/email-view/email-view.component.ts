@@ -133,7 +133,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.emailServ.haveResponse = true;
         this.selectedLetter = Object.assign(part_one_data, dataMails);
-        console.log(this.selectedLetter);
+        // console.log(this.selectedLetter);
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
 
@@ -356,6 +356,7 @@ gownload_attach(e, attach) {
   this.httpPost(`${this.emailServ.ip}/mail/download`, {
     hashes: [attach.hash]
 }).subscribe(data => {
+
   console.log(data);
 });
 
