@@ -151,7 +151,7 @@ routerLink="./create"
     
     <div [innerHTML]="this.selectedLetter?.html | innerhtml" *ngIf="this.selectedLetter?.html !== null; else viewText" class='cont_html'></div>
     <ng-template #viewText >
-    <div class='cont_html'>{{this.selectedLetter?.text}}</div>
+    <div class='cont_html' [innerText]="this.selectedLetter?.text"></div>
   </ng-template>
   </div>
 </div>
