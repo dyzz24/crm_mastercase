@@ -128,7 +128,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
                 this.emailServ.notLettersFlag = false;
               }
               this.emailServ.lettersList = data; // главный массив всех всех писем
-              // console.log(data);
+              console.log(data);
 
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
 

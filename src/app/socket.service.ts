@@ -36,11 +36,11 @@ this.socket.on('mail/work', (msg) => {
     this.showSuccess(`Пользователь ${dataStr.firstName} ${dataStr.lastName}  взял письмо в работу`);
     this.emailServ.lettersList.map((val, ind) => {
       if (+val.mail_id === +dataStr.mailId) {
-        val.work_user_id = {
+          val.work_user_id = {
           email: dataStr.email,
           firstName: dataStr.firstName,
           lastName: dataStr.lastName,
-          userId: dataStr.userId === this.authorizationServ.userId && this.authorizationServ.userId || 100};
+          userId: dataStr.userId};
       }
   });
   }
