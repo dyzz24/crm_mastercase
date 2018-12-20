@@ -1,0 +1,29 @@
+<div class="folders" [ngClass]="{visible: this.state_open}">
+
+    <ul *ngFor="let folder of this.all_folders">
+        <li><span class='la la-lg la-square-o'></span>
+              <p class='folders_name' data-id={{folder.id}} (click)='change_folder($event)'>{{folder.title}}</p>
+
+                      <ul *ngFor="let folder_1level of folder.childs">
+                      <li><span class='la la-lg la-square-o'></span>
+                      <p class='folders_name' data-id={{folder_1level.id}} (click)='change_folder($event)'>{{folder_1level.title}}</p>
+                          <ul *ngFor="let folder_2level of folder_1level.childs">
+                            <li>
+                                <span class='la la-lg la-square-o'></span>
+                              <p class='folders_name' data-id={{folder_2level.id}} (click)='change_folder($event)'>{{folder_2level.title}}</p>
+                              <ul *ngFor="let folder_3level of folder_2level.childs">
+                                  <li>
+                                      <span class='la la-lg la-square-o'></span>
+                                    <p class='folders_name' data-id={{folder_3level.id}} (click)='change_folder($event)'>{{folder_3level.title}}</p>
+
+                                  </li>
+                                </ul>
+                            </li>
+                          </ul>
+                      </li>
+                      </ul>
+        </li>
+        
+  </ul>
+
+</div>

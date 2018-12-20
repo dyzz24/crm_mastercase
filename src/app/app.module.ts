@@ -30,6 +30,7 @@ import { SocketService } from './socket.service';
 import { TemplateComponent } from './email/template/template.component';
 import { PreserverComponent } from './preserver/preserver.component';
 import { FoldersComponent } from './email/folders/folders.component';
+import { FoldersListComponent } from './email/letters/folders-list/folders-list.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { FoldersComponent } from './email/folders/folders.component';
     TemplateComponent,
     PreserverComponent,
     FoldersComponent,
+    FoldersListComponent,
 
   ],
   imports: [

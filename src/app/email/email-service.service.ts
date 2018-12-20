@@ -70,6 +70,7 @@ export class EmailServiceService {
   to_forward;
   sub;
   files = []; // для прокидывания файлов из компонента в компонент, нужно явно посылать пустым
+  folders;
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {

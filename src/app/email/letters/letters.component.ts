@@ -39,6 +39,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   successSearch = false;
   sub;
   subscription: Subscription;
+  folder_list_state = false;
 
   // @ViewChild('size_Check') // для отслеживания размера блока
   // size_Check: ElementRef;
@@ -222,8 +223,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 
   ngDoCheck() {
-    // console.log( this.emailServ.lettersList);
     // this.activatedRoute.params.subscribe(params => console.log(params));
+
   }
 
 
@@ -577,7 +578,7 @@ new_messages_dblClick(index) {
 // }
 
 move_folder() {
-  // this.folders_component.move_letter();
+  this.folder_list_state = ! this.folder_list_state;
 }
 
 dragElemStart(elemId, e) {
