@@ -113,7 +113,7 @@ export class EmailServiceService {
     return firstLett;
   }
 
-  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?, files?) {
+  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?, files?, param_text?, param_html?) {
     const newArray = [];
     this.to_answer = '';
     this.to_subject = '';
@@ -121,6 +121,11 @@ export class EmailServiceService {
     this.to_all_answer = [];
     this.hiddenEmpty = true;
     this.to_answer = param_to_answer;
+    if (param_html === null) {
+      this.to_forward = param_text;
+    } else {
+      this.to_forward = param_html;
+    }
     if (files.length > 0) { // если файл есть
       this.files = files; // ставит его в стэйт
     } else {
@@ -142,10 +147,9 @@ export class EmailServiceService {
       }
       this.to_all_answer = newArray;
 
-
-
     });
   }
+
   }
   new_clear_message() {
     this.to_answer = '';

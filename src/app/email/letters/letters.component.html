@@ -145,8 +145,8 @@
               <ng-template #deleteImportant>
                   <button class='letterMenuButt' (click)='toggleImportantMark(i,$event, this.emailServ.lettersList[i].mail_id, false)' *ngIf="this.emailServ.typeMess !== 'spam'">Удалить из важных</button>
               </ng-template>
-              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 3)' *ngIf='this.emailServ.lettersList[i].box_id !== 3'>Удалить</button>
-              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 1)' *ngIf='this.emailServ.lettersList[i].box_id === 3'>Восстановить</button>
+              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 3, i)' *ngIf='this.emailServ.lettersList[i].box_id !== 3'>Удалить</button>
+              <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 1, i)' *ngIf='this.emailServ.lettersList[i].box_id === 3'>Восстановить</button>
             </div>
           </div>
         </div>

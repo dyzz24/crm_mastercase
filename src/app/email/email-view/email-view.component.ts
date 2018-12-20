@@ -322,21 +322,20 @@ onFileChange(event) {
 
 gownload_attach(e, attach) {
 
-
-
-
   this.httpDownload(`${this.emailServ.ip}/mail/download`, {
     hashes: [attach.hash]
 }).subscribe(data => {
-
-
 const downloadLink = document.createElement('a');
             downloadLink.href = window.URL.createObjectURL(data);
             downloadLink.download = attach.name;
             downloadLink.click();
-
-
 });
+}
+
+download_all_attach(attach) {
+  console.log(attach);
+  const hashes = [];
+  // hashes.push()
 
 }
 

@@ -29,7 +29,6 @@ export class FoldersComponent implements OnInit, DoCheck {
   }
   ngDoCheck() {
     // console.log(this.folder_name_for_post);
-    // console.log(this.user_folders);
   }
   public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});

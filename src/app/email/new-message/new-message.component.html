@@ -71,11 +71,9 @@
   <label>
       <span class='la la-paperclip visible'></span>
   <input type='file' class='file_btn' (change)='onFileChange($event)' multiple>
-  <span class='button__title'>Прикрепить файл</span>
+  <span class='button__title'>Прикрепить файл или перетащите файлы</span>
 </label>
 
-
-      <p class='other__text'>Или перетащите файлы</p>
 
 </div>
 
@@ -100,7 +98,6 @@
     <div class="editor-qu">
       <quill-editor [(ngModel)]='this.emailServ.to_forward' 
       class='quill_styles'
-      
       [(ngModel)]='messages'>
       
       

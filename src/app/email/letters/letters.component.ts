@@ -395,7 +395,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     }
   }
 
-  deleteRestoreLetter(id, e, box) {
+  deleteRestoreLetter(id, e, box, index) {
     e.target.parentNode.classList.remove('visible');
     e.target.closest('.letter__prev').classList.add('dellLetter');
     setTimeout(() => {
@@ -405,23 +405,18 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           boxId: +box,
           address: this.emailServ.idPostForHTTP
         }).subscribe();
-      for (let i = 0; i < this.emailServ.lettersList.length; i++) {
-        if (this.emailServ.lettersList[i].id === idelem.id) {
-          this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
-          this.emailServ.index = i;
-        }
-      }
+      // for (let i = 0; i < this.emailServ.lettersList.length; i++) {
+      //   if (this.emailServ.lettersList[i].id === idelem.id) {
+      //     this.emailServ.selectedLetter = this.emailServ.lettersList[i + 1];
+      //     this.emailServ.index = i;
+      //   }
+      // }
 
       const navigatePath = this.rout.url.replace(/\/view\/.*/, ''); // стартовый урл
-      if (this.emailServ.currentId <= 0) { // если урл равен или меньше нуля
-        const new_url = navigatePath + '/view/' + 0; // ставлю в ноль
-        this.rout.navigate([new_url]); // перехожу
-      } else {
-        const new_url = navigatePath + '/view/' + (+this.emailServ.currentId - 1); // иначе при удалении перехожу к предыдущему элементу let
-        this.rout.navigate([new_url]);
-      }
+      this.emailServ.hiddenEmpty = false;
+      this.rout.navigate([navigatePath]);
 
-        this.emailServ.lettersList.splice(this.emailServ.currentId, 1); // удаляю из представления
+        this.emailServ.lettersList.splice(index, 1); // удаляю из представления
 
 
       if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
@@ -438,7 +433,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             )
             .subscribe(data => {
 
-              this.emailServ.lettersList = data;
+    this.emailServ.lettersList = data;
     this.emailServ.hideAvatars = []; // чтоб инпуты работали
     this.emailServ.idLetters = []; // обнуляю корзину на удаление
     this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
