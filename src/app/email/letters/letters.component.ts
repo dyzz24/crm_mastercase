@@ -584,4 +584,8 @@ new_messages_dblClick(index) {
 move_folder() {
   // this.folders_component.move_letter();
 }
+
+dragElemStart(elemId, e) {
+  e.dataTransfer.setData('mail_id', elemId);
+}
 }

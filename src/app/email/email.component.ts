@@ -37,13 +37,6 @@ export class EmailComponent implements OnInit, DoCheck {
 
   selected_box;
   selected_folders;
-
-  folders = [
-    {name: '1level', id: '12', child:
-    [{name: '2level', id: '13', child:
-    [{name: '3level', id: '14', child:
-    [{name: '4level', id: '7', child: [{name: 'test21', id: '8'},
-    {name: 'test22', id: '33'}]}]}]}, {name: '2level-2', id: '22', child: [{name: '3level-2', id: '38'}]}]}];
 adress;
   constructor(
     public element: ElementRef,
@@ -181,6 +174,43 @@ this._rout.navigate(['email/']);
 loadAmount(count) {   // для количества загруженных писем
   this.emailServ.lettersAmount = count;
 }
+
+drop_letter(e) {
+
+  const data_mail_id = e.dataTransfer.getData('mail_id');
+  this.folder_selection_exit(e);
+  const data_folder_id = e.target.closest('.link_area').id;
+
+  this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+    mailId: +data_mail_id,
+    boxId: +data_folder_id,
+    address: this.emailServ.idPostForHTTP
+  }).subscribe();
+  this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
+    if (+val.mail_id !== +data_mail_id) {
+      return val;
+    }
+    });
+
+}
+
+folder_selection(e) {
+
+  const target = e.target.closest('.type_message');
+  target.classList.add('folder_selection');
+}
+
+folder_selection_exit(e) {
+
+  const target = e.target.closest('.type_message');
+  target.classList.remove('folder_selection');
+}
+
+allowDrop(e) {
+  e.preventDefault();
+}
+
+
 }
 
 

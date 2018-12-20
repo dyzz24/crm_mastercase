@@ -185,21 +185,31 @@ if (this.subscription) {
 
 
   selectMess(n) {
-    // this.activatedRoute.params;
     this.checkerLengthArray_bcc_cc();
     this.checkerLength_addressess();
+    let current_id; // id письма
+    let current_index; // его индекс в массиве писем
 
-    this.emailServ.currentId = this.emailServ.currentId + n;
 
-if (this.emailServ.currentId === this.emailServ.lettersList.length) {
-  this.emailServ.currentId = 0;
+    this.emailServ.lettersList.filter((val, ind) => {
+        if (val.mail_id === this.emailServ.currentId) {
+          current_index = ind + n; // отлавливаю текущий индекс (через id url'а) + n
+        }
+    });
+
+
+if (current_index === this.emailServ.lettersList.length) { // если элемент последний в списке
+  current_index = 0; // ставлю индекс в ноль
 }
 
-if (this.emailServ.currentId < 0) {
-  this.emailServ.currentId = this.emailServ.lettersList.length - 1;
+if (current_index < 0) { // если первый
+  current_index = this.emailServ.lettersList.length - 1; // ставлю в последний индекс
 }
 
-this._rout.navigate(['../' + this.emailServ.currentId], { relativeTo: this.activatedRoute });
+current_id =  this.emailServ.lettersList[current_index].mail_id; // получаю новое id для урла
+
+
+this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); // перехожу по урлу
   }
 
   hideMenuShow() {

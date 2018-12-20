@@ -175,9 +175,13 @@
             routerLinkActive="active_typeMess"
             >
               <div class="link_area one_level_fold"
+              (drop)="drop_letter($event)"
+              (dragover)="allowDrop($event)"
+              (dragover)='folder_selection($event)'
+              (dragleave)='folder_selection_exit($event)'
               (click)="goUrl(1)"
               routerLink="./{{this.emailItems[i].address}}/{{folder.id}}"
-              
+              id={{folder.id}}
               >
                 <span class="la la-lg la-square-o"></span>
                 <p>{{folder.title}}</p>
@@ -201,7 +205,13 @@
                 >
                   <div class="link_area two_level_fold"
                   routerLink="./{{this.emailItems[i].address}}/{{folder_1level.id}}"
-                  (click)="goUrl(0)" 
+
+              (drop)="drop_letter($event)"
+              (dragover)="allowDrop($event)"
+              (dragenter)='folder_selection($event)'
+              (dragleave)='folder_selection_exit($event)'
+              (click)="goUrl(1)"
+              id={{folder_1level.id}}
                   >
                     <span class="la la-lg la-square-o"></span>
                     <p>{{folder_1level.title}}</p>
@@ -223,7 +233,13 @@
                     >
                       <div class="link_area three_level_fold"
                       routerLink="./{{this.emailItems[i].address}}/{{folder_2level.id}}"
-                      (click)="goUrl(0)"
+
+              (drop)="drop_letter($event)"
+              (dragover)="allowDrop($event)"
+              (dragenter)='folder_selection($event)'
+              (dragleave)='folder_selection_exit($event)'
+              (click)="goUrl(1)"
+              id={{folder_2level.id}}
                       >
                         <span class="la la-lg la-square-o"></span>
                         
@@ -244,7 +260,13 @@
                         >
                           <div class="link_area four_level_fold"
                           routerLink="./{{this.emailItems[i].address}}/{{folder_3level.id}}"
-                          (click)="goUrl(0)"
+
+              (drop)="drop_letter($event)"
+              (dragover)="allowDrop($event)"
+              (dragenter)='folder_selection($event)'
+              (dragleave)='folder_selection_exit($event)'
+              (click)="goUrl(1)"
+              id={{folder_3level.id}}
                           >
                             <span class="la la-lg la-square-o"></span>
                             <p>{{folder_3level.title}}</p>
@@ -264,7 +286,13 @@
                             >
                               <div class="link_area five_level_fold"
                               routerLink="./{{this.emailItems[i].address}}/{{folder_4level.id}}"
-                              (click)="goUrl(0)"
+
+              (drop)="drop_letter($event)"
+              (dragover)="allowDrop($event)"
+              (dragenter)='folder_selection($event)'
+              (dragleave)='folder_selection_exit($event)'
+              (click)="goUrl(1)"
+              id={{folder_4level.id}}
                               >
                                 <span class="la la-lg la-square-o"></span>
                                 <p>{{folder_4level.title}}</p>
