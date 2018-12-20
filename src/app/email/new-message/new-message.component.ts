@@ -120,16 +120,11 @@ private formData = new FormData(); // дата для отправки на се
   }
 
   sendMessage() {
-  //   this.httpPost(
-  //     `${this.emailServ.ip}/mail/send`,
-  //     // tslint:disable-next-line:max-line-length
-  //     { subject: this.subject, text: this.messages, html: this.messages, to: this.to}).subscribe((data) => {
-  // });
+
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
     this.formData.append('files', this.files_for_view[i]);
 
 }
-
 
 
   this.formData.append('json', JSON.stringify({
@@ -144,7 +139,6 @@ private formData = new FormData(); // дата для отправки на се
     subject: this.subject,
     html: this.messages
   }));
-
 
   this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
 });
