@@ -49,10 +49,9 @@ export class PreserverComponent implements OnInit {
 }
 
 state_url_go(i) {
-  this.rout.navigate(['/']); // костыль, но работает
-  setTimeout(() => {
-    this.rout.navigate([this.urls_array[i].url_states]);
-  }, 10);
+  // this.rout.navigate(['/']); // костыль, но работает (а теперь и без костыля)
+  this.rout.navigate([this.urls_array[i].url_states]);
+
 }
 
 }

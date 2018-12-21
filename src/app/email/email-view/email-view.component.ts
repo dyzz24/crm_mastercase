@@ -333,9 +333,19 @@ const downloadLink = document.createElement('a');
 }
 
 download_all_attach(attach) {
-  console.log(attach);
-  const hashes = [];
-  // hashes.push()
+  const hashes = attach.map(val => {
+      return val.hash;
+  });
+  this.httpDownload(`${this.emailServ.ip}/mail/download`, {
+    hashes: hashes
+}).subscribe(data => {
+const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(data);
+            downloadLink.download = 'files.zip';
+            downloadLink.click();
+});
+
+
 
 }
 

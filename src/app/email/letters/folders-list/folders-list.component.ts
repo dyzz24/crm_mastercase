@@ -15,8 +15,8 @@ export class FoldersListComponent implements OnInit, DoCheck {
   @Input() all_folders; // все папки
   @Input() selected_mail_id; // выбранные айдишки писем в массиве
   @Input() state_open; // открыт закрыт компонент
-  @Input() token;
-  @Output() state_folders_change = new EventEmitter();
+  @Input() token; // токен авторизации
+  @Output() state_folders_change = new EventEmitter(); // отправка события родителю
 
 
   constructor(
@@ -26,10 +26,9 @@ export class FoldersListComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-
-    this.all_folders = this.all_folders.filter(val => val.address === this.mail_id
+    this.all_folders = this.all_folders.filter(val => val.address === this.mail_id // ловлю папки открытого ящика
     ).map(item => {
-      return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs) [0][0] || [];
+      return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs) [0][0] || []; // чилды входящих
    });
   }
 
@@ -41,20 +40,20 @@ export class FoldersListComponent implements OnInit, DoCheck {
   }
 
   change_folder(e) {
-    this.state_open = false;
-    this.state_folders_change.next(this.state_open);
+    this.state_open = false; // прячу компонент
+    this.state_folders_change.next(this.state_open); // отправляю событие на скрытие компонента
 
-    const target = e.target;
-    const id_folder = target.getAttribute('id');
+    const target = e.target; // ловлю на какой папке был клик
+    const id_folder = target.getAttribute('id'); // ловлю ее id
     this.selected_mail_id.filter(val => {
         this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-      mailId: +val,
-      boxId: +id_folder,
+      mailId: +val, // кидаю ID-шники
+      boxId: +id_folder, // id папки
       address: this.emailServ.idPostForHTTP
     }).subscribe();
     this.emailServ.lettersList = this.emailServ.lettersList.filter((val2 , ind) => {
       if (+val2.mail_id !== +val) {
-        return val2;
+        return val2; // чищу представление
       }
       });
     });
