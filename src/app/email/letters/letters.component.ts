@@ -476,20 +476,28 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
+
         if (val.mail_id === key) {
+
+
+
           arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
+
           this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
             mailId: +val.mail_id,
           boxId: +box,
           address: this.emailServ.idPostForHTTP
-          }).subscribe();
-          this.emailServ.lettersList = arr;
+          }).subscribe(data => {
+          }
+          );
+          return arr;
         }
       }
     });
     this.emailServ.lettersList = this.emailServ.lettersList.filter(
       a => a !== 'null' // возвращаю массив без null (удаленных элементов)
     );
+
     if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
 
       setTimeout(() => {
@@ -504,13 +512,13 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             }
           )
           .subscribe(data => {
-            this.emailServ.lettersList = data;
-            // this.emailServ.stateServ(); // save state on service
+
+  this.emailServ.lettersList = data;
   this.emailServ.hideAvatars = []; // чтоб инпуты работали
   this.emailServ.idLetters = []; // обнуляю корзину на удаление
   this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
     });
-      }, 500);
+      }, 1200);
   }
   // this.emailServ.stateServ(); // save state on service
   this.emailServ.hideAvatars = []; // чтоб инпуты работали
@@ -520,23 +528,10 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 get_work(id, e, index) {
 
-  // if (this.emailServ.lettersList[index].work_user_id === null ||
-  //   this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId
-  // ) {
   e.target.parentNode.classList.remove('visible');
   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
-  // this.emailServ.lettersList[index].work_user_id = {email: this.emailServ.idPostForHTTP,
-  //   firstName: this.authorizationServ.firstName,
-  //   lastName: this.authorizationServ.lastName,
-  //   userId: this.authorizationServ.userId};
-  // this.emailServ.lettersList[index].draft  = this.emailServ.idPostForHTTP;
-  // } else {
-  //   e.target.parentNode.classList.remove('visible');
-  //   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
-  // .subscribe();
-  //   return;
-  // }
+
 }
 
 delete_work(id, e, index) {

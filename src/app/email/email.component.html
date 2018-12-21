@@ -164,7 +164,7 @@
               <p>Входящие</p>
               <p class="email__num">{{ email.count }}</p>
             </div>
-            <button (click)='open_hidden_folders($event)'><span class="la la-lg la-angle-down"></span></button>
+            <button (click)='open_hidden_folders($event)' *ngIf="this?.user_folders[i].length !== 0"><span class="la la-lg la-angle-down"></span></button>
           </div>
 
           <div class="hidden_subfolder" 
