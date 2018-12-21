@@ -163,7 +163,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         excludedIds: this.searchIdForHTTP},
         {contentType: 'application/json'})
         .subscribe(data => {
-          if (data.length === 0 && this.temporaryLetters.length === 0) {
+          if (data.length === 0) {
             this.filterError = true; // если не найдены письма выдаст сообщение в разметке
             this.stopScrollingLoadFiles = false; //
             this.stopSearch = false;
@@ -174,6 +174,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           this.filterError = false;
           this.stopScrollingLoadFiles = true;
           const temporaryArray = this.temporaryLetters; // временный массив с результатами поиска по клиенту
+
           const allSearch = temporaryArray.concat(data.filter((item) => { // конкачу с массивом который пришел с сервера
             return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
            }));
@@ -194,6 +195,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     const regExp = new RegExp (text, 'g');
     const replacer = '<b>' + text + '</b>';
     this.searchIdForHTTP = [];
+
     const stop = stopFlag;
     if (stop) { // если инпут пустой
       this.temporaryLetters = []; // очищаю временный массив писем
@@ -204,20 +206,19 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       return;
     }
 
-    this.temporaryLetters = allLettersList.filter((val, ind) => {
+    const new_search_array = allLettersList.filter((val, ind) => {
       if (val.from_address && val.from_address.toLowerCase().indexOf(text) >= 0 ) {
         return val;
   } else if (val.subject && val.subject.toLowerCase().indexOf(text) >= 0 ) {
-
           return val;
         } else if (val.text && val.text.toLowerCase().indexOf(text) >= 0 ) {
             return val;
         }
     });
-       this.emailServ.lettersList = this.temporaryLetters; // подставляю найденные письма в представление
-       this.searchIdForHTTP = this.temporaryLetters.map(val => {
-        return +val.id; // массив из id найденных писем для отправки на сервер
-       });
+
+       this.emailServ.lettersList = new_search_array; // подставляю найденные письма в представление
+
+
 
   }
 
