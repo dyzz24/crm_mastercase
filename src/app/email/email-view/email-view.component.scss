@@ -236,7 +236,8 @@ p{
     line-height: 20px;
     text-align: center;
     cursor: pointer;
-    width: 20px;
+    padding: 0 6px;
+    box-sizing: border-box;
     height: 20px;
     border-radius: 50%;
     border: 1px solid $border;
@@ -247,7 +248,7 @@ p{
     margin-bottom: 4px;
     &:hover:not(.input_return) {
         background:url('../../../assets/arr_down.png') no-repeat center;
-        background-size: 80% auto;
+        background-size: 50% auto;
         color:rgba(255, 255, 255, 0);
     }
 }
@@ -258,7 +259,7 @@ p{
 
 .input_return {
     background:url('../../../assets/arr_up.png') no-repeat center;
-    background-size: 80% auto;
+    background-size: 50% auto;
     color:rgba(255, 255, 255, 0);
    
 }
@@ -584,7 +585,8 @@ p{
 }
 
 .none_display {
-    display: none;
+    
+    opacity: .2;
 }
 
 .new__mess {

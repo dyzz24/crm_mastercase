@@ -32,14 +32,18 @@
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
-<button class='menu' 
+<button class='menu' *ngIf="this.selectedLetter?.recipients.to.length !== 1; else non_active_btn"
 (click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, true, [])'
-[class.none_display] = 'this.selectedLetter?.recipients.to.length === 1'
 routerLink="./create"
 >
   <span class='la la-reply-all'></span>
   <p class="tooltip">Ответить всем</p>
 </button>
+<ng-template #non_active_btn >
+    <button class='menu none_display'>
+          <span class='la la-reply-all'></span>
+        </button>
+</ng-template>
 <button class='menu' (click)="this.emailServ.new_forward_message(this.selectedLetter?.text, this.selectedLetter?.html)"
 routerLink="./create"
 >

@@ -235,27 +235,12 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   urlLetterView(event, idLetter, id) {
-    if (event.target.className === 'letter__settings') {
-      return;
-    }
-                  // tslint:disable-next-line:forin
-  // for (const i in this.emailServ.activeLett) {
-  //   this.emailServ.activeLett[i] = false;
-  // }
 
     this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, flag: 'seen' , value: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
-    this.emailServ.selectedLetter = this.emailServ.lettersList[idLetter];
-    this.emailServ.index = idLetter;
 
 
-    // this.emailServ.fullPath =
-      // this.emailServ.urlParams + '/view/' + idLetter;
-    // this.emailServ.checkerLengthArray_bcc_cc();
-    // this.emailServ.checkerLength_addressess();
-    // this.emailServ.stateServ();
-    // console.log(this.emailServ.selectedLetter);
   }
 
   selectedLetters(id, e, i) {

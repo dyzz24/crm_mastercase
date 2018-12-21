@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthorizationService {
   public accessToken;
-  public ip = 'http://10.0.1.10:3000';
+  public ip = 'http://10.0.1.33:3000';
   public userId;
   public lastName;
   public firstName;
