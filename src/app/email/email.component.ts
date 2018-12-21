@@ -65,6 +65,7 @@ adress;
       this.emailServ.folders = data2.boxes;
 
       this.socketServ.lettersSocketConnect();
+      // console.log(data2.stats);
     });
 
 
