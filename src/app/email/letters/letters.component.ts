@@ -40,6 +40,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   sub;
   subscription: Subscription;
   folder_list_state = false;
+  open_hidden_menu = false;
 
   // @ViewChild('size_Check') // для отслеживания размера блока
   // size_Check: ElementRef;
@@ -280,8 +281,10 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   menuShow(e, i) {
     if (e.target.className === 'letterMenuButt') {
+      this.open_hidden_menu = ! this.open_hidden_menu;
       return;
     } else {
+      this.open_hidden_menu = ! this.open_hidden_menu;
       const parent = e.target.parentNode.parentNode;
       const hiddenBlock = parent.querySelector('.hideMenu');
       const allHideBlock = document.querySelectorAll('.hideMenu');
@@ -297,10 +300,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   // ****************************************spam add - delete***************************** */
   spamMark(i, e, booleanParam, id) {
 
-    // if (this.emailServ.lettersList[i].messageCondition !== undefined) {
     this.emailServ.lettersList[i].box_id = booleanParam;
-    e.target.parentNode.classList.remove('visible');
-    // this.rout.navigate([this.emailServ.urlParams]);
 
 
     e.target.closest('.letter__prev').classList.add('letter__status-spam');
@@ -324,7 +324,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   toggleImportantMark(i, e, id, boolean) {
     // для переключения удалить-добавить важное
-    e.target.parentNode.classList.remove('visible');
+
     this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, value: boolean, flag: 'flagged', address: this.emailServ.idPostForHTTP })
       .subscribe();
     this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
@@ -332,14 +332,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   // tslint:disable-next-line:max-line-length
-  sent_incomingChecker(i) {
-    // проверка на входящие - исходящие сообщения, ибо исходящие не имеют статуса спама и важных!!!! (без нее глючат исходящие)
-    if (this.emailServ.typeMess !== 'sent') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+
 
   scrollDown() {
     if (this.stopScrollingLoadFiles === true) {
@@ -383,7 +376,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   deleteRestoreLetter(id, e, box, index) {
-    e.target.parentNode.classList.remove('visible');
     e.target.closest('.letter__prev').classList.add('dellLetter');
     setTimeout(() => {
       const idelem = this.emailServ.selectedLetter;
@@ -514,24 +506,15 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 get_work(id, e, index) {
 
-  e.target.parentNode.classList.remove('visible');
+
   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
 
 }
 
 delete_work(id, e, index) {
-  // if (this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId) {
-  e.target.parentNode.classList.remove('visible');
   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: false, address: this.emailServ.idPostForHTTP })
   .subscribe();
-  // this.emailServ.lettersList[index].work_user_id = null;
-    // } else {
-    //   e.target.parentNode.classList.remove('visible');
-    //   this.httpPost(`${this.emailServ.ip}/mail/work`, { mailId: +id, value: false, address: this.emailServ.idPostForHTTP })
-    //   .subscribe();
-    //    return;
-    // }
 
 }
 
@@ -564,5 +547,15 @@ move_folder() {
 
 dragElemStart(elemId, e) {
   e.dataTransfer.setData('mail_id', elemId);
+}
+
+close_menu() {
+
+  this.open_hidden_menu = false;
+
+      const allHideBlock = document.querySelectorAll('.hideMenu');
+      for (let key = 0; key < allHideBlock.length; key++) {
+          allHideBlock[key].classList.remove('visible');
+      }
 }
 }
