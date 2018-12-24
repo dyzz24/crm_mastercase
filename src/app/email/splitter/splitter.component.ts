@@ -46,8 +46,7 @@ export class SplitterComponent implements OnInit {
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
     if (event.buttons !== 0 && event.button !== 0) { return; }
-    this.before.style.userSelect = 'none';
-    this.after.style.userSelect = 'none';
+    document.body.style.userSelect = 'none';
     this._md = true;
     this._parent = this.element.nativeElement.parentNode;
     this._startCoord = this.controller.getBoundingClientRect().left;
@@ -63,8 +62,7 @@ export class SplitterComponent implements OnInit {
   @HostListener('document:mouseup')
   onMouseUp(event: MouseEvent) {
     if (this._md) {
-      this.before.style.userSelect = 'auto';
-      this.after.style.userSelect = 'auto';
+      document.body.style.userSelect = 'auto';
       this._md = false;
       window.requestAnimationFrame(() => {
         window.dispatchEvent(new Event('resize'));

@@ -25,15 +25,18 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 private from;
 private to = [this.emailServ.to_answer]; // array for send
-private copy; // array for send
-private hidden_copy = []; // array for send
-private subject = this.emailServ.to_subject; // тема для отправки
+private copy; // array for send copy
+private hidden_copy = []; // array for send hidd copy
+private subject = this.emailServ.to_subject; // subject
 
 private messages;
 private messages_sending = false;
 private files; // файлы с инпута
 private files_for_view = []; // имена файлов для HTML
 private formData = new FormData(); // дата для отправки на серв файлов
+
+save_tmp_state = false;
+tmp_name;
 
 
 
@@ -47,7 +50,6 @@ private formData = new FormData(); // дата для отправки на се
 
   }
   ngDoCheck() {
-
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -203,17 +205,22 @@ add_drag_input_data(objForData) {
   }
 });
 
-
-
-
-
     // const unizue = arrayF.filter((val, ind, self) => {
     // return self.indexOf(val.name) === ind; } );
 
     // console.log(unizue);
 
 
+}
 
+open_save_template() {
+this.save_tmp_state = ! this.save_tmp_state;
+}
+save_template() {
+  this.save_tmp_state = false;
+  const inp = document.querySelector('.tmp_name_inp');
+  inp.value = '';
+  this.tmp_name = '';
 }
 
 

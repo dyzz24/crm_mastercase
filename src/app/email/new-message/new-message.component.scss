@@ -62,14 +62,13 @@
 
 
 [type='submit'] {
-    margin-top: 20px;
     width: 100px;
 	height: 30px;
     border: solid 1px $border;
     cursor: pointer;
     flex-shrink: 0;
     align-self: flex-start;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 
 
@@ -340,6 +339,33 @@ label {
 
 
 .open {
+    display: flex;
+}
+
+.qu__bottom_block {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.save_templ {
+    width: auto;
+    padding: 0 4px;
+    box-sizing: border-box;
+    margin-left: 8px;
+}
+
+.templ_name {
+    padding: 0 8px;
+    box-sizing: border-box;
+    width: 150px;
+    height: 30px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+}
+.visibl {
     display: flex;
 }
 

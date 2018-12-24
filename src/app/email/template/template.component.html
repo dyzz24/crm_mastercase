@@ -1,7 +1,45 @@
-<button type='button' class='custom__button' (click)='show_hide_templ()' [ngClass]="{active_btn: show_hidden_templ}">
+<button type='button' class='custom__button' (click)='show_hide_templContainer($event)' [ngClass]="{active_btn: show_hidden_templ}">
   <span class='la la-folder'></span>
   <span class='button__title'>Шаблоны</span>
-  <div class="hidden_template" [ngClass]="{visibl_templ: show_hidden_templ}"></div>
 </button>
+  <div class="hidden_template" [ngClass]="{visibl_templ: show_hidden_templ}">
+    <div class="header_tmp">
+        <div class="header__search">
+            <input type="text" placeholder="Поиск" 
+            [formControl]='search_templates'
+            class='search__inp'>
+            <span class='la la-min la-search templ_search_icn' ></span>
+          </div>
+    </div>
+    <ul class="favorit_tmp" *ngIf="!this.favor_search_state; else not_have_favor">
+      <li *ngFor="let favorit_tmp of this.favorit_tmp, let i = index">
+        <span class='la la-star'></span> 
+        <p>{{favorit_tmp.name}}</p>
+      </li>
+    </ul>
+    <ng-template #not_have_favor >
+      <p class='not_search'>Не найдено</p>
+    </ng-template>
+    <div class='show_all_tmp'>
+      <p>Показать все шаблоны</p>
+      <button (click)='show_all_tmp()'>
+        <span class='la la-angle-down' *ngIf="!show_all_tmp_state; else butt_up"></span>
+        <ng-template #butt_up>  
+            <span class='la la-angle-up'></span>
+          </ng-template>
+      </button>
+    </div>
+    <ul class="all_tmp" [ngClass]="{active: show_all_tmp_state}" *ngIf="!this.all_search_state; else not_have_all">
+        <li *ngFor="let all_tmp of all_tmp, let i = index">
+            <span class='la la-star-o'></span> 
+            <p>{{all_tmp.name}}</p>
+          </li>
+    </ul>
+    <ng-template #not_have_all >
+        <p class='not_search_hide' [ngClass]="{active: show_all_tmp_state}">Не найдено</p>
+    </ng-template>
+    
+  </div>
+
 
 

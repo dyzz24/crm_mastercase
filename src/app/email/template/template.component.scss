@@ -8,13 +8,14 @@
 .hidden_template {
     display: none;
     position: absolute;
-    top:0;
-    left: 100%;
-    width: 100px;
-    height: 300px;
+    top:8px;
+    left: 108px;
+    width: 200px;
+    max-height: 290px;
     background: white;
-    z-index: 2;
-    cursor: default;
+    z-index: 6;
+    flex-direction: column;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
 }
 
 .visibl_templ {
@@ -23,3 +24,112 @@
 .active_btn {
     background: rgba(75, 121, 187, 0.3);
 }
+
+.header_tmp {
+    width: 100%;
+    height: 50px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.header__search {
+    width: 100%;
+    border-radius: 4px;
+    height: 25px;
+    background: #d9e6f7;
+    display: flex;
+    box-sizing: border-box;
+    padding:  0 4px;
+    position: relative;
+}
+
+.search__inp {
+    width: 100%;
+}
+
+.templ_search_icn {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    right: 4px;
+    color: #97aac2;
+}
+
+@mixin ul_tmp {
+    width: 100%;
+    max-height: 200px;
+    height: auto;
+    padding: 0 10px;
+    box-sizing: border-box;
+    overflow: auto;
+
+        li {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+
+            span {
+                margin-right: 8px;
+            }
+            
+            p {
+                color:$text-color;
+                font-size: 13px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+    
+}
+
+.favorit_tmp {
+    @include ul_tmp;
+}
+
+.all_tmp {
+    @include ul_tmp;
+    position: absolute;
+    top:100%;
+    left: 0;
+    background: inherit;
+    display: none;
+    box-shadow: -7px 7px 18px 4px rgba(0, 0, 0, 0.1);
+    &.active { 
+        display: block;          
+    }
+}
+
+.show_all_tmp {
+        flex-shrink: 0;
+        width: 100%;
+        height: 35px;
+        padding: 0 4px 0 10px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        p{
+            font-size: 13px;
+            color:$text-color;
+        }       
+}
+
+
+.not_search {
+    text-align: center;
+    font-size: 13px;
+}
+.not_search_hide {
+    text-align: center;
+    display: none;
+    font-size: 13px;
+    &.active { 
+        display: block;          
+    }
+}
+
