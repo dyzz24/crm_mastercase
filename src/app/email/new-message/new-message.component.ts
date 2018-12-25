@@ -182,7 +182,6 @@ drop(e) {
 
   const hidden_drag_region = document.querySelector('.drag_region');
   hidden_drag_region.classList.remove('open');
-
   this.files = e.dataTransfer.files;
   this.add_drag_input_data(this.files);
 }
@@ -206,11 +205,6 @@ add_drag_input_data(objForData) {
   }
 });
 
-
-    // const unizue = arrayF.filter((val, ind, self) => {
-    // return self.indexOf(val.name) === ind; } );
-
-    // console.log(unizue);
 
 
 }

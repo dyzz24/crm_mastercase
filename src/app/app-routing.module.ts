@@ -23,8 +23,6 @@ const routes: Routes = [
   ]
 },
 
-// {path: '**', redirectTo: '/email'}
-// { path: '**', component: EmailComponent },
 ];
 
 
