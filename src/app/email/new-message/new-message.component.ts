@@ -214,9 +214,8 @@ this.save_tmp_state = ! this.save_tmp_state;
 }
 save_template() {
   this.save_tmp_state = false;
-  const inp = document.querySelector('.tmp_name_inp');
-  inp.value = '';
   this.tmp_name = '';
+
 }
 
 
