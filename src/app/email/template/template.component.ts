@@ -83,5 +83,11 @@ export class TemplateComponent implements OnInit, DoCheck {
   show_all_tmp() {
     this.show_all_tmp_state = ! this.show_all_tmp_state;
   }
+  select_tmp(e, index) {
+    if (e.target.className === 'la la-star-o') {
+      return;
+    }
+    console.log(index);
+  }
 
 }

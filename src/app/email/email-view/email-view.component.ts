@@ -55,6 +55,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   preload_to_wait_status = true;
   attachments_array;
   id_for_request;
+  index;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -82,7 +83,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.emailServ.currentId = +data.id;
-
             this.httpPost(
       `${this.emailServ.ip}/mail/mail`,
       // tslint:disable-next-line:max-line-length

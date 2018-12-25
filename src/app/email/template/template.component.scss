@@ -107,6 +107,9 @@
     &.active { 
         display: block;          
     }
+    span:hover::before {
+        content: "\f318";
+    }
 }
 
 .show_all_tmp {

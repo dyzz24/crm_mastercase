@@ -15,7 +15,7 @@
         <input type="text" [(ngModel)]="this.folder_name_for_post">
       </div>
       <div class="to_invest_sett" >
-        <button class='title_inv' (click)='to_invest_open($event)'>Вложить в другую папку</button>
+        <p class='title_inv' (click)='to_invest_open($event)'>Вложить в другую папку</p>
           <div class="to_invest_folders" [ngClass]="{ visible: folder_invest }">
             <p class='title_txt'>Выберите папку</p>
             <div class="folders_body">
