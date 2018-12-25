@@ -205,6 +205,7 @@ add_drag_input_data(objForData) {
   }
 });
 
+
     // const unizue = arrayF.filter((val, ind, self) => {
     // return self.indexOf(val.name) === ind; } );
 

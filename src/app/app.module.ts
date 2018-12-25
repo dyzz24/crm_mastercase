@@ -31,6 +31,7 @@ import { TemplateComponent } from './email/template/template.component';
 import { PreserverComponent } from './preserver/preserver.component';
 import { FoldersComponent } from './email/folders/folders.component';
 import { FoldersListComponent } from './email/letters/folders-list/folders-list.component';
+import { SizerPipe } from './email/email-pipes/sizer.pipe';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { FoldersListComponent } from './email/letters/folders-list/folders-list.
     PreserverComponent,
     FoldersComponent,
     FoldersListComponent,
+    SizerPipe,
 
   ],
   imports: [
