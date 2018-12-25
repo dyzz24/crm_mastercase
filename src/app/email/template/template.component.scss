@@ -70,6 +70,12 @@
             height: 40px;
             display: flex;
             align-items: center;
+            transition: .4s;
+            cursor: pointer;
+
+            &:hover p {
+                text-decoration: underline;
+            }
 
             span {
                 margin-right: 8px;

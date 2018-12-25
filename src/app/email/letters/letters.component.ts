@@ -280,11 +280,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   menuShow(e, i) {
-    if (e.target.className === 'letterMenuButt') {
-      this.open_hidden_menu = ! this.open_hidden_menu;
-      return;
-    } else {
-      this.open_hidden_menu = ! this.open_hidden_menu;
+
+      this.open_hidden_menu = true;
       const parent = e.target.parentNode.parentNode;
       const hiddenBlock = parent.querySelector('.hideMenu');
       const allHideBlock = document.querySelectorAll('.hideMenu');
@@ -295,7 +292,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         }
         allHideBlock[key].classList.remove('visible');
       }
-    }
   }
   // ****************************************spam add - delete***************************** */
   spamMark(i, e, booleanParam, id) {
@@ -407,12 +403,12 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
                 address: this.emailServ.idPostForHTTP,
                 boxId: this.emailServ.selectNum,
                 limit: this.emailServ.lettersAmount,
-                offset: this.counterAmount
+                offset: 0
               }
             )
             .subscribe(data => {
-
     this.emailServ.lettersList = data;
+
     this.emailServ.hideAvatars = []; // чтоб инпуты работали
     this.emailServ.idLetters = []; // обнуляю корзину на удаление
     this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
