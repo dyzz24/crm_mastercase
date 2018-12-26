@@ -46,7 +46,8 @@ adress;
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(SocketService) private socketServ: SocketService,
     private http: HttpClient,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+
     ) {
    }
 

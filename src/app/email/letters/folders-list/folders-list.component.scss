@@ -1,12 +1,14 @@
-.visible {
+@import '../../mixins';
 
+.visible {
     width: 250px;
     height: 350px;
     position: absolute;
-    z-index: 6;
+    z-index: 9;
     display: flex;
     background: white;
     overflow: hidden;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -39,6 +41,8 @@ span {
     height: 30px;
     line-height: 30px;
     transition: .4s;
+    
+    box-sizing: border-box;
     cursor: pointer;
     &:hover {
         background: #d9e6f7;
