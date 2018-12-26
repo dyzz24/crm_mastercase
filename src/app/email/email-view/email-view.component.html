@@ -26,14 +26,15 @@
                 </button>
    
     <div class="left__panel">
-  <button class='menu' (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, true, [],this.selectedLetter?.text, this.selectedLetter?.html)"
+  <button class='menu'
+  (click)='this.emailServ.new_replyMessage(this.selectedLetter?.from_address, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
   routerLink="./create"
   >
     <span class='la la-mail-reply'></span>
     <p class="tooltip">Ответить</p>
 </button>
 <button class='menu' *ngIf="this.selectedLetter?.recipients.to.length !== 1; else non_active_btn"
-(click)='this.emailServ.newMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, true, [])'
+(click)='this.emailServ.new_reply_allMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
 routerLink="./create"
 >
   <span class='la la-reply-all'></span>
@@ -193,7 +194,7 @@ routerLink="./create"
     </div>
 
           <p class='btn__text'
-          (click)="this.emailServ.newMessage(this.selectedLetter?.from_address,'',this.selectedLetter?.subject, false, [])"
+          (click)='this.emailServ.new_replyMessage(this.selectedLetter?.from_address, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
           routerLink="./create"
           >Перейти в полную версию</p>
   </div>

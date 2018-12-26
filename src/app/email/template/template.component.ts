@@ -1,5 +1,8 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, Inject, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subscription } from 'rxjs';
+import { AuthorizationService } from '../../authorization.service';
 
 @Component({
   selector: 'app-template',
@@ -18,13 +21,30 @@ export class TemplateComponent implements OnInit, DoCheck {
   protect_to_copy = false;
   favor_search_state;
   all_search_state;
+  @Input() ip;
+  @Input() email_address;
 
-  constructor() {
+  constructor(private http: HttpClient,
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService) {
     this.search_templates.valueChanges.pipe().subscribe(data => {
           this.search_tmp(data.toLowerCase());
   });
 
    }
+
+
+
+  ngOnInit() {
+ this.httpPost(
+    `${this.ip}/mail/mails`,
+    // tslint:disable-next-line:max-line-length
+    {address: this.email_address, boxId: 4, limit: 100, offset: 0}).subscribe((data) => {
+      console.log(data);
+  });
+}
+   public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
+  }
 
    search_tmp(data) {
      let favor_search_state; // временные булевы
@@ -69,10 +89,6 @@ export class TemplateComponent implements OnInit, DoCheck {
       this.favor_search_state = true;
     }
 
-  }
-
-
-  ngOnInit() {
   }
   ngDoCheck() {
   }

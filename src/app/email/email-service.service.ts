@@ -68,6 +68,8 @@ export class EmailServiceService {
   to_all_answer = [];
   to_subject;
   to_forward;
+  to_cc = [];
+  to_bcc = [];
   sub;
   files = []; // для прокидывания файлов из компонента в компонент, нужно явно посылать пустым
   folders;
@@ -115,90 +117,92 @@ export class EmailServiceService {
     return firstLett;
   }
 
-  newMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, request?, files?, param_text?, param_html?) {
-    const newArray = [];
-    this.to_answer = '';
-    this.to_subject = '';
-    this.to_forward = '';
-    this.to_all_answer = [];
-    this.hiddenEmpty = true;
+  new_message_from_template(param_to_answer?, param_to_subject?, param_to_cc?, param_to_bcc?, param_text?, param_html?) {
+    this.new_clear_message();
     this.to_answer = param_to_answer;
     if (param_html === null) {
       this.to_forward = param_text;
     } else {
       this.to_forward = param_html;
     }
-    if (files.length > 0) { // если файл есть
-      this.files = files; // ставит его в стэйт
-    } else {
-      this.files = []; // иначе чистит стэйт
-    }
+    this.to_answer = param_to_answer;
+    this.to_cc = param_to_cc;
+    this.to_bcc = param_to_bcc;
+    this.to_subject = param_to_subject;
+  }
 
-    if (request) { // если нажали ОТВЕТИТЬ
+  new_replyMessage(param_to_answer?, param_to_subject?, param_text?, param_html?) {
+   this.new_clear_message();
+    this.to_answer = param_to_answer;
     this.to_subject = `RE: ${param_to_subject}`;
+    if (param_html === null) {
+      this.to_forward = param_text;
     } else {
-      this.to_subject = param_to_subject;
+      this.to_forward = param_html;
     }
-    if (param_to_all_answer === '') {
-      return;
+  }
+
+  new_reply_allMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
+    this.new_clear_message();
+    const newArray = [];
+    this.to_answer = param_to_answer;
+    this.to_subject = `RE: ${param_to_subject}`;
+    if (param_html === null) {
+      this.to_forward = param_text;
     } else {
+      this.to_forward = param_html;
+    }
     param_to_all_answer.filter(val => {
       if (val.address !== this.idPostForHTTP && val.address !== param_to_answer) {
 
         newArray.push(val.address);
       }
-      this.to_all_answer = newArray;
-
+      this.to_cc = newArray;
     });
   }
 
-  }
   new_clear_message() {
     this.to_answer = '';
     this.to_subject = '';
-    this.to_all_answer = [];
     this.to_forward = '';
     this.hiddenEmpty = true;
+    this.to_cc = [];
+    this.to_bcc = [];
     this.files = [];
   }
   new_forward_message(param_text, param_html) {
-    this.to_answer = '';
-    this.to_subject = '';
-    this.to_all_answer = [];
-    this.to_forward = '';
-    this.hiddenEmpty = true;
-    this.files = [];
+    this.new_clear_message();
     if (param_html === null) {
       this.to_forward = param_text;
     } else {
       this.to_forward = param_html;
     }
   }
-  newMessage_DblClick(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
-    this.to_answer = '';
-    this.to_subject = '';
-    this.to_all_answer = [];
-    this.to_forward = '';
-    // this.rout.navigate([this.idPostForHTTP + '/create']);
-    // this.fullPath = this.idPostForHTTP + '/create';
-    this.hiddenEmpty = true;
-    this.to_answer = param_to_answer;
-    this.to_subject = param_to_subject;
-    if (param_html === null) {
-      this.to_forward = param_text;
-    } else {
-      this.to_forward = param_html;
-    }
-    if (param_to_all_answer === '') {
-      return;
-    } else {
-    this.to_all_answer = param_to_all_answer.filter(val => {
-      if (val !== this.idPostForHTTP && val !== param_to_answer) {
-        return val;
-      }
-    });
-  }
-  }
+  // newMessage_DblClick(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
+  //   this.to_answer = '';
+  //   this.to_subject = '';
+  //   this.to_all_answer = [];
+  //   this.to_forward = '';
+  //   // this.rout.navigate([this.idPostForHTTP + '/create']);
+  //   // this.fullPath = this.idPostForHTTP + '/create';
+  //   this.hiddenEmpty = true;
+  //   this.to_answer = param_to_answer;
+  //   this.to_subject = param_to_subject;
+  //   if (param_html === null) {
+  //     this.to_forward = param_text;
+  //   } else {
+  //     this.to_forward = param_html;
+  //   }
+  //   if (param_to_all_answer === '') {
+  //     return;
+  //   } else {
+  //   this.to_all_answer = param_to_all_answer.filter(val => {
+  //     if (val !== this.idPostForHTTP && val !== param_to_answer) {
+  //       return val;
+  //     }
+  //   });
+  // }
+  // }
 
 
   checkerLengthArray_bcc_cc() {

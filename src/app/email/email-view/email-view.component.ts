@@ -311,11 +311,13 @@ onFileChange(event) {
   const files  = event.target.files; // отловил файлы прикрепления
   if (files.length > 0) {
 
-    this.emailServ.newMessage(this.selectedLetter.from_address,
-      this.selectedLetter.recipients.to, this.selectedLetter.subject,
-      true,
-      files);
-      this._rout.navigate(['./create'], { relativeTo: this.activatedRoute });
+    this.emailServ.files = files;
+    this.emailServ.to_answer = '';
+    this.emailServ.to_subject = '';
+    this.emailServ.to_cc = [];
+    this.emailServ.to_bcc = [];
+    this.emailServ.hiddenEmpty = true;
+    this._rout.navigate(['./create'], { relativeTo: this.activatedRoute });
   }
 
 }

@@ -26,8 +26,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 private from;
 private to = [this.emailServ.to_answer]; // array for send
-private copy; // array for send copy
-private hidden_copy = []; // array for send hidd copy
+private copy = this.emailServ.to_cc; // array for send copy
+private hidden_copy = this.emailServ.to_bcc; // array for send hidd copy
 private subject = this.emailServ.to_subject; // subject
 
 private messages;
@@ -45,7 +45,7 @@ tmp_name;
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
     this.from = this.emailServ.idPostForHTTP;
-    this.copy = this.emailServ.to_all_answer;
+    this.copy = this.emailServ.to_cc;
     if (this.emailServ.files.length > 0) { // если стэйт сервиса не пуст
       this.files = this.emailServ.files; // берет файлы из него
       this.add_drag_input_data(this.files); // загоняет в файлы для отправки
@@ -53,6 +53,11 @@ tmp_name;
 
   }
   ngDoCheck() {
+    // console.log(this.to)
+    // this.too = this.to.map(val => {
+    //     return {address: val, name: ''};
+    // });
+    // console.log(this.too);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -111,6 +116,9 @@ tmp_name;
 
   showError(param) {
     this.toastrServ.error(param);
+  }
+  show_notification(param) {
+    this.toastrServ.show(param);
   }
 
 
@@ -215,8 +223,35 @@ open_save_template() {
 this.save_tmp_state = ! this.save_tmp_state;
 }
 save_template() {
-  this.save_tmp_state = false;
-  this.tmp_name = '';
+  const to_send = this.to.map(val => { // массив с графами "кому"
+    return {address: val, name: ''};
+});
+  const cc_send = this.copy.map(val => { // массив с графами "копия"
+    return {address: val, name: ''};
+});
+const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+  return {address: val, name: ''};
+});
+  this.save_tmp_state = false; // закрыть поле ввода имени шаблона
+  this.httpPost(
+    `${this.emailServ.ip}/mail/draft`,
+    // tslint:disable-next-line:max-line-length
+    {address: this.from,
+      name: this.tmp_name,
+      text: '',
+      html: this.messages,
+      subject: this.subject,
+      from: [
+        {address: this.from,
+          name: ''
+        }
+      ],
+     to: to_send,
+     cc: cc_send,
+     bcc: bcc_send
+    }).subscribe(() => {});
+  this.tmp_name = ''; // очищаю инпут после сохранения шаблона
+  this.show_notification('Шаблон создан');
 
 }
 

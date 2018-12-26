@@ -348,6 +348,7 @@ label {
     align-items: center;
     padding-top: 20px;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .save_templ {
