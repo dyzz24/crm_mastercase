@@ -35,6 +35,7 @@ private messages_sending = false;
 private files; // файлы с инпута
 private files_for_view = []; // имена файлов для HTML
 private formData = new FormData(); // дата для отправки на серв файлов
+private open_select_address = false;
 
 save_tmp_state = false;
 tmp_name;
@@ -43,6 +44,7 @@ tmp_name;
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
+    this.from = this.emailServ.idPostForHTTP;
     this.copy = this.emailServ.to_all_answer;
     if (this.emailServ.files.length > 0) { // если стэйт сервиса не пуст
       this.files = this.emailServ.files; // берет файлы из него
@@ -132,7 +134,7 @@ tmp_name;
 
   this.formData.append('json', JSON.stringify({
     from: [
-      {address: this.emailServ.idPostForHTTP}
+      {address: this.from}
     ],
     to: [
       {
@@ -216,6 +218,16 @@ save_template() {
   this.save_tmp_state = false;
   this.tmp_name = '';
 
+}
+
+select_new_address(e) {
+  if (e.target.classList.contains('select_btn') || e.target.classList.contains('la-angle-down')) {
+      this.open_select_address = ! this.open_select_address;
+  }
+  if (e.target.classList.contains('select_li')) {
+      this.from = e.target.innerText;
+      this.open_select_address = false;
+  }
 }
 
 

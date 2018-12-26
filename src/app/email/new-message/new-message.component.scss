@@ -108,6 +108,7 @@
     box-sizing: border-box;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
 }
 
 
@@ -367,6 +368,36 @@ label {
 }
 .visibl {
     display: flex;
+}
+
+.hidden_block {
+    position: absolute;
+    top:100%;
+    background: white;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    
+    box-sizing: border-box;
+    width: 100%;
+    display: none;
+    &.visibl {
+        display: list-item;
+    }
+
+    li {
+        font-size: 13px;
+        line-height: 25px;
+        color: black;
+        opacity: .5;
+        height: 40px;
+        line-height: 40px;
+        transition: .4s;
+        padding-left: 8px;
+        cursor: pointer;
+        &:hover {
+            background: #d1d5db;
+        }
+    }
 }
 
 

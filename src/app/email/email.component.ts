@@ -52,13 +52,16 @@ adress;
    }
 
   ngOnInit() {
-    // this.emailItems = [{address:'one'}, {address:'two'}]
 
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
           this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
+
+      this.emailServ.all_user_mail_address = data2.boxes.map(val => {
+        return val.address;
+      });
       this.user_folders = data2.boxes.map(item => {
 
          return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];

@@ -71,6 +71,7 @@ export class EmailServiceService {
   sub;
   files = []; // для прокидывания файлов из компонента в компонент, нужно явно посылать пустым
   folders;
+  all_user_mail_address = [];
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
