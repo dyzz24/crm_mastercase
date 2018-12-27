@@ -27,10 +27,11 @@ tmp_name;
 
   new_message_from_template(param_to_answer?, param_to_subject?, param_to_cc?, param_to_bcc?, param_html?) {
     this.new_clear_message();
-
+    if (param_to_answer) {
     this.to = param_to_answer.map(val => {
       return val.address;
     });
+  }
     this.messages = param_html;
 if (param_to_cc) {
     this.copy = param_to_cc.map(val => {
