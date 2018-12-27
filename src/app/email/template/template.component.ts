@@ -3,6 +3,7 @@ import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
+import { EmailServiceService } from '../email-service.service';
 
 @Component({
   selector: 'app-template',
@@ -14,9 +15,9 @@ export class TemplateComponent implements OnInit, DoCheck {
   show_hidden_templ = false;
   show_all_tmp_state = false;
   search_templates: FormControl = new FormControl('');
-  favorit_tmp = [{name: 'Раз шаблон'}, {name: 'Два шаблон'}, {name: 'Три шаблон'}, {name: 'four'}];
+  favorit_tmp;
   favorit_tmp_copy;
-  all_tmp = [{name: '11111111'}, {name: 'pppppppp'}, {name: 'sssssssss'}, {name: 'Раз шаблон'}];
+  all_tmp;
   all_tmp_copy;
   protect_to_copy = false;
   favor_search_state;
@@ -25,6 +26,7 @@ export class TemplateComponent implements OnInit, DoCheck {
   @Input() email_address;
 
   constructor(private http: HttpClient,
+    @Inject(EmailServiceService) public emailServ: EmailServiceService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService) {
     this.search_templates.valueChanges.pipe().subscribe(data => {
           this.search_tmp(data.toLowerCase());
@@ -39,7 +41,7 @@ export class TemplateComponent implements OnInit, DoCheck {
     `${this.ip}/mail/mails`,
     // tslint:disable-next-line:max-line-length
     {address: this.email_address, boxId: 4, limit: 100, offset: 0}).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
   });
 }
    public httpPost(url: string, body, options?): Observable<any> {
@@ -95,15 +97,41 @@ export class TemplateComponent implements OnInit, DoCheck {
 
   show_hide_templContainer(e) {
       this.show_hidden_templ = ! this.show_hidden_templ;
+      if (this.show_hidden_templ) {
+        this.httpPost(
+          `${this.ip}/mail/draft`,
+          // tslint:disable-next-line:max-line-length
+          {address: this.email_address
+          }).subscribe((data) => {
+            console.log(data);
+            this.all_tmp = data.filter(val => {
+              if (val.flagged === false) {
+                  return val;
+              }
+            });
+            this.favorit_tmp = data.filter(val => {
+              if (val.flagged === true) {
+                  return val;
+              }
+            });
+            console.log(this.favorit_tmp);
+          });
+      }
   }
   show_all_tmp() {
     this.show_all_tmp_state = ! this.show_all_tmp_state;
   }
-  select_tmp(e, index) {
+  select_tmp(e, array_tmp) {
     if (e.target.className === 'la la-star-o') {
       return;
     }
-    console.log(index);
+    this.emailServ.new_message_from_template(array_tmp.recipients.to,
+      array_tmp.subject,
+      array_tmp.recipients.cc,
+      array_tmp.recipients.bcc,
+      array_tmp.html);
+      this.show_hidden_templ = false;
   }
+
 
 }

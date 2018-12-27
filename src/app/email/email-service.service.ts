@@ -56,7 +56,7 @@ export class EmailServiceService {
   dataLetters; // для остановки подгруза писем когда все загружены
 
   selectedLetter: any;
-  ip = 'http://10.0.1.33:3000';
+  ip = 'http://10.0.1.10:3000';
 
   mailsToArray = []; // кому отправить письмо (список адресатов)
   subjectTo;
@@ -77,7 +77,7 @@ export class EmailServiceService {
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
-    // this.rout.navigate(['/email']);
+
   }
 
 
@@ -117,16 +117,15 @@ export class EmailServiceService {
     return firstLett;
   }
 
-  new_message_from_template(param_to_answer?, param_to_subject?, param_to_cc?, param_to_bcc?, param_text?, param_html?) {
+  new_message_from_template(param_to_answer?, param_to_subject?, param_to_cc?, param_to_bcc?, param_html?) {
     this.new_clear_message();
+
     this.to_answer = param_to_answer;
-    if (param_html === null) {
-      this.to_forward = param_text;
-    } else {
-      this.to_forward = param_html;
-    }
+    this.to_forward = param_html;
     this.to_answer = param_to_answer;
-    this.to_cc = param_to_cc;
+    this.to_cc = param_to_cc.map(val => {
+      return val.address;
+    });
     this.to_bcc = param_to_bcc;
     this.to_subject = param_to_subject;
   }

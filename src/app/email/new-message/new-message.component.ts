@@ -45,7 +45,7 @@ tmp_name;
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
     this.from = this.emailServ.idPostForHTTP;
-    this.copy = this.emailServ.to_cc;
+    // this.copy = this.emailServ.to_cc;
     if (this.emailServ.files.length > 0) { // если стэйт сервиса не пуст
       this.files = this.emailServ.files; // берет файлы из него
       this.add_drag_input_data(this.files); // загоняет в файлы для отправки
@@ -53,7 +53,7 @@ tmp_name;
 
   }
   ngDoCheck() {
-    // console.log(this.to)
+    // console.log(this.copy)
     // this.too = this.to.map(val => {
     //     return {address: val, name: ''};
     // });
