@@ -105,13 +105,11 @@ export class TemplateComponent implements OnInit, DoCheck {
           // tslint:disable-next-line:max-line-length
           {address: this.email_address
           }).subscribe((data) => {
-            // console.log(data);
             this.all_tmp = data.filter(val => {
               if (val.flagged === false) {
                   return val;
               }
             });
-            console.log(this.all_tmp);
             this.favorit_tmp = data.filter(val => {
               if (val.flagged === true) {
                   return val;
@@ -125,16 +123,40 @@ export class TemplateComponent implements OnInit, DoCheck {
     this.show_all_tmp_state = ! this.show_all_tmp_state;
   }
   select_tmp(e, array_tmp) {
-    if (e.target.className === 'la la-star-o') {
+    if (e.target.className === 'la la-star-o' || e.target.className === 'la la-star') {
       return;
     }
-    console.log(array_tmp);
     this.newMessageService.new_message_from_template(array_tmp.recipients.to,
       array_tmp.subject,
       array_tmp.recipients.cc,
       array_tmp.recipients.bcc,
       array_tmp.html);
       this.show_hidden_templ = false;
+  }
+
+  favorite_do(select_templ, e) {
+    // console.log(e.target.className);
+    if (e.target.className === 'la la-star-o') {
+      this.all_tmp = this.all_tmp.filter(val => {
+        if (val !== select_templ) {
+            return val;
+        }
+      });
+      this.favorit_tmp.push(select_templ);
+    }
+    if (e.target.className === 'la la-star') {
+      this.favorit_tmp = this.favorit_tmp.filter(val => {
+        if (val !== select_templ) {
+            return val;
+        }
+      });
+      this.all_tmp.push(select_templ);
+    }
+    this.httpPost(
+      `${this.ip}/mail/draft`,
+      {id: select_templ.id,
+        flagged: !select_templ.flagged
+      }).subscribe((data) => {});
   }
 
 

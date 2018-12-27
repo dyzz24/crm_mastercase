@@ -94,6 +94,9 @@
 
 .favorit_tmp {
     @include ul_tmp;
+    span:hover::before {
+        content: "\f31b";
+    }
 }
 
 .all_tmp {
