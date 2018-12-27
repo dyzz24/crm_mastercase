@@ -6,6 +6,7 @@ import { Observable, Subscription, UnsubscriptionError } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
 import { PreserverComponent } from '../../preserver/preserver.component';
+import {NewMessageService} from '../new-message/new-message.service';
 
 export interface SelectedLetter {
   mail_id: number;
@@ -66,7 +67,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     private elem: ElementRef,
     private http: HttpClient,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    @Inject(NewMessageService) private newMessageService: NewMessageService,
     ) {
     }
 
@@ -310,12 +312,8 @@ preserv_saver() {
 onFileChange(event) {
   const files  = event.target.files; // отловил файлы прикрепления
   if (files.length > 0) {
-
-    this.emailServ.files = files;
-    this.emailServ.to_answer = '';
-    this.emailServ.to_subject = '';
-    this.emailServ.to_cc = [];
-    this.emailServ.to_bcc = [];
+    this.newMessageService.new_clear_message();
+    this.newMessageService.files = files;
     this.emailServ.hiddenEmpty = true;
     this._rout.navigate(['./create'], { relativeTo: this.activatedRoute });
   }

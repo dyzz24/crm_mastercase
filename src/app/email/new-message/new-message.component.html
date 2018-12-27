@@ -16,59 +16,59 @@
   <div class="message__body">
 <div class="avatar__block">
     <div class="avatar">
-        <p class='avatar__title'>{{this.from.charAt(0)}}</p>
+        <p class='avatar__title'>{{this?.from.charAt(0)}}</p>
       </div>
       <div class="avatar__row_block" (click)='select_new_address($event)'>
-      <p class='head__p'>От: {{this.from}}</p>
+      <p class='head__p'>От: {{this?.from}}</p>
       <button class='select_btn'>
         <span class='la la-angle-down'></span>
       </button>
-      <ul class="hidden_block" [ngClass]="{visibl: this.open_select_address}">
+      <ul class="hidden_block" [ngClass]="{visibl: this.newMessageService.open_select_address}">
           <li *ngFor="let address of this.emailServ.all_user_mail_address" class='select_li'>{{address}}</li>
       </ul>
       </div>
 </div>
 <div class="row__block">
     <p class='head__p'>Кому: </p>
-    <div class="new_message__bables" *ngFor="let item of this.to,let i = index" [ngClass]="{not__addressess: this.to[0] === '' || this.to[0] === undefined }">
+    <div class="new_message__bables" *ngFor="let item of this.newMessageService.to, let i = index" [ngClass]="{not__addressess: this.newMessageService.to[0] === '' || this.newMessageService.to[0] === undefined }">
       <p>{{item}}</p>
-      <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.to, $event, i)'></span>
+      <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.to, $event, i)'></span>
     </div>
     <input class='input_fields' 
-    (blur)="add_data(this.to, $event)" 
-    (keydown)=' add_data_keyEvent(this.to, $event)'
-    (keydown)='delete_data_keyEvent(this.to, $event)'
+    (blur)="add_data(this.newMessageService.to, $event)" 
+    (keydown)=' add_data_keyEvent(this.newMessageService.to, $event)'
+    (keydown)='delete_data_keyEvent(this.newMessageService.to, $event)'
     >
 </div>
 <div class="row__block">
     <p class='head__p'>Копия: </p>
-    <div class="new_message__bables" *ngFor="let item of this.copy,let i = index" [ngClass]="{not__addressess: this.copy.length === 0}">
+    <div class="new_message__bables" *ngFor="let item of this.newMessageService.copy,let i = index" [ngClass]="{not__addressess: this.newMessageService.copy.length === 0}">
         <p>{{item}}</p>
-        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.copy, $event, i)'></span>
+        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.copy, $event, i)'></span>
       </div>
     <input class='input_fields' 
-    (blur)="add_data(this.copy, $event)" 
-    (keydown)=' add_data_keyEvent(this.copy, $event)'
-    (keydown)='delete_data_keyEvent(this.copy, $event)'
+    (blur)="add_data(this.newMessageService.copy, $event)" 
+    (keydown)=' add_data_keyEvent(this.newMessageService.copy, $event)'
+    (keydown)='delete_data_keyEvent(this.newMessageService.copy, $event)'
     >
 </div>
 <div class="row__block">
     <p class='head__p'>Скрытая: </p>
-    <div class="new_message__bables" *ngFor="let item of this.hidden_copy,let i = index" [ngClass]="{not__addressess: this.hidden_copy.length === 0}">
+    <div class="new_message__bables" *ngFor="let item of this.newMessageService.hidden_copy,let i = index" [ngClass]="{not__addressess: this.newMessageService.hidden_copy.length === 0}">
         <p>{{item}}</p>
-        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.hidden_copy, $event, i)'></span>
+        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.hidden_copy, $event, i)'></span>
       </div>
     <input class='input_fields' 
-    (blur)="add_data(this.hidden_copy, $event)" 
-    (keydown)=' add_data_keyEvent(this.hidden_copy, $event)'
-    (keydown)='delete_data_keyEvent(this.hidden_copy, $event)'
+    (blur)="add_data(this.newMessageService.hidden_copy, $event)" 
+    (keydown)=' add_data_keyEvent(this.newMessageService.hidden_copy, $event)'
+    (keydown)='delete_data_keyEvent(this.newMessageService.hidden_copy, $event)'
     >
 </div>
 
 <div class="row__block">
     <p class='head__p'>Тема: </p>
 
-    <textarea class='input_fields subject' [(ngModel)]='subject' >{{this.subject}}</textarea>
+    <textarea class='input_fields subject' [(ngModel)]='this.newMessageService.subject' >{{this.newMessageService.subject}}</textarea>
 </div>
 <div class="row__block end_group" >
   <label>
@@ -81,9 +81,9 @@
 </div>
 
 
-<div class="attachments" *ngIf="this.files_for_view.length !==0">
+<div class="attachments" *ngIf="this.newMessageService.files_for_view.length !==0">
   <div class="attach_scrollBar">
-    <div class="attach_group" *ngFor="let file of this.files_for_view; let i = index">
+    <div class="attach_group" *ngFor="let file of this.newMessageService.files_for_view; let i = index">
       <div class="name__block">
       <span [class]='file.name | attachPipe'></span>
       <p class='filename'>{{file.name}}</p>
@@ -99,18 +99,18 @@
 
 
     <div class="editor-qu">
-      <quill-editor [(ngModel)]='this.emailServ.to_forward' 
+      <quill-editor
       class='quill_styles'
-      [(ngModel)]='messages'>
+      [(ngModel)]='this.newMessageService.messages'>
       
       
       </quill-editor>
       <div class="qu__bottom_block">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
       <button class='save_templ' (click)='open_save_template()'>Сохранить как шаблон</button>
-      <div class='templ_name' [ngClass]="{visibl: this.save_tmp_state}">
+      <div class='templ_name' [ngClass]="{visibl: this.newMessageService.save_tmp_state}">
         <input type="text" placeholder="Имя шаблона"
-        [(ngModel)]='this.tmp_name' 
+        [(ngModel)]='this.newMessageService.tmp_name' 
         class='tmp_name_inp'
         >
         <button (click)='save_template()'>

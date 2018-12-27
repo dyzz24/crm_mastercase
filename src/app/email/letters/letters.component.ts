@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
+import {NewMessageService} from '../new-message/new-message.service';
 
 
 
@@ -52,6 +53,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
+    @Inject(NewMessageService) private newMessageService: NewMessageService,
     public element: ElementRef,
     private rout: Router,
     private http: HttpClient,

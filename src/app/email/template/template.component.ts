@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { EmailServiceService } from '../email-service.service';
+import {NewMessageService} from '../new-message/new-message.service';
 
 @Component({
   selector: 'app-template',
@@ -27,6 +28,7 @@ export class TemplateComponent implements OnInit, DoCheck {
 
   constructor(private http: HttpClient,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
+    @Inject(NewMessageService) private newMessageService: NewMessageService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService) {
     this.search_templates.valueChanges.pipe().subscribe(data => {
           this.search_tmp(data.toLowerCase());
@@ -103,18 +105,19 @@ export class TemplateComponent implements OnInit, DoCheck {
           // tslint:disable-next-line:max-line-length
           {address: this.email_address
           }).subscribe((data) => {
-            console.log(data);
+            // console.log(data);
             this.all_tmp = data.filter(val => {
               if (val.flagged === false) {
                   return val;
               }
             });
+            console.log(this.all_tmp);
             this.favorit_tmp = data.filter(val => {
               if (val.flagged === true) {
                   return val;
               }
             });
-            console.log(this.favorit_tmp);
+
           });
       }
   }
@@ -125,7 +128,8 @@ export class TemplateComponent implements OnInit, DoCheck {
     if (e.target.className === 'la la-star-o') {
       return;
     }
-    this.emailServ.new_message_from_template(array_tmp.recipients.to,
+    console.log(array_tmp);
+    this.newMessageService.new_message_from_template(array_tmp.recipients.to,
       array_tmp.subject,
       array_tmp.recipients.cc,
       array_tmp.recipients.bcc,

@@ -1,11 +1,13 @@
-import { Component, OnInit, Input, DoCheck, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, Inject, inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { ToastrService} from 'ngx-toastr';
 import { ReadVarExpr } from '@angular/compiler';
+import {NewMessageService} from '../new-message/new-message.service';
+
 
 
 
@@ -20,40 +22,31 @@ export class NewMessageComponent implements OnInit, DoCheck {
     private _rout: Router,
     private http: HttpClient,
     @Inject(ToastrService) private toastrServ: ToastrService,
-    @Inject(AuthorizationService) private authorizationServ: AuthorizationService
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    @Inject(NewMessageService) private newMessageService: NewMessageService,
     ) {
      }
+     public from;
 
-private from;
-private to = [this.emailServ.to_answer]; // array for send
-private copy = this.emailServ.to_cc; // array for send copy
-private hidden_copy = this.emailServ.to_bcc; // array for send hidd copy
-private subject = this.emailServ.to_subject; // subject
 
-private messages;
-private messages_sending = false;
-private files; // файлы с инпута
-private files_for_view = []; // имена файлов для HTML
-private formData = new FormData(); // дата для отправки на серв файлов
-private open_select_address = false;
 
-save_tmp_state = false;
-tmp_name;
+
 
 
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
     this.from = this.emailServ.idPostForHTTP;
+
     // this.copy = this.emailServ.to_cc;
-    if (this.emailServ.files.length > 0) { // если стэйт сервиса не пуст
-      this.files = this.emailServ.files; // берет файлы из него
-      this.add_drag_input_data(this.files); // загоняет в файлы для отправки
+    if (this.newMessageService.files.length > 0) { // если стэйт сервиса не пуст
+
+      this.add_drag_input_data(this.newMessageService.files); // загоняет в файлы для отправки
     }
 
   }
   ngDoCheck() {
-    // console.log(this.copy)
+    // console.log(this.subscription)
     // this.too = this.to.map(val => {
     //     return {address: val, name: ''};
     // });
@@ -133,41 +126,40 @@ tmp_name;
   }
 
   sendMessage() {
-
-  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
-    this.formData.append('files', this.files_for_view[i]);
-
+    this.newMessageService.messages_sending = true; // крутилка on
+  for (let i = 0; i < this.newMessageService.files_for_view.length; i++) { // добавляю в форм дэйт циклом
+    this.newMessageService.formData.append('files', this.newMessageService.files_for_view[i]);
 }
 
 
-  this.formData.append('json', JSON.stringify({
+  this.newMessageService.formData.append('json', JSON.stringify({
     from: [
       {address: this.from}
     ],
     to: [
       {
-        address: this.to
+        address: this.newMessageService.to
       }
     ],
-    subject: this.subject,
-    html: this.messages
+    subject: this.newMessageService.subject,
+    html: this.newMessageService.messages
   }));
 
-  this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
+  this.httpPost(`${this.emailServ.ip}/mail/send`, this.newMessageService.formData).subscribe(resp => {
 });
 
-this.messages_sending = true; // крутилка on
+
 setTimeout(() => {
   const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
     this._rout.navigate([navigatePath]);
-  this.messages_sending = false; // крутилка off
+  this.newMessageService.messages_sending = false; // крутилка off
   this.emailServ.hiddenEmpty = false;
   this.showSuccess('Письмо отправлено');
 }, 3000);
 }
 onFileChange(event) {
-  this.files = event.target.files; // отловил файлы прикрепления
-  this.add_drag_input_data(this.files);
+  this.newMessageService.files = event.target.files; // отловил файлы прикрепления
+  this.add_drag_input_data(this.newMessageService.files);
 }
 
 
@@ -192,12 +184,12 @@ drop(e) {
 
   const hidden_drag_region = document.querySelector('.drag_region');
   hidden_drag_region.classList.remove('open');
-  this.files = e.dataTransfer.files;
-  this.add_drag_input_data(this.files);
+  this.newMessageService.files = e.dataTransfer.files;
+  this.add_drag_input_data(this.newMessageService.files);
 }
 
 delete_attach(index) {
-  this.files_for_view.splice(index, 1);
+  this.newMessageService.files_for_view.splice(index, 1);
 }
 
 
@@ -210,7 +202,7 @@ add_drag_input_data(objForData) {
  // tslint:disable-next-line:forin
   for (const key in val) { // пробегаюсь по файлам
     if (val[key].name !== 'item' && val[key].name !== undefined) { // если имя файла не item и und
-    this.files_for_view.push(val[key]);
+    this.newMessageService.files_for_view.push(val[key]);
     }
   }
 });
@@ -220,27 +212,27 @@ add_drag_input_data(objForData) {
 }
 
 open_save_template() {
-this.save_tmp_state = ! this.save_tmp_state;
+this.newMessageService.save_tmp_state = ! this.newMessageService.save_tmp_state;
 }
 save_template() {
-  const to_send = this.to.map(val => { // массив с графами "кому"
+  const to_send = this.newMessageService.to.map(val => { // массив с графами "кому"
     return {address: val, name: ''};
 });
-  const cc_send = this.copy.map(val => { // массив с графами "копия"
+  const cc_send = this.newMessageService.copy.map(val => { // массив с графами "копия"
     return {address: val, name: ''};
 });
-const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+const bcc_send = this.newMessageService.hidden_copy.map(val => { // массив с графами "Скрытая копия"
   return {address: val, name: ''};
 });
-  this.save_tmp_state = false; // закрыть поле ввода имени шаблона
+  this.newMessageService.save_tmp_state = false; // закрыть поле ввода имени шаблона
   this.httpPost(
     `${this.emailServ.ip}/mail/draft`,
     // tslint:disable-next-line:max-line-length
     {address: this.from,
-      name: this.tmp_name,
+      name: this.newMessageService.tmp_name,
       text: '',
-      html: this.messages,
-      subject: this.subject,
+      html: this.newMessageService.messages,
+      subject: this.newMessageService.subject,
       from: [
         {address: this.from,
           name: ''
@@ -250,18 +242,18 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
      cc: cc_send,
      bcc: bcc_send
     }).subscribe(() => {});
-  this.tmp_name = ''; // очищаю инпут после сохранения шаблона
+  this.newMessageService.tmp_name = ''; // очищаю инпут после сохранения шаблона
   this.show_notification('Шаблон создан');
 
 }
 
 select_new_address(e) {
   if (e.target.classList.contains('select_btn') || e.target.classList.contains('la-angle-down')) {
-      this.open_select_address = ! this.open_select_address;
+      this.newMessageService.open_select_address = ! this.newMessageService.open_select_address;
   }
   if (e.target.classList.contains('select_li')) {
       this.from = e.target.innerText;
-      this.open_select_address = false;
+      this.newMessageService.open_select_address = false;
   }
 }
 

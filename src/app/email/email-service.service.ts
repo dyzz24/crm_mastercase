@@ -71,7 +71,6 @@ export class EmailServiceService {
   to_cc = [];
   to_bcc = [];
   sub;
-  files = []; // для прокидывания файлов из компонента в компонент, нужно явно посылать пустым
   folders;
   all_user_mail_address = [];
 
@@ -117,66 +116,67 @@ export class EmailServiceService {
     return firstLett;
   }
 
-  new_message_from_template(param_to_answer?, param_to_subject?, param_to_cc?, param_to_bcc?, param_html?) {
-    this.new_clear_message();
+  // new_message_from_template(param_to_answer?, param_to_subject?, param_to_cc?, param_to_bcc?, param_html?) {
+  //   this.new_clear_message();
+  //   this.to_answer = param_to_answer;
+  //   this.to_forward = param_html;
+  //   this.to_answer = param_to_answer;
+  //   this.to_cc = param_to_cc.map(val => {
+  //     return val.address;
+  //   });
+  //   this.to_bcc = param_to_bcc.map(val => {
+  //     return val.address;
+  //   });
+  //   this.to_subject = param_to_subject;
+  // }
 
-    this.to_answer = param_to_answer;
-    this.to_forward = param_html;
-    this.to_answer = param_to_answer;
-    this.to_cc = param_to_cc.map(val => {
-      return val.address;
-    });
-    this.to_bcc = param_to_bcc;
-    this.to_subject = param_to_subject;
-  }
+  // new_replyMessage(param_to_answer?, param_to_subject?, param_text?, param_html?) {
+  //  this.new_clear_message();
+  //   this.to_answer = param_to_answer;
+  //   this.to_subject = `RE: ${param_to_subject}`;
+  //   if (param_html === null) {
+  //     this.to_forward = param_text;
+  //   } else {
+  //     this.to_forward = param_html;
+  //   }
+  // }
 
-  new_replyMessage(param_to_answer?, param_to_subject?, param_text?, param_html?) {
-   this.new_clear_message();
-    this.to_answer = param_to_answer;
-    this.to_subject = `RE: ${param_to_subject}`;
-    if (param_html === null) {
-      this.to_forward = param_text;
-    } else {
-      this.to_forward = param_html;
-    }
-  }
+  // new_reply_allMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
+  //   this.new_clear_message();
+  //   const newArray = [];
+  //   this.to_answer = param_to_answer;
+  //   this.to_subject = `RE: ${param_to_subject}`;
+  //   if (param_html === null) {
+  //     this.to_forward = param_text;
+  //   } else {
+  //     this.to_forward = param_html;
+  //   }
+  //   param_to_all_answer.filter(val => {
+  //     if (val.address !== this.idPostForHTTP && val.address !== param_to_answer) {
 
-  new_reply_allMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
-    this.new_clear_message();
-    const newArray = [];
-    this.to_answer = param_to_answer;
-    this.to_subject = `RE: ${param_to_subject}`;
-    if (param_html === null) {
-      this.to_forward = param_text;
-    } else {
-      this.to_forward = param_html;
-    }
-    param_to_all_answer.filter(val => {
-      if (val.address !== this.idPostForHTTP && val.address !== param_to_answer) {
+  //       newArray.push(val.address);
+  //     }
+  //     this.to_cc = newArray;
+  //   });
+  // }
 
-        newArray.push(val.address);
-      }
-      this.to_cc = newArray;
-    });
-  }
-
-  new_clear_message() {
-    this.to_answer = '';
-    this.to_subject = '';
-    this.to_forward = '';
-    this.hiddenEmpty = true;
-    this.to_cc = [];
-    this.to_bcc = [];
-    this.files = [];
-  }
-  new_forward_message(param_text, param_html) {
-    this.new_clear_message();
-    if (param_html === null) {
-      this.to_forward = param_text;
-    } else {
-      this.to_forward = param_html;
-    }
-  }
+  // new_clear_message() {
+  //   this.to_answer = '';
+  //   this.to_subject = '';
+  //   this.to_forward = '';
+  //   this.hiddenEmpty = true;
+  //   this.to_cc = [];
+  //   this.to_bcc = [];
+  //   this.files = [];
+  // }
+  // new_forward_message(param_text, param_html) {
+  //   this.new_clear_message();
+  //   if (param_html === null) {
+  //     this.to_forward = param_text;
+  //   } else {
+  //     this.to_forward = param_html;
+  //   }
+  // }
   // newMessage_DblClick(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
   //   this.to_answer = '';
   //   this.to_subject = '';
