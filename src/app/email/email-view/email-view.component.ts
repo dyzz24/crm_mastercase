@@ -84,7 +84,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
-          this.emailServ.currentId = +data.id;
+          this.emailServ.currentId = +data.id; // ID письма mail_id
             this.httpPost(
       `${this.emailServ.ip}/mail/mail`,
       // tslint:disable-next-line:max-line-length
@@ -148,35 +148,38 @@ if (this.subscription) {
   }
 
 
+current_index_checker(n) {
+  let current_id; // id письма
+  let current_index; // его индекс в массиве писем
 
 
-
-  selectMess(n) {
-    this.checkerLengthArray_bcc_cc();
-    this.checkerLength_addressess();
-    let current_id; // id письма
-    let current_index; // его индекс в массиве писем
-
-
-    this.emailServ.lettersList.filter((val, ind) => {
-        if (val.mail_id === this.emailServ.currentId) {
-          current_index = ind + n; // отлавливаю текущий индекс (через id url'а) + n
-        }
-    });
+  this.emailServ.lettersList.filter((val, ind) => {
+      if (val.mail_id === this.emailServ.currentId) {
+        current_index = ind + n; // отлавливаю текущий индекс (через id url'а) + n
+      }
+  });
 
 
 if (current_index === this.emailServ.lettersList.length) { // если элемент последний в списке
-  current_index = 0; // ставлю индекс в ноль
+current_index = 0; // ставлю индекс в ноль
 }
 
 if (current_index < 0) { // если первый
-  current_index = this.emailServ.lettersList.length - 1; // ставлю в последний индекс
+current_index = this.emailServ.lettersList.length - 1; // ставлю в последний индекс
 }
 
 current_id =  this.emailServ.lettersList[current_index].mail_id; // получаю новое id для урла
 
 
 this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); // перехожу по урлу
+}
+
+
+  selectMess(n) {
+    this.checkerLengthArray_bcc_cc();
+    this.checkerLength_addressess();
+    this.current_index_checker(n);
+
   }
 
   hideMenuShow() {
@@ -188,28 +191,20 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
     const id = this.emailServ.currentId;
     this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
           mailId: +id,
-          boxId: 2,
+          boxId: 3,
           address: this.emailServ.idPostForHTTP
     }).subscribe();
     setTimeout(() => {
 
-
+    this.current_index_checker(1);
     this.emailServ.lettersList = this.emailServ.lettersList.filter((val , ind) => {
       if (val.mail_id !== id) {
         return val;
       }
       });
 
-      const navigatePath = this._rout.url.replace(/\/view\/.*/, ''); // стартовый урл
-      if (this.emailServ.currentId <= 0) { // если урл равен или меньше нуля
-        const new_url = navigatePath + '/view/' + 0; // ставлю в ноль
-        this._rout.navigate([new_url]); // перехожу
-      } else {
-        const new_url = navigatePath + '/view/' + (+this.emailServ.currentId - 1); // иначе при удалении перехожу к предыдущему элементу let
-        this._rout.navigate([new_url]);
-      }
       messageBody.classList.remove('dellLetter');
-      // this.emailServ.stateServ();
+
     }, 500);
   }
 
