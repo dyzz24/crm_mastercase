@@ -162,7 +162,7 @@
 
 
 
-@mixin header($flex-dir,$height:45px){
+@mixin header($flex-dir,$height:40px){
     @extend %all-padding;
     width: 100%;
     height: $height;
