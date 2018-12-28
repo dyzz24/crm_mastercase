@@ -94,7 +94,7 @@
         [class.important__background]="this.emailServ.lettersList[i].flagged === true"
         [class.active_checkboxes]='emailServ.hideAvatars[i]'
         draggable="true"
-        (dragstart)="dragElemStart(letters.mail_id, $event)"
+        (dragstart)="dragElemStart(letters.mail_id, letters.seen, letters.box_id, $event)"
 
         
         >

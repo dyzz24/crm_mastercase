@@ -75,14 +75,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
-
-
-
-    const requestInterval = setInterval(() => {
-      if (this.emailServ.lettersList !== undefined) {
-
         this.preload_to_wait_status = false;
-        clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.emailServ.currentId = +data.id; // ID письма mail_id
@@ -121,9 +115,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         });
               }
 
-    }, 1000);
-
-  }
 
 
 

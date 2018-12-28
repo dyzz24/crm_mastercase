@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthorizationService } from './../authorization.service';
 
@@ -10,6 +10,7 @@ export class EmailGuardGuard implements CanActivate {
 
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    private rout: Router
     ) {
     }
   canActivate(
@@ -18,6 +19,7 @@ export class EmailGuardGuard implements CanActivate {
     if (this.authorizationServ.accessToken !== undefined) {
       return true;
     } else {
+      this.rout.navigate(['email']);
       return false;
     }
   }

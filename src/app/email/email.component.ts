@@ -39,6 +39,7 @@ export class EmailComponent implements OnInit, DoCheck {
   selected_box;
   selected_folders;
 adress;
+counts;
   constructor(
     public element: ElementRef,
     private _rout: Router,
@@ -69,6 +70,18 @@ adress;
       this.emailServ.folders = data2.boxes;
 
       this.socketServ.lettersSocketConnect();
+      // console.log(data2.stats);
+      const counts = data2.stats.reduce((index, value) => {
+        index[value.address] = index[value.address] || {};
+        index[value.address][value.box_id] = value.count;
+        return index;
+      }, {});
+
+
+      // const fold = counts['seo@insat.ru']
+
+      this.counts = counts;
+
     });
 
 
@@ -185,6 +198,8 @@ loadAmount(count) {   // для количества загруженных пи
 drop_letter(e) {
 
   const data_mail_id = e.dataTransfer.getData('mail_id');
+  const seen_status = e.dataTransfer.getData('seen'); // ловлю статус (прочитанное - нет)
+  const previous_folders_box_id = e.dataTransfer.getData('box_id'); // ловлю предыдущий бокс папки (откуда перенес)
   this.folder_selection_exit(e);
   const data_folder_id = e.target.closest('.link_area').id;
 
@@ -198,6 +213,12 @@ drop_letter(e) {
       return val;
     }
     });
+    if (seen_status === 'false') { // если оно НЕ прочитанное
+      // tslint:disable-next-line:max-line-length
+      this.counts[this.emailServ.idPostForHTTP][data_folder_id] = +this.counts[this.emailServ.idPostForHTTP][data_folder_id] + 1 + ''; // меняю счетчик папки в которую перенес
+      // tslint:disable-next-line:max-line-length
+      this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] = +this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1 + ''; // меняю счетчик папки из которой перенес
+    }
 
 }
 

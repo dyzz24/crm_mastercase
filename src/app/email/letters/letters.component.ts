@@ -6,7 +6,7 @@ import { FormControl, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
-import { SocketService } from '../../socket.service';
+
 import { AuthorizationService } from '../../authorization.service';
 import {NewMessageService} from '../new-message/new-message.service';
 
@@ -84,62 +84,28 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       this.emailServ.selectNum = +params.id;
       this.emailServ.haveResponse = false; // если убрать - не будет индикации при навигации по папкам (хз грузит или нет)
       // tslint:disable-next-line:forin
-      if (this.authorizationServ.accessToken === undefined) { // если авторизации не было, будет опрашивать сервис авторизации по интервалу
-        this.loading_list_letters(true);
-      } else {
-        this.loading_list_letters(false);
-      }
+      this.httpPost(
+        `${this.emailServ.ip}/mail/mails`,
+        // tslint:disable-next-line:max-line-length
+        {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
+
+    this.emailServ.haveResponse = true;
+          if (data.length === 0) {
+            this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
+          } else {
+            this.emailServ.notLettersFlag = false;
+          }
+          this.emailServ.lettersList = data; // главный массив всех всех писем
+          // console.log(data);
+
+          this.emailServ.dataLetters = this.emailServ.lettersAmount;
+          });
 
     }); // подписка
 
 
   }
 
-    private loading_list_letters(boolean) {
-
-
-        if (boolean) {
-          const requestInterval = setInterval(() => {
-            if (this.authorizationServ.accessToken !== undefined) {
-              clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации ()
-              this.httpPost(
-                `${this.emailServ.ip}/mail/mails`,
-                // tslint:disable-next-line:max-line-length
-                {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
-
-            this.emailServ.haveResponse = true;
-                  if (data.length === 0) {
-                    this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
-                  } else {
-                    this.emailServ.notLettersFlag = false;
-                  }
-                  this.emailServ.lettersList = data; // главный массив всех всех писем
-                  this.emailServ.dataLetters = this.emailServ.lettersAmount;
-                  });
-
-            }
-          }, 1000);
-        }
-        if (!boolean) {
-          this.httpPost(
-            `${this.emailServ.ip}/mail/mails`,
-            // tslint:disable-next-line:max-line-length
-            {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
-
-        this.emailServ.haveResponse = true;
-              if (data.length === 0) {
-                this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
-              } else {
-                this.emailServ.notLettersFlag = false;
-              }
-              this.emailServ.lettersList = data; // главный массив всех всех писем
-              // console.log(data);
-
-              this.emailServ.dataLetters = this.emailServ.lettersAmount;
-              });
-
-        }
-    }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -543,8 +509,10 @@ move_folder() {
   this.folder_list_state = ! this.folder_list_state;
 }
 
-dragElemStart(elemId, e) {
+dragElemStart(elemId, seen_status, box_id, e) {
   e.dataTransfer.setData('mail_id', elemId);
+  e.dataTransfer.setData('seen', seen_status);
+  e.dataTransfer.setData('box_id', box_id);
 }
 
 close_menu() {
