@@ -238,10 +238,11 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   urlLetterView(event, idLetter, id) {
-
+if (this.emailServ.lettersList[idLetter].seen === false) {
     this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, flag: 'seen' , value: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
+}
 
 
   }

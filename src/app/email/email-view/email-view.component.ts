@@ -57,6 +57,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   attachments_array;
   id_for_request;
   index;
+  cahse_letters = [];
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -85,6 +86,19 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.emailServ.currentId = +data.id; // ID письма mail_id
+          let flagged = true;
+          this.cahse_letters.filter(val => {
+
+                if (val.mail_id === this.emailServ.currentId) {
+                  this.selectedLetter = val;
+                  this.checkerLengthArray_bcc_cc();
+                  this.checkerLength_addressess();
+                  this.emailServ.activeLett[data.id] = true;
+                  this.emailServ.hiddenEmpty = true;
+                  flagged = false;
+                }
+          });
+          if (flagged) {
             this.httpPost(
       `${this.emailServ.ip}/mail/mail`,
       // tslint:disable-next-line:max-line-length
@@ -94,6 +108,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.emailServ.haveResponse = true;
         this.selectedLetter = dataMails;
 
+        this.cahse_letters.push(this.selectedLetter);
+
 
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
@@ -101,8 +117,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.emailServ.hiddenEmpty = true;
         });
           this.emailServ.activeLett[data.id] = true;
+      }
         });
-
               }
 
     }, 1000);
