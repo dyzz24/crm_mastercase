@@ -92,6 +92,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
     }); // подписка
 
+
   }
 
     private loading_list_letters(boolean) {
@@ -135,7 +136,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
               // console.log(data);
 
               this.emailServ.dataLetters = this.emailServ.lettersAmount;
-
               });
 
         }

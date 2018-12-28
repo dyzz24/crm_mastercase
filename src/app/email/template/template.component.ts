@@ -97,7 +97,7 @@ export class TemplateComponent implements OnInit, DoCheck {
   ngDoCheck() {
   }
 
-  show_hide_templContainer(e) {
+  show_hide_templContainer(e) { // открываю список шаблонов + запрашиваю их на серве
       this.show_hidden_templ = ! this.show_hidden_templ;
       if (this.show_hidden_templ) {
         this.httpPost(

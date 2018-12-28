@@ -94,6 +94,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         this.emailServ.haveResponse = true;
         this.selectedLetter = dataMails;
 
+
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
 
@@ -114,10 +115,9 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     if (this.selectedLetter.recipients.cc === null || this.selectedLetter.recipients.cc === undefined) {
       return;
     }
-    if (this.selectedLetter.recipients.cc.length > 3) {
-      this.selectedLetter.recipients.cc = [];
+      this.cut_cc_adressess_array = [];
       this.cut_cc_adressess_array = this.selectedLetter.recipients.cc.slice(0, 3);
-    }
+
   }
   checkerLength_addressess() {
 
@@ -146,6 +146,9 @@ if (this.subscription) {
     const navigatePath = this._rout.url.replace(/\/view.*/, '');
     this._rout.navigate([navigatePath], { relativeTo: this.activatedRoute });
   }
+
+
+
 
 
   selectMess(n) {
