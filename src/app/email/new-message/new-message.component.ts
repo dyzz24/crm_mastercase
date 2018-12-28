@@ -36,6 +36,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
+    this.newMessageService.save_tmp_state = false;
     this.from = this.emailServ.idPostForHTTP;
 
     // this.copy = this.emailServ.to_cc;
@@ -228,7 +229,7 @@ const bcc_send = this.newMessageService.hidden_copy.map(val => { // массив
   this.httpPost(
     `${this.emailServ.ip}/mail/draft`,
     // tslint:disable-next-line:max-line-length
-    {address: this.from,
+    {address: this.from, // имейл
       name: this.newMessageService.tmp_name,
       text: '',
       html: this.newMessageService.messages,

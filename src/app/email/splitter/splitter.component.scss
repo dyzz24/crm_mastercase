@@ -8,13 +8,13 @@
 
 :host ::ng-deep {
     .splitters {
-        width: 3px;
+        width: 5px;
         min-width: 3px;
         cursor:w-resize;
         height: 100%;
         position: absolute;
         top: 0;
-        z-index: 3;
+        z-index: 9;
     }
 
     .splitter__body {

@@ -174,7 +174,6 @@
   </ng-template>
 
   
-  <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
   </div>
   
     <app-splitter left min='100' max='500' positionLeft='-0.5'></app-splitter>
@@ -198,4 +197,5 @@
     <router-outlet></router-outlet>
   
   </div>
+  <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
 </div>
