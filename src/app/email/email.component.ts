@@ -200,7 +200,6 @@ drop_letter(e) {
   const data_mail_id = e.dataTransfer.getData('mail_id');
   const seen_status = e.dataTransfer.getData('seen'); // ловлю статус (прочитанное - нет)
   const previous_folders_box_id = e.dataTransfer.getData('box_id'); // ловлю предыдущий бокс папки (откуда перенес)
-  this.folder_selection_exit(e);
   const data_folder_id = e.target.closest('.link_area').id;
 
   this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
@@ -214,11 +213,21 @@ drop_letter(e) {
     }
     });
     if (seen_status === 'false') { // если оно НЕ прочитанное
+
+      if (!this.counts[this.emailServ.idPostForHTTP][data_folder_id]) { // если упадет NaN
+        this.counts[this.emailServ.idPostForHTTP][data_folder_id] = 1 + ''; // ставлю 1
+        this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
+        +this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1 + ''; // меняю счетчик папки из которой перенес
+        this.folder_selection_exit(e);
+      } else {
       // tslint:disable-next-line:max-line-length
-      this.counts[this.emailServ.idPostForHTTP][data_folder_id] = +this.counts[this.emailServ.idPostForHTTP][data_folder_id] + 1 + ''; // меняю счетчик папки в которую перенес
-      // tslint:disable-next-line:max-line-length
-      this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] = +this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1 + ''; // меняю счетчик папки из которой перенес
+      this.counts[this.emailServ.idPostForHTTP][data_folder_id] =
+      +this.counts[this.emailServ.idPostForHTTP][data_folder_id] + 1 + ''; // меняю счетчик папки в которую перенес
+      this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
+      +this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1 + ''; // меняю счетчик папки из которой перенес
+      this.folder_selection_exit(e);
     }
+  }
 
 }
 
