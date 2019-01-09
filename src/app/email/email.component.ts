@@ -39,7 +39,7 @@ export class EmailComponent implements OnInit, DoCheck {
   selected_box;
   selected_folders;
 adress;
-counts;
+
   constructor(
     public element: ElementRef,
     private _rout: Router,
@@ -56,7 +56,7 @@ counts;
 
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
-          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации (потом убрать)
+          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
           this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
 
@@ -74,7 +74,7 @@ counts;
       const counts = data2.stats.reduce((index, value) => {
         index[value.address] = index[value.address] || {};
 
-        index[value.address][value.box_id] = value.count;
+        index[value.address][value.box_id] = +value.count;
 
         return index;
       }, {});
@@ -83,7 +83,7 @@ counts;
 
       // const fold = counts['seo@insat.ru']
 
-      this.counts = counts;
+      this.emailServ.counts = counts;
 
     });
 
@@ -217,17 +217,17 @@ drop_letter(e) {
     });
     if (seen_status === 'false') { // если оно НЕ прочитанное
 
-      if (!this.counts[this.emailServ.idPostForHTTP][data_folder_id]) { // если упадет NaN
-        this.counts[this.emailServ.idPostForHTTP][data_folder_id] = 1 + ''; // ставлю 1
-        this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
-        +this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1 + ''; // меняю счетчик папки из которой перенес
+      if (!this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id]) { // если упадет NaN
+        this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id] = 1; // ставлю 1
+        this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
+        +this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1; // меняю счетчик папки из которой перенес
         this.folder_selection_exit(e);
       } else {
       // tslint:disable-next-line:max-line-length
-      this.counts[this.emailServ.idPostForHTTP][data_folder_id] =
-      +this.counts[this.emailServ.idPostForHTTP][data_folder_id] + 1 + ''; // меняю счетчик папки в которую перенес
-      this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
-      +this.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1 + ''; // меняю счетчик папки из которой перенес
+      this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id] =
+      +this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id] + 1 ; // меняю счетчик папки в которую перенес
+      this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
+      +this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1; // меняю счетчик папки из которой перенес
       this.folder_selection_exit(e);
     }
   }

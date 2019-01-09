@@ -162,7 +162,7 @@
               routerLink="./{{this.emailItems[i].address}}/1"
             >
               <p>Входящие</p>
-              <p class='counter' *ngIf="this.counts[email.address] !== undefined && this.counts[email.address][1] !== '0'">{{this.counts[email.address][1]}}</p>
+              <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][1] !== 0">{{this.emailServ.counts[email.address][1]}}</p>
               <p class="email__num">{{ email.count }}</p>
             </div>
             <button (click)='open_hidden_folders($event)' *ngIf="this?.user_folders[i].length !== 0"><span class="la la-lg la-angle-down"></span></button>
@@ -186,7 +186,7 @@
               >
                 <span class="la la-lg la-square-o"></span>
                 <p>{{folder.title}}</p>
-                <p class='counter' *ngIf="this.counts[email.address] !== undefined && this.counts[email.address][folder.id] !== '0'">{{this.counts[email.address][folder.id]}}</p>
+                <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder.id] !== 0">{{this.emailServ.counts[email.address][folder.id]}}</p>
               </div>
               <button (click)='open_hidden_folders($event)'
               *ngIf="folder.childs"
@@ -216,7 +216,7 @@
                   >
                     <span class="la la-lg la-square-o"></span>
                     <p>{{folder_1level.title}}</p>
-                    <p class='counter' *ngIf="this.counts[email.address] !== undefined && this.counts[email.address][folder_1level.id] !== '0' ">{{this.counts[email.address][folder_1level.id]}}</p>
+                    <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_1level.id] !== 0 ">{{this.emailServ.counts[email.address][folder_1level.id]}}</p>
                   </div>
                   <button (click)='open_hidden_folders($event)'
                   *ngIf="folder_1level.childs"
@@ -246,7 +246,7 @@
                         <span class="la la-lg la-square-o"></span>
                         
                         <p>{{folder_2level.title}}</p>
-                        <p class='counter' *ngIf="this.counts[email.address] !== undefined && this.counts[email.address][folder_2level.id] !== '0'">{{this.counts[email.address][folder_2level.id]}}</p>
+                        <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_2level.id] !== 0">{{this.emailServ.counts[email.address][folder_2level.id]}}</p>
                       </div>
                       <button (click)='open_hidden_folders($event)'
                       *ngIf="folder_2level.childs"
@@ -273,7 +273,7 @@
                           >
                             <span class="la la-lg la-square-o"></span>
                             <p>{{folder_3level.title}}</p>
-                            <p class='counter' *ngIf="this.counts[email.address] !== undefined && this.counts[email.address][folder_3level.id] !== '0'">{{this.counts[email.address][folder_3level.id]}}</p>
+                            <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_3level.id] !== 0">{{this.emailServ.counts[email.address][folder_3level.id]}}</p>
                           </div>
                           <button (click)='open_hidden_folders($event)'
                           *ngIf="folder_3level.childs"
@@ -300,7 +300,7 @@
                               >
                                 <span class="la la-lg la-square-o"></span>
                                 <p>{{folder_4level.title}}</p>
-                                <p class='counter' *ngIf="this.counts[email.address] !== undefined && this.counts[email.address][folder_4level.id] !== '0'">{{this.counts[email.address][folder_4level.id]}}</p>
+                                <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_4level.id] !== 0">{{this.emailServ.counts[email.address][folder_4level.id]}}</p>
                               </div>
                             </div>
                           </div>

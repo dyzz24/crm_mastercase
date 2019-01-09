@@ -73,6 +73,7 @@ export class EmailServiceService {
   sub;
   folders;
   all_user_mail_address = [];
+  counts: number; // счетчик новых писем в папках
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
