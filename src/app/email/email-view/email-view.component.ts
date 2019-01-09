@@ -361,10 +361,4 @@ public httpDownload(url: string, body, options?): Observable<any> {
     }, responseType: 'blob' as 'json'});
 }
 
-
-
-
-
-
-
 }

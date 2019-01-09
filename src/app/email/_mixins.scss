@@ -276,7 +276,7 @@ span {
 &:hover span {
             color: $text-color;
         }
-&:hover {
+&:hover:not(.create) {
             background: #a2b3cc;
         }
 }

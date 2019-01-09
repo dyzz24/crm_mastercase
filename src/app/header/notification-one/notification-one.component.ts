@@ -23,7 +23,6 @@ export class NotificationOneComponent implements OnInit, DoCheck {
 
   private newMessagesCountArray = [];
   private newMessagesCount;
-  private all_email_address;
   private accessToken;
   private response_flagged = false;
 
@@ -52,7 +51,6 @@ export class NotificationOneComponent implements OnInit, DoCheck {
           return;
         }
         data2.map((val) => {
-          this.all_email_address = [...val.address]; // собираю все адреса ящиков
           this.newMessagesCountArray = [...this.newMessagesCountArray, +val.count]; // собираю их каунты
         });
             this.newMessagesCount = this.newMessagesCountArray.reduce((acc, val) => acc + val); // суммирую каунты

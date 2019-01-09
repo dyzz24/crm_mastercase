@@ -77,7 +77,6 @@ export class EmailServiceService {
 
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
-
   }
 
 
