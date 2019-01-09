@@ -73,9 +73,12 @@ counts;
       // console.log(data2.stats);
       const counts = data2.stats.reduce((index, value) => {
         index[value.address] = index[value.address] || {};
+
         index[value.address][value.box_id] = value.count;
+
         return index;
       }, {});
+      // console.log(counts);
 
 
       // const fold = counts['seo@insat.ru']

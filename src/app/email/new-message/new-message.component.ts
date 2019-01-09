@@ -216,6 +216,11 @@ open_save_template() {
 this.newMessageService.save_tmp_state = ! this.newMessageService.save_tmp_state;
 }
 save_template() {
+
+  if (this.newMessageService.tmp_name === '' || this.newMessageService.tmp_name === undefined) {
+    this.showError('Введите имя шаблона');
+    return;
+  }
   const to_send = this.newMessageService.to.map(val => { // массив с графами "кому"
     return {address: val, name: ''};
 });
