@@ -166,8 +166,11 @@
 
 .new_message__bables {
     @include bables;
-    p{
+    
+    cursor: pointer;
+    p, input{
         margin-right: 10px;
+        width: 100%;
     }
 
 }
@@ -177,9 +180,8 @@
     align-items: center;
 }
 
-
-.visible {
-    display: block;
+.hide {
+    display: none;
 }
 
 .other__text {
@@ -398,6 +400,26 @@ label {
         &:hover {
             background: #d1d5db;
         }
+    }
+}
+
+
+.babl__menu {
+    @include hideMenu (200px, auto, 115%, 50%, white);
+    
+    transform: translateX(50%);
+
+    &_btn {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+        box-sizing: border-box;
+    }
+
+    &.visible {
+        display: flex;
     }
 }
 

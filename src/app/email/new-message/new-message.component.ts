@@ -17,6 +17,8 @@ import {NewMessageService} from '../new-message/new-message.service';
   styleUrls: ['./new-message.component.scss']
 })
 export class NewMessageComponent implements OnInit, DoCheck {
+
+  private babl_menu_show = false;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -47,11 +49,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
   }
   ngDoCheck() {
-    // console.log(this.subscription)
-    // this.too = this.to.map(val => {
-    //     return {address: val, name: ''};
-    // });
-    // console.log(this.too);
+    // console.log(this.newMessageService.to);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -263,6 +261,42 @@ select_new_address(e) {
   }
 }
 
+show_babl_menu(e, index) {
+  if (e.target.classList.contains('babl__menu') || e.target.classList.contains('babl__menu_btn')) {
+      return;
+  }
+  const all_bables = document.querySelectorAll('.babl__menu');
+  const all_bables_input = document.querySelectorAll('.new_message__bables p');
+
+      for (let key = 0; key < all_bables.length; key++) {
+        if (key === index) {
+          all_bables[key].classList.toggle('visible');
+          continue;
+        }
+        all_bables[key].classList.remove('visible');
+      }
+}
+edit_babl_open(index) {
+      const babl_name = document.querySelectorAll('.new_message__bables p');
+      const babl_inp = document.querySelectorAll('.new_message__bables input');
+      for (let key = 0; key < babl_name.length; key++) {
+        babl_name[index].classList.add('hide');
+        babl_inp[index].classList.remove('hide');
+      }
+}
+
+edit_babl(e, index, array_for_edit) {
+  if (e.target.value === '') {
+    array_for_edit.splice(index, 1);
+    return;
+  }
+  const regExsp = /[а-яё]/i;
+  if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) {
+    this.showError('Введите корректный адрес (en + @)');
+    return;
+  }
+  array_for_edit[index] = e.target.value;
+}
 
 
 }

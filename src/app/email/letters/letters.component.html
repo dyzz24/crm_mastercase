@@ -138,7 +138,6 @@
           >
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
             <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments !== false" [class.time-icons__status-new]="letters.seen === false">
-              <p class='tooltip'>Вложения</p>
             </span>
             <button class='letter__settings' (click)='menuShow($event, i)'  [class.time-icons__status-new]="letters.seen === false">
               <span class='la la-ellipsis-h'></span>

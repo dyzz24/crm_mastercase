@@ -13,16 +13,16 @@
         routerLink="./create"
         >
             <span class='la la-envelope-o'></span>
-            <p class="tooltip">Новое сообщение</p>
+            <p class="tooltip2">Новое сообщение</p>
           </button>
           <button (click)='selectMess(-1)' 
           >
               <span class='la la-angle-left' ></span>
-              <p class="tooltip">Следующее сообщение</p>
+              <p class="tooltip2">Следующее сообщение</p>
             </button>
               <button  (click)='selectMess(1)'>
                   <span class='la la-angle-right'></span>
-                  <p class="tooltip">Предыдущее сообщение</p>
+                  <p class="tooltip2">Предыдущее сообщение</p>
                 </button>
    
     <div class="left__panel">
@@ -31,14 +31,14 @@
   routerLink="./create"
   >
     <span class='la la-mail-reply'></span>
-    <p class="tooltip">Ответить</p>
+    <p class="tooltip2">Ответить</p>
 </button>
 <button class='menu' *ngIf="this.selectedLetter?.recipients.to.length !== 1; else non_active_btn"
 (click)='this.newMessageService.new_reply_allMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
 routerLink="./create"
 >
   <span class='la la-reply-all'></span>
-  <p class="tooltip">Ответить всем</p>
+  <p class="tooltip2">Ответить всем</p>
 </button>
 <ng-template #non_active_btn >
     <button class='menu none_display'>
@@ -49,19 +49,19 @@ routerLink="./create"
 routerLink="./create"
 >
   <span class='la la-share'></span>
-  <p class="tooltip">Переслать</p>
+  <p class="tooltip2">Переслать</p>
 </button>
     </div>
   <button class='menu' (click)='deleteLetter()'>
    <span class='la la-trash-o'></span>
-  <p class="tooltip">Удалить сообщение</p>
+  <p class="tooltip2">Удалить сообщение</p>
   </button>
 </div>
 <div class="group__one">
     <div class="left__panel end">
       <button class='one_butt' (click)='hideMenuShow()'>
       <span class='la la-ellipsis-h'></span>
-      <p class="tooltip">Меню</p>
+      <p class="tooltip2">Меню</p>
     </button>
     <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
         <button class='letterMenuButt' (click)='print()'>Распечатать</button>
@@ -72,7 +72,7 @@ routerLink="./create"
     <button class='one_butt' (click)='closeViewer()'
     >
         <span class='la la-close'></span>
-        <p class="tooltip">Закрыть</p>
+        <p class="tooltip2">Закрыть</p>
       </button>
 
   </div>
@@ -149,7 +149,7 @@ routerLink="./create"
             </div>
             <button class='download' (click)='download_all_attach(this.selectedLetter?.recipients.attachments)'>
                 <span class='la la-download'></span>
-                <p class="tooltip">Скачать всё</p>
+                <p class="tooltip2">Скачать всё</p>
               </button>
         
             </div>

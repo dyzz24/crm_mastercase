@@ -640,5 +640,33 @@ p{
        }
    }
 
+   button {
+    &:hover .tooltip2 {
+       display: block;
+    }
+}
+
+.tooltip2 {
+    display: none;
+    white-space: nowrap;
+    width: auto;
+    height: 16px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff !important;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 80;
+    overflow: hidden;
+    top: 105%;
+    left: 0;
+    opacity: 0;
+    animation: tooltipAnim .4s .5s forwards;  
+    line-height: 14px;
+    font-size: 13px;
+    
+}
+
 
 

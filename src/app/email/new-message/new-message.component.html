@@ -30,9 +30,16 @@
 </div>
 <div class="row__block">
     <p class='head__p'>Кому: </p>
-    <div class="new_message__bables" *ngFor="let item of this.newMessageService.to, let i = index" [ngClass]="{not__addressess: this.newMessageService.to[0] === '' || this.newMessageService.to[0] === undefined }">
+    <div class="new_message__bables" *ngFor="let item of this.newMessageService.to, let i = index" 
+    [ngClass]="{not__addressess: this.newMessageService.to[0] === '' || this.newMessageService.to[0] === undefined }"
+    (click)='show_babl_menu($event, i)'
+    >
       <p>{{item}}</p>
+      <input type="text" value={{this.newMessageService.to[i]}} class='hide' (change)='edit_babl($event,i,this.newMessageService.to)'>
       <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.to, $event, i)'></span>
+      <div class="babl__menu">
+        <button class="babl__menu_btn" (click)='edit_babl_open(i)'>Редактировать</button>
+      </div>
     </div>
     <input class='input_fields' 
     (blur)="add_data(this.newMessageService.to, $event)" 

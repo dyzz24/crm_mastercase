@@ -196,7 +196,7 @@ button {
     z-index: 80;
     overflow: hidden;
     top: 120%;
-    right: -50%;
+    right: 100%;
     opacity: 0;
     animation: tooltipAnim .4s .5s forwards;  
     line-height: 14px;
@@ -365,6 +365,7 @@ span {
         margin: 0px 4px 4px 0px;
         height: 24px;
         padding: 0 10px;
+        position: relative;
         p {
             color: $text-color;
             text-overflow: ellipsis;
