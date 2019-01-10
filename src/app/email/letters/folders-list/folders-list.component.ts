@@ -62,6 +62,9 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
       }
       });
     });
+
+
+
       this.emailServ.hideAvatars = []; // чтоб инпуты работали
       this.emailServ.idLetters = []; // обнуляю корзину на удаление
       this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)

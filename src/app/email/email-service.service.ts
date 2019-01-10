@@ -83,7 +83,7 @@ export class EmailServiceService {
 
 
 
-  checkerTrash() {
+  checkerTrash() { // ф-я проверяет пустые ли выделенные инпуты (аватарки), если нет то открывает меню с действиями
     if (this.idLetters.length > 0) {
       this.hiddenTrash = false;
     } else {
