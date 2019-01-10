@@ -32,6 +32,7 @@ export class TemplateComponent implements OnInit, DoCheck {
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService) {
     this.search_templates.valueChanges.pipe().subscribe(data => {
           this.search_tmp(data.toLowerCase());
+
   });
 
    }
@@ -66,6 +67,9 @@ export class TemplateComponent implements OnInit, DoCheck {
         return;
       }
       const new_all_tmp = this.all_tmp.filter(val => { // массив найденных совпадений (1)
+        if (val.name === null) {
+          return;
+        }
         if (val.name.toLowerCase().indexOf(data) >= 0 ) {
           all_search_state = true;
           return val;
@@ -74,6 +78,9 @@ export class TemplateComponent implements OnInit, DoCheck {
    });
 
    const new_all_favorit = this.favorit_tmp.filter(val => { // массив найденных совпадений (2)
+    if (val.name === null) {
+      return;
+    }
     if (val.name.toLowerCase().indexOf(data) >= 0 ) {
       favor_search_state = true;
       return val;

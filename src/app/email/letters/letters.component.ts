@@ -154,6 +154,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   searchLetterFunc(text, allLettersList, stopFlag?) {
+    this.input_checked_cancell();
     if (this.protectToCopy === false) {
       this.lettersCopy = this.emailServ.lettersList; // сохраняю исходные письма и сношу флаг
       this.protectToCopy = true;
@@ -187,14 +188,12 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
        this.emailServ.lettersList = new_search_array; // подставляю найденные письма в представление
 
-
-
   }
 
 
   ngDoCheck() {
     // this.activatedRoute.params.subscribe(params => console.log(params));
-
+// console.log(this.folder_list_state);
   }
 
 
@@ -377,21 +376,26 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
             )
             .subscribe(data => {
     this.emailServ.lettersList = data;
+    this.input_checked_cancell();
 
-    this.emailServ.hideAvatars = []; // чтоб инпуты работали
-    this.emailServ.idLetters = []; // обнуляю корзину на удаление
-    this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
       });
         }, 500);
     }
     }, 500);
   }
 
-  importantMarkAll() {
+  input_checked_cancell() { // ф-я сбрасывает чекбоксы
+                          // чистит ID, отменяет выделение по аватарке
     const allInputs = document.querySelectorAll('.checkbox');
     for (const key of <any>allInputs) {
       key.checked = false;
     }
+    this.emailServ.hideAvatars = []; // чтоб инпуты работали
+    this.emailServ.idLetters = []; // обнуляю корзину на удаление
+    this.emailServ.checkerTrash();
+  }
+
+  importantMarkAll() {
     const id_for_important = this.emailServ.idLetters;
     // this.httpPost(`${this.emailServ.ip}/mail/set`, {
     //   mailId: id_for_important,
@@ -408,9 +412,7 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
         }
       });
 
-      this.emailServ.hideAvatars = []; // чтоб инпуты работали
-      this.emailServ.idLetters = []; // обнуляю корзину на удаление
-      this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
+      this.input_checked_cancell();
   }
 
   deleteRestoreLettersAll(box) {
@@ -457,16 +459,12 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
           .subscribe(data => {
 
   this.emailServ.lettersList = data;
-  this.emailServ.hideAvatars = []; // чтоб инпуты работали
-  this.emailServ.idLetters = []; // обнуляю корзину на удаление
-  this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
+  this.input_checked_cancell();
     });
       }, 1200);
   }
   // this.emailServ.stateServ(); // save state on service
-  this.emailServ.hideAvatars = []; // чтоб инпуты работали
-  this.emailServ.idLetters = []; // обнуляю корзину на удаление
-  this.emailServ.checkerTrash(); // убираю иконку (иначе инпуты глючат)
+  this.input_checked_cancell();
 }
 
 get_work(id, e, index) {

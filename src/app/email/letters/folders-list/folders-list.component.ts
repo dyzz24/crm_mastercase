@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, DoCheck, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Inject, Input, DoCheck, Output, EventEmitter, OnDestroy} from '@angular/core';
 import { EmailServiceService } from '../../email-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs';
@@ -9,15 +9,15 @@ import { tokenKey } from '@angular/core/src/view';
   templateUrl: './folders-list.component.html',
   styleUrls: ['./folders-list.component.scss']
 })
-export class FoldersListComponent implements OnInit, DoCheck {
+export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
 
   @Input() mail_id;  // id ящика
   @Input() all_folders; // все папки
   @Input() selected_mail_id; // выбранные айдишки писем в массиве
-  @Input() state_open; // открыт закрыт компонент
+  @Input() state_open; // открыт закрыт компонент список папок
   @Input() token; // токен авторизации
-  @Output() state_folders_change = new EventEmitter(); // отправка события родителю
-
+  @Output() state_folders_change = new EventEmitter(); // отправка события родителю для скрытия компонента папок
+  @Output() folders_component_close = new EventEmitter(); // отправка события родителю для скрытия компонента папок когда компонент умер
 
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
@@ -33,6 +33,11 @@ export class FoldersListComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
+  }
+
+  ngOnDestroy() {
+    this.folders_component_close.next(); // отправляю событие на скрытие компонента
+
   }
 
   public httpPost(url: string, body, options?): Observable<any> {

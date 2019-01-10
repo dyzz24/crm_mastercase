@@ -62,7 +62,9 @@
               <span class='la la-exclamation'></span>
               <p class="tooltip">Отметить как важные</p>
             </button>
-            <button  type='button' (click)='move_folder()' [ngClass]="{folders_do_active: this.folder_list_state}">
+            <button  type='button' (click)='move_folder()' [ngClass]="{folders_do_active: this.folder_list_state}"
+            
+            >
                 <span class='la la-hand-o-right'></span>
                 <p class="tooltip">Поместить в папку</p>
             </button>
@@ -73,6 +75,7 @@
             [state_open]='this.folder_list_state'
             [token]='this.authorizationServ.accessToken'
             (state_folders_change)='this.move_folder()'
+            (folders_component_close)='this.folder_list_state = false'
             ></app-folders-list>
           <ng-template #restoreAll >
           <button  type='button' (click)='deleteRestoreLettersAll(1)'>
