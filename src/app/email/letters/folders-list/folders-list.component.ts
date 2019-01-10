@@ -17,7 +17,6 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
   @Input() state_open; // открыт закрыт компонент список папок
   @Input() token; // токен авторизации
   @Output() state_folders_change = new EventEmitter(); // отправка события родителю для скрытия компонента папок
-  @Output() folders_component_close = new EventEmitter(); // отправка события родителю для скрытия компонента папок когда компонент умер
 
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
@@ -36,7 +35,7 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.folders_component_close.next(); // отправляю событие на скрытие компонента
+    this.state_folders_change.next(); // отправляю событие на скрытие компонента
 
   }
 

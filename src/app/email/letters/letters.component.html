@@ -74,8 +74,8 @@
             [all_folders]='this.emailServ.folders'
             [state_open]='this.folder_list_state'
             [token]='this.authorizationServ.accessToken'
-            (state_folders_change)='this.move_folder()'
-            (folders_component_close)='this.folder_list_state = false'
+            (state_folders_change)='this.folder_list_state = false'
+           
             ></app-folders-list>
           <ng-template #restoreAll >
           <button  type='button' (click)='deleteRestoreLettersAll(1)'>
