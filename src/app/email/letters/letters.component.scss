@@ -32,9 +32,9 @@ $font-color: $icons-color;
     width: 350px;
     flex-shrink: 0;
     border-right:  1px solid $border;
-    box-shadow: -7px 0 18px 4px rgba(0,0,0,.1);
+    box-shadow: -7px 0 18px 4px rgba(0,0,0,.1) inset;
     background: #f7fbfe;
-    z-index: 5;
+    z-index: 7;
     box-sizing: border-box;
 
 }
@@ -44,7 +44,7 @@ $font-color: $icons-color;
     flex-direction: column;
     height: calc(100vh - 60px);
     box-shadow: -7px 0px 18px 4px rgba(0,0,0,.1);
-    z-index: 5;
+    z-index: 4;
     // position: relative;
     // &::before {
     //     content: '';
@@ -351,6 +351,7 @@ label {
       padding: 10px 8px 0px 5px;
       box-sizing: border-box;
       flex-shrink: 0;
+      z-index: 6;
     
 
   }
@@ -461,7 +462,7 @@ label {
 
 
 .hideMenu {
-    @include hideMenu(180px,auto,0px,100%,rgba(0, 0, 0, 0.541));   
+    @include hideMenu(180px,auto,0px,100%,white);   
 }
 
 
@@ -591,8 +592,9 @@ transition: .5s;
     height: 100%;
     top:0;
     left: 0;
-    z-index: 4;
+    z-index: 6;
     display: none;
+    
 
     &.visible {
          display: block;

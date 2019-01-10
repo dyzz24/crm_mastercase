@@ -370,6 +370,7 @@ p{
     animation: tooltipAnim .4s .1s forwards;
 }
 
+
 .attachment__item {
     display: flex;
     align-items: flex-start;
@@ -443,17 +444,10 @@ p{
 //     margin-right: 4px;
 // }
 .hideMenu {
-    margin-top: 12px;
-    position: absolute;
-    width: 180px;
-    height: 100px;
+    @include hideMenu (180px, auto, 0, 0, white);
     top:100%;
-    right: 0;
-    background: rgba(0, 0, 0, 0.541);
-    border-radius: 6px;
     display: none;
-    flex-direction: column;
-    animation: menuEffect .4s;
+    
 }
 @keyframes menuEffect {
     0% {

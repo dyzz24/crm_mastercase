@@ -2,6 +2,7 @@
 <div class="letters">
   
   <div class='letter__list'>
+      <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
     <div class="preloader__letters" *ngIf="this.emailServ.haveResponse === false; else messagesDownload">
         <div class="cssload-speeding-wheel"></div>
         <p>ЗАГРУЗКА</p>
@@ -82,8 +83,6 @@
             <span class='la la-share-alt'></span>
             <p class="tooltip">Восстановить</p>
           </button>
-
-          
         </ng-template>
     </div>
 
@@ -200,5 +199,5 @@
     <router-outlet></router-outlet>
   
   </div>
-  <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
+  
 </div>

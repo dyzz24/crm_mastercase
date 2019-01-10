@@ -21,6 +21,8 @@
     background: #f7fbfe;
     box-sizing: border-box;
     overflow: auto;
+    z-index: 6;
+    box-shadow: -7px 0 18px 4px rgba(0,0,0,.1) inset;
 }
 
 

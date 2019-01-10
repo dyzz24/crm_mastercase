@@ -252,6 +252,9 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
       this.open_hidden_menu = true;
       const parent = e.target.parentNode.parentNode;
       const hiddenBlock = parent.querySelector('.hideMenu');
+      if (hiddenBlock.classList.contains('visible')) { // если нажали второй раз на одно и тоже меню - убрать clickable_cancel_block
+        this.open_hidden_menu = false;
+      }
       const allHideBlock = document.querySelectorAll('.hideMenu');
       for (let key = 0; key < allHideBlock.length; key++) {
         if (key === i) {
