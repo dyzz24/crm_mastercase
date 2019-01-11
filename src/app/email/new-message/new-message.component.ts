@@ -18,7 +18,7 @@ import {NewMessageService} from '../new-message/new-message.service';
 })
 export class NewMessageComponent implements OnInit, DoCheck {
 
-  private babl_menu_show = false;
+  private babl_menu_show = [];
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -260,28 +260,34 @@ select_new_address(e) {
   }
 }
 
-show_babl_menu(e, index) {
+show_babl_menu(e) {
   if (e.target.classList.contains('babl__menu') || e.target.classList.contains('babl__menu_btn') ||
-  e.target.classList.contains('inp')) { // если клик не по баблу - выхожу
+  e.target.classList.contains('babl_inp')) { // если клик не по баблу - выхожу
       return;
   }
-  const all_bables = document.querySelectorAll('.babl__menu'); // ловлю скрытое меню бабла
+  const all_bables = document.querySelectorAll('.babl__menu'); // ловлю скрытое меню всех баблов
+  const target_babl = e.target.closest('.new_message__bables'); // ловлю бабл который кликнули
+  const target_babl_menu = target_babl.querySelector('.babl__menu'); // ловлю его меню
+  if (!target_babl_menu.classList.contains('visible')) { // если меню скрыто
+    for (let key = 0; key < all_bables.length; key++) {
+      all_bables[key].classList.remove('visible'); // скрываю все остальные
+      }
+    target_babl_menu.classList.add('visible'); // делаю его видимым
+  } else {
+    for (let key = 0; key < all_bables.length; key++) {
+      all_bables[key].classList.remove('visible'); // иначе просто скрываю все остальные
+      }
+  }
 
-      for (let key = 0; key < all_bables.length; key++) {
-        if (key === index) {
-          all_bables[key].classList.toggle('visible'); // открываю-закрываю целевое меню
-          continue;
-        }
-        all_bables[key].classList.remove('visible'); // скрываю все остальные
-      }
+
 }
-edit_babl_open(index) {
-      const babl_name = document.querySelectorAll('.new_message__bables p'); // ловлю имя бабла
-      const babl_inp = document.querySelectorAll('.new_message__bables input'); // его инпут для изменения бабла
-      for (let key = 0; key < babl_name.length; key++) {
-        babl_name[index].classList.add('hide'); // в текущем меню скрываю имя,
-        babl_inp[index].classList.remove('hide'); // открываю инпут для edit
-      }
+edit_babl_open(e) {
+      const target_babl = e.target.closest('.new_message__bables');
+      const target_babl_name = target_babl.querySelector('.babl_name');
+      const target_babl_input = target_babl.querySelector('.babl_inp');
+
+      target_babl_name.classList.add('hide'); // в текущем меню скрываю имя,
+      target_babl_input.classList.remove('hide');
       const babl__menu_visibl = document.querySelector('.babl__menu.visible'); // скрываю меню
       babl__menu_visibl.classList.remove('visible');
 }
