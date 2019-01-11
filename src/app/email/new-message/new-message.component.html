@@ -35,7 +35,11 @@
     (click)='show_babl_menu($event, i)'
     >
       <p>{{item}}</p>
-      <input type="text" value={{this.newMessageService.to[i]}} class='hide' (change)='edit_babl($event,i,this.newMessageService.to)'>
+      <input type="text" value={{this.newMessageService.to[i]}} class='hide inp' 
+      
+      (change)='edit_babl($event,i,this.newMessageService.to)'
+      (blur)='edit_babl($event,i,this.newMessageService.to)'
+      >
       <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.to, $event, i)'></span>
       <div class="babl__menu">
         <button class="babl__menu_btn" (click)='edit_babl_open(i)'>Редактировать</button>
@@ -43,8 +47,8 @@
     </div>
     <input class='input_fields' 
     (blur)="add_data(this.newMessageService.to, $event)" 
-    (keydown)=' add_data_keyEvent(this.newMessageService.to, $event)'
-    (keydown)='delete_data_keyEvent(this.newMessageService.to, $event)'
+    (keydown)='add_data_keyEvent(this.newMessageService.to, $event)'
+    
     >
 </div>
 <div class="row__block">
@@ -56,7 +60,7 @@
     <input class='input_fields' 
     (blur)="add_data(this.newMessageService.copy, $event)" 
     (keydown)=' add_data_keyEvent(this.newMessageService.copy, $event)'
-    (keydown)='delete_data_keyEvent(this.newMessageService.copy, $event)'
+    
     >
 </div>
 <div class="row__block">
@@ -68,7 +72,7 @@
     <input class='input_fields' 
     (blur)="add_data(this.newMessageService.hidden_copy, $event)" 
     (keydown)=' add_data_keyEvent(this.newMessageService.hidden_copy, $event)'
-    (keydown)='delete_data_keyEvent(this.newMessageService.hidden_copy, $event)'
+    
     >
 </div>
 

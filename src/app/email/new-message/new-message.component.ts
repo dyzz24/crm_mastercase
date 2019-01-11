@@ -78,6 +78,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
       e.target.value = ''; // чищу значение с таргета
   }
   add_data_keyEvent(arr,  e) { // срабатывает при клике на Enter, функция принимает массив для работы, действие аналогично ф-ии сверху
+    if (e.key === 'Backspace' && e.target.value === '') { // если нажали на backspace - удалили последний
+      arr.pop();
+      return;
+    }
     if (e.key === 'Enter' && e.target.value !== '') { // отлавливаю клик на Enter
       if (arr[0] === '' || arr[0] === undefined) {
         arr.shift();
@@ -97,11 +101,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
     }
   }
 
-  delete_data_keyEvent(arr, e) { // удаление при клике на Backspace
-    if (e.key === 'Backspace' && e.target.value === '') {
-      arr.pop();
-    }
-  }
   delete_data_clickEvent(arr, e, index) { // удаление при клике на крестик в бабле
     arr.splice(index, 1); // удалили по текущему индексу
   }
@@ -262,41 +261,62 @@ select_new_address(e) {
 }
 
 show_babl_menu(e, index) {
-  if (e.target.classList.contains('babl__menu') || e.target.classList.contains('babl__menu_btn')) {
+  if (e.target.classList.contains('babl__menu') || e.target.classList.contains('babl__menu_btn') ||
+  e.target.classList.contains('inp')) { // если клик не по баблу - выхожу
       return;
   }
-  const all_bables = document.querySelectorAll('.babl__menu');
-  const all_bables_input = document.querySelectorAll('.new_message__bables p');
+  const all_bables = document.querySelectorAll('.babl__menu'); // ловлю скрытое меню бабла
 
       for (let key = 0; key < all_bables.length; key++) {
         if (key === index) {
-          all_bables[key].classList.toggle('visible');
+          all_bables[key].classList.toggle('visible'); // открываю-закрываю целевое меню
           continue;
         }
-        all_bables[key].classList.remove('visible');
+        all_bables[key].classList.remove('visible'); // скрываю все остальные
       }
 }
 edit_babl_open(index) {
-      const babl_name = document.querySelectorAll('.new_message__bables p');
-      const babl_inp = document.querySelectorAll('.new_message__bables input');
+      const babl_name = document.querySelectorAll('.new_message__bables p'); // ловлю имя бабла
+      const babl_inp = document.querySelectorAll('.new_message__bables input'); // его инпут для изменения бабла
       for (let key = 0; key < babl_name.length; key++) {
-        babl_name[index].classList.add('hide');
-        babl_inp[index].classList.remove('hide');
+        babl_name[index].classList.add('hide'); // в текущем меню скрываю имя,
+        babl_inp[index].classList.remove('hide'); // открываю инпут для edit
       }
+      const babl__menu_visibl = document.querySelector('.babl__menu.visible'); // скрываю меню
+      babl__menu_visibl.classList.remove('visible');
 }
 
 edit_babl(e, index, array_for_edit) {
-  if (e.target.value === '') {
+  if (e.target.value === '') { // если очистили инпут бабла - удаляю его из массива
     array_for_edit.splice(index, 1);
     return;
   }
   const regExsp = /[а-яё]/i;
-  if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) {
+  if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) { // валидация
     this.showError('Введите корректный адрес (en + @)');
+    cancel_babl_edit();
+    e.target.value = array_for_edit[index]; // val инпута восстанавливаю к первоначальному (для повторного edit)
     return;
   }
-  array_for_edit[index] = e.target.value;
+
+  array_for_edit[index] = e.target.value; // если валидация прошла - меняю массив со значениями
+  cancel_babl_edit();
+
+
+
+
+  function cancel_babl_edit() {
+    const babl_name = document.querySelectorAll('.new_message__bables p');
+      const babl_inp = document.querySelectorAll('.new_message__bables input');
+      for (let key = 0; key < babl_name.length; key++) {
+        babl_name[index].classList.remove('hide'); // если не правильный ввод скрываю инпут и показываю имя (первоначальное)
+        babl_inp[index].classList.add('hide');
+      }
+  }
 }
 
 
+
+
 }
+
