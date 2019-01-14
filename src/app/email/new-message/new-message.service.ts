@@ -45,42 +45,7 @@ if (param_to_cc) {
   }
     this.subject = param_to_subject;
   }
-  new_replyMessage(param_to_answer?, param_to_subject?, param_text?, param_html?) {
-    this.new_clear_message();
-    this.to = [param_to_answer];
-     this.subject = `RE: ${param_to_subject}`;
-     if (param_html === null) {
-      this.messages = param_text;
-     } else {
-      this.messages = param_html;
-     }
-   }
-   new_reply_allMessage(param_to_answer?, param_to_all_answer?, param_to_subject?, param_text?, param_html?) {
-    this.new_clear_message();
-    const newArray = [];
-    this.to = [param_to_answer];
-    this.subject = `RE: ${param_to_subject}`;
-    if (param_html === null) {
-      this.messages = param_text;
-    } else {
-      this.messages = param_html;
-    }
-    param_to_all_answer.filter(val => {
-      if (val.address !== this.emailServ.idPostForHTTP && val.address !== param_to_answer) {
 
-        newArray.push(val.address);
-      }
-      this.copy = newArray;
-    });
-  }
-  new_forward_message(param_text, param_html) {
-    this.new_clear_message();
-    if (param_html === null) {
-      this.messages = param_text;
-    } else {
-      this.messages = param_html;
-    }
-  }
   new_clear_message() {
     this.to = [];
     this.subject = '';

@@ -30,68 +30,68 @@
 </div>
 <div class="row__block">
     <p class='head__p'>Кому: </p>
-    <div class="new_message__bables" *ngFor="let item of this.newMessageService.to, let i = index" 
-    [ngClass]="{not__addressess: this.newMessageService.to[0] === '' || this.newMessageService.to[0] === undefined }"
+    <div class="new_message__bables" *ngFor="let item of this.to, let i = index" 
+    [ngClass]="{not__addressess: this.to[0] === '' || this.to[0] === undefined }"
     (click)='show_babl_menu($event, i)'
     >
       <p class='babl_name'>{{item}}</p>
-      <input type="text" value={{this.newMessageService.to[i]}} class='hide babl_inp' 
+      <input type="text" value={{this.to[i]}} class='hide babl_inp' 
       
-      (change)='edit_babl($event,i,this.newMessageService.to)'
-      (blur)='edit_babl($event,i,this.newMessageService.to)'
+      (change)='edit_babl($event,i,this.to)'
+      (blur)='edit_babl($event,i,this.to)'
       >
-      <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.to, $event, i)'></span>
+      <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.to, $event, i)'></span>
       <div class="babl__menu">
         <button class="babl__menu_btn" (click)='edit_babl_open($event)'>Редактировать</button>
       </div>
     </div>
     <input class='input_fields' 
-    (blur)="add_data(this.newMessageService.to, $event)" 
-    (keydown)='add_data_keyEvent(this.newMessageService.to, $event)'
+    (blur)="add_data(this.to, $event)" 
+    (keydown)='add_data_keyEvent(this.to, $event)'
     
     >
 </div>
 <div class="row__block">
     <p class='head__p'>Копия: </p>
-    <div class="new_message__bables" *ngFor="let item of this.newMessageService.copy,let i = index" 
-    [ngClass]="{not__addressess: this.newMessageService.copy.length === 0}"
+    <div class="new_message__bables" *ngFor="let item of this.copy,let i = index" 
+    [ngClass]="{not__addressess: this.copy.length === 0}"
     (click)='show_babl_menu($event, i)'
     >
         <p class='babl_name'>{{item}}</p>
-        <input type="text" value={{this.newMessageService.copy[i]}} class='hide babl_inp'
-        (change)='edit_babl($event,i,this.newMessageService.copy)'
-        (blur)='edit_babl($event,i,this.newMessageService.copy)'
+        <input type="text" value={{this.copy[i]}} class='hide babl_inp'
+        (change)='edit_babl($event,i,this.copy)'
+        (blur)='edit_babl($event,i,this.copy)'
         >
-        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.copy, $event, i)'></span>
+        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.copy, $event, i)'></span>
         <div class="babl__menu">
           <button class="babl__menu_btn" (click)='edit_babl_open($event)'>Редактировать</button>
         </div>
       </div>
     <input class='input_fields' 
-    (blur)="add_data(this.newMessageService.copy, $event)" 
-    (keydown)=' add_data_keyEvent(this.newMessageService.copy, $event)'
+    (blur)="add_data(this.copy, $event)" 
+    (keydown)=' add_data_keyEvent(this.copy, $event)'
     
     >
 </div>
 <div class="row__block">
     <p class='head__p'>Скрытая: </p>
-    <div class="new_message__bables" *ngFor="let item of this.newMessageService.hidden_copy,let i = index" 
-    [ngClass]="{not__addressess: this.newMessageService.hidden_copy.length === 0}"
+    <div class="new_message__bables" *ngFor="let item of this.hidden_copy,let i = index" 
+    [ngClass]="{not__addressess: this.hidden_copy.length === 0}"
     (click)='show_babl_menu($event, i)'
     >
         <p class='babl_name'>{{item}}</p>
-        <input type="text" value={{this.newMessageService.hidden_copy[i]}} class='hide babl_inp'
-        (change)='edit_babl($event,i,this.newMessageService.hidden_copy)'
-        (blur)='edit_babl($event,i,this.newMessageService.hidden_copy)'
+        <input type="text" value={{this.hidden_copy[i]}} class='hide babl_inp'
+        (change)='edit_babl($event,i,this.hidden_copy)'
+        (blur)='edit_babl($event,i,this.hidden_copy)'
         >
-        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.newMessageService.hidden_copy, $event, i)'></span>
+        <span class='la la-micro la-close' (click)='delete_data_clickEvent(this.hidden_copy, $event, i)'></span>
         <div class="babl__menu">
           <button class="babl__menu_btn" (click)='edit_babl_open($event)'>Редактировать</button>
         </div>
       </div>
     <input class='input_fields' 
-    (blur)="add_data(this.newMessageService.hidden_copy, $event)" 
-    (keydown)=' add_data_keyEvent(this.newMessageService.hidden_copy, $event)'
+    (blur)="add_data(this.hidden_copy, $event)" 
+    (keydown)=' add_data_keyEvent(this.hidden_copy, $event)'
     
     >
 </div>
@@ -99,7 +99,7 @@
 <div class="row__block">
     <p class='head__p'>Тема: </p>
 
-    <textarea class='input_fields subject' [(ngModel)]='this.newMessageService.subject' >{{this.newMessageService.subject}}</textarea>
+    <textarea class='input_fields subject' [(ngModel)]='this.subject' >{{this.subject}}</textarea>
 </div>
 <div class="row__block end_group" >
   <label>
@@ -112,16 +112,16 @@
 </div>
 
 
-<div class="attachments" *ngIf="this.newMessageService.files_for_view.length !==0">
+<div class="attachments" *ngIf="this.files_for_view.length !==0">
   <div class="attach_scrollBar">
-    <div class="attach_group" *ngFor="let file of this.newMessageService.files_for_view; let i = index">
+    <div class="attach_group" *ngFor="let all_file of this.files_for_view; let i = index">
       <div class="name__block">
-      <span [class]='file.name | attachPipe'></span>
-      <p class='filename'>{{file.name}}</p>
+      <span [class]='all_file.name | attachPipe'></span>
+      <p class='filename'>{{all_file.name}}</p>
       
       
     </div>
-    <p class='size'>{{file.size | sizer}}</p>
+    <p class='size'>{{all_file.size | sizer}}</p>
       <span class='la la-micro la-close' (click)='delete_attach(i)'></span>
       </div>
     </div>
@@ -132,7 +132,7 @@
     <div class="editor-qu">
       <quill-editor
       class='quill_styles'
-      [(ngModel)]='this.newMessageService.messages'>
+      [(ngModel)]='this.messages'>
       
       
       </quill-editor>

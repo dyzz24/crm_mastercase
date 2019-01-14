@@ -9,7 +9,7 @@
   <div class="header_letter__view">
     <div class="group__one">
 
-        <button class='new__mess' (click)='this.newMessageService.new_clear_message()'
+        <button class='new__mess'
         routerLink="./create"
         title="Новое сообщение"
         >
@@ -28,16 +28,15 @@
    
     <div class="left__panel">
   <button class='menu'
-  (click)='this.newMessageService.new_replyMessage(this.selectedLetter?.from_address, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
   routerLink="./create"
-  [queryParams] = "{'testparam':this.selectedLetter?.mail_id, 'status':'request'}"
+  [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'reply'}"
   title="Ответить"
   >
     <span class='la la-mail-reply'></span>
 </button>
 <button class='menu' *ngIf="this.selectedLetter?.details.recipients.to.length !== 1; else non_active_btn"
-(click)='this.newMessageService.new_reply_allMessage(this.selectedLetter?.from_address, this.selectedLetter?.details.recipients.to, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
 routerLink="./create"
+[queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'reply_all'}"
 title="Ответить всем"
 >
   <span class='la la-reply-all'></span>
@@ -47,8 +46,9 @@ title="Ответить всем"
           <span class='la la-reply-all'></span>
         </button>
 </ng-template>
-<button class='menu' (click)="this.newMessageService.new_forward_message(this.selectedLetter?.text, this.selectedLetter?.html)"
+<button class='menu'
 routerLink="./create"
+[queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'forward'}"
 title="Переслать"
 >
   <span class='la la-share'></span>
@@ -199,7 +199,7 @@ title="Переслать"
     </div>
 
           <p class='btn__text'
-          (click)='this.newMessageService.new_replyMessage(this.selectedLetter?.from_address, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
+          [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'reply'}"
           routerLink="./create"
           >Перейти в полную версию</p>
   </div>

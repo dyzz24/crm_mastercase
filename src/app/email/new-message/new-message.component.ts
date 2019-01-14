@@ -30,8 +30,16 @@ export class NewMessageComponent implements OnInit, DoCheck {
     ) {
      }
      public from;
-     one; // del
-     two; // del
+     private mail_id; // del
+     private status; // del
+     subscription: Subscription;
+
+    public to = []; // array for send
+    public copy = []; // array for send copy
+    public hidden_copy = []; // array for send hidd copy
+    public subject = ''; // subject
+    public messages;
+    public files_for_view = []; // имена файлов для HTML
 
 
 
@@ -44,22 +52,72 @@ export class NewMessageComponent implements OnInit, DoCheck {
     this.newMessageService.save_tmp_state = false;
     this.from = this.emailServ.idPostForHTTP;
 
-    // this.copy = this.emailServ.to_cc;
+
     if (this.newMessageService.files.length > 0) { // если стэйт сервиса не пуст
 
-      this.add_drag_input_data(this.newMessageService.files); // загоняет в файлы для отправки
+      this.files_for_view = this.newMessageService.files; // загоняет в файлы для отправки
     }
-    const querySubscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
+    this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
       (queryParam: any) => {
-          // this.one = queryParam['product'];
-          this.two = queryParam['testparam'];
-          console.log(this.two);
+          this.mail_id = queryParam['id'];
+          this.status = queryParam['status'];
+
+          if (this.status === 'reply') {
+            this.httpPost(
+              `${this.emailServ.ip}/mail/mail`,
+              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+                this.to = [dataMails.from_address];
+                this.subject = `RE: ${dataMails.subject}`;
+                if (dataMails.html === null) {
+                  this.messages = dataMails.text;
+                 } else {
+                  this.messages = dataMails.html;
+                 }
+              });
+          }
+
+          if (this.status === 'reply_all') {
+            this.httpPost(
+              `${this.emailServ.ip}/mail/mail`,
+              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+                this.to = [dataMails.from_address];
+                this.subject = `RE: ${dataMails.subject}`;
+                const newArray = [];
+                dataMails.details.recipients.to.filter(val => {
+                  if (val.address !== this.emailServ.idPostForHTTP && val.address !== dataMails.from_address) {
+                    newArray.push(val.address);
+                  }
+                  this.copy = newArray;
+                });
+
+                if (dataMails.html === null) {
+                  this.messages = dataMails.text;
+                 } else {
+                  this.messages = dataMails.html;
+                 }
+              });
+          }
+
+          if (this.status === 'forward') {
+            this.httpPost(
+              `${this.emailServ.ip}/mail/mail`,
+              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+                this.subject = `${dataMails.subject}`;
+                if (dataMails.html === null) {
+                  this.messages = dataMails.text;
+                 } else {
+                  this.messages = dataMails.html;
+                 }
+              });
+          }
+
+
       }
   );
 
   }
   ngDoCheck() {
-    // console.log(this.newMessageService.to);
+    // console.log(this.files_for_view);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -135,8 +193,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
   sendMessage() {
     this.newMessageService.messages_sending = true; // крутилка on
-  for (let i = 0; i < this.newMessageService.files_for_view.length; i++) { // добавляю в форм дэйт циклом
-    this.newMessageService.formData.append('files', this.newMessageService.files_for_view[i]);
+  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
+    this.newMessageService.formData.append('files', this.files_for_view[i]);
 }
 
 
@@ -197,7 +255,7 @@ drop(e) {
 }
 
 delete_attach(index) {
-  this.newMessageService.files_for_view.splice(index, 1);
+  this.files_for_view.splice(index, 1);
 }
 
 
@@ -210,7 +268,7 @@ add_drag_input_data(objForData) {
  // tslint:disable-next-line:forin
   for (const key in val) { // пробегаюсь по файлам
     if (val[key].name !== 'item' && val[key].name !== undefined) { // если имя файла не item и und
-    this.newMessageService.files_for_view.push(val[key]);
+    this.files_for_view.push(val[key]);
     }
   }
 });
