@@ -3,6 +3,7 @@ import { AuthorizationService } from './authorization.service';
 import { ToastrService} from 'ngx-toastr';
 import { EmailServiceService } from './email/email-service.service';
 import * as io from 'socket.io-client';
+import {global_params} from './global';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class SocketService {
     if (this.socketConnectedFlag === true) { // если уже был коннект, выхожу
       return;
     } else {
-    this.socket = io('ws://10.0.1.33:3000', {
+    this.socket = io(global_params.socket_ip, {
       query: {
           // tslint:disable-next-line:max-line-length
           token: this.authorizationServ.accessToken

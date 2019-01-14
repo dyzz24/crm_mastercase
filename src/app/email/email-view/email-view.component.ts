@@ -17,13 +17,13 @@ export interface SelectedLetter {
   html?: string;
   text: string;
   subject?: string;
-  recipients: {
+  details: {recipients: {
     reply_to: any;
     to: any;
-    attachments: any;
     cc: any;
     bcc: any;
-  };
+  },
+  attachments: any};
 }
 
 
@@ -80,14 +80,14 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.emailServ.currentId = +data.id; // ID письма mail_id
-          let flagged = true;
+          let flagged = true; // при каждом изменении роута
           this.cahse_letters.filter(val => {
 
                 if (val.mail_id === this.emailServ.currentId) {
                   this.selectedLetter = val;
                   this.checkerLengthArray_bcc_cc();
                   this.checkerLength_addressess();
-                  this.emailServ.activeLett[data.id] = true;
+                  this.emailServ.activeLett[data.id] = true; // кэширование прочитанных писем в сторадж
                   this.emailServ.hiddenEmpty = true;
                   flagged = false;
                 }
@@ -119,17 +119,17 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
 
   checkerLengthArray_bcc_cc() {
-    if (this.selectedLetter.recipients.cc === null || this.selectedLetter.recipients.cc === undefined) {
+    if (this.selectedLetter.details.recipients.cc === null || this.selectedLetter.details.recipients.cc === undefined) {
       return;
     }
       this.cut_cc_adressess_array = [];
-      this.cut_cc_adressess_array = this.selectedLetter.recipients.cc.slice(0, 3);
+      this.cut_cc_adressess_array = this.selectedLetter.details.recipients.cc.slice(0, 3);
 
   }
   checkerLength_addressess() {
 
       this.cut_addressess_array = [];
-      this.cut_addressess_array = this.selectedLetter.recipients.to.slice(0, 3);
+      this.cut_addressess_array = this.selectedLetter.details.recipients.to.slice(0, 3);
 
   }
 
@@ -241,25 +241,25 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
 
   all_view(e) {
     if (e.target.classList.contains('cc')) {
-      if (this.cut_cc_adressess_array !== this.selectedLetter.recipients.cc) {
-      this.cut_cc_adressess_array = this.selectedLetter.recipients.cc;
+      if (this.cut_cc_adressess_array !== this.selectedLetter.details.recipients.cc) {
+      this.cut_cc_adressess_array = this.selectedLetter.details.recipients.cc;
       e.target.value = '';
       e.target.classList.add('input_return');
       } else {
         e.target.classList.remove('input_return');
         this.checkerLengthArray_bcc_cc();
-        e.target.value = this.selectedLetter.recipients.cc.length - this.cut_cc_adressess_array.length;
+        e.target.value = this.selectedLetter.details.recipients.cc.length - this.cut_cc_adressess_array.length;
       }
     }
     if (e.target.classList.contains('addressess')) {
-      if (this.cut_addressess_array !== this.selectedLetter.recipients.to) {
-      this.cut_addressess_array = this.selectedLetter.recipients.to;
+      if (this.cut_addressess_array !== this.selectedLetter.details.recipients.to) {
+      this.cut_addressess_array = this.selectedLetter.details.recipients.to;
       e.target.value = '';
       e.target.classList.add('input_return');
       } else {
         e.target.classList.remove('input_return');
         this.checkerLength_addressess();
-        e.target.value = this.selectedLetter.recipients.to.length - this.cut_addressess_array.length;
+        e.target.value = this.selectedLetter.details.recipients.to.length - this.cut_addressess_array.length;
       }
     }
   }
@@ -328,7 +328,8 @@ onFileChange(event) {
 gownload_attach(e, attach) {
 
   this.httpDownload(`${this.emailServ.ip}/mail/download`, {
-    hashes: [attach.hash]
+    hashes: [{'hash' : attach.hash, 'name': attach.name}],
+    zip: false
 }).subscribe(data => {
 const downloadLink = document.createElement('a');
             downloadLink.href = window.URL.createObjectURL(data);
@@ -339,10 +340,11 @@ const downloadLink = document.createElement('a');
 
 download_all_attach(attach) {
   const hashes = attach.map(val => { // собираю hash из массива c вложениями
-      return val.hash;
+      return {'hash': val.hash, 'name': val.name };
   });
   this.httpDownload(`${this.emailServ.ip}/mail/download`, {
-    hashes: hashes
+    hashes: hashes,
+    zip: true
 }).subscribe(data => {
 const downloadLink = document.createElement('a');
             downloadLink.href = window.URL.createObjectURL(data);

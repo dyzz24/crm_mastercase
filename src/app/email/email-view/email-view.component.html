@@ -11,18 +11,19 @@
 
         <button class='new__mess' (click)='this.newMessageService.new_clear_message()'
         routerLink="./create"
+        title="Новое сообщение"
         >
             <span class='la la-envelope-o'></span>
-            <p class="tooltip2">Новое сообщение</p>
           </button>
           <button (click)='selectMess(-1)' 
+          title="Следующее сообщение"
           >
               <span class='la la-angle-left' ></span>
-              <p class="tooltip2">Следующее сообщение</p>
             </button>
-              <button  (click)='selectMess(1)'>
+              <button  (click)='selectMess(1)'
+              title="Предыдущее сообщение"
+              >
                   <span class='la la-angle-right'></span>
-                  <p class="tooltip2">Предыдущее сообщение</p>
                 </button>
    
     <div class="left__panel">
@@ -30,16 +31,16 @@
   (click)='this.newMessageService.new_replyMessage(this.selectedLetter?.from_address, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
   routerLink="./create"
   [queryParams] = "{'testparam':this.selectedLetter?.mail_id, 'status':'request'}"
+  title="Ответить"
   >
     <span class='la la-mail-reply'></span>
-    <p class="tooltip2">Ответить</p>
 </button>
-<button class='menu' *ngIf="this.selectedLetter?.recipients.to.length !== 1; else non_active_btn"
-(click)='this.newMessageService.new_reply_allMessage(this.selectedLetter?.from_address, this.selectedLetter?.recipients.to, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
+<button class='menu' *ngIf="this.selectedLetter?.details.recipients.to.length !== 1; else non_active_btn"
+(click)='this.newMessageService.new_reply_allMessage(this.selectedLetter?.from_address, this.selectedLetter?.details.recipients.to, this.selectedLetter?.subject, this.selectedLetter?.text, this.selectedLetter?.html)'
 routerLink="./create"
+title="Ответить всем"
 >
   <span class='la la-reply-all'></span>
-  <p class="tooltip2">Ответить всем</p>
 </button>
 <ng-template #non_active_btn >
     <button class='menu none_display'>
@@ -48,32 +49,34 @@ routerLink="./create"
 </ng-template>
 <button class='menu' (click)="this.newMessageService.new_forward_message(this.selectedLetter?.text, this.selectedLetter?.html)"
 routerLink="./create"
+title="Переслать"
 >
   <span class='la la-share'></span>
-  <p class="tooltip2">Переслать</p>
 </button>
     </div>
-  <button class='menu' (click)='deleteLetter()'>
+  <button class='menu' (click)='deleteLetter()'
+  title="Удалить сообщение"
+  >
    <span class='la la-trash-o'></span>
-  <p class="tooltip2">Удалить сообщение</p>
   </button>
 </div>
 <div class="group__one">
     <div class="left__panel end">
-      <button class='one_butt' (click)='hideMenuShow()'>
+      <button class='one_butt' (click)='hideMenuShow()' title="Меню">
       <span class='la la-ellipsis-h'></span>
-      <p class="tooltip2">Меню</p>
     </button>
     <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
-        <button class='letterMenuButt' (click)='print()'>Распечатать</button>
+        <button class='letterMenuButt' (click)='print()'
+        title="Удалить сообщение"
+        >Распечатать</button>
         <button class='letterMenuButt' (click)='preserv_saver()'>Сохранить в закладках</button>
       </div>
   </div>
 
     <button class='one_butt' (click)='closeViewer()'
+    title="Закрыть"
     >
         <span class='la la-close'></span>
-        <p class="tooltip2">Закрыть</p>
       </button>
 
   </div>
@@ -103,7 +106,7 @@ routerLink="./create"
             <div class="panel">
               <div class='panel__name'>
                 
-                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== ''">{{this.selectedLetter?.from_name}}</p>
+                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
                 <p class='email__name'>{{this.selectedLetter?.from_address}}</p>
               </div>
           <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
@@ -111,32 +114,33 @@ routerLink="./create"
             <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
-              <div class='info__content_p' *ngIf="this.selectedLetter?.recipients.to.length === 1; else have_many_addresses"><p>Вам</p></div>
+              <div class='info__content_p' *ngIf="this.selectedLetter?.details.recipients.to.length === 1; else have_many_addresses"><p>Вам</p></div>
               <ng-template #have_many_addresses>
               <div class='info__content_p' *ngFor="let item of this?.cut_addressess_array"><p>{{item.address}}</p></div>
-              <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.recipients.to.length'
-              *ngIf="this.selectedLetter?.recipients.to.length > 3"
+              <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.details.recipients.to.length'
+              *ngIf="this.selectedLetter?.details.recipients.to.length > 3"
               (click)='all_view($event)' 
-              value='+{{this.selectedLetter?.recipients.to.length - this?.cut_addressess_array.length}}'>
+              value='+{{this.selectedLetter?.details.recipients.to.length - this?.cut_addressess_array.length}}'>
               </ng-template>
             </div>
             </div>
-            <div class="info__row" *ngIf="this.selectedLetter?.recipients.cc !== undefined">
+            <div class="info__row" *ngIf="this.selectedLetter?.details.recipients.cc !== undefined">
                 <p class="info_head">Копия:</p>
                 <div class="cut__visible_block">
                 <div class='info__content_p' *ngFor="let item of this?.cut_cc_adressess_array"><p>{{item.address}}</p></div>
-                <input type='button' class='cc' [class.input_return]='this?.cut_cc_adressess_array.length === this.selectedLetter?.recipients.cc.length'
-                *ngIf="this.selectedLetter?.recipients.cc.length > 3"
+                <input type='button' class='cc' [class.input_return]='this?.cut_cc_adressess_array.length === this.selectedLetter?.details.recipients.cc.length'
+                *ngIf="this.selectedLetter?.details.recipients.cc.length > 3"
                 (click)='all_view($event)' 
-                value='+{{this.selectedLetter?.recipients.cc.length - this?.cut_cc_adressess_array.length}}'>
+                value='+{{this.selectedLetter?.details.recipients.cc.length - this?.cut_cc_adressess_array.length}}'>
                 </div>
             </div>
         </div>
           </div>
           <div class="attachment__block" *ngIf="this.selectedLetter?.attachments !== false">
             <div class="attach__container" >
-              <div class="attachment__item" *ngFor="let attach of this.selectedLetter?.recipients.attachments; let i = index"
+              <div class="attachment__item" *ngFor="let attach of this.selectedLetter?.details.attachments; let i = index"
               (click)='gownload_attach($event, attach)'
+              title="{{attach.name}}"
               >
               <span [class]='attach.name | attachPipe'></span>
               <p class='filename'>{{attach.name}}
@@ -144,13 +148,13 @@ routerLink="./create"
               </p>
               
               <p class='size'>{{attach.size | sizer}}</p>
-               <p class="attach_tooltip">{{attach.name}}</p>
               </div>
               
             </div>
-            <button class='download' (click)='download_all_attach(this.selectedLetter?.recipients.attachments)'>
+            <button class='download' (click)='download_all_attach(this.selectedLetter?.details.attachments)'
+            title="Скачать всё"
+            >
                 <span class='la la-download'></span>
-                <p class="tooltip2">Скачать всё</p>
               </button>
         
             </div>

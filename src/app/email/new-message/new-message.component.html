@@ -151,7 +151,7 @@
       </div> 
     </div>
     
-    <div class="message__preload" *ngIf="this.messages_sending === true">
+    <div class="message__preload" *ngIf="this.newMessageService.messages_sending === true">
         <div class="cssload-speeding-wheel" ></div>
       <p>Отправка письма</p>
     </div>

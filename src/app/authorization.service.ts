@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { Observable } from 'rxjs';
+import {global_params} from './global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
   public accessToken;
-  public ip = 'http://10.0.1.33:3000';
+  public ip = global_params.ip;
   public userId;
   public lastName;
   public firstName;

@@ -1,5 +1,6 @@
 import { Injectable} from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
+import {global_params} from '../global';
 
 
 
@@ -56,7 +57,7 @@ export class EmailServiceService {
   dataLetters; // для остановки подгруза писем когда все загружены
 
   selectedLetter: any;
-  ip = 'http://10.0.1.33:3000';
+  ip = global_params.ip;
 
   mailsToArray = []; // кому отправить письмо (список адресатов)
   subjectTo;
