@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, DoCheck, Inject, inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
@@ -26,9 +26,12 @@ export class NewMessageComponent implements OnInit, DoCheck {
     @Inject(ToastrService) private toastrServ: ToastrService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(NewMessageService) private newMessageService: NewMessageService,
+    private activatedRoute: ActivatedRoute
     ) {
      }
      public from;
+     one; // del
+     two; // del
 
 
 
@@ -46,6 +49,13 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
       this.add_drag_input_data(this.newMessageService.files); // загоняет в файлы для отправки
     }
+    const querySubscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
+      (queryParam: any) => {
+          // this.one = queryParam['product'];
+          this.two = queryParam['testparam'];
+          console.log(this.two);
+      }
+  );
 
   }
   ngDoCheck() {

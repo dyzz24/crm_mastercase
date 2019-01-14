@@ -141,7 +141,7 @@ if (this.subscription) {
 }
   }
   ngDoCheck() {
-    // console.log(this.selectedLetter.recipients);
+    // console.log(this.selectedLetter);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -338,7 +338,7 @@ const downloadLink = document.createElement('a');
 }
 
 download_all_attach(attach) {
-  const hashes = attach.map(val => {
+  const hashes = attach.map(val => { // собираю hash из массива c вложениями
       return val.hash;
   });
   this.httpDownload(`${this.emailServ.ip}/mail/download`, {
@@ -349,8 +349,6 @@ const downloadLink = document.createElement('a');
             downloadLink.download = 'files.zip';
             downloadLink.click();
 });
-
-
 
 }
 
