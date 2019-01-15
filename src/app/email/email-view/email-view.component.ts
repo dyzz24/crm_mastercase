@@ -320,7 +320,7 @@ onFileChange(event) {
     this.newMessageService.new_clear_message();
     this.newMessageService.files = files;
     this.emailServ.hiddenEmpty = true;
-    this._rout.navigate(['./create'], { relativeTo: this.activatedRoute });
+    this._rout.navigate(['./create', { 'files': true }], { relativeTo: this.activatedRoute});
   }
 
 }

@@ -53,14 +53,18 @@ export class NewMessageComponent implements OnInit, DoCheck {
     this.from = this.emailServ.idPostForHTTP;
 
 
-    if (this.newMessageService.files.length > 0) { // если стэйт сервиса не пуст
+    // if (this.newMessageService.files.length > 0) { // если стэйт сервиса не пуст
 
-      this.files_for_view = this.newMessageService.files; // загоняет в файлы для отправки
-    }
+    //   this.files_for_view = this.newMessageService.files; // загоняет в файлы для отправки
+    // }
     this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
       (queryParam: any) => {
           this.mail_id = queryParam['id'];
           this.status = queryParam['status'];
+
+          if (this.activatedRoute.snapshot.params.files) {
+            this.files_for_view = this.newMessageService.files;
+          }
 
           if (this.status === 'reply') {
             this.httpPost(
@@ -224,8 +228,8 @@ setTimeout(() => {
 }, 3000);
 }
 onFileChange(event) {
-  this.newMessageService.files = event.target.files; // отловил файлы прикрепления
-  this.add_drag_input_data(this.newMessageService.files);
+  const files  = event.target.files; // отловил файлы прикрепления
+  this.add_drag_input_data(files);
 }
 
 
@@ -262,7 +266,6 @@ delete_attach(index) {
 add_drag_input_data(objForData) {
   // console.log(obj)
   const newArray = [objForData]; // засунул в массив для работы
-
 
   newArray.map((val) => {
  // tslint:disable-next-line:forin
