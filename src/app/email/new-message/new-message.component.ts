@@ -40,7 +40,11 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public subject = ''; // subject
     public messages;
     public files_for_view = []; // имена файлов для HTML
-
+    public formData = new FormData(); // дата для отправки на серв файлов
+    public tmp_name;
+    public open_select_address = false;
+    public save_tmp_state = false;
+    public messages_sending = false;
 
 
 
@@ -49,7 +53,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
-    this.newMessageService.save_tmp_state = false;
+    this.save_tmp_state = false;
     this.from = this.emailServ.idPostForHTTP;
 
 
@@ -62,8 +66,62 @@ export class NewMessageComponent implements OnInit, DoCheck {
           this.mail_id = queryParam['id'];
           this.status = queryParam['status'];
 
+          if (this.status === 'template') {
+            this.httpPost(
+              `${this.emailServ.ip}/mail/draft`,
+              {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
+                this.to = [];
+                this.copy = [];
+                this.hidden_copy = [];
+                this.messages = '';
+                this.subject = '';
+                // this.to = [dataMails.from_address];
+                // this.subject = `RE: ${dataMails.subject}`;
+
+                if (dataMails.html === null) {
+                  this.messages = dataMails[0].text;
+                 } else {
+                  this.messages = dataMails[0].html;
+                 }
+                 this.subject = dataMails[0].subject;
+
+                 if (dataMails[0].details.recipients.to) {
+                 const newArray_to = [];
+                dataMails[0].details.recipients.to.filter(val => {
+                  newArray_to.push(val.address);
+                });
+                this.to = newArray_to;
+              }
+
+              if (dataMails[0].details.recipients.cc) {
+                const newArray_copy = [];
+                dataMails[0].details.recipients.cc.filter(val => {
+                  newArray_copy.push(val.address);
+                });
+                this.copy = newArray_copy;
+              }
+
+              if (dataMails[0].details.recipients.bcc) {
+                const newArray_hidden_copy = [];
+                dataMails[0].details.recipients.bcc.filter(val => {
+                  newArray_hidden_copy.push(val.address);
+                });
+                this.hidden_copy = newArray_hidden_copy;
+              }
+
+              });
+          }
+
+
           if (this.activatedRoute.snapshot.params.files && this.newMessageService.files.length) {
             this.add_drag_input_data(this.newMessageService.files);
+            this.mail_id = this.activatedRoute.snapshot.params.id;
+            this.httpPost(
+              `${this.emailServ.ip}/mail/mail`,
+              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+                this.to = [dataMails.from_address];
+                this.subject = `RE: ${dataMails.subject}`;
+              });
           }
 
           if (this.status === 'reply') {
@@ -196,33 +254,33 @@ export class NewMessageComponent implements OnInit, DoCheck {
   }
 
   sendMessage() {
-    this.newMessageService.messages_sending = true; // крутилка on
+    this.messages_sending = true; // крутилка on
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
-    this.newMessageService.formData.append('files', this.files_for_view[i]);
+    this.formData.append('files', this.files_for_view[i]);
 }
 
 
-  this.newMessageService.formData.append('json', JSON.stringify({
+  this.formData.append('json', JSON.stringify({
     from: [
       {address: this.from}
     ],
     to: [
       {
-        address: this.newMessageService.to
+        address: this.to
       }
     ],
-    subject: this.newMessageService.subject,
-    html: this.newMessageService.messages
+    subject: this.subject,
+    html: this.messages
   }));
 
-  this.httpPost(`${this.emailServ.ip}/mail/send`, this.newMessageService.formData).subscribe(resp => {
+  this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
 });
 
 
 setTimeout(() => {
   const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
     this._rout.navigate([navigatePath]);
-  this.newMessageService.messages_sending = false; // крутилка off
+  this.messages_sending = false; // крутилка off
   this.emailServ.hiddenEmpty = false;
   this.showSuccess('Письмо отправлено');
 }, 3000);
@@ -281,53 +339,52 @@ add_drag_input_data(objForData) {
 }
 
 open_save_template() {
-this.newMessageService.save_tmp_state = ! this.newMessageService.save_tmp_state;
+this.save_tmp_state = ! this.save_tmp_state;
 }
 save_template() {
 
-  if (this.newMessageService.tmp_name === '' || this.newMessageService.tmp_name === undefined) {
+  if (this.tmp_name === '' || this.tmp_name === undefined) {
     this.showError('Введите имя шаблона');
     return;
   }
-  const to_send = this.newMessageService.to.map(val => { // массив с графами "кому"
-    return {address: val, name: ''};
+  const to_send = this.to.map(val => { // массив с графами "кому"
+    return {address: val};
 });
-  const cc_send = this.newMessageService.copy.map(val => { // массив с графами "копия"
-    return {address: val, name: ''};
+  const cc_send = this.copy.map(val => { // массив с графами "копия"
+    return {address: val};
 });
-const bcc_send = this.newMessageService.hidden_copy.map(val => { // массив с графами "Скрытая копия"
-  return {address: val, name: ''};
+const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+  return {address: val};
 });
-  this.newMessageService.save_tmp_state = false; // закрыть поле ввода имени шаблона
+  this.save_tmp_state = false; // закрыть поле ввода имени шаблона
   this.httpPost(
-    `${this.emailServ.ip}/mail/draft`,
+    `${this.emailServ.ip}/mail/draft_create`,
     // tslint:disable-next-line:max-line-length
     {address: this.from, // имейл
-      name: this.newMessageService.tmp_name,
+      title: this.tmp_name,
       text: '',
-      html: this.newMessageService.messages,
-      subject: this.newMessageService.subject,
+      html: this.messages,
+      subject: this.subject,
       from: [
         {address: this.from,
-          name: ''
         }
       ],
      to: to_send,
      cc: cc_send,
      bcc: bcc_send
     }).subscribe(() => {});
-  this.newMessageService.tmp_name = ''; // очищаю инпут после сохранения шаблона
+  this.tmp_name = ''; // очищаю инпут после сохранения шаблона
   this.show_notification('Шаблон создан');
 
 }
 
 select_new_address(e) {
   if (e.target.classList.contains('select_btn') || e.target.classList.contains('la-angle-down')) {
-      this.newMessageService.open_select_address = ! this.newMessageService.open_select_address;
+      this.open_select_address = ! this.open_select_address;
   }
   if (e.target.classList.contains('select_li')) {
       this.from = e.target.innerText;
-      this.newMessageService.open_select_address = false;
+      this.open_select_address = false;
   }
 }
 

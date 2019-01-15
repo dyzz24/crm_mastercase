@@ -113,6 +113,10 @@
     span:hover::before {
         content: "\f318";
     }
+
+    li {
+        outline: none;
+    }
 }
 
 .show_all_tmp {

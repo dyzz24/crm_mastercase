@@ -23,7 +23,7 @@
       <button class='select_btn'>
         <span class='la la-angle-down'></span>
       </button>
-      <ul class="hidden_block" [ngClass]="{visibl: this.newMessageService.open_select_address}">
+      <ul class="hidden_block" [ngClass]="{visibl: this.open_select_address}">
           <li *ngFor="let address of this.emailServ.all_user_mail_address" class='select_li'>{{address}}</li>
       </ul>
       </div>
@@ -132,16 +132,17 @@
     <div class="editor-qu">
       <quill-editor
       class='quill_styles'
-      [(ngModel)]='this.messages'>
+      [(ngModel)]='this.messages'
+      >
       
       
       </quill-editor>
       <div class="qu__bottom_block">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
       <button class='save_templ' (click)='open_save_template()'>Сохранить как шаблон</button>
-      <div class='templ_name' [ngClass]="{visibl: this.newMessageService.save_tmp_state}">
+      <div class='templ_name' [ngClass]="{visibl: this.save_tmp_state}">
         <input type="text" placeholder="Имя шаблона"
-        [(ngModel)]='this.newMessageService.tmp_name' 
+        [(ngModel)]='this.tmp_name' 
         class='tmp_name_inp'
         >
         <button (click)='save_template()'>
@@ -151,7 +152,7 @@
       </div> 
     </div>
     
-    <div class="message__preload" *ngIf="this.newMessageService.messages_sending === true">
+    <div class="message__preload" *ngIf="this.messages_sending === true">
         <div class="cssload-speeding-wheel" ></div>
       <p>Отправка письма</p>
     </div>

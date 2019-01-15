@@ -14,7 +14,7 @@
     <ul class="favorit_tmp" *ngIf="!this.favor_search_state; else not_have_favor">
       <li *ngFor="let favorit_tmp of this.favorit_tmp, let i = index" (click)='select_tmp($event, this.favorit_tmp)'>
         <span class='la la-star' (click)='favorite_do(this.favorit_tmp, $event)'></span> 
-        <p>{{favorit_tmp.name}}</p>
+        <p>{{favorit_tmp.title}}</p>
       </li>
     </ul>
     <ng-template #not_have_favor >
@@ -30,9 +30,13 @@
       </button>
     </div>
     <ul class="all_tmp" [ngClass]="{active: show_all_tmp_state}" *ngIf="!this.all_search_state; else not_have_all">
-        <li *ngFor="let all_tmp of this.all_tmp, let i = index"(click)='select_tmp($event, this.all_tmp)'>
+        <li *ngFor="let all_tmp of this.all_tmp, let i = index"(click)='select_tmp($event, this.all_tmp.draft_id)'
+        routerLink="./"
+        [queryParams] = "{'id':this.all_tmp.draft_id, 'status':'template'}"
+
+        >
             <span class='la la-star-o' (click)='favorite_do(this.all_tmp, $event)'></span> 
-            <p>{{all_tmp.name}}</p>
+            <p>{{all_tmp.title}}</p>
           </li>
     </ul>
     <ng-template #not_have_all >

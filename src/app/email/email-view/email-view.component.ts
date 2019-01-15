@@ -317,10 +317,9 @@ preserv_saver() {
 onFileChange(event) {
   const files  = event.target.files; // отловил файлы прикрепления
   if (files.length > 0) {
-    this.newMessageService.new_clear_message();
     this.newMessageService.files = files;
     this.emailServ.hiddenEmpty = true;
-    this._rout.navigate(['./create', { 'files': true }], { relativeTo: this.activatedRoute});
+    this._rout.navigate(['./create', { 'files': true, id: this.emailServ.currentId}], { relativeTo: this.activatedRoute});
   }
 
 }

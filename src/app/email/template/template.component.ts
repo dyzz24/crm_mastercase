@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { EmailServiceService } from '../email-service.service';
 import {NewMessageService} from '../new-message/new-message.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-template',
@@ -27,6 +28,8 @@ export class TemplateComponent implements OnInit, DoCheck {
   @Input() email_address;
 
   constructor(private http: HttpClient,
+    private _rout: Router,
+    private activatedRoute: ActivatedRoute,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     @Inject(NewMessageService) private newMessageService: NewMessageService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService) {
@@ -43,7 +46,7 @@ export class TemplateComponent implements OnInit, DoCheck {
  this.httpPost(
     `${this.ip}/mail/mails`,
     // tslint:disable-next-line:max-line-length
-    {address: this.email_address, boxId: 4, limit: 100, offset: 0}).subscribe((data) => {
+    {address: this.email_address}).subscribe((data) => {
       // console.log(data);
   });
 }
@@ -67,10 +70,10 @@ export class TemplateComponent implements OnInit, DoCheck {
         return;
       }
       const new_all_tmp = this.all_tmp.filter(val => { // массив найденных совпадений (1)
-        if (val.name === null) {
+        if (val.title === null) {
           return;
         }
-        if (val.name.toLowerCase().indexOf(data) >= 0 ) {
+        if (val.title.toLowerCase().indexOf(data) >= 0 ) {
           all_search_state = true;
           return val;
       }
@@ -78,10 +81,10 @@ export class TemplateComponent implements OnInit, DoCheck {
    });
 
    const new_all_favorit = this.favorit_tmp.filter(val => { // массив найденных совпадений (2)
-    if (val.name === null) {
+    if (val.title === null) {
       return;
     }
-    if (val.name.toLowerCase().indexOf(data) >= 0 ) {
+    if (val.title.toLowerCase().indexOf(data) >= 0 ) {
       favor_search_state = true;
       return val;
   }
@@ -113,7 +116,7 @@ export class TemplateComponent implements OnInit, DoCheck {
           {address: this.email_address
           }).subscribe((data) => {
             this.all_tmp = data.filter(val => {
-              if (val.flagged === false) {
+              if (val.flagged === undefined) {
                   return val;
               }
             });
@@ -129,16 +132,17 @@ export class TemplateComponent implements OnInit, DoCheck {
   show_all_tmp() {
     this.show_all_tmp_state = ! this.show_all_tmp_state;
   }
-  select_tmp(e, array_tmp) {
+  select_tmp(e, id) {
     if (e.target.className === 'la la-star-o' || e.target.className === 'la la-star') {
       return;
     }
-    this.newMessageService.new_message_from_template(array_tmp.recipients.to,
-      array_tmp.subject,
-      array_tmp.recipients.cc,
-      array_tmp.recipients.bcc,
-      array_tmp.html);
       this.show_hidden_templ = false;
+      // this.httpPost(
+      //   `${this.ip}/mail/mails`,
+      //   // tslint:disable-next-line:max-line-length
+      //   {address: this.email_address}).subscribe((data) => {
+      //     // console.log(data);
+      // });
   }
 
   favorite_do(select_templ, e) {
@@ -160,9 +164,10 @@ export class TemplateComponent implements OnInit, DoCheck {
       this.all_tmp.push(select_templ);
     }
     this.httpPost(
-      `${this.ip}/mail/draft`,
-      {id: select_templ.id,
-        flagged: !select_templ.flagged
+      `${this.ip}/mail/draft_update`,
+      {id: select_templ.draft_id,
+        flagged: !select_templ.flagged,
+        address: this.emailServ.idPostForHTTP
       }).subscribe((data) => {});
   }
 
