@@ -116,7 +116,7 @@ export class TemplateComponent implements OnInit, DoCheck {
           {address: this.email_address
           }).subscribe((data) => {
             this.all_tmp = data.filter(val => {
-              if (val.flagged === undefined) {
+              if (val.flagged === false) {
                   return val;
               }
             });
