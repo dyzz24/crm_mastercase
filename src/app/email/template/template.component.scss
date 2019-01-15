@@ -97,6 +97,9 @@
     span:hover::before {
         content: "\f31b";
     }
+    li {
+        outline: none;
+    }
 }
 
 .all_tmp {

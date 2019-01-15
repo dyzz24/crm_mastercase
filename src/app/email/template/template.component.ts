@@ -115,13 +115,14 @@ export class TemplateComponent implements OnInit, DoCheck {
           // tslint:disable-next-line:max-line-length
           {address: this.email_address
           }).subscribe((data) => {
+            // console.log(data);
             this.all_tmp = data.filter(val => {
-              if (val.flagged === false) {
+              if (!val.flagged) {
                   return val;
               }
             });
             this.favorit_tmp = data.filter(val => {
-              if (val.flagged === true) {
+              if (val.flagged) {
                   return val;
               }
             });

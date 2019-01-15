@@ -22,6 +22,7 @@ import { SizerPipe } from '../email/email-pipes/sizer.pipe';
 import { EmailServiceService } from '../email/email-service.service';
 import { EmailModuleRoutingModule } from './email-module-routing.module';
 import {NewMessageService} from '../email/new-message/new-message.service';
+import { TemplateLetterListComponent } from './template-letter-list/template-letter-list.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import {NewMessageService} from '../email/new-message/new-message.service';
     FoldersComponent,
     FoldersListComponent,
     SizerPipe,
+    TemplateLetterListComponent,
   ],
   providers: [EmailServiceService, NewMessageService],
 })

@@ -1,0 +1,11 @@
+<div class="template">
+  <div class="template__list">
+    <div class="list__prev" *ngFor="let letter of draft_list"
+    routerLink="./create"
+        [queryParams] = "{'id':letter.draft_id, 'status':'template'}"
+    >шаблон</div>
+  </div>
+  <div class="template__container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

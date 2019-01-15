@@ -65,7 +65,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
       (queryParam: any) => {
           this.mail_id = queryParam['id'];
           this.status = queryParam['status'];
-
           if (this.status === 'template') {
             this.httpPost(
               `${this.emailServ.ip}/mail/draft`,
@@ -75,9 +74,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.hidden_copy = [];
                 this.messages = '';
                 this.subject = '';
-                // this.to = [dataMails.from_address];
-                // this.subject = `RE: ${dataMails.subject}`;
-
                 if (dataMails.html === null) {
                   this.messages = dataMails[0].text;
                  } else {
