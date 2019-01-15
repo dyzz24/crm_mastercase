@@ -62,8 +62,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
           this.mail_id = queryParam['id'];
           this.status = queryParam['status'];
 
-          if (this.activatedRoute.snapshot.params.files) {
-            this.files_for_view = this.newMessageService.files;
+          if (this.activatedRoute.snapshot.params.files && this.newMessageService.files.length) {
+            this.add_drag_input_data(this.newMessageService.files);
           }
 
           if (this.status === 'reply') {
