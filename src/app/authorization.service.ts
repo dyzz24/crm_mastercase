@@ -15,11 +15,11 @@ export class AuthorizationService {
   public firstName;
 
   constructor(private http: HttpClient) {
-    if (localStorage.getItem('authorizationToken') === null) {
-      this.authorization();
+    if (localStorage.getItem('authorizationToken') === null) { // Если токена нет
+      this.authorization(); // авторизуюсь
       return;
     } else {
-      const state = JSON.parse(localStorage.getItem('authorizationToken'));
+      const state = JSON.parse(localStorage.getItem('authorizationToken')); // если есть получаю
       this.accessToken = state.accessToken;
       this.userId = state.userId;
       this.lastName = state.lastName;

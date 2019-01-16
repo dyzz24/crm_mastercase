@@ -172,7 +172,8 @@ current_index = 0; // ставлю индекс в ноль
 }
 
 if (current_index < 0) { // если первый
-current_index = this.emailServ.lettersList.length - 1; // ставлю в последний индекс
+// current_index = this.emailServ.lettersList.length - 1; // ставлю в последний индекс
+return;
 }
 
 current_id =  this.emailServ.lettersList[current_index].mail_id; // получаю новое id для урла

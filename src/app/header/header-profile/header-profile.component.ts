@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { AuthorizationService } from '../../authorization.service';
 
 
 @Component({
@@ -8,14 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+  ) { }
 
-  public name = 'Сергей';
-  public surname = 'Иванов';
+  public name;
+  public surname;
   public role = 'Admin';
   public avatarSrc = './assets/user.png';
 
   ngOnInit() {
+    const requestInterval = setInterval(() => {
+      if (this.authorizationServ.accessToken !== undefined) {
+        clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
+        this.name =  this.authorizationServ.firstName;
+        this.surname = this.authorizationServ.lastName;
+      }
+    }, 1000);
   }
 
 }

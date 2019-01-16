@@ -19,13 +19,11 @@
             <span class='la la-min la-check' *ngIf="this.successSearch === true"></span>
             </div>
           </div>
-          <button class='letters__refresh' type='button' (click)='get_message()'>
+          <button class='letters__refresh' type='button' (click)='get_message()' title="Обновить">
             <span class='la  la-refresh'></span>
-            <p class="tooltip">Обновить</p>
           </button>
-          <button class='letters__locate' (click)='scrollTop($event)' type='button'>
+          <button class='letters__locate' (click)='scrollTop($event)' type='button' title="Наверх">
             <span class='la  la-long-arrow-up'></span>
-            <p class="tooltip">Наверх</p>
           </button>
         </div>
 <div class="empty__cont">
@@ -44,30 +42,34 @@
         <span class='la la-min la-check' *ngIf="this.successSearch === true"></span>
         </div>
       </div>
-      <button class='letters__refresh' type='button' (click)='get_message()'>
+      <button class='letters__refresh' type='button' (click)='get_message()'
+      title="Обновить"
+      >
         <span class='la  la-refresh'></span>
-        <p class="tooltip">Обновить</p>
       </button>
-      <button class='letters__locate' (click)='scrollTop($event)' type='button'>
+      <button class='letters__locate' (click)='scrollTop($event)' type='button'
+      title="Наверх"
+      >
         <span class='la  la-long-arrow-up'></span>
         <p class="tooltip">Наверх</p>
       </button>
     </div>
 
     <div class="hidden__setting_panel" [class.hiddenTrash]='!emailServ.hiddenTrash'>
-        <button  type='button'  (click)='deleteRestoreLettersAll(3)' *ngIf="this.emailServ.selectNum !==3; else restoreAll">
+        <button  type='button'  (click)='deleteRestoreLettersAll(3)' *ngIf="this.emailServ.selectNum !==3; else restoreAll"
+        title="Удалить"
+        >
             <span class='la la-trash-o'></span>
-            <p class="tooltip">Удалить</p>
           </button>
-            <button  type='button' (click)='importantMarkAll()'>
+            <button  type='button' (click)='importantMarkAll()'
+            title="Отметить как важные"
+            >
               <span class='la la-exclamation'></span>
-              <p class="tooltip">Отметить как важные</p>
             </button>
             <button  type='button' (click)='move_folder()' [ngClass]="{folders_do_active: this.folder_list_state}"
-            
+            title="Поместить в папку"
             >
                 <span class='la la-hand-o-right'></span>
-                <p class="tooltip">Поместить в папку</p>
             </button>
             <app-folders-list  *ngIf="this.folder_list_state && this.emailServ.idLetters.length"
             [selected_mail_id]='this.emailServ.idLetters' 
@@ -139,9 +141,10 @@
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
             <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments !== false" [class.time-icons__status-new]="letters.seen === false">
             </span>
-            <button class='letter__settings' (click)='menuShow($event, i)'  [class.time-icons__status-new]="letters.seen === false">
+            <button class='letter__settings' (click)='menuShow($event, i)'  [class.time-icons__status-new]="letters.seen === false"
+            title="Меню"
+            >
               <span class='la la-ellipsis-h'></span>
-              <p class='tooltip'>Меню</p>
             </button>
             <div class="hideMenu" (click)='close_menu()'>
                 <button class='letterMenuButt' *ngIf="!this.emailServ.lettersList[i].work_user_id" (click)='get_work(emailServ.lettersList[i].mail_id, $event, i)'>Взять в работу</button>

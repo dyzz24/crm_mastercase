@@ -1,3 +1,4 @@
+
 <div class="template">
   <div class="template__list">
     <div class="list__prev" *ngFor="let letter of draft_list"
@@ -5,6 +6,7 @@
         [queryParams] = "{'id':letter.draft_id, 'status':'template'}"
     >шаблон</div>
   </div>
+  <app-splitter left min='100' max='500' positionLeft='-0.5'></app-splitter>
   <div class="template__container">
     <router-outlet></router-outlet>
   </div>
