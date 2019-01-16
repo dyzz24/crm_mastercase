@@ -8,13 +8,24 @@
                         routerLink="email"
                         routerLinkActive="active"
                 ><span class="la la-lg la-envelope-o"></span></div>
+
                 <div class="icon__nav"><span class="la la-lg la-calendar"></span></div>
+
+                <div class="icon__nav"
+                        routerLink="setting"
+                        routerLinkActive="active"
+                ><span class="la la-lg la-cogs"></span></div>
 
                 <div class="nav__buttons" [ngClass]='{hidenBlock:hidden}'>
                         <a routerLink="email"
                         routerLinkActive="active"
                         >Почта</a>
                         <a routerLink="/" (click)='clearLocalStorage(1, $event)' >Календарь</a>
+                        
+                        <a routerLink="setting"
+                        routerLinkActive="active"
+                        
+                        >Настройки</a>
                 </div>
         </div>
 </nav>

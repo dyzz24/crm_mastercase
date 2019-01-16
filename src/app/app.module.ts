@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthorizationService } from './authorization.service';
 import { SocketService } from './socket.service';
 import { EmailModuleModule } from './email/email-module.module';
+import {SettingModule} from './setting/setting.module';
 
 
 
@@ -34,6 +35,7 @@ import { EmailModuleModule } from './email/email-module.module';
     BrowserModule,
     AppRoutingModule,
     EmailModuleModule,
+    SettingModule,
     HttpClientModule,
 
   ],

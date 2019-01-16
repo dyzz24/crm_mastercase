@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
-  { path: 'email',  redirectTo: '/email', pathMatch: 'full'}
+  // { path: 'email',  redirectTo: '/email', pathMatch: 'full'}
 ];
 
 
