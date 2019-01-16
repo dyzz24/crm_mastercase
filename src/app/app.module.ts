@@ -16,6 +16,7 @@ import { AuthorizationService } from './authorization.service';
 import { SocketService } from './socket.service';
 import { EmailModuleModule } from './email/email-module.module';
 import {SettingModule} from './setting/setting.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 
@@ -28,6 +29,7 @@ import {SettingModule} from './setting/setting.module';
     NotificationOneComponent,
     NotificationTwoComponent,
     HeaderProfileComponent,
+    NotFoundComponent,
 
 
   ],

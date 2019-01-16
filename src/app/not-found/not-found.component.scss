@@ -1,0 +1,21 @@
+.not_found {
+    padding: 60px 0 0 60px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    p {
+        font-size: 26px;
+    }
+
+    button {
+        margin-top: 12px;
+        background: rgb(146, 127, 127);
+        padding: 8px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+}

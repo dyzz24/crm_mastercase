@@ -8,7 +8,7 @@ import { EmailGuardGuard } from '../email/email-guard.guard';
 import { TemplateLetterListComponent } from './template-letter-list/template-letter-list.component';
 
 const routes: Routes = [
-  { path: 'email', component: EmailComponent,
+  { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
   children:
   [
     {path: ':email_id/template', component: TemplateLetterListComponent, canActivate: [EmailGuardGuard],

@@ -38,7 +38,7 @@ export class SocketService {
 });
 this.socket.on('mail/work', (msg) => {
   const dataStr = JSON.parse(msg);
-  // console.log(dataStr);
+  console.log(dataStr);
   if (dataStr.status === 4) {
     this.showSuccess(`Пользователь ${dataStr.name} взял письмо в работу`);
     this.emailServ.lettersList.map((val, ind) => {
@@ -46,7 +46,7 @@ this.socket.on('mail/work', (msg) => {
           val.work_user_id = {
           email: dataStr.email,
           // firstName: dataStr.firstName,
-          // lastName: dataStr.lastName,
+          name: dataStr.name,
           userId: dataStr.userId};
       }
   });

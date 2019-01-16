@@ -265,6 +265,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
         address: this.to
       }
     ],
+    copy: [{
+      address: this.copy
+    }],
     subject: this.subject,
     html: this.messages
   }));

@@ -19,17 +19,27 @@ export class NewUserComponent implements OnInit, DoCheck {
 
 
   private login_form_group: FormGroup;
+  private authorization_error: Subscription;
 
   ngOnInit() {
     this.initForm();
+    this.authorization_error = this.authorizationServ.error_response.subscribe(val => { // подписываюсь
+      if (val) {
+          alert('Не залогинет'); // если ошибка авторизации - написать
+          this.login_form_group.reset();
+      }
+    });
   }
 
   initForm() {
     this.login_form_group = this.fb.group({
       login: ['',
-      Validators.email
+      [Validators.email,
+        Validators.required]
     ],
-      password: [null]
+      password: ['',
+      Validators.required
+    ]
     });
   }
 
@@ -38,7 +48,17 @@ export class NewUserComponent implements OnInit, DoCheck {
   }
 
   authorization() {
-      this.authorizationServ.authorization(this.login_form_group.value.login, this.login_form_group.value.password);
+
+    if (this.login_form_group.invalid) {
+        alert('Введите корректные данные');
+        return;
+    }
+
+
+        this.authorizationServ.authorization(this.login_form_group.value.login, this.login_form_group.value.password);
+
+
+
   }
 
 }

@@ -19,7 +19,7 @@ export class EmailGuardGuard implements CanActivate {
     if (this.authorizationServ.accessToken !== undefined) {
       return true;
     } else {
-      this.rout.navigate(['email']);
+      this.rout.navigate(['not_f']);
       return false;
     }
   }

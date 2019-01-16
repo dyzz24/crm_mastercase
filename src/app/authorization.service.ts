@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {global_params} from './global';
+import { Subject } from 'rxjs';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,7 @@ export class AuthorizationService {
   public ip = global_params.ip;
   public userId;
   public name;
+  public error_response = new Subject<any>();
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem('authorizationToken') === null) { // Если токена нет
@@ -41,11 +45,16 @@ export class AuthorizationService {
 
     public authorization(email, password) {
       this.httpPost(`${this.ip}/user/login`,
-      {email: email, password: password}, {contentType: 'application/json'}).subscribe((data) => {
-        this.accessToken = data.accessToken;
-        this.userId = data.userId;
-        this.name = data.name;
-        this.stateServ();
+      {email: email, password: password}, {contentType: 'application/json'}).subscribe((data => {
+          this.accessToken = data.accessToken;
+          this.userId = data.userId;
+          this.name = data.name;
+          this.stateServ();
+
+      }
+    ), (err: HttpErrorResponse) => { // если ошибка авторизации, отправляю в компонент что нельзя залогиниться
+        this.error_response.next(err.error);
+
     });
 }
 
