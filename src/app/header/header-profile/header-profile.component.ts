@@ -14,7 +14,6 @@ export class HeaderProfileComponent implements OnInit {
   ) { }
 
   public name;
-  public surname;
   public role = 'Admin';
   public avatarSrc = './assets/user.png';
 
@@ -22,8 +21,7 @@ export class HeaderProfileComponent implements OnInit {
     const requestInterval = setInterval(() => {
       if (this.authorizationServ.accessToken !== undefined) {
         clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
-        this.name =  this.authorizationServ.firstName;
-        this.surname = this.authorizationServ.lastName;
+        this.name =  this.authorizationServ.name;
       }
     }, 1000);
   }

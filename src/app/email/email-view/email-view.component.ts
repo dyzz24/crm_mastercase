@@ -107,10 +107,11 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
-
+// console.log(this.selectedLetter)
         this.emailServ.hiddenEmpty = true;
         });
           this.emailServ.activeLett[data.id] = true;
+
       }
         });
               }

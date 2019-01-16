@@ -84,7 +84,7 @@ title="Переслать"
   <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
      
          <div class='left__panel end' *ngIf="this.selectedLetter?.work_user_id !== null">
-          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id.userId !== this.authorizationServ.userId" ><p>{{this.selectedLetter?.work_user_id.firstName}} {{this.selectedLetter?.work_user_id.lastName}}</p>
+          <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id.userId !== this.authorizationServ.userId" ><p>{{this.selectedLetter?.work_user_id.name}}</p>
           </div>
         </div>
       

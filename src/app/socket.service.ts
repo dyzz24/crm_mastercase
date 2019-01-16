@@ -32,15 +32,15 @@ export class SocketService {
 });
 this.socket.on('mail/work', (msg) => {
   const dataStr = JSON.parse(msg);
-  console.log(dataStr);
+  // console.log(dataStr);
   if (dataStr.status === 4) {
-    this.showSuccess(`Пользователь ${dataStr.firstName} ${dataStr.lastName}  взял письмо в работу`);
+    this.showSuccess(`Пользователь ${dataStr.name} взял письмо в работу`);
     this.emailServ.lettersList.map((val, ind) => {
       if (+val.mail_id === +dataStr.mailId) {
           val.work_user_id = {
           email: dataStr.email,
-          firstName: dataStr.firstName,
-          lastName: dataStr.lastName,
+          // firstName: dataStr.firstName,
+          // lastName: dataStr.lastName,
           userId: dataStr.userId};
       }
   });
@@ -55,7 +55,7 @@ this.socket.on('mail/work', (msg) => {
 
   }
   if (dataStr.status === 2) {
-this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.firstName} ${dataStr.lastName}`);
+this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.name}`);
   }
  });
 
