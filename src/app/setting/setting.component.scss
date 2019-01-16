@@ -1,0 +1,13 @@
+@import '../../colors';
+@import '../email/mixins';
+.setting {
+    display: flex;
+    padding: 60px 0 0 60px;
+    box-sizing: border-box;
+}
+
+.new_user_btn {
+    width: auto;
+    padding: 0 8px;
+    box-sizing: border-box;
+}

@@ -15,7 +15,7 @@ export class AuthorizationService {
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem('authorizationToken') === null) { // Если токена нет
-      this.authorization(); // авторизуюсь
+      this.authorization('seo@insat.ru', '12345678'); // авторизуюсь
       return;
     } else {
       const state = JSON.parse(localStorage.getItem('authorizationToken')); // если есть получаю
@@ -39,9 +39,9 @@ export class AuthorizationService {
       return this.http.post(url, body, {headers: {}});
     }
 
-    public authorization() {
+    public authorization(email, password) {
       this.httpPost(`${this.ip}/user/login`,
-      {email: 'seo@insat.ru', password: '12345678'}, {contentType: 'application/json'}).subscribe((data) => {
+      {email: email, password: password}, {contentType: 'application/json'}).subscribe((data) => {
         this.accessToken = data.accessToken;
         this.userId = data.userId;
         this.name = data.name;
