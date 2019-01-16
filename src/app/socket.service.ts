@@ -4,6 +4,7 @@ import { ToastrService} from 'ngx-toastr';
 import { EmailServiceService } from './email/email-service.service';
 import * as io from 'socket.io-client';
 import {global_params} from './global';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,15 @@ import {global_params} from './global';
 export class SocketService {
   private socket: SocketIOClient.Socket;
   private socketConnectedFlag = false;
+  public data = new Subject<any>();
 
   constructor(private authorizationServ: AuthorizationService,
     private toastrServ: ToastrService,
     private emailServ: EmailServiceService) { }
+
+    change_params_in_work(param) {
+        this.data.next(param); // отправляю событие для email-view компонента для отображения кем взято в работу
+    }
 
   lettersSocketConnect() {
     if (this.socketConnectedFlag === true) { // если уже был коннект, выхожу
@@ -44,6 +50,7 @@ this.socket.on('mail/work', (msg) => {
           userId: dataStr.userId};
       }
   });
+  this.change_params_in_work(dataStr);
   }
   if (dataStr.status === 0) {
     this.showSuccess(`Пользователь  удалил письмо из работы`);
@@ -52,6 +59,8 @@ this.socket.on('mail/work', (msg) => {
         val.work_user_id = null;
       }
   });
+
+  this.change_params_in_work(dataStr);
 
   }
   if (dataStr.status === 2) {

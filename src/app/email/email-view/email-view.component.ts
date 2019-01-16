@@ -8,12 +8,13 @@ import { AuthorizationService } from '../../authorization.service';
 import { PreserverComponent } from '../../preserver/preserver.component';
 import {NewMessageService} from '../new-message/new-message.service';
 
+
 export interface SelectedLetter {
   mail_id: number;
   from_address: any;
   id: any;
   date?: number;
-  work_user_id?: string;
+  work_user_id?: any;
   html?: string;
   text: string;
   subject?: string;
@@ -50,6 +51,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   selectedLetter: SelectedLetter;
   subject;
   subscription: Subscription;
+  subscrioption_socket: Subscription;
 
   cut_addressess_array;
   cut_cc_adressess_array;
@@ -70,10 +72,12 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     private activatedRoute: ActivatedRoute,
     @Inject(NewMessageService) private newMessageService: NewMessageService,
+    @Inject(SocketService) private socketServ: SocketService
     ) {
     }
 
   ngOnInit() {
+
     this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
         this.preload_to_wait_status = false;
 
@@ -107,13 +111,24 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
-// console.log(this.selectedLetter)
         this.emailServ.hiddenEmpty = true;
         });
           this.emailServ.activeLett[data.id] = true;
 
       }
         });
+
+
+
+        this.subscrioption_socket = this.socketServ.data.subscribe(val => { // подписка на сокет- сервис
+
+          if (val.status === 0) { // если письмо удалили из работы - чищу из представления
+            this.selectedLetter.work_user_id = null;
+          }
+          if ( val.status === 4) { // если добавил я - ставлю в представление
+            this.selectedLetter.work_user_id = {userId: val.userId, name: val.name};
+          }
+      });
               }
 
 
@@ -140,6 +155,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 if (this.subscription) {
   this.subscription.unsubscribe();
 }
+this.subscrioption_socket.unsubscribe();
   }
   ngDoCheck() {
     // console.log(this.selectedLetter);
