@@ -98,7 +98,10 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             this.emailServ.notLettersFlag = false;
           }
           this.emailServ.lettersList = data; // главный массив всех всех писем
-          // console.log(data);
+
+          this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => {
+            return val = false;
+          }); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
           this.emailServ.dataLetters = this.emailServ.lettersAmount;
           });
@@ -547,8 +550,13 @@ tt(e, index) {
   const min_max_arr = [min, max];
   // this.emailServ.hideAvatars[index] = ! this.emailServ.hideAvatars[index];
   this.emailServ.hideAvatars.fill(true, min_max_arr[0], min_max_arr[1]);
+  // this.emailServ.selectedLetter
 
-  console.log(this.emailServ.hideAvatars);
+  this.emailServ.idLetters = [];
+  for (let i = min; i < max; i++) {
+    this.emailServ.idLetters.push(this.emailServ.lettersList[i].mail_id);
+  }
+  console.log(this.emailServ.idLetters);
 }
   // console.log();
   // const allInputs = document.querySelectorAll('.checkbox');
