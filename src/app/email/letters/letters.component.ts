@@ -43,6 +43,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   folder_list_state = false;
   open_hidden_menu = false;
   indexess_array = [];
+  checkbox_flagged: boolean;
 
 
   // @ViewChild('size_Check') // для отслеживания размера блока
@@ -216,6 +217,9 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
   selectedLetters(id, e, i) {
     // this.emailServ.hideAvatars[i] = !this.emailServ.hideAvatars[i];
     // множественный выбор писем в папке ****************
+    if (e.shiftKey) {
+      return;
+    }
     if (e.target.checked) {
       this.emailServ.idLetters = [...this.emailServ.idLetters, +id];
       this.emailServ.hideAvatars[i] = true;
@@ -530,34 +534,84 @@ close_menu() {
       }
 }
 
-tt(e, index) {
+select_some_letters(e, index) {
+if (e.target.className === 'checkbox') { // чтобы не всплывало событие до чекбокса
+  console.log(e.target.checked);
+  if (e.target.checked) {
+    this.checkbox_flagged = true;
+  } else {
+    e.target.checked = false;
+  }
+    return;
+}
+  if (e.shiftKey) { // если зажали шифт
 
-  if (e.shiftKey) {
-  let min;
-  let max;
   this.indexess_array.push(index);
-
-  if (this.indexess_array.length > 2) {
-
-  this.indexess_array.sort((a, b) => a - b);
-  this.indexess_array.sort((a, b) => {
-    if ( a > b) {
-        max = a;
-        min = this.indexess_array[0];
+  this.indexess_array = this.indexess_array.filter(
+    (val, ind, self) => {
+if (self.indexOf(val) === ind) {
+    return val;
+}
     }
-    return max;
-  });
-  const min_max_arr = [min, max];
-  // this.emailServ.hideAvatars[index] = ! this.emailServ.hideAvatars[index];
-  this.emailServ.hideAvatars.fill(true, min_max_arr[0], min_max_arr[1]);
-  // this.emailServ.selectedLetter
+  );
 
-  this.emailServ.idLetters = [];
-  for (let i = min; i < max; i++) {
+    const min_max_arr = [0, index];
+    this.emailServ.hideAvatars.fill(true, min_max_arr[0], min_max_arr[1] + 1);
+
+  for (let i = min_max_arr[0]; i <= min_max_arr[1]; i++) {
     this.emailServ.idLetters.push(this.emailServ.lettersList[i].mail_id);
   }
-  console.log(this.emailServ.idLetters);
+  this.emailServ.idLetters = this.emailServ.idLetters.filter(
+    (val, ind, self) => {
+if (self.indexOf(val) === ind) {
+    return val;
 }
+    }
+  );
+  const allInputs = document.querySelectorAll('.checkbox');
+  for (let i = min_max_arr[0]; i < min_max_arr[1]; i ++) {
+      allInputs[i].checked = true;
+    }
+
+//   if (this.indexess_array.length > 1) {
+
+//   this.indexess_array.sort((a, b) => a - b); //
+//   this.indexess_array.sort((a, b) => {
+//     if ( a > b) {
+//         max = a;
+//         min = this.indexess_array[0];
+//     }
+//     return max;
+//   });
+//   const min_max_arr = [min, max];
+
+//   this.emailServ.hideAvatars.fill(true, min_max_arr[0], min_max_arr[1] + 1);
+//   for (let ind = min_max_arr[0]; ind <= min_max_arr[1]; ind++) {
+//     this.emailServ.idLetters.push(this.emailServ.lettersList[ind].mail_id);
+//   }
+//   this.emailServ.idLetters = this.emailServ.idLetters.filter(
+//     (val, ind, self) => {
+// if (self.indexOf(val) === ind) {
+//     return val;
+// }
+//     }
+//   );
+
+//   const allInputs = document.querySelectorAll('.checkbox');
+//   for (let i = min_max_arr[0]; i < min_max_arr[1]; i ++) {
+//       allInputs[i].checked = true;
+//     }
+
+//   }
+
+  // if (this.indexess_array.length === 1) {
+
+  this.emailServ.checkerTrash();
+
+  console.log(this.emailServ.idLetters);
+
+
+
   // console.log();
   // const allInputs = document.querySelectorAll('.checkbox');
   //   for (const key of <any>allInputs) {

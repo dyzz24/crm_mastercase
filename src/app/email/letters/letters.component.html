@@ -103,13 +103,13 @@
         
         >
         <div class="avatar__group">
-          <div class="avatar" (click)='tt($event, i)'>
+          <div class="avatar" (click)='select_some_letters($event, i)'>
 
               <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{letters.from_address.charAt(0)}}</p>
 
             <!-- <img src='' [class.hiddenAva]='emailServ.hideAvatars[i]'> -->
             <label class='checkedLabel' [class.visibleLabel]='emailServ.hideAvatars[i]'>
-              <input type='checkbox' class='checkbox' (change)='selectedLetters(letters.mail_id, $event, i)'
+              <input type='checkbox' class='checkbox' (click)='selectedLetters(letters.mail_id, $event, i)'
             
               >
               <!--собираю id писем с чеккед инпутов-->
