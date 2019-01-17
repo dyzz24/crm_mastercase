@@ -102,7 +102,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP, mailId: data.id}).subscribe((dataMails) => {
         // const test = this.selected_letter_part2.push(dataMails);
-console.log(dataMails);
+// console.log(dataMails);
         this.emailServ.haveResponse = true;
         this.selectedLetter = dataMails;
 

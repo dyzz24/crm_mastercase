@@ -42,6 +42,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   subscription: Subscription;
   folder_list_state = false;
   open_hidden_menu = false;
+  indexess_array = [];
+
 
   // @ViewChild('size_Check') // для отслеживания размера блока
   // size_Check: ElementRef;
@@ -198,10 +200,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 
 
-  hideAva(index) {
-    this.emailServ.hideAvatars[index] = !this.emailServ.hideAvatars[index];
-  }
-
   urlLetterView(event, idLetter, id) {
 if (this.emailServ.lettersList[idLetter].seen === false) {
     this.httpPost(`${this.emailServ.ip}/mail/set`, { mailId: +id, flag: 'seen' , value: true, address: this.emailServ.idPostForHTTP})
@@ -213,15 +211,18 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
   }
 
   selectedLetters(id, e, i) {
+    // this.emailServ.hideAvatars[i] = !this.emailServ.hideAvatars[i];
     // множественный выбор писем в папке ****************
     if (e.target.checked) {
-      this.emailServ.idLetters = [...this.emailServ.idLetters, +id]; // индексы писем (от 0 до ...)
+      this.emailServ.idLetters = [...this.emailServ.idLetters, +id];
+      this.emailServ.hideAvatars[i] = true;
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
         (val, ind, self) => {
           return self.indexOf(val) === ind;
         }
       );
     } else {
+      this.emailServ.hideAvatars[i] = false;
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
         item => item !== +id
       );
@@ -525,4 +526,43 @@ close_menu() {
           allHideBlock[key].classList.remove('visible');
       }
 }
+
+tt(e, index) {
+
+  if (e.shiftKey) {
+  let min;
+  let max;
+  this.indexess_array.push(index);
+
+  if (this.indexess_array.length > 2) {
+
+  this.indexess_array.sort((a, b) => a - b);
+  this.indexess_array.sort((a, b) => {
+    if ( a > b) {
+        max = a;
+        min = this.indexess_array[0];
+    }
+    return max;
+  });
+  const min_max_arr = [min, max];
+  // this.emailServ.hideAvatars[index] = ! this.emailServ.hideAvatars[index];
+  this.emailServ.hideAvatars.fill(true, min_max_arr[0], min_max_arr[1]);
+
+  console.log(this.emailServ.hideAvatars);
+}
+  // console.log();
+  // const allInputs = document.querySelectorAll('.checkbox');
+  //   for (const key of <any>allInputs) {
+  //     key.checked = true;
+  //   }
+              // this.emailServ.hideAvatars[]
+  // console.log(start_end_arr);
+    // for (let i = min; i < max; i ++) {
+    //   allInputs[i].checked = true;
+    // }
+  // console.log(start_end_arr);
+  }
+
+}
+
 }
