@@ -448,6 +448,64 @@ edit_babl(e, index, array_for_edit) {
   }
 }
 
+send_and_save_tmp(e) {
+
+  if (e.target.className === 'save_templ send_mess') {
+  const to_send = this.to.map(val => { // массив с графами "кому"
+    return {address: val};
+});
+  const cc_send = this.copy.map(val => { // массив с графами "копия"
+    return {address: val};
+});
+const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+  return {address: val};
+});
+  this.httpPost(
+    `${this.emailServ.ip}/mail/draft_update`,
+    // tslint:disable-next-line:max-line-length
+    {address: this.from, // имейл
+      id: this.mail_id,
+      html: this.messages,
+      subject: this.subject,
+      from: [
+        {address: this.from,
+        }
+      ],
+     to: to_send,
+     cc: cc_send,
+     bcc: bcc_send
+    }).subscribe(() => {});
+  this.sendMessage();
+} else {
+  const to_send = this.to.map(val => { // массив с графами "кому"
+  return {address: val};
+});
+const cc_send = this.copy.map(val => { // массив с графами "копия"
+  return {address: val};
+});
+const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+return {address: val};
+});
+this.httpPost(
+  `${this.emailServ.ip}/mail/draft_update`,
+  // tslint:disable-next-line:max-line-length
+  {address: this.from, // имейл
+    id: this.mail_id,
+    html: this.messages,
+    subject: this.subject,
+    from: [
+      {address: this.from,
+      }
+    ],
+   to: to_send,
+   cc: cc_send,
+   bcc: bcc_send
+  }).subscribe(() => {
+    this.showSuccess('Изменения сохранены');
+  });
+}
+}
+
 
 
 

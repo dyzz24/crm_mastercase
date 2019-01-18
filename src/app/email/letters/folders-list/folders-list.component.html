@@ -1,21 +1,57 @@
 <div class="folders" [ngClass]="{visible: this.state_open}">
-
+        <ul class='inbox'>
+                <li><span class='la la-lg la-square-o' [ngClass]="{non_activ: this.emailServ.selectedMess === 1}"></span>
+                      <p class='folders_name' data-id={{1}} (click)='change_folder($event)'
+                      *ngIf="this.emailServ.selectedMess !== 1 ; else currentFold"
+                      >Входящие</p>
+                      <ng-template #currentFold >
+                            <p class='folders_name non_activ'>Входящие</p>
+                      </ng-template>
+                      </li>
+        </ul>
     <ul *ngFor="let folder of this.all_folders">
-        <li><span class='la la-lg la-square-o'></span>
-              <p class='folders_name' data-id={{folder.id}} (click)='change_folder($event)'>{{folder.title}}</p>
+        <li><span class='la la-lg la-square-o' [ngClass]="{non_activ: this.emailServ.selectedMess === folder.id}"
+            ></span>
+              <p class='folders_name' data-id={{folder.id}} (click)='change_folder($event)'
+              *ngIf="this.emailServ.selectedMess !== folder.id ; else currentFold"
+              >{{folder.title}}</p>
+              <ng-template #currentFold >
+                    <p class='folders_name non_activ'>{{folder.title}}</p>
+              </ng-template>
 
                       <ul *ngFor="let folder_1level of folder.childs">
-                      <li><span class='la la-lg la-square-o'></span>
-                      <p class='folders_name' data-id={{folder_1level.id}} (click)='change_folder($event)'>{{folder_1level.title}}</p>
+                      <li>
+                          <span class='la la-lg la-square-o' [ngClass]="{non_activ: this.emailServ.selectedMess === folder_1level.id}"></span>
+                      <p class='folders_name' 
+                      data-id={{folder_1level.id}} 
+                      (click)='change_folder($event)'
+                      *ngIf="this.emailServ.selectedMess !== folder_1level.id ; else currentFold"
+                      >{{folder_1level.title}}</p>
+                      <ng-template #currentFold >
+                            <p class='folders_name non_activ'>{{folder_1level.title}}</p>
+                      </ng-template>
                           <ul *ngFor="let folder_2level of folder_1level.childs">
                             <li>
-                                <span class='la la-lg la-square-o'></span>
-                              <p class='folders_name' data-id={{folder_2level.id}} (click)='change_folder($event)'>{{folder_2level.title}}</p>
+                                <span class='la la-lg la-square-o' [ngClass]="{non_activ: this.emailServ.selectedMess === folder_2level.id}"></span>
+                              <p class='folders_name' 
+                              data-id={{folder_2level.id}}
+                              (click)='change_folder($event)'
+                              *ngIf="this.emailServ.selectedMess !== folder_2level.id ; else currentFold"
+                              >{{folder_2level.title}}</p>
+                              <ng-template #currentFold >
+                                    <p class='folders_name non_activ'>{{folder_2level.title}}</p>
+                              </ng-template>
                               <ul *ngFor="let folder_3level of folder_2level.childs">
                                   <li>
-                                      <span class='la la-lg la-square-o'></span>
-                                    <p class='folders_name' data-id={{folder_3level.id}} (click)='change_folder($event)'>{{folder_3level.title}}</p>
-
+                                      <span class='la la-lg la-square-o' [ngClass]="{non_activ: this.emailServ.selectedMess === folder_3level.id}"></span>
+                                    <p class='folders_name'
+                                    data-id={{folder_3level.id}}
+                                    (click)='change_folder($event)'
+                                    *ngIf="this.emailServ.selectedMess !== folder_3level.id ; else currentFold"
+                                    >{{folder_3level.title}}</p>
+                                    <ng-template #currentFold >
+                                            <p class='folders_name non_activ'>{{folder_3level.title}}</p>
+                                      </ng-template>
                                   </li>
                                 </ul>
                             </li>

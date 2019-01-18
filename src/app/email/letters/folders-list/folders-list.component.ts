@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, Input, DoCheck, Output, EventEmitter, OnDestroy} from '@angular/core';
 import { EmailServiceService } from '../../email-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable} from 'rxjs';
-import { tokenKey } from '@angular/core/src/view';
+import { Observable, Subscription} from 'rxjs';
+import { Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-folders-list',
@@ -20,7 +20,7 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
 
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -29,6 +29,8 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
     ).map(item => {
       return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs) [0][0] || []; // чилды входящих
    });
+
+    // console.log(this.emailServ.selectedMess);
   }
 
   ngDoCheck() {

@@ -11,15 +11,24 @@
     box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
 }
 
+.folders {
+    display: flex;
+    flex-direction: column;
+}
+
 
 ul {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     box-sizing: border-box;
     padding-left: 15px;
     display: flex;
     flex-direction: column;
     overflow: auto;
+}
+
+.inbox {
+    padding-left: 7.5px;
 }
 
 li {
@@ -44,7 +53,14 @@ span {
     
     box-sizing: border-box;
     cursor: pointer;
-    &:hover {
+    &:hover:not(.non_activ) {
         background: #d9e6f7;
     }
+
+    
+}
+.non_activ {
+    cursor: default;
+    opacity: .5;
+
 }

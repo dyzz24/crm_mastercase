@@ -139,7 +139,7 @@
       </quill-editor>
       <div class="qu__bottom_block">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
-      <button class='save_templ' (click)='open_save_template()'>Сохранить как шаблон</button>
+      <button class='save_templ' (click)='open_save_template()' *ngIf="this.status !== 'template'">Сохранить как шаблон</button>
       <div class='templ_name' [ngClass]="{visibl: this.save_tmp_state}">
         <input type="text" placeholder="Имя шаблона"
         [(ngModel)]='this.tmp_name' 
@@ -149,6 +149,8 @@
             <span class='la la-check-circle-o'></span>
           </button>
       </div>
+      <button class='save_templ send_mess' *ngIf="this.status === 'template'" (click)='send_and_save_tmp($event)'>Отправить и сохранить изменения в шаблоне</button>
+      <button class='save_templ' *ngIf="this.status === 'template'" (click)='send_and_save_tmp($event)'>Сохранить изменения</button>
       </div> 
     </div>
     

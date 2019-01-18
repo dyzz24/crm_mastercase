@@ -200,6 +200,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   ngDoCheck() {
     // this.activatedRoute.params.subscribe(params => console.log(params));
 // console.log(this.folder_list_state);
+
   }
 
 
