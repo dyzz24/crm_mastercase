@@ -8,14 +8,36 @@
     height: 100vh;
     flex-direction: column;
     p {
-        font-size: 26px;
+        color:black;
+        font-size: 24px;
     }
+}
 
-    button {
+
+.new_user {
+
+    padding: 60px 0 0 60px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    display: flex;
+    flex-direction: column;
+
+    input {
         margin-top: 12px;
-        background: rgb(146, 127, 127);
-        padding: 8px;
+        margin-left: 12px;
+        background: bisque;
+        width: 250px;
+        border-radius: 6px;
+        height: 34px;
+        padding: 0 12px;
         box-sizing: border-box;
         cursor: pointer;
     }
 }
+
+input.ng-touched.ng-invalid{
+    border: 1px solid red;
+   }

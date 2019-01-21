@@ -3,8 +3,11 @@
   Необходимо авторизоваться
 </p>
 
-<button
-routerLink="/setting/new_user"
->Тык</button>
+<form class="new_user" [formGroup]="login_form_group">
+    <input type="text" placeholder="Логин (email)" formControlName="login">
+    <input type="text" placeholder="Пароль" formControlName="password">
+    <input type="submit" value = 'Войти' (click)='authorization()'>
+  </form>
+  
 
 </div>
