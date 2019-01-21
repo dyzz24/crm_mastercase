@@ -6,11 +6,11 @@ import { AuthorizationService } from '../../authorization.service';
 
 
 @Component({
-  selector: 'app-new-user',
-  templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.html',
+  styleUrls: ['./login.scss']
 })
-export class NewUserComponent implements OnInit, DoCheck {
+export class LoginComponent implements OnInit, DoCheck {
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,

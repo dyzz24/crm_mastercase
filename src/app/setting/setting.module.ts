@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingRoutingModule } from './setting-routing.module';
 import { SettingComponent } from './setting.component';
-import { NewUserComponent } from './new-user/new-user.component';
+import { LoginComponent } from './login/login';
 
 @NgModule({
   imports: [
@@ -12,6 +12,6 @@ import { NewUserComponent } from './new-user/new-user.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [SettingComponent, NewUserComponent]
+  declarations: [SettingComponent, LoginComponent]
 })
 export class SettingModule { }
