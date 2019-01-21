@@ -570,9 +570,10 @@ select_some_letters(e, index) {
       }
           }
         );
-        const allInputs = document.querySelectorAll('.checkbox'); // ловлю все чекбоксы
-        for (let i = this.min_max_arr[0]; i < this.min_max_arr[1]; i ++) {
-            allInputs[i].checked = true; // ставлю в тру
+
+          const allInputs = document.querySelectorAll('.checkbox');
+          for (const key of <any>allInputs) {
+            key.checked = true; // ставлю в тру
           }
 
       } else { // если по чекнутому чекбоксу нажали
@@ -587,10 +588,10 @@ select_some_letters(e, index) {
         this.selected_one_input_elem = undefined;
         }
 
-        this.emailServ.hideAvatars.fill(false, this.min_max_arr[0], this.min_max_arr[1] + 1); // показываю аватарки
-        const allInputs = document.querySelectorAll('.checkbox'); // ловлю чекбоксы
-        for (let i = this.min_max_arr[0]; i < this.min_max_arr[1]; i ++) {
-            allInputs[i].checked = false; // их скидываю
+
+        const allInputs = document.querySelectorAll('.checkbox');
+          for (const key of <any>allInputs) {
+            key.checked = false; // ставлю в тру
           }
           this.emailServ.idLetters.splice(index); // начиная с индекса по которому кликнули, удаляю все id-шки из выбранных
       }

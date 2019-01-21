@@ -138,15 +138,17 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.httpPost(
               `${this.emailServ.ip}/mail/mail`,
               {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
-                this.to = [dataMails.from_address];
+
                 this.subject = `RE: ${dataMails.subject}`;
                 const newArray = [];
                 dataMails.details.recipients.to.filter(val => {
-                  if (val.address !== this.emailServ.idPostForHTTP && val.address !== dataMails.from_address) {
+                  if (val.address !== this.emailServ.idPostForHTTP) {
                     newArray.push(val.address);
                   }
-                  this.copy = newArray;
                 });
+
+                this.to = newArray;
+                this.to.push(dataMails.from_address);
 
                 if (dataMails.html === null) {
                   this.messages = dataMails.text;
