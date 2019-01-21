@@ -44,6 +44,8 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   open_hidden_menu = false;
   indexess_array = [];
   checkbox_flagged: boolean;
+  selected_one_input_elem;
+  min_max_arr;
 
 
   // @ViewChild('size_Check') // для отслеживания размера блока
@@ -548,9 +550,17 @@ select_some_letters(e, index) {
       if (e.target.checked) { // если изменили состояние инпута на тру
 
 
-          const min_max_arr = [0, index]; // массив с нулевого элема до индексного
-          this.emailServ.hideAvatars.fill(true, min_max_arr[0], min_max_arr[1] + 1); // заполняю тру для  представления
-  for (let i = min_max_arr[0]; i <= min_max_arr[1]; i++) {
+        if (!this.selected_one_input_elem) { // если с шифтом нажали без выбранного индекса по клику без шифта
+          this.min_max_arr = [0, index]; // получаю массив от индексного (чекнутого) элема до макс. длины
+          }
+          if (this.selected_one_input_elem) {
+            // tslint:disable-next-line:max-line-length
+            this.min_max_arr = [this.selected_one_input_elem, index]; // получаю массив от индексного (чекнутого) элема до макс. длины
+            this.min_max_arr.sort((a, b) => a - b);
+            this.selected_one_input_elem = undefined; // удаляю выбранный кликом элем
+            }
+          this.emailServ.hideAvatars.fill(true, this.min_max_arr[0], this.min_max_arr[1] + 1); // заполняю тру для  представления
+  for (let i = this.min_max_arr[0]; i <= this.min_max_arr[1]; i++) {
           this.emailServ.idLetters.push(this.emailServ.lettersList[i].mail_id); // пушу айдишники
         }
         this.emailServ.idLetters = this.emailServ.idLetters.filter( // фильтрую дубли
@@ -561,27 +571,37 @@ select_some_letters(e, index) {
           }
         );
         const allInputs = document.querySelectorAll('.checkbox'); // ловлю все чекбоксы
-        for (let i = min_max_arr[0]; i < min_max_arr[1]; i ++) {
+        for (let i = this.min_max_arr[0]; i < this.min_max_arr[1]; i ++) {
             allInputs[i].checked = true; // ставлю в тру
           }
 
       } else { // если по чекнутому чекбоксу нажали
         e.target.checked = false; // скидываю его
-        const min_max_arr = [index, this.emailServ.idLetters.length]; // получаю массив от индексного (чекнутого) элема до макс. длины
-        this.emailServ.hideAvatars.fill(false, min_max_arr[0], min_max_arr[1] + 1); // показываю аватарки
+        if (!this.selected_one_input_elem) {
+          this.min_max_arr = [index, this.emailServ.idLetters.length]; // получаю массив от индексного (чекнутого) элема до макс. длины
+          }
+        if (this.selected_one_input_elem) {
+        // tslint:disable-next-line:max-line-length
+        this.min_max_arr = [this.selected_one_input_elem, this.emailServ.idLetters.length]; // получаю массив от индексного (чекнутого) элема до макс. длины
+        this.min_max_arr.sort((a, b) => a - b);
+        this.selected_one_input_elem = undefined;
+        }
+
+        this.emailServ.hideAvatars.fill(false, this.min_max_arr[0], this.min_max_arr[1] + 1); // показываю аватарки
         const allInputs = document.querySelectorAll('.checkbox'); // ловлю чекбоксы
-        for (let i = min_max_arr[0]; i < min_max_arr[1]; i ++) {
+        for (let i = this.min_max_arr[0]; i < this.min_max_arr[1]; i ++) {
             allInputs[i].checked = false; // их скидываю
           }
           this.emailServ.idLetters.splice(index); // начиная с индекса по которому кликнули, удаляю все id-шки из выбранных
       }
     }
-console.log(this.emailServ.idLetters);
-
+          console.log(this.emailServ.idLetters);
+          this.emailServ.checkerTrash();
+          return;
   }
 
+this.selected_one_input_elem = index; // если просто клик, ловлю индекс
 
-  this.emailServ.checkerTrash();
 
   }
 
