@@ -89,4 +89,16 @@ selected_all() {
 
   console.log(this.id_selected_letter);
 }
+
+cancel_selected_all() {
+  this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
+  this.id_selected_letter = [];
+  const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
+
+  for (const key of allInputs) {
+      key.checked = false;
+  }
+
+  console.log(this.id_selected_letter);
+}
 }

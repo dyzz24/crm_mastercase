@@ -2,6 +2,7 @@
 <div class="template">
   <div class="template__list">
     <app-email-header
+    (select_all_inputs) = 'this.selected_all()'
     >
   </app-email-header>
     <div class="template_settings">
@@ -13,6 +14,7 @@
           </button>
           <button  type='button'
         title="Удалить"
+        (click) = 'cancel_selected_all()'
         >
             <span class='la la-trash-o'></span>
           </button>
