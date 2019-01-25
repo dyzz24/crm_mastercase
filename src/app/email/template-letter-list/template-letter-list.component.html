@@ -1,9 +1,13 @@
 
 <div class="template">
   <div class="template__list">
+    <app-email-header
+    >
+  </app-email-header>
     <div class="template_settings">
         <button  type='button'
         title="Удалить"
+        (click) = 'selected_all()'
         >
             <span class='la la-trash-o'></span>
           </button>
@@ -34,7 +38,7 @@
     
     [ngClass]="{checkbox_selected: this.selected_checkbox_for_html[i]}"
     >
-    <input type="checkbox"  id={{letter.draft_id}} class='hidden_checkbox' (change)='select_letter($event, i)'>
+    <input type="checkbox"  id={{letter.draft_id}} class='avatar_checkboxes hidden_checkbox' (change)='select_letter($event, i, letter.draft_id)'>
       <label for={{letter.draft_id}} class="checkbox_block"></label>
       <div class="setting_and_txt_group"
       routerLink="./create"
@@ -44,7 +48,7 @@
       <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.draft_id}} class='settings_checkbox hidden_checkbox'
       (change) = 'cancell_checked($event, i)'
       >
-      <div class="hidden_settings"></div>
+      <div class="hidden_settings">Я меню</div>
       <label class="setting" for="sett_{{letter.draft_id}}">
           <span class='la la-ellipsis-h'></span>
       </label>

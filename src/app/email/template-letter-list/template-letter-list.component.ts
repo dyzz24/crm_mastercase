@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from '../../authorization.service';
@@ -18,6 +18,8 @@ export class TemplateLetterListComponent implements OnInit {
   draft_list; // список шаблонов для колбасины
 
   selected_checkbox_for_html = [];
+  collections_inputs_element = [];
+  id_selected_letter = [];
 
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
@@ -36,23 +38,34 @@ export class TemplateLetterListComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         {address: this.email_id}).subscribe((data) => {
           this.draft_list = data;
-          // console.log(data);
+          console.log(data);
         });
     });
+
   }
+
+
 
   public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
-  select_letter(e, index) {
+  select_letter(e, index, id) {
     if (e.target.checked) {
       this.selected_checkbox_for_html[index] = true;
+      this.id_selected_letter = [...this.id_selected_letter, +id];
+      this.id_selected_letter = this.id_selected_letter.filter(
+        (val, ind, self) => {
+          return self.indexOf(val) === ind;
+        }
+      );
     }
     if (!e.target.checked) {
       this.selected_checkbox_for_html[index] = false;
+      this.id_selected_letter = this.id_selected_letter.filter(
+        item => item !== +id
+      );
     }
-    console.log(this.selected_checkbox_for_html);
   }
 
   cancell_checked(e, index) {
@@ -63,5 +76,17 @@ export class TemplateLetterListComponent implements OnInit {
             }
             allInputs[i].checked = false;
           }
+}
+
+selected_all() {
+  this.selected_checkbox_for_html = this.draft_list.map(val => val = true);
+  this.id_selected_letter = this.draft_list.map(val => val.draft_id);
+  const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
+
+  for (const key of allInputs) {
+      key.checked = true;
+  }
+
+  console.log(this.id_selected_letter);
 }
 }
