@@ -347,10 +347,12 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
             );
             this.emailServ.stopFlag = false;
             this.emailServ.dataLetters = data.length;
-            this.input_checked_cancell();
-            this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => {
-              return val = false;
-            }); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+data.map(val => {
+  val = false;
+  this.emailServ.hideAvatars.push(val);
+});
 
             // this.emailServ.stateServ();
           });
@@ -572,8 +574,8 @@ select_some_letters(e, index) {
         );
 
           const allInputs = document.querySelectorAll('.checkbox');
-          for (const key of <any>allInputs) {
-            key.checked = true; // ставлю в тру
+          for (let i = 0; i <= index; i++) {
+            allInputs[i].checked = true;
           }
 
       } else { // если по чекнутому чекбоксу нажали
@@ -588,7 +590,7 @@ select_some_letters(e, index) {
         this.selected_one_input_elem = undefined;
         }
 
-
+        this.emailServ.hideAvatars.fill(false, this.min_max_arr[0], this.min_max_arr[1] + 1);
         const allInputs = document.querySelectorAll('.checkbox');
           for (const key of <any>allInputs) {
             key.checked = false; // ставлю в тру
@@ -596,13 +598,12 @@ select_some_letters(e, index) {
           this.emailServ.idLetters.splice(index); // начиная с индекса по которому кликнули, удаляю все id-шки из выбранных
       }
     }
-          console.log(this.emailServ.idLetters);
           this.emailServ.checkerTrash();
+          console.log(this.emailServ.idLetters);
           return;
   }
 
 this.selected_one_input_elem = index; // если просто клик, ловлю индекс
-
 
   }
 
