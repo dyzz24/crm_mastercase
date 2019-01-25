@@ -6,6 +6,7 @@ import { EmailViewComponent } from '../email/email-view/email-view.component';
 import { NewMessageComponent } from '../email/new-message/new-message.component';
 import { EmailGuardGuard } from '../email/email-guard.guard';
 import { TemplateLetterListComponent } from './template-letter-list/template-letter-list.component';
+import { AddEmailComponent } from './add-email/add-email.component';
 
 const routes: Routes = [
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
@@ -22,6 +23,7 @@ const routes: Routes = [
             {path: ':id/:id/create', component: NewMessageComponent}]},
   ]
 },
+{path: ':id/add_email', component: AddEmailComponent}
 ];
 
 @NgModule({

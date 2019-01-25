@@ -573,7 +573,8 @@ select_some_letters(e, index) {
           }
         );
 
-          const allInputs = document.querySelectorAll('.checkbox');
+          // const allInputs = document.querySelectorAll('.checkbox') as HTMLDivElement;
+          const allInputs: HTMLDivElement = <any>document.querySelectorAll('.checkbox');
           for (let i = 0; i <= index; i++) {
             allInputs[i].checked = true;
           }

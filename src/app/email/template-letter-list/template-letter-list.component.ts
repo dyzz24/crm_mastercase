@@ -17,6 +17,8 @@ export class TemplateLetterListComponent implements OnInit {
   email_id; // имя ящика для запроса
   draft_list; // список шаблонов для колбасины
 
+  selected_checkbox_for_html = [];
+
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
@@ -43,4 +45,23 @@ export class TemplateLetterListComponent implements OnInit {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
+  select_letter(e, index) {
+    if (e.target.checked) {
+      this.selected_checkbox_for_html[index] = true;
+    }
+    if (!e.target.checked) {
+      this.selected_checkbox_for_html[index] = false;
+    }
+    console.log(this.selected_checkbox_for_html);
+  }
+
+  cancell_checked(e, index) {
+    const allInputs = <any>document.querySelectorAll('.settings_checkbox');
+          for (let i = 0; i <= allInputs.length - 1; i++) {
+            if (index === i) {
+              continue;
+            }
+            allInputs[i].checked = false;
+          }
+}
 }

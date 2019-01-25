@@ -1,10 +1,56 @@
 
 <div class="template">
   <div class="template__list">
-    <div class="list__prev" *ngFor="let letter of draft_list"
-    routerLink="./create"
-        [queryParams] = "{'id':letter.draft_id, 'status':'template'}"
-    >{{letter.title}}</div>
+    <div class="template_settings">
+        <button  type='button'
+        title="Удалить"
+        >
+            <span class='la la-trash-o'></span>
+          </button>
+          <button  type='button'
+        title="Удалить"
+        >
+            <span class='la la-trash-o'></span>
+          </button>
+          <button  type='button'
+        title="Удалить"
+        >
+            <span class='la la-trash-o'></span>
+          </button>
+          <button  type='button'
+        title="Удалить"
+        >
+            <span class='la la-trash-o'></span>
+          </button>
+          <button  type='button'
+        title="Удалить"
+        >
+            <span class='la la-trash-o'></span>
+          </button>
+    </div>
+    <div class="list__prev" *ngFor="let letter of draft_list, let i = index"
+    
+    routerLinkActive = 'active_template'
+    
+    [ngClass]="{checkbox_selected: this.selected_checkbox_for_html[i]}"
+    >
+    <input type="checkbox"  id={{letter.draft_id}} class='hidden_checkbox' (change)='select_letter($event, i)'>
+      <label for={{letter.draft_id}} class="checkbox_block"></label>
+      <div class="setting_and_txt_group"
+      routerLink="./create"
+      [queryParams] = "{'id':letter.draft_id, 'status':'template'}"
+      >
+      <div class="text_info">{{letter.title}}</div>
+      <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.draft_id}} class='settings_checkbox hidden_checkbox'
+      (change) = 'cancell_checked($event, i)'
+      >
+      <div class="hidden_settings"></div>
+      <label class="setting" for="sett_{{letter.draft_id}}">
+          <span class='la la-ellipsis-h'></span>
+      </label>
+      
+      </div>
+  </div>
   </div>
   <app-splitter left min='100' max='500' positionLeft='-0.5'></app-splitter>
   <div class="template__container">

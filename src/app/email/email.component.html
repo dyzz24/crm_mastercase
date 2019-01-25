@@ -1,3 +1,4 @@
+
 <section class="mail__container">
   <div class="mails">
     <div class="list__container">
@@ -372,7 +373,7 @@
       </div>
       <div
           class="emails__list"
-          (click)="createInboxOpen()"
+          routerLink="./add_email"
         >
           <div class="accaunt_info">
             <div class="avatar create_new_account">
@@ -387,3 +388,4 @@
   <div class="mails__view"><router-outlet></router-outlet></div>
   <app-preserver></app-preserver>
 </section>
+

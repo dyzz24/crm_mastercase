@@ -1,0 +1,62 @@
+
+@import '../mixins';
+    
+
+.add_email {
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #636363, $alpha: .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+    padding-left: 60px;
+    box-sizing: border-box;
+}
+
+.form_body {
+    width: 600px;
+    height: 720px;
+    background: #F7FBFE;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+}
+
+.selected {
+    input {
+        display: none;
+    }
+
+    display: flex;
+
+    label {
+        display: flex;
+        background: #636363;
+        padding: 6px 10px;
+        box-sizing: border-box;
+        margin-right: 10px;
+    }
+    input:checked + label {
+        color: red;
+    }
+}
+
+.setting_one_page,
+.setting_two_page {
+    width: 100%;
+    background: #636363;
+    flex: 1;
+    display: none;
+
+    &.active {
+        display: flex;
+    }
+}
+
+.setting_two_page {
+    background: red;
+}
+
+

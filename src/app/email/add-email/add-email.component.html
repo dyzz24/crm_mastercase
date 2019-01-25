@@ -1,0 +1,28 @@
+<div class="add_email">
+<div class="form_body">
+   <div class="header">
+     <p>Добавить почтовый ящик</p>
+     <button 
+    title="Закрыть"
+    >
+        <span class='la la-close'></span>
+      </button>
+   </div>
+  <div class="selected">
+      <input name='tab_selected' type='radio' value="one_tab" id='1' (change)='test($event)' checked class='inp_1'>
+      <label for="1">Основные</label>
+      <input name='tab_selected' type='radio' value="two_tab" id='2' (change)='test($event)' class='inp_2'>
+      <label for="2">Правила</label>  
+  </div>
+
+  <div class="setting_one_page" [ngClass]="{active: this.tab_open === 1}"></div>
+  <div class="setting_two_page" [ngClass]="{active: this.tab_open === 2}"></div>
+  
+  
+
+</div>
+
+</div>
+<!-- <p>
+  add-email works!
+</p> -->

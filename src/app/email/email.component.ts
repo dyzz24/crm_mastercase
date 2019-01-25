@@ -250,6 +250,10 @@ allowDrop(e) {
   e.preventDefault();
 }
 
+aux_do() {
+  this._rout.navigate([{outlets: {aux: 'add_email'}}]);
+}
+
 
 }
 
