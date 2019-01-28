@@ -5,9 +5,14 @@
     class='mini_btn'
     (click) = 'this.select_all_inputs_do()'
     >
-        <span class='la la-circle-o'>
-          
-        </span>
+        <span class='la la-circle-o'
+        *ngIf="this.toggle_checked_inputs_flag"
+        ></span>
+
+        <span class='la la-check-circle'
+        *ngIf="!this.toggle_checked_inputs_flag"
+        ></span>
+
       </button>
       <button  type='button'
     title="Удалить"
