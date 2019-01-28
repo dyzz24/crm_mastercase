@@ -73,9 +73,10 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
       this.hidden_top_menu = ! this.hidden_top_menu;
   }
 
-  filters_input(data) {
+  filters_input(data) { // ф-я отправляет data с определенными флагами для родителя
     this.hidden_top_menu = false; // скрываю меню
-      this.filters_selected.next(data);
+    this.toggle_checked_inputs_flag = true; // скидываю кнопку массового выделения (если вдруг стояла)
+      this.filters_selected.next(data); // отправляю событие родителю
   }
 
 }

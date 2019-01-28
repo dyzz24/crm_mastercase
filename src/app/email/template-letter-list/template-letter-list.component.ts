@@ -210,19 +210,36 @@ cancell_all_checked() {
     }
 
     filters_select_letter(e) {
-        if (e === 'favor') {
-          this.id_selected_letter = [];
-          this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
-          const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
-          this.draft_list.filter((val, ind) => {
 
-            if (val.flagged === true) {
-              this.selected_checkbox_for_html[ind] = true;
-              this.id_selected_letter.push(val.draft_id);
-              allInputs[ind].checked = true;
-            }
-          });
+        if (e === 'favor') {
+          this.canc_select(); // очищаю предыдущее выделение (если есть) все инпуты, id писем и html привязку чищу
+          this.filters_select(
+            this.id_selected_letter,
+            this.selected_checkbox_for_html,
+            '.avatar_checkboxes',
+            this.draft_list,
+            'flagged');
         }
+
     }
+
+    // tslint:disable-next-line:max-line-length
+    filters_select(id_for_send, select_for_html, inputs_checkbox, base_array, condition) { // БУДЕТ ИСПОЛЬЗОВАТЬСЯ В ОСНОВНОЙ КОЛБАСЕ ПИСЕМ
+// ф-я принимает 5 арг: массив id писем, массив булевых для представления, базовый массив с письмами и селектор рабочего инпута
+// и состояние поиска по главному массиву
+// condition - флаг поиска по массиву писем (либо)
+
+
+        const allInputs = <any>document.querySelectorAll(inputs_checkbox); // беру все инпуты
+        base_array.filter((val, ind) => { // пробегаюсь по главному массиву писем
+          if (val[condition] === true) { // если элемент массива совпадает с искомым условием
+            select_for_html[ind] = true; // в данных индексах представления ставлю тру для отображения в html
+            id_for_send.push(val.draft_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
+            allInputs[ind].checked = true; // ставлю инпуты с нужными индексами в тру (для отображение представления)
+          }
+        });
+
+
+  }
 
 }
