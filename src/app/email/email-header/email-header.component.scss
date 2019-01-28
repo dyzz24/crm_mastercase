@@ -11,7 +11,9 @@
     padding: 0 10px 0 20px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    // overflow: hidden;
+    position: relative;
+        z-index: 1;
 
     .input_group {
         flex: 1;
@@ -43,6 +45,7 @@
         width: 20px;
         height: 20px;
         margin: 0;
+        
 
         span {
             font-size: 18px;
@@ -63,5 +66,36 @@
     }
     100% {
         transform: rotate(360deg)
+    }
+}
+
+.top_hidden_menu {
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    width: 135px;
+    height: auto;
+    background: white;
+    top: 40px;
+    left: 55px;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+
+    &.active {
+        display: flex;
+        opacity: 0;
+        animation: anim_top_menu .4s forwards;
+    }
+}
+
+@keyframes anim_top_menu {
+    0% {
+        transform: translateY(-999px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
     }
 }

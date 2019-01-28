@@ -46,6 +46,7 @@ export class TemplateLetterListComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         {address: this.email_id}).subscribe((data) => {
           this.draft_list = data;
+          console.log(this.draft_list);
         });
     });
 
@@ -88,14 +89,16 @@ export class TemplateLetterListComponent implements OnInit {
 
 selected_all() {
   if (this.toggle_flag) {
-  this.selected_checkbox_for_html = this.draft_list.map(val => val = true);
-  this.id_selected_letter = this.draft_list.map(val => val.draft_id);
-  const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
-
-  for (const key of allInputs) {
-      key.checked = true;
-  }
+  this._select();
 } else {
+  this.canc_select();
+}
+
+  this.toggle_flag = ! this.toggle_flag;
+
+}
+
+canc_select() { // отменяет выделение всех писем
   this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
   this.id_selected_letter = [];
   const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
@@ -104,13 +107,19 @@ selected_all() {
   }
 }
 
-  this.toggle_flag = ! this.toggle_flag;
+_select() { // выделяет все письма
+  this.selected_checkbox_for_html = this.draft_list.map(val => val = true);
+  this.id_selected_letter = this.draft_list.map(val => val.draft_id);
+  const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
 
+  for (const key of allInputs) {
+      key.checked = true;
+  }
 }
 
 
 search_in_templates(data) {
-  this.input_checked_cancell();
+  this.canc_select();
   if (this.protectToCopy === false) {
     this.draft_copy_search = this.draft_list; // сохраняю исходные письма и сношу флаг
     this.protectToCopy = true;
@@ -149,15 +158,7 @@ search_in_templates(data) {
     }
 }
 
-input_checked_cancell() {
-  this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
-  this.id_selected_letter = [];
-  const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
 
-  for (const key of allInputs) {
-      key.checked = false;
-  }
-}
 
 delete_one_tmp(id, e, index) {
   e.target.closest('.list__prev').classList.add('dellLetter'); // отловили парента - дали красивую анимашку
@@ -197,5 +198,31 @@ cancell_all_checked() {
     key.checked = false;
   }
 }
+
+
+    select_cancell_inputs(e) {
+
+      if  (e === true) {
+        this._select();
+      } else {
+        this.canc_select();
+      }
+    }
+
+    filters_select_letter(e) {
+        if (e === 'favor') {
+          this.id_selected_letter = [];
+          this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
+          const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
+          this.draft_list.filter((val, ind) => {
+
+            if (val.flagged === true) {
+              this.selected_checkbox_for_html[ind] = true;
+              this.id_selected_letter.push(val.draft_id);
+              allInputs[ind].checked = true;
+            }
+          });
+        }
+    }
 
 }

@@ -15,11 +15,26 @@
 
       </button>
       <button  type='button'
-    title="Удалить"
+    title="Что-то"
     class='mini_btn'
+    (click) = 'toggle_header_menu()'
     >
-        <span class='la la-caret-down'></span>
+        <span class='la la-caret-down'
+        *ngIf="!this.hidden_top_menu"
+        ></span>
+        <span class='la la-caret-up'
+        *ngIf="this.hidden_top_menu"
+        ></span>
       </button>
+
+      <div class="top_hidden_menu"
+      [ngClass]="{active: this.hidden_top_menu}"
+      >
+        <button class='letterMenuButt' (click) = 'this.select_canc_all_inputs_do(true)' >Выделить все письма</button>
+        <button class='letterMenuButt' (click) = "this.filters_input('favor')">Избранные</button>
+        <button class='letterMenuButt' (click) = 'this.select_canc_all_inputs_do(false)'>Снять выделение</button>
+    </div>
+      
 
       <div class="input_group">
       <input type="text" name="" id="" placeholder="Поиск"

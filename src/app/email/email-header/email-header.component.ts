@@ -12,8 +12,12 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   searchLettersInput: FormControl = new FormControl('');
   private search_work = false;
   hide_left_btn_status = false;
+  hidden_top_menu = false;
 
-  @Output() select_all_inputs = new EventEmitter(); // отправка события родителю для скрытия компонента папок
+  @Output() select_all_inputs = new EventEmitter(); // отправка события родителю
+  @Output() select_cancell_all_inputs = new EventEmitter(); // отправка события родителю
+  @Output() filters_selected = new EventEmitter(); // отправка события родителю
+
 
   @Output() search_function = new EventEmitter(); // отправка события родителю для скрытия компонента папок
   @Input() success_search;
@@ -46,12 +50,32 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
     this.toggle_checked_inputs_flag = ! this.toggle_checked_inputs_flag;
   }
 
+  select_canc_all_inputs_do(boolean) { // для выделение в меню стрелочки
+      if (boolean) {
+        this.select_cancell_all_inputs.next(true);
+        this.toggle_checked_inputs_flag = false;
+      } else {
+        this.select_cancell_all_inputs.next(false);
+        this.toggle_checked_inputs_flag = true;
+      }
+      this.hidden_top_menu = false; // скрываю меню
+  }
+
   hide_left_btn(bool) {
       if (bool) {
         this.hide_left_btn_status = true;
       } else {
         this.hide_left_btn_status = false;
       }
+  }
+
+  toggle_header_menu() {
+      this.hidden_top_menu = ! this.hidden_top_menu;
+  }
+
+  filters_input(data) {
+    this.hidden_top_menu = false; // скрываю меню
+      this.filters_selected.next(data);
   }
 
 }
