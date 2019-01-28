@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 })
 export class EmailHeaderComponent implements OnInit {
 
+  public toggle_checked_inputs_flag = true;
 
   @Output() select_all_inputs = new EventEmitter(); // отправка события родителю для скрытия компонента папок
 
@@ -18,6 +19,7 @@ export class EmailHeaderComponent implements OnInit {
 
   select_all_inputs_do() {
     this.select_all_inputs.next(); // отправляю событие на скрытие компонента
+    this.toggle_checked_inputs_flag = ! this.toggle_checked_inputs_flag;
   }
 
 }

@@ -21,6 +21,8 @@ export class TemplateLetterListComponent implements OnInit {
   collections_inputs_element = [];
   id_selected_letter = [];
 
+  toggle_flag = true;
+
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
@@ -79,6 +81,7 @@ export class TemplateLetterListComponent implements OnInit {
 }
 
 selected_all() {
+  if (this.toggle_flag) {
   this.selected_checkbox_for_html = this.draft_list.map(val => val = true);
   this.id_selected_letter = this.draft_list.map(val => val.draft_id);
   const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
@@ -86,19 +89,18 @@ selected_all() {
   for (const key of allInputs) {
       key.checked = true;
   }
-
-  console.log(this.id_selected_letter);
-}
-
-cancel_selected_all() {
+} else {
   this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
   this.id_selected_letter = [];
   const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
-
   for (const key of allInputs) {
       key.checked = false;
   }
-
-  console.log(this.id_selected_letter);
 }
+
+  this.toggle_flag = ! this.toggle_flag;
+
+}
+
+
 }
