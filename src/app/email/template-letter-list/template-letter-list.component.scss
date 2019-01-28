@@ -21,6 +21,7 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
     &__container {
         flex: 1;
@@ -47,9 +48,10 @@
     align-items: center;
     transition: .4s;
     position: relative;
+    flex-shrink: 0;
 
     &:hover {
-        background: #F8F3BA;
+        background: #E0E0E0;
     }
 
     &.checkbox_selected {
@@ -57,7 +59,7 @@
     }
 
     &.active_template {
-        background: #F9E977;
+        background: #CFCFCF;
     }
 }
 
@@ -148,10 +150,25 @@
     transform: translateY(-50%);
     right: 45px;
     width: 150px;
-    height: 30px;
-    background: #2D5A81;
+    background: white;
     display: flex;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
+
+
+        &__btn {
+            line-height: 18px;
+            width: 100%;
+            color: #262626;
+            padding: 5px;
+            cursor: pointer;
+            background: white;
+            transition: .4s;
+            margin: 0;
+        }
+
 }
 .settings_checkbox + .hidden_settings {
         display: none;
@@ -160,6 +177,34 @@
 .settings_checkbox:checked + .hidden_settings {
     display: flex;
 }
+
+.settings_checkbox:checked + .hidden_settings + .setting {
+    background: #6B7FA0;
+}
+
+
+.favorite_template {
+    background: #F8F3BA;
+    transition: .4s;
+    &:hover {
+        background: #F9E977;
+    }
+    &.active_template {
+        background: #F9E977;
+    }
+}
+
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: auto;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+}
+
 
 
 

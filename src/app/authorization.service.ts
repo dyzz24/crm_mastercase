@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
-import { Router} from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 import { Observable } from 'rxjs';
 import {global_params} from './global';
 import { Subject } from 'rxjs';
@@ -18,9 +18,10 @@ export class AuthorizationService {
   public error_response = new Subject<any>();
   public success_response = new Subject<any>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute, private rout: Router) {
     if (localStorage.getItem('authorizationToken') === null) { // Если токена нет
-      this.authorization('seo@insat.ru', '12345678'); // авторизуюсь
+      // this.authorization('seo@insat.ru', '12345678'); // авторизуюсь
+      this.rout.navigate(['auth'], { relativeTo: this.activatedRoute });
       return;
     } else {
       const state = JSON.parse(localStorage.getItem('authorizationToken')); // если есть получаю

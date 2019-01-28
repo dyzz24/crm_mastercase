@@ -22,10 +22,16 @@
       </button>
 
       <div class="input_group">
-      <input type="text" name="" id="" placeholder="Поиск">
-      <span class='la la-search'></span>
+      <input type="text" name="" id="" placeholder="Поиск"
+      [formControl]='searchLettersInput'
+      (focus) = 'hide_left_btn(true)'
+      (blur) = 'hide_left_btn(false)'
+      >
+      <span class='la la-search' *ngIf="this.search_work === false"></span>
+      <span class='la la-check' *ngIf="this.success_search === true"></span>
+      <span class='la la-frown-o' *ngIf="this.not_success_search === true"></span>
       </div>
-      <div class="right_btn_group">
+      <div class="right_btn_group" *ngIf="!hide_left_btn_status">
           <button  type='button'
           title="Удалить"
           >

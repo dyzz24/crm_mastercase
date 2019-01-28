@@ -170,8 +170,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     this.stopSearch = true;
     this.startSearch = false;
     this.successSearch = false;
-    const regExp = new RegExp (text, 'g');
-    const replacer = '<b>' + text + '</b>';
     this.searchIdForHTTP = [];
 
     const stop = stopFlag;
