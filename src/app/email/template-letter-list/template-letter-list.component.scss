@@ -72,6 +72,7 @@
     background-size: 18px 18px;
     transition: .4s;
     flex-shrink: 0;
+    position: relative;
 
     &:hover {
         background: url('../../../assets/checked.svg') no-repeat center , #2D5A81;
@@ -80,10 +81,11 @@
 
 }
 
-.hidden_checkbox:checked + .checkbox_block {
+.avatar_checkboxes:checked + .checkbox_block {
     background: url('../../../assets/checked.svg') no-repeat center , #2D5A81;
     background-size: 18px 18px;
 }
+
 
 
 .hidden_checkbox {

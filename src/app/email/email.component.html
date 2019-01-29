@@ -159,9 +159,11 @@
           >
             <div
               class="link_area"
-              (click)="goUrl(0)"
+
               routerLink="./{{this.emailItems[i].address}}/1"
-              
+              (drop)="drop_letter($event)"
+              (dragover)="allowDrop($event)"
+              id={{1}}
             >
               <p>Входящие</p>
               <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][1] !== 0">{{this.emailServ.counts[email.address][1]}}</p>
@@ -180,13 +182,11 @@
               <div class="link_area one_level_fold"
               (drop)="drop_letter($event)"
               (dragover)="allowDrop($event)"
-              (dragover)='folder_selection($event)'
-              (dragleave)='folder_selection_exit($event)'
               (click)="goUrl(1)"
               routerLink="./{{this.emailItems[i].address}}/{{folder.id}}"
               id={{folder.id}}
               >
-                <span class="la la-lg la-square-o"></span>
+                <span class="folders_span"></span>
                 <p>{{folder.title}}</p>
                 <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder.id] !== 0">{{this.emailServ.counts[email.address][folder.id]}}</p>
               </div>
@@ -211,12 +211,10 @@
 
               (drop)="drop_letter($event)"
               (dragover)="allowDrop($event)"
-              (dragenter)='folder_selection($event)'
-              (dragleave)='folder_selection_exit($event)'
               (click)="goUrl(1)"
               id={{folder_1level.id}}
                   >
-                    <span class="la la-lg la-square-o"></span>
+                    <span class="folders_span"></span>
                     <p>{{folder_1level.title}}</p>
                     <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_1level.id] !== 0 ">{{this.emailServ.counts[email.address][folder_1level.id]}}</p>
                   </div>
@@ -240,12 +238,11 @@
 
               (drop)="drop_letter($event)"
               (dragover)="allowDrop($event)"
-              (dragenter)='folder_selection($event)'
-              (dragleave)='folder_selection_exit($event)'
+
               (click)="goUrl(1)"
               id={{folder_2level.id}}
                       >
-                        <span class="la la-lg la-square-o"></span>
+                        <span class="folders_span"></span>
                         
                         <p>{{folder_2level.title}}</p>
                         <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_2level.id] !== 0">{{this.emailServ.counts[email.address][folder_2level.id]}}</p>
@@ -268,12 +265,11 @@
 
               (drop)="drop_letter($event)"
               (dragover)="allowDrop($event)"
-              (dragenter)='folder_selection($event)'
-              (dragleave)='folder_selection_exit($event)'
+
               (click)="goUrl(1)"
               id={{folder_3level.id}}
                           >
-                            <span class="la la-lg la-square-o"></span>
+                            <span class="folders_span"></span>
                             <p>{{folder_3level.title}}</p>
                             <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_3level.id] !== 0">{{this.emailServ.counts[email.address][folder_3level.id]}}</p>
                           </div>
@@ -295,12 +291,11 @@
 
               (drop)="drop_letter($event)"
               (dragover)="allowDrop($event)"
-              (dragenter)='folder_selection($event)'
-              (dragleave)='folder_selection_exit($event)'
+
               (click)="goUrl(1)"
               id={{folder_4level.id}}
                               >
-                                <span class="la la-lg la-square-o"></span>
+                                <span class="folders_span"></span>
                                 <p>{{folder_4level.title}}</p>
                                 <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_4level.id] !== 0">{{this.emailServ.counts[email.address][folder_4level.id]}}</p>
                               </div>

@@ -221,30 +221,18 @@ drop_letter(e) {
         this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id] = 1; // ставлю 1
         this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
         +this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1; // меняю счетчик папки из которой перенес
-        this.folder_selection_exit(e);
+
       } else {
       // tslint:disable-next-line:max-line-length
       this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id] =
       +this.emailServ.counts[this.emailServ.idPostForHTTP][data_folder_id] + 1 ; // меняю счетчик папки в которую перенес
       this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =
       +this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] - 1; // меняю счетчик папки из которой перенес
-      this.folder_selection_exit(e);
+
     }
   }
-
 }
 
-folder_selection(e) {
-
-  const target = e.target.closest('.type_message');
-  target.classList.add('folder_selection');
-}
-
-folder_selection_exit(e) {
-
-  const target = e.target.closest('.type_message');
-  target.classList.remove('folder_selection');
-}
 
 allowDrop(e) {
   e.preventDefault();

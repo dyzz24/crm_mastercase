@@ -5,6 +5,7 @@ import { AuthorizationService } from '../../authorization.service';
 import { Observable, Subscription } from 'rxjs';
 import {global_params} from '../../global';
 import { EmailServiceService } from '../email-service.service';
+import { ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-template-letter-list',
@@ -32,6 +33,7 @@ export class TemplateLetterListComponent implements OnInit {
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
+    @Inject(ToastrService) private toastrServ: ToastrService,
     private rout: Router,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute
@@ -227,8 +229,6 @@ cancell_all_checked() {
 // ф-я принимает 5 арг: массив id писем, массив булевых для представления, базовый массив с письмами и селектор рабочего инпута
 // и состояние поиска по главному массиву
 // condition - флаг поиска по массиву писем (либо)
-
-
         const allInputs = <any>document.querySelectorAll(inputs_checkbox); // беру все инпуты
         base_array.filter((val, ind) => { // пробегаюсь по главному массиву писем
           if (val[condition] === true) { // если элемент массива совпадает с искомым условием
@@ -239,6 +239,68 @@ cancell_all_checked() {
         });
 
 
+  }
+
+  important_all_letter() {
+    if (this.id_selected_letter.length === 0) { // если выбранных писем нет - выйти
+      this.showError('Выберите хотя бы один шаблон'); // выведет сообщение что ты не прав
+      return;
+    }
+    const all_data_for_http = []; // массив с id писем для бэка
+    for (const key of this.id_selected_letter) {
+      all_data_for_http.push( // пушу в него объекты для бэка
+        {draftId: key,
+        flagged: true,
+        address: this.emailServ.idPostForHTTP}
+      );
+    }
+
+    this.httpPost(
+      `${this.emailServ.ip}/mail/draft_update`,
+      all_data_for_http).subscribe((data) => {}); // всё это отправляю
+
+    this.draft_list.filter(val => { // прохожусь по массиву всех конвертиков
+          for (const key of this.id_selected_letter) { // прохожусь по массиву выбранных id писем
+              if  (key === val.draft_id)  { // если нашлись
+                  val.flagged = true; // меняю флаг
+                  return val;
+              }
+          }
+    });
+    this.canc_select(); // скидываю все чекбоксы
+  }
+
+  delete_all_letter() {
+    if (this.id_selected_letter.length === 0) {
+      this.showError('Выберите хотя бы один шаблон');
+      return;
+    }
+    const all_data_for_http = [];
+    for (const key of this.id_selected_letter) {
+      all_data_for_http.push(
+        {draftId: key,
+        boxId: +3,
+        address: this.emailServ.idPostForHTTP}
+      );
+    }
+
+    // this.httpPost(
+    //   `${this.emailServ.ip}/mail/draft_update`,
+    //   all_data_for_http).subscribe((data) => {});
+
+    this.draft_list.filter(val => { // прохожусь по массиву всех конвертиков
+          for (const key of this.id_selected_letter) { // прохожусь по массиву выбранных id писем
+              if  (key !== val.draft_id)  { // если нашлись
+                // console.log(val)
+                  return val;
+              }
+          }
+    });
+    this.canc_select(); // скидываю все чекбоксы
+  }
+
+  showError(param) {
+    this.toastrServ.error(param);
   }
 
 }

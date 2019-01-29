@@ -252,6 +252,8 @@
     justify-content: flex-end;
     padding: 0 20px;
 }
+
+
 .create,
 .cancel {
     cursor: pointer;
@@ -276,6 +278,13 @@
     border: 1px solid #0476C3;
     color: #0476C3;
     margin-left: 10px;
+}
+
+button.cancel,
+button.settings {
+    &:hover {
+        background: none;
+    }
 }
 
 .where_invest_txt {

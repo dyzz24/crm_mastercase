@@ -12,31 +12,18 @@
   </app-email-header>
     <div class="template_settings">
         <button  type='button'
-        title="Удалить"
-        (click) = 'selected_all()'
+        title="Сделать избранными"
+        (click) = 'this.important_all_letter()'
         >
-            <span class='la la-trash-o'></span>
+            <span class='la la-exclamation'></span>
           </button>
           <button  type='button'
         title="Удалить"
+        (click) = 'this.delete_all_letter()'
         >
             <span class='la la-trash-o'></span>
           </button>
-          <button  type='button'
-        title="Удалить"
-        >
-            <span class='la la-trash-o'></span>
-          </button>
-          <button  type='button'
-        title="Удалить"
-        >
-            <span class='la la-trash-o'></span>
-          </button>
-          <button  type='button'
-        title="Удалить"
-        >
-            <span class='la la-trash-o'></span>
-          </button>
+          
     </div>
     <div class="wrapper" *ngIf="this.not_succes_search_flag === false; else search_not_found">
     <div class="list__prev" *ngFor="let letter of draft_list, let i = index"
