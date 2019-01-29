@@ -89,16 +89,16 @@ export class TemplateLetterListComponent implements OnInit {
 }
 
 
-selected_all() {
-  if (this.toggle_flag) {
-  this._select();
-} else {
-  this.canc_select();
-}
+// selected_all() {
+//   if (this.toggle_flag) {
+//   this._select();
+// } else {
+//   this.canc_select();
+// }
 
-  this.toggle_flag = ! this.toggle_flag;
+//   this.toggle_flag = ! this.toggle_flag;
 
-}
+// }
 
 canc_select() { // отменяет выделение всех писем
   this.selected_checkbox_for_html = this.draft_list.map(val => val = false);
@@ -284,18 +284,25 @@ cancell_all_checked() {
       );
     }
 
-    // this.httpPost(
-    //   `${this.emailServ.ip}/mail/draft_update`,
-    //   all_data_for_http).subscribe((data) => {});
+    this.httpPost(
+      `${this.emailServ.ip}/mail/draft_update`,
+      all_data_for_http).subscribe((data) => {});
 
-    this.draft_list.filter(val => { // прохожусь по массиву всех конвертиков
+
+    this.draft_list.filter((val, ind, arr) => { // прохожусь по массиву всех конвертиков
           for (const key of this.id_selected_letter) { // прохожусь по массиву выбранных id писем
-              if  (key !== val.draft_id)  { // если нашлись
-                // console.log(val)
-                  return val;
+              if  (val.draft_id === key)  { // если нашлись
+                arr[ind] = 'null';
+                return arr;
               }
           }
     });
+
+    this.draft_list = this.draft_list.filter(
+      a => a !== 'null' // возвращаю массив без null (удаленных элементов)
+    );
+
+
     this.canc_select(); // скидываю все чекбоксы
   }
 

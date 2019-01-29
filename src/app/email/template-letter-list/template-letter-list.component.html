@@ -2,7 +2,6 @@
 <div class="template">
   <div class="template__list">
     <app-email-header
-    (select_all_inputs) = 'this.selected_all()'
     (search_function) = 'this.search_in_templates($event)'
     [success_search] = 'this.succes_search_flag'
     [not_success_search] = 'this.not_succes_search_flag'
@@ -33,8 +32,8 @@
     [ngClass]="{checkbox_selected: this.selected_checkbox_for_html[i]}"
     [class.favorite_template] = 'letter.flagged'
     >
-    <input type="checkbox"  id={{letter.draft_id}} class='avatar_checkboxes hidden_checkbox' (change)='select_letter($event, i, letter.draft_id)'>
-      <label for={{letter.draft_id}} class="checkbox_block"></label>
+    <input type="checkbox"  id='my_id{{letter.draft_id}}' class='avatar_checkboxes hidden_checkbox' (change)='select_letter($event, i, letter.draft_id)'>
+      <label for='my_id{{letter.draft_id}}' class="checkbox_block"></label>
       <div class="setting_and_txt_group"
       routerLink="./create"
       [queryParams] = "{'id':letter.draft_id, 'status':'template'}"

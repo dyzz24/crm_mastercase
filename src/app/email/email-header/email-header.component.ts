@@ -14,7 +14,7 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   hide_left_btn_status = false;
   hidden_top_menu = false;
 
-  @Output() select_all_inputs = new EventEmitter(); // отправка события родителю
+
   @Output() select_cancell_all_inputs = new EventEmitter(); // отправка события родителю
   @Output() filters_selected = new EventEmitter(); // отправка события родителю
 
@@ -46,7 +46,12 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   }
 
   select_all_inputs_do() {
-    this.select_all_inputs.next(); // отправляю событие на скрытие компонента
+    // this.select_all_inputs.next(); // отправляю событие на скрытие компонента
+    if (this.toggle_checked_inputs_flag) {
+      this.select_cancell_all_inputs.next(true);
+    } else {
+      this.select_cancell_all_inputs.next(false);
+    }
     this.toggle_checked_inputs_flag = ! this.toggle_checked_inputs_flag;
   }
 
