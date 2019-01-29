@@ -164,18 +164,17 @@ delete_one_tmp(id, e, index) {
   e.target.closest('.list__prev').classList.add('dellLetter'); // отловили парента - дали красивую анимашку
   this.cancell_all_checked(); // сняли чекбокс с нипута меню (чьлю ушло меню)
 
-      this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-          draftId: +id,
-          boxId: +3,
-          address: this.emailServ.idPostForHTTP
-        }).subscribe();
+      // this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+      //     draftId: +id,
+      //     boxId: +3,
+      //     address: this.emailServ.idPostForHTTP
+      //   }).subscribe();
 
 
         setTimeout(() => {
-
+        this.draft_list.splice(index, 1); // удаляю из представления
         e.target.closest('.list__prev').classList.remove('dellLetter'); // сняли анимашку
         this.rout.navigate(['./'], { relativeTo: this.activatedRoute }); // скинули роут
-        this.draft_list.splice(index, 1); // удаляю из представления
 }, 500);
 }
 

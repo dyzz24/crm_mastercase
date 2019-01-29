@@ -25,30 +25,30 @@ export class AuthorizationComponent implements OnInit, DoCheck, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.authorization_error = this.authorizationServ.error_response.subscribe(val => { // подписываюсь
+    this.authorization_error = this.authorizationServ.error_response.subscribe(val => { // подписываюсь на отрицательный ответ от сервера
       if (val) {
-          alert('Не залогинет'); // если ошибка авторизации - написать
-          this.login_form_group.reset();
+          alert('Не корректные данные'); // если ошибка авторизации - написать
+          this.login_form_group.reset(); // скидываю форму
       }
     });
     this.authorization_success = this.authorizationServ.success_response.subscribe(val => { // подписываюсь на положительный ответ от серв
 
-         if (val) {
+         if (val) { // если всё введено правильно - переходит туда
           this.rout.navigate(['/email']);
          }
 
     });
   }
   ngOnDestroy() {
-    this.authorization_success.unsubscribe();
+    this.authorization_success.unsubscribe(); // отписон
     this.authorization_error.unsubscribe();
   }
 
   initForm() {
-    this.login_form_group = this.fb.group({
+    this.login_form_group = this.fb.group({ // инициализация группы инпутов формы
       login: ['',
       [Validators.email,
-        Validators.required]
+        Validators.required] // базовая валидация
     ],
       password: ['',
       Validators.required
@@ -62,15 +62,11 @@ export class AuthorizationComponent implements OnInit, DoCheck, OnDestroy {
 
   authorization() {
 
-    if (this.login_form_group.invalid) {
+    if (this.login_form_group.invalid) { // если введены плохие данные
         alert('Введите корректные данные');
         return;
     }
-
-
-        this.authorizationServ.authorization(this.login_form_group.value.login, this.login_form_group.value.password);
-
-
+        this.authorizationServ.authorization(this.login_form_group.value.login, this.login_form_group.value.password); // если всё ок - отпр
 
   }
 

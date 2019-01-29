@@ -1,12 +1,11 @@
 <div class="not_found">
-<p>
-  Необходимо авторизоваться
-</p>
 
 <form class="new_user" [formGroup]="login_form_group">
-    <input type="text" placeholder="Логин (email)" formControlName="login">
-    <input type="text" placeholder="Пароль" formControlName="password">
-    <input type="submit" value = 'Войти' (click)='authorization()'>
+  <h2>MasterCase</h2>
+  <p>Вход</p>
+    <input type="text" placeholder="Введите почту" formControlName="login">
+    <input type="password" placeholder="Пароль" formControlName="password">
+    <button (click)='authorization()'>Войти</button>
   </form>
   
 
