@@ -7,13 +7,16 @@ import { NewMessageComponent } from '../email/new-message/new-message.component'
 import { EmailGuardGuard } from '../email/email-guard.guard';
 import { TemplateLetterListComponent } from './template-letter-list/template-letter-list.component';
 import { AddEmailComponent } from './add-email/add-email.component';
+import { EmptyTemplateComponent } from './empty-template/empty-template.component';
 
 const routes: Routes = [
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
   children:
   [
     {path: ':email_id/template', component: TemplateLetterListComponent, canActivate: [EmailGuardGuard],
-  children: [{path: 'create', component: NewMessageComponent}]
+  children: [{path: 'create', component: NewMessageComponent},
+
+              {path: '**', component: EmptyTemplateComponent}]
   },
 
     {path: ':id1/:id', component: LettersComponent, canActivate: [EmailGuardGuard],
