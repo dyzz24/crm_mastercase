@@ -18,6 +18,7 @@ import { EmailModuleModule } from './email/email-module.module';
 import {SettingModule} from './setting/setting.module';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -31,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NotificationTwoComponent,
     HeaderProfileComponent,
     AuthorizationComponent,
+    HomeComponent,
 
 
   ],

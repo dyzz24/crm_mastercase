@@ -1,4 +1,4 @@
-<div class="profile__cont">
+<div class="profile__cont" (click) = show_menu_toggle()>
     <div class="avatar">
         <img src={{avatarSrc}}>
       </div>
@@ -6,4 +6,12 @@
     <p>{{this.authorizationServ?.name}}</p>
       </div>
   
+      <div class="hidden__profile_menu" *ngIf="this.hide_menu_show">
+        <button class='header_btn'
+        (click) = 'this.logout()'
+        >
+          <span class='la la-sign-out'></span>
+          Выйти из системы
+        </button>
+      </div>
 </div>

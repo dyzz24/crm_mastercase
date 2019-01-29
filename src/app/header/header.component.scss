@@ -1,5 +1,5 @@
-@import '../../colors';
 
+@import '../../colors';
 header {
     position: fixed;
     top:0;
@@ -75,13 +75,12 @@ header {
 
 
 .header__profile {
-    width: 210px;
+    width: auto;
     height: 36px;
-    margin-right: 50px;
     z-index: 5;
 }
 
-@import '../../colors';
+
 
 .left__comp {
     width: 100%;

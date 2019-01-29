@@ -49,7 +49,10 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
     this.state_open = false; // прячу компонент
     this.state_folders_change.next(this.state_open); // отправляю событие на скрытие компонента
 
-    const target = e.target; // ловлю на какой папке был клик
+    const target = e.target.closest('.wrapper'); // ловлю на какой папке был клик
+    if (target.className === 'wrapper non_activ') {
+        return;
+    }
     const id_folder = target.getAttribute('id'); // ловлю ее id
     this.selected_mail_id.filter(val => {
         this.httpPost(`${this.emailServ.ip}/mail/setbox`, {

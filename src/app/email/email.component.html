@@ -161,6 +161,7 @@
               class="link_area"
               (click)="goUrl(0)"
               routerLink="./{{this.emailItems[i].address}}/1"
+              
             >
               <p>Входящие</p>
               <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][1] !== 0">{{this.emailServ.counts[email.address][1]}}</p>

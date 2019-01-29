@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AuthorizationService } from '../../authorization.service';
+import { Router, ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -9,20 +10,26 @@ import { AuthorizationService } from '../../authorization.service';
 })
 export class HeaderProfileComponent implements OnInit {
 
+  hide_menu_show = false;
+
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    private rout: Router
   ) { }
 
   public role = 'Admin';
   public avatarSrc = './assets/user.png';
 
   ngOnInit() {
-    // const requestInterval = setInterval(() => {
-    //   if (this.authorizationServ.accessToken !== undefined) {
-    //     clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
+  }
 
-    //   }
-    // }, 1000);
+  show_menu_toggle() {
+    this.hide_menu_show = ! this.hide_menu_show;
+  }
+
+  logout() {
+    localStorage.clear();
+    this.rout.navigate(['/auth']);
   }
 
 }

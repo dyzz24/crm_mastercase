@@ -53,23 +53,23 @@ input,button {
     src:url('./assets/fonts/Roboto/Roboto-Bold.ttf');
 }
 
-.la {
-    font-family: 'la';
-    text-align: center;
-}
+// .la {
+//     font-family: 'la';
+//     text-align: center;
+// }
 
 
-.la-post {
-    font-size: 14px;
-    color:rgb(238, 229, 229);
-    cursor: pointer;
-    line-height: 60px;
-    z-index: 1;
+// .la-post {
+//     font-size: 14px;
+//     color:rgb(238, 229, 229);
+//     cursor: pointer;
+//     line-height: 60px;
+//     z-index: 1;
 
-    &::before {
-        content: "\f0e0";
-    }
-}
+//     &::before {
+//         content: "\f0e0";
+//     }
+// }
 
 
 // @font-face {

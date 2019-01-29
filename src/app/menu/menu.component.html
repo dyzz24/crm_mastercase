@@ -4,12 +4,17 @@
         </div>
 
         <div class='nav__items'>
+                        <div class="icon__nav"
+                        routerLink="home"
+                        routerLinkActive="active"
+                ><span class="la la-lg la-windows"></span></div>
+
                 <div class="icon__nav"
                         routerLink="email"
                         routerLinkActive="active"
                 ><span class="la la-lg la-envelope-o"></span></div>
 
-                <div class="icon__nav"><span class="la la-lg la-calendar"></span></div>
+    
 
                 <div class="icon__nav"
                         routerLink="setting"
@@ -17,10 +22,13 @@
                 ><span class="la la-lg la-cogs"></span></div>
 
                 <div class="nav__buttons" [ngClass]='{hidenBlock:hidden}'>
+                                <a routerLink="home"
+                                routerLinkActive="active"
+                                >Домой</a>
                         <a routerLink="email"
                         routerLinkActive="active"
                         >Почта</a>
-                        <a routerLink="/" (click)='clearLocalStorage(1, $event)' >Календарь</a>
+
                         
                         <a routerLink="setting"
                         routerLinkActive="active"

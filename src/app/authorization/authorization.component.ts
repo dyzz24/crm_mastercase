@@ -34,7 +34,7 @@ export class AuthorizationComponent implements OnInit, DoCheck, OnDestroy {
     this.authorization_success = this.authorizationServ.success_response.subscribe(val => { // подписываюсь на положительный ответ от серв
 
          if (val) { // если всё введено правильно - переходит туда
-          this.rout.navigate(['/email']);
+          this.rout.navigate(['/home']);
          }
 
     });
@@ -68,6 +68,16 @@ export class AuthorizationComponent implements OnInit, DoCheck, OnDestroy {
     }
         this.authorizationServ.authorization(this.login_form_group.value.login, this.login_form_group.value.password); // если всё ок - отпр
 
+  }
+
+  toggle_password_show() {
+    const password_inp = document.querySelector('.password');
+    const current_attribute = password_inp.getAttribute('type');
+    if (current_attribute === 'password') {
+      password_inp.setAttribute('type', 'text');
+    } else {
+      password_inp.setAttribute('type', 'password');
+    }
   }
 
 

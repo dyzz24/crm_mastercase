@@ -3,8 +3,13 @@
 <form class="new_user" [formGroup]="login_form_group">
   <h2>MasterCase</h2>
   <p>Вход</p>
-    <input type="text" placeholder="Введите почту" formControlName="login">
-    <input type="password" placeholder="Пароль" formControlName="password">
+    <span>Адрес эл. почты</span>
+    <input class='main_inp' type="text" placeholder="Введите почту" formControlName="login">
+    <span>Пароль</span>
+    <div class="password_group">
+    <input type="password" placeholder="Пароль" formControlName="password" class='password'>
+    <i (click) = 'toggle_password_show()' class="la la-eye-slash"></i>
+    </div>
     <button (click)='authorization()'>Войти</button>
   </form>
   
