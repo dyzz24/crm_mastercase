@@ -416,12 +416,19 @@ data.map(val => {
 
   importantMarkAll() {
     const id_for_important = this.emailServ.idLetters;
-    // this.httpPost(`${this.emailServ.ip}/mail/set`, {
-    //   mailId: id_for_important,
-    //   value: true,
-    //   flag: 'flagged',
-    //   address: this.emailServ.idPostForHTTP })
-    //   .subscribe();
+
+    const all_data_for_http = [];
+    for (const key of this.emailServ.idLetters) {
+      all_data_for_http.push(
+        {mailId: key,
+          value: true,
+          flag: 'flagged',
+        address: this.emailServ.idPostForHTTP}
+      );
+    }
+
+    this.httpPost(`${this.emailServ.ip}/mail/set`, all_data_for_http)
+      .subscribe();
 
       this.emailServ.lettersList.filter((val, ind, arr) => {
         for (const key of id_for_important) {
@@ -438,22 +445,25 @@ data.map(val => {
 
     const id_for_delete = this.emailServ.idLetters;
 
+    const all_data_for_http = [];
+    for (const key of this.emailServ.idLetters) {
+      all_data_for_http.push(
+        {mailId: key,
+          boxId: +box,
+          address: this.emailServ.idPostForHTTP}
+      );
+    }
+
+    this.httpPost(`${this.emailServ.ip}/mail/setbox`, all_data_for_http).subscribe(data => {
+    }
+    );
+
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
 
         if (val.mail_id === key) {
 
-
-
           arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
-
-          this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-            mailId: +val.mail_id,
-          boxId: +box,
-          address: this.emailServ.idPostForHTTP
-          }).subscribe(data => {
-          }
-          );
           return arr;
         }
       }

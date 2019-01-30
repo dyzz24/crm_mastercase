@@ -192,7 +192,8 @@
     height: 400px;
     overflow: auto;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
     background: #F7FBFE;
 
     ul {
