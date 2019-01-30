@@ -25,7 +25,7 @@
           
     </div>
     <div class="wrapper" *ngIf="this.not_succes_search_flag === false; else search_not_found">
-    <div class="list__prev" *ngFor="let letter of draft_list, let i = index"
+    <div class="list__prev" *ngFor="let letter of emailServ.draft_list, let i = index"
     
     routerLinkActive = 'active_template'
     

@@ -79,7 +79,6 @@ border-radius: 2px;
 
 .avatar__block {
     flex-shrink: 0;
-    margin-top: 10px;
     width: 100%;
     padding: 0 60px 0px 10px;
     box-sizing: border-box;
@@ -544,6 +543,21 @@ label {
             color: #0476C3;
             margin-right: 6px; 
         }
+    }
+
+
+    .template_name {
+        width: 100%;
+        padding: 0 40px;
+        box-sizing: border-box;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        font-size: 16px;
+        text-align: center;
+        color: #000000;
+        font-weight: bold;
     }
 
 

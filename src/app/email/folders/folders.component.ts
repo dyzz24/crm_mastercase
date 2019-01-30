@@ -54,9 +54,10 @@ export class FoldersComponent implements OnInit, DoCheck {
     }
   }
   get_folder_id(e) {
-    const target = e.target;
+    const target = e.target.closest('.wrapper');
     this.id_folder = target.getAttribute('id');
-    this.folder_name = target.innerHTML;
+    console.log(this.id_folder);
+    this.folder_name = target.querySelector('.folders_name').innerHTML;
     this.folder_invest = ! this.folder_invest;
     this.randomizer(this.user_folders);
     this.random_nums_id(this.all_folders_id);
@@ -71,6 +72,7 @@ export class FoldersComponent implements OnInit, DoCheck {
   create_folder() {
 
       this.randomizer(this.user_folders); // собираю все айдишники в массив
+      console.log(this.user_folders);
       this.deepSearch(this.user_folders, this.id_folder); // главная функция
       this.closeViewer(); // закрыть
       const obj_for_resp = [{id: 1, childs: this.user_folders}];

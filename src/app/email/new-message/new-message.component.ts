@@ -47,6 +47,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public messages_sending = false;
     public important_tmp = false;
     edit_template = false;
+    public template_title: string;
 
 
 
@@ -71,6 +72,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.httpPost(
               `${this.emailServ.ip}/mail/draft`,
               {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
+                this.template_title = dataMails[0].title;
                 this.to = [];
                 this.copy = [];
                 this.hidden_copy = [];
@@ -179,6 +181,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.hidden_copy = [];
                 this.messages = '';
                 this.subject = '';
+                this.edit_template = false;
           }
 
           if (queryParam.edit_tmp === 'true') { // для колбасины и редактирования шаблонов
@@ -532,6 +535,5 @@ this.httpPost(
     this.showSuccess('Изменения сохранены');
   });
 }
-
 }
 

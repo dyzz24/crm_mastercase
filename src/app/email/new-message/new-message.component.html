@@ -11,6 +11,13 @@
         ><span class='la la-folder'></span>Новый шаблон</button>
         <div class="stick_splitter"></div>
 
+        <button class='new_btn'
+        *ngIf="this.edit_template"
+        title="Удалить шаблон"
+        (click) = 'this.emailServ.delete_template(this.mail_id)'
+        routerLink="../template"
+        ><span class='la la-trash'></span></button>
+
       <app-template 
       [ip]='this.emailServ.ip' 
       [email_address]='this.emailServ.idPostForHTTP'
@@ -25,6 +32,7 @@
         </button>
   </div>
   <div class="message__body">
+    <div class="template_name" *ngIf="this.edit_template">Название шаблона: {{this.template_title}}</div>
 <div class="avatar__block">
     <div class="avatar">
         <p class='avatar__title'>{{this?.from.charAt(0)}}</p>

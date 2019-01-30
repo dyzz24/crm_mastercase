@@ -1,6 +1,9 @@
 import { Injectable} from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import {global_params} from '../global';
+import { Subject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { AuthorizationService } from '../authorization.service';
 
 
 
@@ -75,9 +78,41 @@ export class EmailServiceService {
   folders;
   all_user_mail_address = [];
   counts: number; // счетчик новых писем в папках
+  draft_list = []; // все шаблоны конверты
+  public draft_list_edited = new Subject<any>();
 
 
-  constructor( private rout: Router, private activatedRoute: ActivatedRoute) {
+  constructor( private rout: Router, private activatedRoute: ActivatedRoute,
+    private http: HttpClient, private authorizationServ: AuthorizationService) {
+  }
+
+  public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
+  }
+
+
+  delete_template(draft_id) {
+    this.draft_list.filter((val, ind, arr) => { // прохожусь по массиву всех конвертиков
+          if  (+val.draft_id === +draft_id)  { // если нашлись
+            arr.splice(ind, 1);
+            this.draft_list_edited.next('true');
+          }
+        });
+        // this.httpPost(`${global_params.ip}/mail/setbox`, {
+        //   draftId: +draft_id,
+        //   boxId: +3,
+        //   address: this.idPostForHTTP
+        // }).subscribe();
+
+
+
+        // так как Денис захотел возможность удалять шаблоны из 3го окна
+            // а это не связанный с колбасой компонент
+            // пришлось связывать их общим сервером
+            // но возникла трудность с шаблонами которые чекбоксены (чекбокс не слетал при удалении)
+            // поэтому я отправляю компоненту списка шаблонов (колбасе)
+            // событие, что бы тот снял чекбоксы (вызвал ф-ю снятия)
+            // он подписан на это событие
   }
 
 
