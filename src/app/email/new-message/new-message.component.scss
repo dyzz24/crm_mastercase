@@ -6,7 +6,7 @@
 .header {
     @include header(row);
         background: #f7fbfe;
-        padding: 0 0px;
+        padding: 0 10px 0 10px;
 }
 
 %title_text {
@@ -54,6 +54,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0 20px;
 }
 .quill_styles {
     flex: 1;
@@ -62,19 +63,23 @@
 
 
 [type='submit'] {
-    width: 100px;
-	height: 30px;
-    border: solid 1px $border;
+    color:white;
+    width: 120px;
+	height: 38px;
+    background: #0476C3;
+box-shadow: 0px 2px 4px rgba(9, 41, 85, 0.2);
+border-radius: 2px;
     cursor: pointer;
     flex-shrink: 0;
     align-self: flex-start;
-    border-radius: 4px;
+    font-size: 16px;
+
 }
 
 
 .avatar__block {
     flex-shrink: 0;
-    margin-top: 16px;
+    margin-top: 10px;
     width: 100%;
     padding: 0 60px 0px 10px;
     box-sizing: border-box;
@@ -89,6 +94,7 @@
     width: 40px;
     height: 40px;
     margin-right: 10px;
+    margin-left: 10px;
 
             p {
         padding: 0;
@@ -126,8 +132,8 @@
 .row__block {
     flex-shrink: 0;
     @extend %border-bottom;
-    width: calc(100% - 120px);
-    margin: 0 60px;
+    width: calc(100% - 140px);
+    margin: 0 70px;
     box-sizing: border-box;
     min-height: 40px;  
     display: flex;
@@ -141,7 +147,7 @@
     width: 100%;
     margin: 0;
     border-bottom: none;
-    padding: 0 60px;
+    padding: 0 70px;
     box-sizing: border-box;
     justify-content: space-between;
 
@@ -363,10 +369,14 @@ label {
 
 .save_templ {
     width: auto;
-    padding: 0 4px;
+    // padding: 0 4px;
     box-sizing: border-box;
-    margin-left: 8px;
+    // margin-left: 8px;
+    font-size: 16px;
+    color: #0476C3;
 }
+
+
 
 
 .visibl {
@@ -514,21 +524,29 @@ label {
         width: 155px;
         height: 24px;
         font-size: 13px;
-        color: #074B86;
+        color: #0476C3;
         display: flex;
         align-items: center;
         margin-left: 20px;
         margin-bottom: 12px;
+        transition: .4s;
 
         &:hover span::before {
             content: "\f318";
+            color: #074B86;
+        }
+
+        &:hover {
+            color: #074B86;
         }
 
         span {
-            color: #074B86;
+            color: #0476C3;
             margin-right: 6px; 
         }
     }
+
+
 
 
 

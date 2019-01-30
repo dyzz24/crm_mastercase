@@ -5,11 +5,11 @@
         <button class='new_btn'
         routerLink="../create"
         ><span class='la la-envelope'></span>Новое сообщение</button>
-
         <button class='new_btn'
         routerLink="../create"
         *ngIf="this.edit_template"
         ><span class='la la-folder'></span>Новый шаблон</button>
+        <div class="stick_splitter"></div>
 
       <app-template 
       [ip]='this.emailServ.ip' 
@@ -17,9 +17,7 @@
       *ngIf="!this.edit_template"
       ></app-template>
       </div>
-        <button type='button'>
-            <span class='la la-ellipsis-h'></span>
-          </button>
+
         </div>
 
       <button class='close' (click)='closeViewer()'>
@@ -153,6 +151,7 @@
       </quill-editor>
       <div class="qu__bottom_block">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
+      <div class="stick_splitter"></div>
       <button class='save_templ' (click)='open_save_template()' *ngIf="this.status !== 'template'">Сохранить как шаблон</button>
       
       <button class='save_templ' *ngIf="this.status === 'template'" (click)='send_and_save_tmp($event)'>Сохранить изменения</button>

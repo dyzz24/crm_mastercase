@@ -355,6 +355,7 @@ add_drag_input_data(objForData) {
 // ШАБЛОНЫ СОХРАНЯЕМ ************************************ //
 open_save_template() {
 this.save_tmp_state = ! this.save_tmp_state;
+this.important_tmp = false;
 }
 
 cancel_template() {

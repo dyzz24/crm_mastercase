@@ -162,7 +162,7 @@
 
 
 
-@mixin header($flex-dir,$height:40px){
+@mixin header($flex-dir,$height:50px){
     @extend %all-padding;
     width: 100%;
     height: $height;
@@ -416,12 +416,12 @@ button {
     line-height: 1;
     height: 40px;
     width: auto;
-    padding: 0px 0 0px 12px;
+    // padding: 0px 0 0px 12px;
     box-sizing: border-box;
     font-size: 13px;
     color: #9CABC2;
     transition: .4s;
-    margin-right: 10px;
+    margin: 0 10px;
 
     span {
         color: #9CABC2;
@@ -469,5 +469,13 @@ button {
     border: 1px solid #0476C3;
     color: #0476C3;
     margin-left: 10px;
+}
+
+ // палка разделитель
+.stick_splitter  {
+    height: 40px;
+    width: 1px;
+    margin: 0 10px;
+    background: rgba(196, 206, 223, 0.5);
 }
     
