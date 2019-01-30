@@ -176,10 +176,6 @@
 button {
     position: relative;  
     cursor: pointer;
-
-    &:hover .tooltip {
-       display: block;
-    }
 }
 
 .tooltip {
@@ -272,7 +268,6 @@ button {
     display: flex !important;
     visibility: visible;
     z-index: 5;
-    
 }
 
 
@@ -292,16 +287,11 @@ button {
     margin: 0 2px 0 2px;
     flex-shrink: 0;
     
-span {
+// span {
     
-    color: $icons-color;
-}
-&:hover span {
-            color: $text-color;
-        }
-&:hover:not(.create) {
-            background: #a2b3cc;
-        }
+//     color: $icons-color;
+// }
+
 }
 
 
@@ -351,7 +341,7 @@ span {
         background: white;
         transition: .4s;
         &:hover {
-            background: #1a1919;
+            background: #c9c8c8;
         }
         margin: 0;
         
@@ -387,13 +377,7 @@ span {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-left:1px solid #d9e6f7;
-        border-right:1px solid #d9e6f7;
         box-sizing: border-box; 
-        
-        margin: 0 2px;
-            padding: 0 2px;
-        
         
         }
         
@@ -401,9 +385,6 @@ span {
         .left__panel.end{
             border:0px;
             padding: 0px;
-            border-right:1px solid #d9e6f7;
-            margin-right:  4px;
-            padding-right: 4px; 
         }
 
         .custom__button {
@@ -412,6 +393,81 @@ span {
             box-sizing: border-box;
 
         }
-// folders settings
 
+
+        .create_btn {
+            background: #0476C3;
+            width: auto;
+            // height: 38px;
+            line-height: 1;
+            font-size: 13px;
+            color: white;
+            box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            padding: 8px 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        
+.new_btn {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    height: 40px;
+    width: auto;
+    padding: 0px 0 0px 12px;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: #9CABC2;
+    transition: .4s;
+    margin-right: 10px;
+
+    span {
+        color: #9CABC2;
+        margin-right: 9px;
+    }
+    &:hover,
+    &:hover span {
+        color: rgb(73, 118, 185);
+    }
+}
+
+.title_txt {
+    height: 40px;
+    width: 100%;
+    padding-left: 20px;
+    color: #092955;
+    font-size: 13px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.create,
+.cancel {
+    cursor: pointer;
+    width: 100px;
+    height: 28px;
+    line-height: 28px;
+    color: #F7FBFE;
+    font-size: 13px;
+    border-radius: 2px;
+    background: #0476C3;
+    box-shadow: -6px 0px 23px rgba(7, 59, 110, 0.1);
+    box-sizing: border-box;
+    transition: .4s;
+    
+    &:hover {
+        box-shadow: -6px 0px 23px rgba(7, 59, 110, 0);
+    }
+}
+
+.cancel {
+    background: white;
+    border: 1px solid #0476C3;
+    color: #0476C3;
+    margin-left: 10px;
+}
     

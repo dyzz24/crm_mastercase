@@ -6,7 +6,7 @@
 .header {
     @include header(row);
         background: #f7fbfe;
-        padding: 0 10px;
+        padding: 0 0px;
 }
 
 %title_text {
@@ -368,15 +368,7 @@ label {
     margin-left: 8px;
 }
 
-.templ_name {
-    padding: 0 8px;
-    box-sizing: border-box;
-    width: 150px;
-    height: 30px;
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-}
+
 .visibl {
     display: flex;
 }
@@ -431,6 +423,116 @@ label {
         display: flex;
     }
 }
+
+
+
+
+
+    .hidden_template_create {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($color: #000000, $alpha: .3);
+        z-index: 50;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        &.visibl {
+            display: flex;
+        }
+    }
+
+    .templ_name {
+
+        box-sizing: border-box;
+        width: 600px;
+        height: 236px;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        background: #F7FBFE;
+        border: 1px solid #F7FBFE;
+        border-radius: 2px;
+    
+    }
+
+    .row__names {
+        width: 100%;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        margin: 15px 0 25px 0;
+        padding: 0 20px;
+        box-sizing: border-box;
+         
+        p{
+            font-size: 13px;
+            color: #262626;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+    
+        input {
+                flex: 1;
+                height: 34px;
+                border: 1px solid #D9E6F7;
+                box-sizing: border-box;
+                border-radius: 2px;
+                padding: 0 10px;
+                background: white;
+    
+                &:hover {
+                    border-color: #0476C3;
+                }
+    
+                &:focus {
+                    border-color: #0476C3;
+                }
+        }
+    }
+
+
+    .title_txt {
+        background: white;
+        color: #262626;
+    }
+
+    .buttons_block {
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+        height: 28px;
+        display: flex;
+        justify-content: flex-end;
+
+    }
+
+
+    .favorite {
+        width: 155px;
+        height: 24px;
+        font-size: 13px;
+        color: #074B86;
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+        margin-bottom: 12px;
+
+        &:hover span::before {
+            content: "\f318";
+        }
+
+        span {
+            color: #074B86;
+            margin-right: 6px; 
+        }
+    }
+
+
+
+
 
 
 

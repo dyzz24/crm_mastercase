@@ -2,7 +2,20 @@
   <div class="header">
     <div class="left__group">
       <div class="left__panel end">
-      <app-template [ip]='this.emailServ.ip' [email_address]='this.emailServ.idPostForHTTP'></app-template>
+        <button class='new_btn'
+        routerLink="../create"
+        ><span class='la la-envelope'></span>Новое сообщение</button>
+
+        <button class='new_btn'
+        routerLink="../create"
+        *ngIf="this.edit_template"
+        ><span class='la la-folder'></span>Новый шаблон</button>
+
+      <app-template 
+      [ip]='this.emailServ.ip' 
+      [email_address]='this.emailServ.idPostForHTTP'
+      *ngIf="!this.edit_template"
+      ></app-template>
       </div>
         <button type='button'>
             <span class='la la-ellipsis-h'></span>
@@ -141,16 +154,7 @@
       <div class="qu__bottom_block">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
       <button class='save_templ' (click)='open_save_template()' *ngIf="this.status !== 'template'">Сохранить как шаблон</button>
-      <div class='templ_name' [ngClass]="{visibl: this.save_tmp_state}">
-        <input type="text" placeholder="Имя шаблона"
-        [(ngModel)]='this.tmp_name' 
-        class='tmp_name_inp'
-        >
-        <button (click)='save_template()'>
-            <span class='la la-check-circle-o'></span>
-          </button>
-      </div>
-      <button class='save_templ send_mess' *ngIf="this.status === 'template'" (click)='send_and_save_tmp($event)'>Отправить и сохранить изменения в шаблоне</button>
+      
       <button class='save_templ' *ngIf="this.status === 'template'" (click)='send_and_save_tmp($event)'>Сохранить изменения</button>
       </div> 
     </div>
@@ -163,4 +167,42 @@
   <div class="drag_region"  (dragleave)='dragEnd($event)' (dragover)='dragStart($event)' (drop)='drop($event)'>
     <p>Брось файл тут</p>
   </div>
+
+
+
+
+  <div class="hidden_template_create" [ngClass]="{visibl: this.save_tmp_state}">
+      <div class='templ_name' >
+        <div class="title_txt">Сохранение шаблона</div>
+        <div class="row__names">
+            <p>Название шаблона</p>
+            <input type="text"
+              [(ngModel)]='this.tmp_name' 
+              class='tmp_name_inp'
+              autofocus>
+            </div>
+            <button class='favorite'
+            (click) = 'toggle_important_flag()'
+            >
+              <span class='la la-star-o' *ngIf="!this.important_tmp"></span>
+                <span class='la la-star' *ngIf="this.important_tmp"></span>
+                Сделать избранным</button>
+  
+            <div class="buttons_block">
+                <button class='create' (click)='save_template()'>
+                    Создать
+                  </button>
+  
+                  <button class='cancel' (click)='cancel_template()'>
+                      Отмена
+                    </button>
+  
+            </div>
+        
+      </div>
+    </div>
 </div>
+
+
+
+

@@ -1,7 +1,7 @@
 @import '../../mixins';
 
 .visible {
-    width: 250px;
+    width: 248px;
     height: auto;
     max-height: 240px;
     position: absolute;
@@ -106,14 +106,3 @@ span {
     }
 }
 
-.title_txt {
-    height: 40px;
-    width: 100%;
-    padding-left: 20px;
-    color: #092955;
-    font-size: 13px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}

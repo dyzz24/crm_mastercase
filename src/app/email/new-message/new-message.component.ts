@@ -45,6 +45,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public open_select_address = false;
     public save_tmp_state = false;
     public messages_sending = false;
+    public important_tmp = false;
+    edit_template = false;
 
 
 
@@ -53,7 +55,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.emailServ.hiddenEmpty = true;
-    this.save_tmp_state = false;
+    this.save_tmp_state = false; // открытие закрытие окна сохранения имени шаблона
     this.from = this.emailServ.idPostForHTTP;
 
 
@@ -169,6 +171,18 @@ export class NewMessageComponent implements OnInit, DoCheck {
                   this.messages = dataMails.html;
                  }
               });
+          }
+
+          if  (this.status === undefined) {
+              this.to = [];
+                this.copy = [];
+                this.hidden_copy = [];
+                this.messages = '';
+                this.subject = '';
+          }
+
+          if (queryParam.edit_tmp === 'true') { // для колбасины и редактирования шаблонов
+            this.edit_template = true;
           }
 
 
@@ -338,9 +352,17 @@ add_drag_input_data(objForData) {
 
 
 }
-
+// ШАБЛОНЫ СОХРАНЯЕМ ************************************ //
 open_save_template() {
 this.save_tmp_state = ! this.save_tmp_state;
+}
+
+cancel_template() {
+  this.save_tmp_state = false;
+}
+
+toggle_important_flag() {
+    this.important_tmp = ! this.important_tmp;
 }
 save_template() {
 
@@ -366,6 +388,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
       text: '',
       html: this.messages,
       subject: this.subject,
+      flagged: this.important_tmp,
       from: [
         {address: this.from,
         }
@@ -378,6 +401,8 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
   this.show_notification('Шаблон создан');
 
 }
+
+// *************************************************************************
 
 select_new_address(e) {
   if (e.target.classList.contains('select_btn') || e.target.classList.contains('la-angle-down')) {
@@ -452,33 +477,33 @@ edit_babl(e, index, array_for_edit) {
 
 send_and_save_tmp(e) {
 
-  if (e.target.className === 'save_templ send_mess') {
-  const to_send = this.to.map(val => { // массив с графами "кому"
-    return {address: val};
-});
-  const cc_send = this.copy.map(val => { // массив с графами "копия"
-    return {address: val};
-});
-const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
-  return {address: val};
-});
-  this.httpPost(
-    `${this.emailServ.ip}/mail/draft_update`,
-    // tslint:disable-next-line:max-line-length
-    {address: this.from, // имейл
-      id: this.mail_id,
-      html: this.messages,
-      subject: this.subject,
-      from: [
-        {address: this.from,
-        }
-      ],
-     to: to_send,
-     cc: cc_send,
-     bcc: bcc_send
-    }).subscribe(() => {});
-  this.sendMessage();
-} else {
+//   if (e.target.className === 'save_templ send_mess') {
+//   const to_send = this.to.map(val => { // массив с графами "кому"
+//     return {address: val};
+// });
+//   const cc_send = this.copy.map(val => { // массив с графами "копия"
+//     return {address: val};
+// });
+// const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+//   return {address: val};
+// });
+//   this.httpPost(
+//     `${this.emailServ.ip}/mail/draft_update`,
+//     // tslint:disable-next-line:max-line-length
+//     {address: this.from, // имейл
+//       id: this.mail_id,
+//       html: this.messages,
+//       subject: this.subject,
+//       from: [
+//         {address: this.from,
+//         }
+//       ],
+//      to: to_send,
+//      cc: cc_send,
+//      bcc: bcc_send
+//     }).subscribe(() => {});
+//   this.sendMessage();
+// } else {
   const to_send = this.to.map(val => { // массив с графами "кому"
   return {address: val};
 });
@@ -506,10 +531,6 @@ this.httpPost(
     this.showSuccess('Изменения сохранены');
   });
 }
-}
-
-
-
 
 }
 

@@ -34,7 +34,7 @@ $font-color: $icons-color;
     border-right:  1px solid $border;
     box-shadow: -7px 0 18px 4px rgba(0,0,0,.1) inset;
     background: #f7fbfe;
-    z-index: 7;
+    z-index: 5;
     box-sizing: border-box;
 
 }
@@ -336,7 +336,7 @@ label {
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
-      flex: 1;
+      width: 240px;
       overflow: hidden;
   }
 

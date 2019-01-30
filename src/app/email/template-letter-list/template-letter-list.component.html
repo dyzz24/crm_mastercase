@@ -36,7 +36,7 @@
       <label for='my_id{{letter.draft_id}}' class="checkbox_block"></label>
       <div class="setting_and_txt_group"
       routerLink="./create"
-      [queryParams] = "{'id':letter.draft_id, 'status':'template'}"
+      [queryParams] = "{'id':letter.draft_id, 'status':'template', 'edit_tmp':true}"
       >
       <div class="text_info">{{letter.title}}</div>
       <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.draft_id}} class='settings_checkbox hidden_checkbox'

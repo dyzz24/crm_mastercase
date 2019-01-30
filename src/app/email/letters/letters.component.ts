@@ -425,7 +425,7 @@ data.map(val => {
 
       this.emailServ.lettersList.filter((val, ind, arr) => {
         for (const key of id_for_important) {
-          if (+val.id === +key) {
+          if (+val.mail_id === +key) {
               val.flagged = true;
           }
         }

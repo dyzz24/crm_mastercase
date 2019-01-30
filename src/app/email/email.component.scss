@@ -12,6 +12,7 @@
 
 .mails__view {
     width: 100%;
+    z-index: 8;
 }
 
 .mails {
@@ -21,7 +22,7 @@
     background: #f7fbfe;
     box-sizing: border-box;
     overflow: auto;
-    z-index: 8;
+    z-index: 9;
     box-shadow: -7px 0 18px 4px rgba(0,0,0,.1) inset;
 }
 
