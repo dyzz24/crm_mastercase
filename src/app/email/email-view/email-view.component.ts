@@ -79,24 +79,26 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   ngOnInit() {
 
     this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
-        this.preload_to_wait_status = false;
+
 
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
           this.emailServ.currentId = +data.id; // ID письма mail_id
-          let flagged = true; // при каждом изменении роута
-          this.cahse_letters.filter(val => {
+          let flagged = true; // при каждом изменении роута получаю активный флаг
+          this.preload_to_wait_status = true; // ставлю крутилку декоратор при каждом изменении роута
+          this.cahse_letters.filter(val => { // при смене роута пробегаюсь по кэшу
 
-                if (val.mail_id === this.emailServ.currentId) {
-                  this.selectedLetter = val;
+                if (val.mail_id === this.emailServ.currentId) { // если элемент с таким id уже есть в кэше
+                  this.selectedLetter = val; // выставляю в активное письмо val из кэш массива
                   this.checkerLengthArray_bcc_cc();
                   this.checkerLength_addressess();
-                  this.emailServ.activeLett[data.id] = true; // кэширование прочитанных писем в сторадж
-                  this.emailServ.hiddenEmpty = true;
-                  flagged = false;
+                  this.emailServ.activeLett[data.id] = true; // ставлю в колбасе активным письмом
+                  this.emailServ.hiddenEmpty = true; // удалю вообще скоро
+                  this.preload_to_wait_status = false; // отменяю крутилку
+                  flagged = false; // скидываю флаг, чтоб не делать запрос
                 }
           });
-          if (flagged) {
+          if (flagged) { // если флаг не был скинут из кэша
             this.httpPost(
       `${this.emailServ.ip}/mail/mail`,
       // tslint:disable-next-line:max-line-length
@@ -104,16 +106,17 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
         // const test = this.selected_letter_part2.push(dataMails);
 // console.log(dataMails);
         this.emailServ.haveResponse = true;
-        this.selectedLetter = dataMails;
+        this.selectedLetter = dataMails; // ставлю активным письмом ответ с сервера
         // console.log(this.selectedLetter);
-        this.cahse_letters.push(this.selectedLetter);
+        this.cahse_letters.push(this.selectedLetter); // добавляю в кэш уже ответ с сервера
+        this.preload_to_wait_status = false; // отменяю крутилку
 
 
         this.checkerLengthArray_bcc_cc();
         this.checkerLength_addressess();
         this.emailServ.hiddenEmpty = true;
         });
-          this.emailServ.activeLett[data.id] = true;
+          this.emailServ.activeLett[data.id] = true; // делаю активным в колбасе письмо
 
       }
 

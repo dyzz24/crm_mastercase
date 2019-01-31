@@ -77,8 +77,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.httpPost(
               `${this.emailServ.ip}/mail/draft`,
               {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
-                this.important_template = dataMails[0].flagged;
 
+                this.important_template = dataMails[0].flagged;
                 this.template_title = dataMails[0].title;
                 this.to = [];
                 this.copy = [];
@@ -90,19 +90,18 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
                  } else {
                   this.messages = dataMails[0].html;
-
                  }
                  this.subject = dataMails[0].subject;
-
-                 if (dataMails.details && dataMails[0].details.recipients.to) {
+                 if (dataMails[0].details && dataMails[0].details.recipients.to) {
                  const newArray_to = [];
                 dataMails[0].details.recipients.to.filter(val => {
                   newArray_to.push(val.address);
                 });
+
                 this.to = newArray_to;
               }
 
-              if (dataMails.details &&  dataMails[0].details.recipients.cc) {
+              if (dataMails[0].details && dataMails[0].details.recipients.cc) {
                 const newArray_copy = [];
                 dataMails[0].details.recipients.cc.filter(val => {
                   newArray_copy.push(val.address);
@@ -110,7 +109,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.copy = newArray_copy;
               }
 
-              if (dataMails.details &&  dataMails[0].details.recipients.bcc) {
+              if (dataMails[0].details && dataMails[0].details.recipients.bcc) {
                 const newArray_hidden_copy = [];
                 dataMails[0].details.recipients.bcc.filter(val => {
                   newArray_hidden_copy.push(val.address);
@@ -130,24 +129,24 @@ export class NewMessageComponent implements OnInit, DoCheck {
               return;
           }
 
-          if (this.status === 'template') {
+          if (this.status === 'template') { // шаблоны, добавление их в письмо
             this.httpPost(
               `${this.emailServ.ip}/mail/draft`,
               {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
                 this.template_title = dataMails[0].title;
-                this.to = [];
-                this.copy = [];
-                this.hidden_copy = [];
+                // this.to = [];
+                // this.copy = [];
+                // this.hidden_copy = [];
                 // this.messages = '';
                 this.subject = '';
+                if (this.messages === undefined) {
+                  this.messages = '';
+                }
                 if (dataMails.html === null) {
-                  // this.messages = dataMails[0].text;
-
                               this.messages =   `${dataMails[0].text} <br>
                                <blockquote type="cite"> ${this.messages} </blockquote>`;
 
                  } else {
-                  // this.messages = dataMails[0].html;
 
                             this.messages =   `${dataMails[0].html}  <br>
                             <blockquote type="cite"> ${this.messages} </blockquote>`;
@@ -155,28 +154,28 @@ export class NewMessageComponent implements OnInit, DoCheck {
                  }
                  this.subject = dataMails[0].subject;
 
-                 if (dataMails.details && dataMails[0].details.recipients.to) {
+                 if (dataMails[0].details.recipients.to) {
                  const newArray_to = [];
                 dataMails[0].details.recipients.to.filter(val => {
-                  newArray_to.push(val.address);
+                  this.to.push(val.address);
                 });
-                this.to = newArray_to;
+
               }
 
-              if (dataMails.details &&  dataMails[0].details.recipients.cc) {
+              if (dataMails[0].details.recipients.cc) {
                 const newArray_copy = [];
                 dataMails[0].details.recipients.cc.filter(val => {
-                  newArray_copy.push(val.address);
+                  this.copy.push(val.address);
                 });
-                this.copy = newArray_copy;
+
               }
 
-              if (dataMails.details &&  dataMails[0].details.recipients.bcc) {
+              if (dataMails[0].details.recipients.bcc) {
                 const newArray_hidden_copy = [];
                 dataMails[0].details.recipients.bcc.filter(val => {
-                  newArray_hidden_copy.push(val.address);
+                  this.hidden_copy.push(val.address);
                 });
-                this.hidden_copy = newArray_hidden_copy;
+
               }
 
               });
@@ -195,6 +194,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
           }
 
           if (this.status === 'reply') {
+
             this.httpPost(
               `${this.emailServ.ip}/mail/mail`,
               {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
