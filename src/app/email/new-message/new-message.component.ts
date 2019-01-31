@@ -150,11 +150,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
                             this.messages =   `${dataMails[0].html}  <br>
                             <blockquote type="cite"> ${this.messages} </blockquote>`;
-
                  }
                  this.subject = dataMails[0].subject;
 
-                 if (dataMails[0].details.recipients.to) {
+                 if (dataMails[0].details && dataMails[0].details.recipients.to) {
                  const newArray_to = [];
                 dataMails[0].details.recipients.to.filter(val => {
                   this.to.push(val.address);
@@ -162,7 +161,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
               }
 
-              if (dataMails[0].details.recipients.cc) {
+              if (dataMails[0].details && dataMails[0].details.recipients.cc) {
                 const newArray_copy = [];
                 dataMails[0].details.recipients.cc.filter(val => {
                   this.copy.push(val.address);
@@ -170,7 +169,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
               }
 
-              if (dataMails[0].details.recipients.bcc) {
+              if (dataMails[0].details && dataMails[0].details.recipients.bcc) {
                 const newArray_hidden_copy = [];
                 dataMails[0].details.recipients.bcc.filter(val => {
                   this.hidden_copy.push(val.address);
