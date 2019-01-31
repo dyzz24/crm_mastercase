@@ -359,6 +359,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
     copy: [{
       address: this.copy
     }],
+    hidden_copy: [{
+      address: this.hidden_copy
+    }],
     subject: this.subject,
     html: this.messages
   }));

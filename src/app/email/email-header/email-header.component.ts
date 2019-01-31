@@ -17,9 +17,8 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
 
   @Output() select_cancell_all_inputs = new EventEmitter(); // отправка события родителю
   @Output() filters_selected = new EventEmitter(); // отправка события родителю
-
-
   @Output() search_function = new EventEmitter(); // отправка события родителю для скрытия компонента папок
+  @Output() scroll_up_event = new EventEmitter(); // отправка события родителю для скрытия компонента папок
   @Input() success_search;
   @Input() not_success_search;
 
@@ -82,6 +81,10 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
     this.hidden_top_menu = false; // скрываю меню
     this.toggle_checked_inputs_flag = true; // скидываю кнопку массового выделения (если вдруг стояла)
       this.filters_selected.next(data); // отправляю событие родителю
+  }
+
+  scroll_up() {
+      this.scroll_up_event.next();
   }
 
 }

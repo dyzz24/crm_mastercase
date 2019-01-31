@@ -262,7 +262,7 @@ cancell_all_checked() {
     const all_data_for_http = []; // массив с id писем для бэка
     for (const key of this.id_selected_letter) {
       all_data_for_http.push( // пушу в него объекты для бэка
-        {draftId: key,
+        {id: key,
         flagged: true,
         address: this.emailServ.idPostForHTTP}
       );
@@ -321,6 +321,11 @@ cancell_all_checked() {
 
   showError(param) {
     this.toastrServ.error(param);
+  }
+
+  scroll_up() {
+    const toTopBlock = document.querySelector('.wrapper');
+    toTopBlock.scroll(0, 0);
   }
 
 }
