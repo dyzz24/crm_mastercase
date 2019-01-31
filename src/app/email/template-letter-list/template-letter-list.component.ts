@@ -54,7 +54,7 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
     });
 
     this.subscription_emailServ_template_list = this.emailServ.draft_list_edited.subscribe(params => {
-      if (params === 'true') {
+      if (params === 'delete') {
         this.canc_select();
       }
 

@@ -95,7 +95,7 @@ export class EmailServiceService {
     this.draft_list.filter((val, ind, arr) => { // прохожусь по массиву всех конвертиков
           if  (+val.draft_id === +draft_id)  { // если нашлись
             arr.splice(ind, 1);
-            this.draft_list_edited.next('true');
+            this.draft_list_edited.next('delete');
           }
         });
         // this.httpPost(`${global_params.ip}/mail/setbox`, {
@@ -113,6 +113,23 @@ export class EmailServiceService {
             // поэтому я отправляю компоненту списка шаблонов (колбасе)
             // событие, что бы тот снял чекбоксы (вызвал ф-ю снятия)
             // он подписан на это событие
+  }
+
+  important_template(flagged, draft_id) {
+    this.httpPost(
+      `${global_params.ip}/mail/draft_update`,
+      {id: draft_id,
+        flagged: !flagged,
+        address: this.idPostForHTTP // смена шаблона на избранное
+      }).subscribe((data) => {});
+
+      this.draft_list.filter((val, ind, arr) => { // прохожусь по массиву всех конвертиков
+        if  (+val.draft_id === +draft_id)  { // если нашлись
+          val.flagged = !flagged; // меняю флаг на противоположное значение того, которое принимает
+        }
+      });
+
+      this.draft_list_edited.next(flagged); // отправляю флаг для изменения в компоненте new message звездочки
   }
 
 

@@ -423,7 +423,8 @@ button {
     transition: .4s;
     margin: 0 10px;
 
-    span {
+    span:not(.la.la-star-o),
+    span:not(.la.la-star) {
         color: #9CABC2;
         margin-right: 9px;
     }

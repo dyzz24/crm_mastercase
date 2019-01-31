@@ -9,6 +9,20 @@
         routerLink="../create"
         *ngIf="this.edit_template"
         ><span class='la la-folder'></span>Новый шаблон</button>
+
+        <button class='new_btn'
+        *ngIf="this.edit_template"
+        title="Избранное"
+        (click) = 'this.emailServ.important_template(this.important_template, this.mail_id)'
+
+        ><span class='la la-star-o'
+        *ngIf="!this.important_template"
+        ></span>
+        <span class='la la-star'
+        *ngIf="this.important_template"
+        ></span>
+      </button>
+
         <div class="stick_splitter"></div>
 
         <button class='new_btn'

@@ -7,6 +7,8 @@ import { AuthorizationService } from '../../authorization.service';
 import { ToastrService} from 'ngx-toastr';
 import { ReadVarExpr } from '@angular/compiler';
 import {NewMessageService} from '../new-message/new-message.service';
+import { DatePipe } from '@angular/common';
+import { isDate } from '@angular/common/src/i18n/format_date';
 
 
 
@@ -48,7 +50,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public important_tmp = false;
     edit_template = false;
     public template_title: string;
-
+    public important_template: boolean;
+    public subscription_emailServ_template_list: Subscription;
 
 
 
@@ -68,10 +71,14 @@ export class NewMessageComponent implements OnInit, DoCheck {
       (queryParam: any) => {
           this.mail_id = queryParam['id'];
           this.status = queryParam['status'];
-          if (this.status === 'template') {
+          if (queryParam.edit_tmp === 'true') { // для колбасины и редактирования шаблонов
+            this.edit_template = true;
+
             this.httpPost(
               `${this.emailServ.ip}/mail/draft`,
               {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
+                this.important_template = dataMails[0].flagged;
+
                 this.template_title = dataMails[0].title;
                 this.to = [];
                 this.copy = [];
@@ -80,8 +87,71 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.subject = '';
                 if (dataMails.html === null) {
                   this.messages = dataMails[0].text;
+
                  } else {
                   this.messages = dataMails[0].html;
+
+                 }
+                 this.subject = dataMails[0].subject;
+
+                 if (dataMails.details && dataMails[0].details.recipients.to) {
+                 const newArray_to = [];
+                dataMails[0].details.recipients.to.filter(val => {
+                  newArray_to.push(val.address);
+                });
+                this.to = newArray_to;
+              }
+
+              if (dataMails.details &&  dataMails[0].details.recipients.cc) {
+                const newArray_copy = [];
+                dataMails[0].details.recipients.cc.filter(val => {
+                  newArray_copy.push(val.address);
+                });
+                this.copy = newArray_copy;
+              }
+
+              if (dataMails.details &&  dataMails[0].details.recipients.bcc) {
+                const newArray_hidden_copy = [];
+                dataMails[0].details.recipients.bcc.filter(val => {
+                  newArray_hidden_copy.push(val.address);
+                });
+                this.hidden_copy = newArray_hidden_copy;
+              }
+
+              });
+
+              this.subscription_emailServ_template_list = this.emailServ.draft_list_edited.subscribe(params => {
+                if (params === true) { // подписался на изменение сервиса для того что бы менять звездочку в шаблонах
+                    this.important_template = false;
+                } else {
+                  this.important_template = true;
+                }
+              });
+              return;
+          }
+
+          if (this.status === 'template') {
+            this.httpPost(
+              `${this.emailServ.ip}/mail/draft`,
+              {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
+                this.template_title = dataMails[0].title;
+                this.to = [];
+                this.copy = [];
+                this.hidden_copy = [];
+                // this.messages = '';
+                this.subject = '';
+                if (dataMails.html === null) {
+                  // this.messages = dataMails[0].text;
+
+                              this.messages =   `${dataMails[0].text} <br>
+                               <blockquote type="cite"> ${this.messages} </blockquote>`;
+
+                 } else {
+                  // this.messages = dataMails[0].html;
+
+                            this.messages =   `${dataMails[0].html}  <br>
+                            <blockquote type="cite"> ${this.messages} </blockquote>`;
+
                  }
                  this.subject = dataMails[0].subject;
 
@@ -131,9 +201,12 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.to = [dataMails.from_address];
                 this.subject = `RE: ${dataMails.subject}`;
                 if (dataMails.html === null) {
-                  this.messages = dataMails.text;
+
+                  this.messages = `${dataMails.from_address} писал :
+                  <blockquote type="cite"> ${dataMails.text} </blockquote>`;
                  } else {
-                  this.messages = dataMails.html;
+                  this.messages = `${dataMails.from_address} писал :
+                  <blockquote type="cite"> ${dataMails.html} </blockquote>`;
                  }
               });
           }
@@ -155,9 +228,11 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.to.push(dataMails.from_address);
 
                 if (dataMails.html === null) {
-                  this.messages = dataMails.text;
+                  this.messages = `${dataMails.from_address} писал :
+                  <blockquote> ${dataMails.text} </blockquote>`;
                  } else {
-                  this.messages = dataMails.html;
+                  this.messages = `${dataMails.from_address} писал :
+                  <blockquote> ${dataMails.html} </blockquote>`;
                  }
               });
           }
@@ -184,9 +259,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.edit_template = false;
           }
 
-          if (queryParam.edit_tmp === 'true') { // для колбасины и редактирования шаблонов
-            this.edit_template = true;
-          }
 
 
       }
