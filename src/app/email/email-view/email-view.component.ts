@@ -105,7 +105,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 // console.log(dataMails);
         this.emailServ.haveResponse = true;
         this.selectedLetter = dataMails;
-
+        // console.log(this.selectedLetter);
         this.cahse_letters.push(this.selectedLetter);
 
 
@@ -116,6 +116,8 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
           this.emailServ.activeLett[data.id] = true;
 
       }
+
+
         });
 
 

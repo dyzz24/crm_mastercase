@@ -555,10 +555,9 @@ close_menu() {
 select_some_letters(e, index) {
 
   if (e.shiftKey) { // если зажали шифт
-    if (e.target.className === 'checkbox') { // чтобы не всплывало событие до чекбокса
+    if (e.target.className === 'avatar_checkboxes hidden_checkbox') { // чтобы не всплывало событие до чекбокса
 
       if (e.target.checked) { // если изменили состояние инпута на тру
-
 
         if (!this.selected_one_input_elem) { // если с шифтом нажали без выбранного индекса по клику без шифта
           this.min_max_arr = [0, index]; // получаю массив от индексного (чекнутого) элема до макс. длины
@@ -582,37 +581,39 @@ select_some_letters(e, index) {
         );
 
           // const allInputs = document.querySelectorAll('.checkbox') as HTMLDivElement;
-          const allInputs: HTMLDivElement = <any>document.querySelectorAll('.checkbox');
-          for (let i = 0; i <= index; i++) {
+          const allInputs: HTMLDivElement = <any>document.querySelectorAll('.avatar_checkboxes.hidden_checkbox');
+          for (let i = this.min_max_arr[0]; i <= this.min_max_arr[1]; i++) {
             allInputs[i].checked = true;
           }
 
       } else { // если по чекнутому чекбоксу нажали
         e.target.checked = false; // скидываю его
+        const allInputs = document.querySelectorAll('.avatar_checkboxes.hidden_checkbox');
         if (!this.selected_one_input_elem) {
-          this.min_max_arr = [index, this.emailServ.idLetters.length]; // получаю массив от индексного (чекнутого) элема до макс. длины
+          this.min_max_arr = [index, allInputs.length - 1]; // получаю массив от индексного (чекнутого) элема до макс. длины
           }
         if (this.selected_one_input_elem) {
         // tslint:disable-next-line:max-line-length
-        this.min_max_arr = [this.selected_one_input_elem, this.emailServ.idLetters.length]; // получаю массив от индексного (чекнутого) элема до макс. длины
+        this.min_max_arr = [this.selected_one_input_elem, index]; // получаю массив от индексного (чекнутого) элема до кликного индекса
         this.min_max_arr.sort((a, b) => a - b);
         this.selected_one_input_elem = undefined;
         }
 
         this.emailServ.hideAvatars.fill(false, this.min_max_arr[0], this.min_max_arr[1] + 1);
-        const allInputs = document.querySelectorAll('.checkbox');
-          for (const key of <any>allInputs) {
-            key.checked = false; // ставлю в тру
+
+          for (let i = this.min_max_arr[0]; i <= this.min_max_arr[1]; i++) {
+            allInputs[i].checked = false;
           }
           this.emailServ.idLetters.splice(index); // начиная с индекса по которому кликнули, удаляю все id-шки из выбранных
       }
     }
           this.emailServ.checkerTrash();
-          console.log(this.emailServ.idLetters);
+
           return;
   }
 
 this.selected_one_input_elem = index; // если просто клик, ловлю индекс
+
 
   }
 

@@ -103,18 +103,23 @@
         
         >
         <div class="avatar__group">
-          <div class="avatar" (click)='select_some_letters($event, i)'>
+          <div class="avatar" >
 
-              <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{letters.from_address.charAt(0)}}</p>
+              <!-- <p [class.hiddenName]='emailServ.hideAvatars[i]'>{{letters.from_address.charAt(0)}}</p> -->
 
-            <!-- <img src='' [class.hiddenAva]='emailServ.hideAvatars[i]'> -->
-            <label class='checkedLabel' [class.visibleLabel]='emailServ.hideAvatars[i]'>
+
+            <!-- <label class='checkedLabel' [class.visibleLabel]='emailServ.hideAvatars[i]'>
               <input type='checkbox' class='checkbox' (click)='selectedLetters(letters.mail_id, $event, i)'
-            
-              >
+              > -->
+
+              <input type="checkbox"  id='my_id{{letters.mail_id}}' class='avatar_checkboxes hidden_checkbox'
+              (click)='select_some_letters($event, i)'
+              (click)='selectedLetters(letters.mail_id, $event, i)'>
+              <label for='my_id{{letters.mail_id}}' class="checkbox_block">{{letters.from_address.charAt(0)}}</label>
+
               <!--собираю id писем с чеккед инпутов-->
-              <div class='checker'></div>
-            </label>
+              <!-- <div class='checker'></div>
+            </label> -->
             <div class="avatar__info-butt"  
           
             [class.active_in_work]='this.emailServ.lettersList[i]?.work_user_id.userId === this.authorizationServ.userId'
