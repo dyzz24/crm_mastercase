@@ -219,31 +219,32 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     // this.emailServ.hideAvatars[i] = !this.emailServ.hideAvatars[i];
     // множественный выбор писем в папке ****************
     if (e.shiftKey) {
-      return;
+      return; // еслт по шифту - выходим
     }
-    if (e.target.checked) {
-      this.emailServ.idLetters = [...this.emailServ.idLetters, +id];
-      this.emailServ.hideAvatars[i] = true;
+    if (e.target.checked) { // если инпут чекнули
+      this.emailServ.idLetters = [...this.emailServ.idLetters, +id]; // закладываю id письмеца
+      this.emailServ.hideAvatars[i] = true; // ставлю в true аватарку (для отображения полосы выделенного письма)
+      // this.emailServ.idLetters = this.emailServ.idLetters.filter(
+      //   (val, ind, self) => { // фильтрую дублирование id, чтоб не добавлять 10 одинаковых (может убрать)
+      //     return self.indexOf(val) === ind;
+      //   }
+      // );
+
+    } else {// если по чекнутому инпуту клик
+      this.emailServ.hideAvatars[i] = false; // удаляю из доп полосы
       this.emailServ.idLetters = this.emailServ.idLetters.filter(
-        (val, ind, self) => {
-          return self.indexOf(val) === ind;
-        }
-      );
-    } else {
-      this.emailServ.hideAvatars[i] = false;
-      this.emailServ.idLetters = this.emailServ.idLetters.filter(
-        item => item !== +id
+        item => item !== +id // удаляю id из списка id
       );
     }
 
-    this.emailServ.checkerTrash();
+    this.emailServ.checkerTrash(); // рудимент, потом отпадет
   }
 
-  newMessage() {
-    this.rout.navigate([this.emailServ.urlParams + '/create']);
-    this.emailServ.fullPath = this.emailServ.urlParams + '/create';
-    this.emailServ.hiddenEmpty = true;
-  }
+  // newMessage() {
+  //   this.rout.navigate([this.emailServ.urlParams + '/create']);
+  //   this.emailServ.fullPath = this.emailServ.urlParams + '/create';
+  //   this.emailServ.hiddenEmpty = true;
+  // }
 
   statusMessageSpam(param) {
     if (this.emailServ.lettersList[param].box_id === 4) {
