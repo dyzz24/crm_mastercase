@@ -1,0 +1,26 @@
+
+@import '../mixins';
+.empty__cont {
+    width: 100%;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+     p{
+        width: 230px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #858585;
+        margin-bottom: 20px;
+        text-align: center;
+     }
+
+}
+
+
+.main__butt {
+    width: 200px;
+    background: #d9e6f7;
+}
