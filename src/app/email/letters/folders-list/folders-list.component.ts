@@ -24,19 +24,13 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log(this.all_folders);
-    this.all_folders = this.all_folders.filter(val => val.address === this.mail_id // ловлю папки открытого ящика
+
+
+   this.all_folders = this.all_folders.filter(val => val.address === this.mail_id // ловлю папки открытого ящика
     ).map(item => {
-      return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs) [0][0] || []; // чилды входящих
+      return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs) [0] || []; // чилды входящих
    });
 
-
-  //  this.all_folders = this.all_folders.filter(val => val.address === this.mail_id // ловлю папки открытого ящика
-  //   ).map(item => {
-  //     return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)
-  //     .map(item3 => item3) [0] || []; // чилды входящих
-  //  });
-  //  console.log(this.all_folders);
 
     // console.log(this.emailServ.selectedMess);
   }
