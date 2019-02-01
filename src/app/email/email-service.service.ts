@@ -117,8 +117,8 @@ export class EmailServiceService {
 
   important_template(flagged, draft_id) {
     this.httpPost(
-      `${global_params.ip}/mail/draft_update`,
-      {id: draft_id,
+      `${global_params.ip}/mail/draft/update`,
+      {draftId: +draft_id,
         flagged: !flagged,
         address: this.idPostForHTTP // смена шаблона на избранное
       }).subscribe((data) => {});

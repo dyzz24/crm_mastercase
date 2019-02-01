@@ -76,7 +76,7 @@ export class FoldersComponent implements OnInit, DoCheck {
       this.deepSearch(this.user_folders, this.id_folder); // главная функция
       this.closeViewer(); // закрыть
       const obj_for_resp = [{id: 1, childs: this.user_folders}];
-      this.httpPost(`${this.ip}/mail/box`, {
+      this.httpPost(`${this.ip}/mail/box/update`, {
         address: this.box_id, boxes: obj_for_resp
       } , {contentType: 'application/json'}).subscribe((data2) => {
     });

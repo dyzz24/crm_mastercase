@@ -36,38 +36,41 @@ export class SocketService {
     this.showSuccess(`Пользователь  залогинен`);
     this.socketConnectedFlag = true;  // как только законектился, меняю флаг чтобы не пускать кучу запросов
 });
-this.socket.on('mail/work', (msg) => {
+this.socket.on('mail/envelope/update', (msg) => {
   const dataStr = JSON.parse(msg);
-  console.log(dataStr);
-  if (dataStr.status === 4) {
-    this.showSuccess(`Пользователь ${dataStr.name} взял письмо в работу`);
+
+  dataStr.forEach(el => {
+    console.log(el);
+
+  if (el.status === 4) {
+    this.showSuccess(`Пользователь ${el.become.name} взял письмо в работу`);
     this.emailServ.lettersList.map((val, ind) => {
-      if (+val.mail_id === +dataStr.mailId) {
+      if (+val.mail_id === +el.mailId) {
           val.work_user_id = {
-          email: dataStr.email,
-          // firstName: dataStr.firstName,
-          name: dataStr.name,
-          userId: dataStr.userId};
+          email: el.become.email,
+          // firstName: el.firstName,
+          name: el.become.name,
+          userId: el.userId};
       }
   });
-  this.change_params_in_work(dataStr);
+  this.change_params_in_work(el);
   }
-  if (dataStr.status === 0) {
+  if (el.status === 0) {
     this.showSuccess(`Пользователь  удалил письмо из работы`);
     this.emailServ.lettersList.map((val, ind) => {
-      if (+val.mail_id === +dataStr.mailId) {
+      if (+val.mail_id === +el.mailId) {
         val.work_user_id = null;
       }
   });
 
-  this.change_params_in_work(dataStr);
+  this.change_params_in_work(el);
 
   }
-  if (dataStr.status === 2) {
-this.showError(`Письмо УЖЕ взято в работу пользователем ${dataStr.name}`);
+  if (el.status === 2) {
+this.showError(`Письмо УЖЕ взято в работу пользователем ${el.been.name}`);
   }
  });
-
+});
  this.socket.on('mail/sync', (newLett) => {
   const dataLetter = JSON.parse(newLett);
   console.log(dataLetter);

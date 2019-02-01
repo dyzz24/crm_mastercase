@@ -43,12 +43,12 @@ export class TemplateComponent implements OnInit, DoCheck {
 
 
   ngOnInit() {
- this.httpPost(
-    `${this.ip}/mail/mails`,
-    // tslint:disable-next-line:max-line-length
-    {address: this.email_address}).subscribe((data) => {
-      // console.log(data);
-  });
+//  this.httpPost(
+//     `${this.ip}/mail/mails`,
+//     // tslint:disable-next-line:max-line-length
+//     {address: this.email_address}).subscribe((data) => {
+//       // console.log(data);
+//   });
 }
    public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
@@ -111,9 +111,9 @@ export class TemplateComponent implements OnInit, DoCheck {
       this.show_hidden_templ = ! this.show_hidden_templ;
       if (this.show_hidden_templ) {
         this.httpPost(
-          `${this.ip}/mail/draft`,
+          `${this.ip}/mail/draft/`,
           // tslint:disable-next-line:max-line-length
-          {address: this.email_address
+          {
           }).subscribe((data) => {
             // console.log(data);
             this.all_tmp = data.filter(val => {

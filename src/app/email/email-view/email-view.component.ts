@@ -100,9 +100,9 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
           });
           if (flagged) { // если флаг не был скинут из кэша
             this.httpPost(
-      `${this.emailServ.ip}/mail/mail`,
+      `${this.emailServ.ip}/mail/envelope/`,
       // tslint:disable-next-line:max-line-length
-      {address: this.emailServ.idPostForHTTP, mailId: data.id}).subscribe((dataMails) => {
+      {address: this.emailServ.idPostForHTTP, mailId: +data.id}).subscribe((dataMails) => {
         // const test = this.selected_letter_part2.push(dataMails);
 // console.log(dataMails);
         this.emailServ.haveResponse = true;
@@ -131,7 +131,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
             this.selectedLetter.work_user_id = null;
           }
           if ( val.status === 4) { // если добавил я - ставлю в представление
-            this.selectedLetter.work_user_id = {userId: val.userId, name: val.name};
+            this.selectedLetter.work_user_id = {userId: val.userId, name: val.become.name};
           }
       });
               }
@@ -219,7 +219,7 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
     const messageBody = this.messageContainer.nativeElement;
     messageBody.classList.add('dellLetter');
     const id = this.emailServ.currentId;
-    this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+    this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
           mailId: +id,
           boxId: 3,
           address: this.emailServ.idPostForHTTP

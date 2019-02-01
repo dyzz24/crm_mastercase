@@ -57,7 +57,7 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
     }
     const id_folder = target.getAttribute('id'); // ловлю ее id
     this.selected_mail_id.filter(val => {
-        this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+        this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
       mailId: +val, // кидаю ID-шники
       boxId: +id_folder, // id папки
       address: this.emailServ.idPostForHTTP

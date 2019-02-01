@@ -205,7 +205,7 @@ drop_letter(e) {
   const previous_folders_box_id = e.dataTransfer.getData('box_id'); // ловлю предыдущий бокс папки (откуда перенес)
   const data_folder_id = e.target.closest('.link_area').id;
 
-  this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
+  this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
     mailId: +data_mail_id,
     boxId: +data_folder_id,
     address: this.emailServ.idPostForHTTP

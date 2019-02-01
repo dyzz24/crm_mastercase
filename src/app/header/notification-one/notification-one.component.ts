@@ -45,15 +45,20 @@ export class NotificationOneComponent implements OnInit, DoCheck {
 
   }
   getInfo() {
-    this.httpPost(`${this.authorizationServ.ip}/mail/boxes`, {} ,
+    this.httpPost(`${this.authorizationServ.ip}/mail/box/`, {} ,
       {contentType: 'application/json'}).subscribe((data2) => {
-        if (data2.length === 0) {
-          return;
-        }
-        data2.map((val) => {
-          this.newMessagesCountArray = [...this.newMessagesCountArray, +val.count]; // собираю их каунты
-        });
-            this.newMessagesCount = this.newMessagesCountArray.reduce((acc, val) => acc + val); // суммирую каунты
+
+        this.newMessagesCount  = data2.stats.reduce((summ, item) => {
+            summ +=  item && +item.count || 0;
+            return summ;
+        }, 0);
+        // if (data2.length === 0) {
+        //   return;
+        // }
+        // data2.map((val) => {
+        //   this.newMessagesCountArray = [...this.newMessagesCountArray, +val.count]; // собираю их каунты
+        // });
+        //     this.newMessagesCount = this.newMessagesCountArray.reduce((acc, val) => acc + val); // суммирую каунты
       });
   }
 

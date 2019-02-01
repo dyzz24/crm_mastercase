@@ -75,8 +75,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.edit_template = true;
 
             this.httpPost(
-              `${this.emailServ.ip}/mail/draft`,
-              {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
+              `${this.emailServ.ip}/mail/draft/`,
+              {address: this.emailServ.idPostForHTTP, draftId: +this.mail_id}).subscribe((dataMails) => {
 
                 this.important_template = dataMails[0].flagged;
                 this.template_title = dataMails[0].title;
@@ -85,7 +85,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.hidden_copy = [];
                 this.messages = '';
                 this.subject = '';
-                if (dataMails.html === null) {
+                if (dataMails[0].html === null) {
                   this.messages = dataMails[0].text;
 
                  } else {
@@ -131,8 +131,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
           if (this.status === 'template') { // шаблоны, добавление их в письмо
             this.httpPost(
-              `${this.emailServ.ip}/mail/draft`,
-              {address: this.emailServ.idPostForHTTP, id: this.mail_id}).subscribe((dataMails) => {
+              `${this.emailServ.ip}/mail/draft/`,
+              {address: this.emailServ.idPostForHTTP, draftId: +this.mail_id}).subscribe((dataMails) => {
                 this.template_title = dataMails[0].title;
                 // this.to = [];
                 // this.copy = [];
@@ -142,7 +142,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 if (this.messages === undefined) {
                   this.messages = '';
                 }
-                if (dataMails.html === null) {
+                if (dataMails[0].html === null) {
                               this.messages =   `${dataMails[0].text} <br>
                                <blockquote type="cite"> ${this.messages} </blockquote>`;
 
@@ -154,7 +154,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
                  this.subject = dataMails[0].subject;
 
                  if (dataMails[0].details && dataMails[0].details.recipients.to) {
-                 const newArray_to = [];
+
                 dataMails[0].details.recipients.to.filter(val => {
                   this.to.push(val.address);
                 });
@@ -162,7 +162,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
               }
 
               if (dataMails[0].details && dataMails[0].details.recipients.cc) {
-                const newArray_copy = [];
+
                 dataMails[0].details.recipients.cc.filter(val => {
                   this.copy.push(val.address);
                 });
@@ -170,7 +170,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
               }
 
               if (dataMails[0].details && dataMails[0].details.recipients.bcc) {
-                const newArray_hidden_copy = [];
                 dataMails[0].details.recipients.bcc.filter(val => {
                   this.hidden_copy.push(val.address);
                 });
@@ -185,8 +184,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.add_drag_input_data(this.newMessageService.files);
             this.mail_id = this.activatedRoute.snapshot.params.id;
             this.httpPost(
-              `${this.emailServ.ip}/mail/mail`,
-              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+              `${this.emailServ.ip}/mail/envelope/`,
+              {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address];
                 this.subject = `RE: ${dataMails.subject}`;
               });
@@ -195,8 +194,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
           if (this.status === 'reply') {
 
             this.httpPost(
-              `${this.emailServ.ip}/mail/mail`,
-              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+              `${this.emailServ.ip}/mail/envelope/`,
+              {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address];
                 this.subject = `RE: ${dataMails.subject}`;
                 if (dataMails.html === null) {
@@ -212,8 +211,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
           if (this.status === 'reply_all') {
             this.httpPost(
-              `${this.emailServ.ip}/mail/mail`,
-              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+              `${this.emailServ.ip}/mail/envelope/`,
+              {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
 
                 this.subject = `RE: ${dataMails.subject}`;
                 const newArray = [];
@@ -238,8 +237,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
           if (this.status === 'forward') {
             this.httpPost(
-              `${this.emailServ.ip}/mail/mail`,
-              {address: this.emailServ.idPostForHTTP, mailId: this.mail_id}).subscribe((dataMails) => {
+              `${this.emailServ.ip}/mail/envelope/`,
+              {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.subject = `${dataMails.subject}`;
                 if (dataMails.html === null) {
                   this.messages = dataMails.text;
@@ -458,23 +457,32 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
   return {address: val};
 });
   this.save_tmp_state = false; // закрыть поле ввода имени шаблона
+  const object_for_template_list = {
+    address: this.from, // имейл
+    title: this.tmp_name,
+    text: null,
+    html: this.messages,
+    subject: this.subject || null,
+    flagged: this.important_tmp,
+    recipients: {
+    from: [
+      {address: this.from,
+      }
+    ],
+   to: to_send,
+   cc: cc_send,
+   bcc: bcc_send
+  }
+  };
   this.httpPost(
-    `${this.emailServ.ip}/mail/draft_create`,
+    `${this.emailServ.ip}/mail/draft/create`,
     // tslint:disable-next-line:max-line-length
-    {address: this.from, // имейл
-      title: this.tmp_name,
-      text: '',
-      html: this.messages,
-      subject: this.subject,
-      flagged: this.important_tmp,
-      from: [
-        {address: this.from,
-        }
-      ],
-     to: to_send,
-     cc: cc_send,
-     bcc: bcc_send
-    }).subscribe(() => {});
+    object_for_template_list).subscribe((data) => {
+
+      object_for_template_list['draft_id'] = data.draftId;
+      this.emailServ.draft_list.push(object_for_template_list);
+
+    });
   this.tmp_name = ''; // очищаю инпут после сохранения шаблона
   this.show_notification('Шаблон создан');
 
@@ -592,12 +600,13 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
 return {address: val};
 });
 this.httpPost(
-  `${this.emailServ.ip}/mail/draft_update`,
+  `${this.emailServ.ip}/mail/draft/update`,
   // tslint:disable-next-line:max-line-length
   {address: this.from, // имейл
-    id: this.mail_id,
+    draftId: +this.mail_id,
     html: this.messages,
     subject: this.subject,
+    recipients: {
     from: [
       {address: this.from,
       }
@@ -605,6 +614,7 @@ this.httpPost(
    to: to_send,
    cc: cc_send,
    bcc: bcc_send
+  }
   }).subscribe(() => {
     this.showSuccess('Изменения сохранены');
   });

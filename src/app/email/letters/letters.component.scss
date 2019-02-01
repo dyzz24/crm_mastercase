@@ -473,7 +473,7 @@ background: rgba(141, 175, 255, 0.507);
     height: calc(100vh - 60px);
     flex-direction: column;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     background-color: #f3f5f7;
 }
