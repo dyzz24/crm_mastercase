@@ -7,6 +7,7 @@ import { SocketService } from '../../socket.service';
 import { AuthorizationService } from '../../authorization.service';
 import { PreserverComponent } from '../../preserver/preserver.component';
 import {NewMessageService} from '../new-message/new-message.service';
+import {global_params} from '../../global';
 
 
 export interface SelectedLetter {
@@ -100,7 +101,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
           });
           if (flagged) { // если флаг не был скинут из кэша
             this.httpPost(
-      `${this.emailServ.ip}/mail/envelope/`,
+      `${global_params.ip}/mail/envelope/`,
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP, mailId: +data.id}).subscribe((dataMails) => {
         // const test = this.selected_letter_part2.push(dataMails);
@@ -219,7 +220,7 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
     const messageBody = this.messageContainer.nativeElement;
     messageBody.classList.add('dellLetter');
     const id = this.emailServ.currentId;
-    this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
+    this.httpPost(`${global_params.ip}/mail/envelope/update`, {
           mailId: +id,
           boxId: 3,
           address: this.emailServ.idPostForHTTP
@@ -313,7 +314,7 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
       text: this.messages
     }));
 
-    this.httpPost(`${this.emailServ.ip}/mail/send`, formData).subscribe(resp => {
+    this.httpPost(`${global_params.ip}/mail/send`, formData).subscribe(resp => {
   });
 
     this.sending_status = true;
@@ -349,7 +350,7 @@ onFileChange(event) {
 
 gownload_attach(e, attach) {
 
-  this.httpDownload(`${this.emailServ.ip}/mail/download`, {
+  this.httpDownload(`${global_params.ip}/mail/download`, {
     hashes: [{'hash' : attach.hash, 'name': attach.name}],
     zip: false
 }).subscribe(data => {
@@ -364,7 +365,7 @@ download_all_attach(attach) {
   const hashes = attach.map(val => { // собираю hash из массива c вложениями
       return {'hash': val.hash, 'name': val.name };
   });
-  this.httpDownload(`${this.emailServ.ip}/mail/download`, {
+  this.httpDownload(`${global_params.ip}/mail/download`, {
     hashes: hashes,
     zip: true
 }).subscribe(data => {

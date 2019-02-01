@@ -46,7 +46,7 @@ export class AuthorizationService {
     }
 
     public authorization(email, password) {
-      this.httpPost(`${this.ip}/user/login`,
+      this.httpPost(`${global_params.ip}/user/login`,
       {email: email, password: password}, {contentType: 'application/json'}).subscribe((data => {
           this.accessToken = data.accessToken;
           this.userId = data.userId;

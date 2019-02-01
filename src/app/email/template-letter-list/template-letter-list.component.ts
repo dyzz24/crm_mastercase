@@ -7,6 +7,7 @@ import {global_params} from '../../global';
 import { EmailServiceService } from '../email-service.service';
 import { ToastrService} from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-template-letter-list',
   templateUrl: './template-letter-list.component.html',

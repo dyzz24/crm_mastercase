@@ -6,6 +6,7 @@ import { AuthorizationService } from '../authorization.service';
 import { SocketService } from '../socket.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
+import {global_params} from '../global';
 // import { setContextDirty } from '@angular/core/src/render3/styling';
 
 
@@ -57,7 +58,7 @@ adress;
    const requestInterval = setInterval(() => {
         if (this.authorizationServ.accessToken !== undefined) {
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
-          this.httpPost(`${this.emailServ.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
+          this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
 
       this.emailServ.all_user_mail_address = data2.boxes.map(val => {
@@ -205,7 +206,7 @@ drop_letter(e) {
   const previous_folders_box_id = e.dataTransfer.getData('box_id'); // ловлю предыдущий бокс папки (откуда перенес)
   const data_folder_id = e.target.closest('.link_area').id;
 
-  this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
+  this.httpPost(`${global_params.ip}/mail/envelope/update`, {
     mailId: +data_mail_id,
     boxId: +data_folder_id,
     address: this.emailServ.idPostForHTTP

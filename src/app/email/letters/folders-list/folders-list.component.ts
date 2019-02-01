@@ -3,6 +3,7 @@ import { EmailServiceService } from '../../email-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription} from 'rxjs';
 import { Router, ActivatedRoute} from '@angular/router';
+import {global_params} from '../../../global';
 
 @Component({
   selector: 'app-folders-list',
@@ -57,7 +58,7 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
     }
     const id_folder = target.getAttribute('id'); // ловлю ее id
     this.selected_mail_id.filter(val => {
-        this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
+        this.httpPost(`${global_params.ip}/mail/envelope/update`, {
       mailId: +val, // кидаю ID-шники
       boxId: +id_folder, // id папки
       address: this.emailServ.idPostForHTTP

@@ -9,6 +9,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { AuthorizationService } from '../../authorization.service';
 import {NewMessageService} from '../new-message/new-message.service';
+import {global_params} from '../../global';
 
 
 
@@ -90,7 +91,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       this.emailServ.haveResponse = false; // если убрать - не будет индикации при навигации по папкам (хз грузит или нет)
       // tslint:disable-next-line:forin
       this.httpPost(
-        `${this.emailServ.ip}/mail/box/`,
+        `${global_params.ip}/mail/box/`,
         // tslint:disable-next-line:max-line-length
         {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
 
@@ -121,7 +122,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   get_message() {
     this.httpPost(
-      `${this.emailServ.ip}/mail/sync`,
+      `${global_params.ip}/mail/box/sync`,
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP}).subscribe((data) => {});
   }
@@ -135,7 +136,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
         return;
     }
-    this.httpPost(`${this.emailServ.ip}/mail/search`,
+    this.httpPost(`${global_params.ip}/mail/search`,
         { query: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum,
         excludedIds: this.searchIdForHTTP},
         {contentType: 'application/json'})
@@ -208,7 +209,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   urlLetterView(event, idLetter, id) {
 if (this.emailServ.lettersList[idLetter].seen === false) {
     // tslint:disable-next-line:max-line-length
-    this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, { mailId: +id, seen: true, address: this.emailServ.idPostForHTTP})
+    this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, seen: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
 }
@@ -287,7 +288,7 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     setTimeout(() => {
       this.emailServ.lettersList.splice(i, 1);
 
-      this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
+      this.httpPost(`${global_params.ip}/mail/envelope/update`, {
           mailId: +id,
           boxId: booleanParam,
           address: this.emailServ.idPostForHTTP
@@ -303,7 +304,7 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
   toggleImportantMark(i, e, id, boolean) {
     // для переключения удалить-добавить важное
 
-    this.httpPost(`${this.emailServ.ip}/mail/envelope/update`,
+    this.httpPost(`${global_params.ip}/mail/envelope/update`,
     { mailId: +id, flagged: boolean, address: this.emailServ.idPostForHTTP })
       .subscribe();
     this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
@@ -333,7 +334,7 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
         this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
 
         this.httpPost(
-          `${this.emailServ.ip}/mail/box/`,
+          `${global_params.ip}/mail/box/`,
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,
@@ -365,7 +366,7 @@ data.map(val => {
     e.target.closest('.letter__prev').classList.add('dellLetter');
     setTimeout(() => {
       const idelem = this.emailServ.selectedLetter;
-      this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, {
+      this.httpPost(`${global_params.ip}/mail/envelope/update`, {
           mailId: +id,
           boxId: +box,
           address: this.emailServ.idPostForHTTP
@@ -387,7 +388,7 @@ data.map(val => {
       if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
         setTimeout(() => {
           this.httpPost(
-            `${this.emailServ.ip}/mail/box/`,
+            `${global_params.ip}/mail/box/`,
               // tslint:disable-next-line:max-line-length
               {
                 address: this.emailServ.idPostForHTTP,
@@ -424,13 +425,12 @@ data.map(val => {
     for (const key of this.emailServ.idLetters) {
       all_data_for_http.push(
         {mailId: key,
-          value: true,
-          flag: 'flagged',
+          flagged: true,
         address: this.emailServ.idPostForHTTP}
       );
     }
 
-    this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, all_data_for_http)
+    this.httpPost(`${global_params.ip}/mail/envelope/update`, all_data_for_http)
       .subscribe();
 
       this.emailServ.lettersList.filter((val, ind, arr) => {
@@ -457,7 +457,7 @@ data.map(val => {
       );
     }
 
-    this.httpPost(`${this.emailServ.ip}/mail/box/update`, all_data_for_http).subscribe(data => {
+    this.httpPost(`${global_params.ip}/mail/box/update`, all_data_for_http).subscribe(data => {
     }
     );
 
@@ -479,7 +479,7 @@ data.map(val => {
 
       setTimeout(() => {
         this.httpPost(
-          `${this.emailServ.ip}/mail/envelope/`,
+          `${global_params.ip}/mail/envelope/`,
             // tslint:disable-next-line:max-line-length
             {
               address: this.emailServ.idPostForHTTP,
@@ -502,13 +502,13 @@ data.map(val => {
 get_work(id, e, index) {
 
 
-  this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, { mailId: +id, workUserId: true, address: this.emailServ.idPostForHTTP })
+  this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, workUserId: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
 
 }
 
 delete_work(id, e, index) {
-  this.httpPost(`${this.emailServ.ip}/mail/envelope/update`, { mailId: +id, workUserId: false, address: this.emailServ.idPostForHTTP })
+  this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, workUserId: false, address: this.emailServ.idPostForHTTP })
   .subscribe();
 
 }

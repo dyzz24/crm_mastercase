@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject, DoCheck } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
+import {global_params} from '../../global';
 
 @Component({
   selector: 'app-folders',
@@ -76,7 +77,7 @@ export class FoldersComponent implements OnInit, DoCheck {
       this.deepSearch(this.user_folders, this.id_folder); // главная функция
       this.closeViewer(); // закрыть
       const obj_for_resp = [{id: 1, childs: this.user_folders}];
-      this.httpPost(`${this.ip}/mail/box/update`, {
+      this.httpPost(`${global_params.ip}/mail/box/update`, {
         address: this.box_id, boxes: obj_for_resp
       } , {contentType: 'application/json'}).subscribe((data2) => {
     });

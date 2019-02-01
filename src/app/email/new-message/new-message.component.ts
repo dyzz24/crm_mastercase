@@ -9,7 +9,7 @@ import { ReadVarExpr } from '@angular/compiler';
 import {NewMessageService} from '../new-message/new-message.service';
 import { DatePipe } from '@angular/common';
 import { isDate } from '@angular/common/src/i18n/format_date';
-
+import {global_params} from '../../global';
 
 
 
@@ -75,7 +75,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.edit_template = true;
 
             this.httpPost(
-              `${this.emailServ.ip}/mail/draft/`,
+              `${global_params.ip}/mail/draft/`,
               {address: this.emailServ.idPostForHTTP, draftId: +this.mail_id}).subscribe((dataMails) => {
 
                 this.important_template = dataMails[0].flagged;
@@ -131,8 +131,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
           if (this.status === 'template') { // шаблоны, добавление их в письмо
             this.httpPost(
-              `${this.emailServ.ip}/mail/draft/`,
-              {address: this.emailServ.idPostForHTTP, draftId: +this.mail_id}).subscribe((dataMails) => {
+              `${global_params.ip}/mail/draft/`,
+              { draftId: +this.mail_id}).subscribe((dataMails) => {
                 this.template_title = dataMails[0].title;
                 // this.to = [];
                 // this.copy = [];
@@ -184,7 +184,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.add_drag_input_data(this.newMessageService.files);
             this.mail_id = this.activatedRoute.snapshot.params.id;
             this.httpPost(
-              `${this.emailServ.ip}/mail/envelope/`,
+              `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address];
                 this.subject = `RE: ${dataMails.subject}`;
@@ -194,7 +194,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
           if (this.status === 'reply') {
 
             this.httpPost(
-              `${this.emailServ.ip}/mail/envelope/`,
+              `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address];
                 this.subject = `RE: ${dataMails.subject}`;
@@ -211,7 +211,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
           if (this.status === 'reply_all') {
             this.httpPost(
-              `${this.emailServ.ip}/mail/envelope/`,
+              `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
 
                 this.subject = `RE: ${dataMails.subject}`;
@@ -237,7 +237,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
           if (this.status === 'forward') {
             this.httpPost(
-              `${this.emailServ.ip}/mail/envelope/`,
+              `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.subject = `${dataMails.subject}`;
                 if (dataMails.html === null) {
@@ -264,7 +264,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
   }
   ngDoCheck() {
-    // console.log(this.files_for_view);
+    // console.log(this.hidden_copy);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -306,6 +306,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
         this.showError('Введите корректный адрес (en + @)');
         return;
       }
+      // const new_data = {address: e.target.value}
       arr.push(e.target.value);
       arr.filter((val, ind, self) => {
         if (self.indexOf(val) !== ind) {
@@ -349,22 +350,29 @@ export class NewMessageComponent implements OnInit, DoCheck {
     from: [
       {address: this.from}
     ],
-    to: [
-      {
-        address: this.to
-      }
-    ],
-    copy: [{
-      address: this.copy
-    }],
-    hidden_copy: [{
-      address: this.hidden_copy
-    }],
+    to: this.to.map(val => {
+      return {
+        address: val
+      };
+    })
+    ,
+    copy: this.copy.map(val => {
+      return {
+        address: val
+      };
+    })
+    ,
+    hidden_copy: this.hidden_copy.map(val => {
+      return {
+        address: val
+      };
+    })
+    ,
     subject: this.subject,
     html: this.messages
   }));
 
-  this.httpPost(`${this.emailServ.ip}/mail/send`, this.formData).subscribe(resp => {
+  this.httpPost(`${global_params.ip}/mail/envelope/send`, this.formData).subscribe(resp => {
 });
 
 
@@ -475,7 +483,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
   }
   };
   this.httpPost(
-    `${this.emailServ.ip}/mail/draft/create`,
+    `${global_params.ip}/mail/draft/create`,
     // tslint:disable-next-line:max-line-length
     object_for_template_list).subscribe((data) => {
 
@@ -574,7 +582,7 @@ send_and_save_tmp(e) {
 //   return {address: val};
 // });
 //   this.httpPost(
-//     `${this.emailServ.ip}/mail/draft_update`,
+//     `${global_params.ip}/mail/draft_update`,
 //     // tslint:disable-next-line:max-line-length
 //     {address: this.from, // имейл
 //       id: this.mail_id,
@@ -600,7 +608,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
 return {address: val};
 });
 this.httpPost(
-  `${this.emailServ.ip}/mail/draft/update`,
+  `${global_params.ip}/mail/draft/update`,
   // tslint:disable-next-line:max-line-length
   {address: this.from, // имейл
     draftId: +this.mail_id,

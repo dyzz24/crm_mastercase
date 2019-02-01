@@ -6,6 +6,7 @@ import { AuthorizationService } from '../../authorization.service';
 import { EmailServiceService } from '../email-service.service';
 import {NewMessageService} from '../new-message/new-message.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import {global_params} from '../../global';
 
 @Component({
   selector: 'app-template',
@@ -111,11 +112,11 @@ export class TemplateComponent implements OnInit, DoCheck {
       this.show_hidden_templ = ! this.show_hidden_templ;
       if (this.show_hidden_templ) {
         this.httpPost(
-          `${this.ip}/mail/draft/`,
+          `${global_params.ip}/mail/draft/`,
           // tslint:disable-next-line:max-line-length
           {
           }).subscribe((data) => {
-            // console.log(data);
+
             this.all_tmp = data.filter(val => {
               if (!val.flagged) {
                   return val;
@@ -165,7 +166,7 @@ export class TemplateComponent implements OnInit, DoCheck {
       this.all_tmp.push(select_templ);
     }
     this.httpPost(
-      `${this.ip}/mail/draft_update`,
+      `${global_params.ip}/mail/draft_update`,
       {id: select_templ.draft_id,
         flagged: !select_templ.flagged,
         address: this.emailServ.idPostForHTTP
