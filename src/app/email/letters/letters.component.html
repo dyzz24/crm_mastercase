@@ -33,7 +33,7 @@
      
       <ng-template #haveMess>   
      
-    <div class="header">
+    <!-- <div class="header">
       <div class="header__search">
         <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
         <div class="search__icons">
@@ -53,7 +53,16 @@
         <span class='la  la-long-arrow-up'></span>
         <p class="tooltip">Наверх</p>
       </button>
-    </div>
+    </div> -->
+    <app-email-header
+    (search_function) = 'this.search_letter($event)'
+    [success_search] = 'this.succes_search_flag'
+    [not_success_search] = 'this.not_succes_search_flag'
+    (select_cancell_all_inputs) = 'this.select_all_or_cancell_all_inputs($event)'
+    (filters_selected) = 'this.filters_select_letter($event)'
+    (scroll_up_event) = 'scrollTop($event)'
+    >
+  </app-email-header>
 
     <div class="hidden__setting_panel" *ngIf="this.emailServ.idLetters.length > 0">
         <button  type='button'  (click)='deleteRestoreLettersAll(3)' *ngIf="this.emailServ.selectNum !==3; else restoreAll"

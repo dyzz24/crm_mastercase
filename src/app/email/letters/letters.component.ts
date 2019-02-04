@@ -47,6 +47,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   checkbox_flagged: boolean;
   selected_one_input_elem;
   min_max_arr;
+  selected_flag = false;
 
 
   // @ViewChild('size_Check') // для отслеживания размера блока
@@ -66,20 +67,20 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
 
-    this.searchLettersInput.valueChanges.pipe().subscribe(data => {
-        if (data === '') {
-          this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList, true); // .toLowerCase() - отмена регистра при поиске
-              this.stopSearch = false;
-              this.startSearch = true;
-              this.successSearch = false;
-              this.searchStringForHTTP = '';
-        } else {
-          this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList);
-          this.searchStringForHTTP = data.toLowerCase();
-        }
-    });
+    // this.searchLettersInput.valueChanges.pipe().subscribe(data => {
+    //     if (data === '') {
+    //       this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList, true); // .toLowerCase() - отмена регистра при поиске
+    //           this.stopSearch = false;
+    //           this.startSearch = true;
+    //           this.successSearch = false;
+    //           this.searchStringForHTTP = '';
+    //     } else {
+    //       this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList);
+    //       this.searchStringForHTTP = data.toLowerCase();
+    //     }
+    // });
 
-    this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
+    // this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
   }
   ngOnInit() {
     // this.emailServ.fullPath = this.activatedRoute.snapshot.url;
@@ -102,9 +103,10 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             this.emailServ.notLettersFlag = false;
           }
           this.emailServ.lettersList = data; // главный массив всех всех писем
-
+          // console.log(this.emailServ.lettersList)
           this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => {
             return val = false;
+
           }); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
           this.emailServ.dataLetters = this.emailServ.lettersAmount;
@@ -112,6 +114,75 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
     }); // подписка
 
+
+  }
+
+  search_letter(data) {
+    this.canc_select();
+    if (this.protectToCopy === false) {
+      this.lettersCopy = this.emailServ.lettersList; // сохраняю исходные письма и сношу флаг
+      this.protectToCopy = true;
+    }
+
+    if (data === '') { // если инпут пустой
+
+      this.temporaryLetters = []; // очищаю временный массив писем
+      this.emailServ.lettersList = this.lettersCopy; // вставляю исходный список писем
+        this.protectToCopy = false; // разрешаю снова сохранять исходные письма
+      this.filterError = false; // переключатель для "Письма не найдены" в html
+      this.stopScrollingLoadFiles = false; // отменяю подгруз скроллом при работе поиска
+      // this.filterError = false; // переключатель для "Письма не найдены" в html
+      return;
+    }
+
+    this.stopSearch = true;
+    this.startSearch = false;
+    this.successSearch = false;
+    this.searchIdForHTTP = [];
+
+    const new_search_array = this.lettersCopy.filter((val, ind) => {
+      if (val.from_address && val.from_address.toLowerCase().indexOf(data) >= 0 ) { // сам поиск
+        return val;
+      }
+      if (val.preview && val.preview.toLowerCase().indexOf(data) >= 0) {
+          return val;
+      }
+
+    });
+
+      if (new_search_array.length > 0) { // если совпадения есть
+        this.emailServ.lettersList = new_search_array;
+      }
+
+      this.searchStringForHTTP = data;
+
+      if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
+        return;
+    }
+    this.httpPost(`${global_params.ip}/mail/search`,
+        { query: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum,
+        excludedIds: this.searchIdForHTTP},
+        {contentType: 'application/json'})
+        .subscribe(data2 => {
+          if (data2.length === 0) {
+            this.filterError = true; // если не найдены письма выдаст сообщение в разметке
+            this.stopScrollingLoadFiles = false; //
+            this.stopSearch = false;
+            this.startSearch = true;
+            this.successSearch = false;
+            return;
+          }
+          this.filterError = false;
+          this.stopScrollingLoadFiles = true;
+          const temporaryArray = this.temporaryLetters; // временный массив с результатами поиска по клиенту
+
+          const allSearch = temporaryArray.concat(data.filter((item) => { // конкачу с массивом который пришел с сервера
+            return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
+           }));
+           this.emailServ.lettersList = allSearch; // в представление
+           this.successSearch = true;
+           this.stopSearch = false;
+        });
 
   }
 
@@ -132,78 +203,10 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
-  searchOnServer() {
-    if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
-        return;
-    }
-    this.httpPost(`${global_params.ip}/mail/search`,
-        { query: `${this.searchStringForHTTP}`, address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum,
-        excludedIds: this.searchIdForHTTP},
-        {contentType: 'application/json'})
-        .subscribe(data => {
-          if (data.length === 0) {
-            this.filterError = true; // если не найдены письма выдаст сообщение в разметке
-            this.stopScrollingLoadFiles = false; //
-            this.stopSearch = false;
-            this.startSearch = true;
-            this.successSearch = false;
-            return;
-          }
-          this.filterError = false;
-          this.stopScrollingLoadFiles = true;
-          const temporaryArray = this.temporaryLetters; // временный массив с результатами поиска по клиенту
-
-          const allSearch = temporaryArray.concat(data.filter((item) => { // конкачу с массивом который пришел с сервера
-            return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
-           }));
-           this.emailServ.lettersList = allSearch; // в представление
-           this.successSearch = true;
-           this.stopSearch = false;
-        });
-  }
-
-  searchLetterFunc(text, allLettersList, stopFlag?) {
-    this.canc_select();
-    if (this.protectToCopy === false) {
-      this.lettersCopy = this.emailServ.lettersList; // сохраняю исходные письма и сношу флаг
-      this.protectToCopy = true;
-    }
-    this.stopSearch = true;
-    this.startSearch = false;
-    this.successSearch = false;
-    this.searchIdForHTTP = [];
-
-    const stop = stopFlag;
-    if (stop) { // если инпут пустой
-      this.temporaryLetters = []; // очищаю временный массив писем
-      this.emailServ.lettersList = this.lettersCopy; // вставляю исходный список писем
-        this.protectToCopy = false; // разрешаю снова сохранять исходные письма
-      this.filterError = false; // переключатель для "Письма не найдены" в html
-      this.stopScrollingLoadFiles = false; // отменяю подгруз скроллом при работе поиска
-      return;
-    }
-
-    const new_search_array = allLettersList.filter((val, ind) => {
-      if (val.from_address && val.from_address.toLowerCase().indexOf(text) >= 0 ) {
-        return val;
-  } else if (val.subject && val.subject.toLowerCase().indexOf(text) >= 0 ) {
-          return val;
-        } else if (val.text && val.text.toLowerCase().indexOf(text) >= 0 ) {
-            return val;
-        }
-    });
-
-       this.emailServ.lettersList = new_search_array; // подставляю найденные письма в представление
-
-  }
-
-
   ngDoCheck() {
     // this.activatedRoute.params.subscribe(params => console.log(params));
 // console.log(this.folder_list_state);
-
   }
-
 
 
   urlLetterView(event, idLetter, id) {
@@ -213,9 +216,45 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
 }
-
-
   }
+
+
+  filters_select(id_for_send, select_for_html, inputs_checkbox, base_array, condition) { // БУДЕТ ИСПОЛЬЗОВАТЬСЯ В ОСНОВНОЙ КОЛБАСЕ ПИСЕМ
+    // ф-я принимает 5 арг: массив id писем, массив булевых для представления, базовый массив с письмами и селектор рабочего инпута
+    // и состояние поиска по главному массиву
+    // condition - флаг поиска по массиву писем (либо)
+            const allInputs = <any>document.querySelectorAll(inputs_checkbox); // беру все инпуты
+            base_array.filter((val, ind) => { // пробегаюсь по главному массиву писем
+              if (val[condition] === true) { // если элемент массива совпадает с искомым условием
+                select_for_html[ind] = true; // в данных индексах представления ставлю тру для отображения в html
+                id_for_send.push(val.draft_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
+                allInputs[ind].checked = true; // ставлю инпуты с нужными индексами в тру (для отображение представления)
+              }
+            });
+      }
+
+      filters_select_letter(e) {
+        if (e === 'favor') {
+          this.canc_select(); // очищаю предыдущее выделение (если есть) все инпуты, id писем и html привязку чищу
+          this.filters_select(
+            this.emailServ.idLetters,
+            this.emailServ.hideAvatars,
+            '.avatar_checkboxes',
+            this.emailServ.lettersList,
+            'flagged');
+        }
+
+    }
+
+
+  select_all_or_cancell_all_inputs(flag) {
+    this.selected_flag = flag;
+    if (this.selected_flag) {
+        this._select();
+    } else {
+      this.canc_select();
+    }
+}
 
 
   canc_select() { // отменяет выделение всех писем
@@ -224,6 +263,15 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
     for (const key of allInputs) {
         key.checked = false;
+    }
+  }
+
+  _select() { // выделяет все письма
+    this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => val = true);
+    this.emailServ.idLetters = this.emailServ.lettersList.map(val => val.mail_id);
+    const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
+    for (const key of allInputs) {
+        key.checked = true;
     }
   }
 
@@ -236,11 +284,6 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     if (e.target.checked) { // если инпут чекнули
       this.emailServ.idLetters = [...this.emailServ.idLetters, +id]; // закладываю id письмеца
       this.emailServ.hideAvatars[i] = true; // ставлю в true аватарку (для отображения полосы выделенного письма)
-      // this.emailServ.idLetters = this.emailServ.idLetters.filter(
-      //   (val, ind, self) => { // фильтрую дублирование id, чтоб не добавлять 10 одинаковых (может убрать)
-      //     return self.indexOf(val) === ind;
-      //   }
-      // );
 
     } else {// если по чекнутому инпуту клик
       this.emailServ.hideAvatars[i] = false; // удаляю из доп полосы

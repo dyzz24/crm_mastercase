@@ -300,7 +300,10 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
     }
   }
   quick_send() {
+
     const formData = new FormData;
+
+
     formData.append('json', JSON.stringify({
       from: [
         {address: this.emailServ.idPostForHTTP}
@@ -314,8 +317,9 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
       text: this.messages
     }));
 
-    this.httpPost(`${global_params.ip}/mail/send`, formData).subscribe(resp => {
+    this.httpPost(`${global_params.ip}/mail/envelope/send`, formData).subscribe(resp => {
   });
+
 
     this.sending_status = true;
     setTimeout(() => {

@@ -48,9 +48,10 @@
       </div>
       <div class="right_btn_group" *ngIf="!hide_left_btn_status">
           <button  type='button'
-          title="Удалить"
+          title="Обновить"
+          (click) = 'this.get_message()'
           >
-              <span class='la la-trash-o'></span>
+              <span class='la la-refresh'></span>
             </button>
             <button  type='button'
           title="Наверх"

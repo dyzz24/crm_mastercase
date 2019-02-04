@@ -1,5 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input, DoCheck} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, DoCheck, Inject} from '@angular/core';
 import { FormControl, ReactiveFormsModule} from '@angular/forms';
+import {global_params} from '../../global';
+import { Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { EmailServiceService } from '../email-service.service';
+import { AuthorizationService } from '../../authorization.service';
 
 @Component({
   selector: 'app-email-header',
@@ -22,7 +27,11 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   @Input() success_search;
   @Input() not_success_search;
 
-  constructor() {
+  constructor(
+    private http: HttpClient,
+    @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    @Inject(EmailServiceService) public emailServ: EmailServiceService,
+    ) {
 
     this.searchLettersInput.valueChanges.pipe().subscribe(data => {
             this.search_function.next(data);
@@ -85,6 +94,18 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
 
   scroll_up() {
       this.scroll_up_event.next();
+  }
+
+
+  public httpPost(url: string, body, options?): Observable<any> {
+    return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
+  }
+
+  get_message() {
+    this.httpPost(
+      `${global_params.ip}/mail/box/sync`,
+      // tslint:disable-next-line:max-line-length
+      {address: this.emailServ.idPostForHTTP}).subscribe((data) => {});
   }
 
 }
