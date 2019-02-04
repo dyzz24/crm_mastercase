@@ -247,13 +247,18 @@ select {
     color: #262626;
     align-items: center;
     margin-bottom: 32px;
+
+    label {
+        display: flex;
+        align-items: center;
+    }
     
 
     input {
         display: none;
     }
 
-    input + .custom_checkbox {
+    input + label .custom_checkbox {
         width: 20px;
         height: 20px;
         background: #FFFFFF;
@@ -263,9 +268,18 @@ select {
         margin-right: 10px;
     }
 
-    input:checked + .custom_checkbox {
+    input:checked + label .custom_checkbox {
         background: url('../../../assets/checked.svg') no-repeat center, #0476C3;
         background-size: 12px 9px;
+    }
+}
+
+
+.hide_inputs {
+    display: flex;
+
+    .input_group:not(:last-child) {
+            margin-right: 10px;
     }
 }
 

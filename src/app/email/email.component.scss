@@ -111,6 +111,15 @@ a,p{
     &:hover {
         background: #d9e6f7;
     } 
+
+    button {
+        opacity: 0;
+        transition: .2s;
+    }
+
+    &:hover button{
+        opacity: 1;
+    }
 }
 
 .left_activ_strip {
@@ -143,6 +152,14 @@ a,p{
     }
     &:hover:not(.wrap) {
             background: #d9e6f7;
+    }
+
+    button {
+        opacity: 0;
+    }
+
+    &:hover button {
+        opacity: 1;
     }
 }
 

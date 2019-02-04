@@ -74,8 +74,13 @@
 
           <div class="label_group">
           <input type="checkbox" name="" id="encryption">
-          <div class="custom_checkbox"></div>
-          <label for="encryption">Использовать шифрование пароля</label>
+
+         
+          <label for="encryption">
+                <div class="custom_checkbox">
+              
+                    </div>
+              Использовать шифрование пароля</label>
           </div>
 
           <p class="title">
@@ -113,9 +118,25 @@
               </div>
 
               <div class="label_group">
-                  <input type="checkbox" name="" id="matches" checked>
-                  <div class="custom_checkbox"></div>
-                  <label for="matches">Логин совпадает с входящей почтой</label>
+                  <input type="checkbox" name="" id="matches" checked
+                  (change) = 'toggle_edit_login($event)'
+                  >
+                  
+                  <label for="matches">
+                        <div class="custom_checkbox"></div>
+                    Логин совпадает с входящей почтой</label>
+                  </div>
+
+                  <div class="hide_inputs" *ngIf="this.hide_inputs">
+                        <div class="input_group">
+                                <p>Адрес почты</p>
+                                <input type="text" placeholder="Адрес почтового сервера">
+                              </div>
+
+                              <div class="input_group">
+                                    <p>Пароль</p>
+                                    <input type="text" placeholder="Пароль">
+                                  </div>
                   </div>
 
                   <button class="next_step"

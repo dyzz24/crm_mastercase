@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AddEmailComponent implements OnInit {
 
   tab_open = 1;
+  hide_inputs = false;
 
   constructor() { }
 
@@ -30,6 +31,16 @@ export class AddEmailComponent implements OnInit {
       password_inp.setAttribute('type', 'text');
     } else {
       password_inp.setAttribute('type', 'password');
+    }
+  }
+
+  toggle_edit_login(e) {
+    const bool = e.target.checked;
+
+    if (!bool) {
+      this.hide_inputs = true;
+    } else {
+      this.hide_inputs = false;
     }
   }
 }
