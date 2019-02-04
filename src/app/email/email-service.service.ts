@@ -144,6 +144,8 @@ export class EmailServiceService {
     }
   }
 
+
+
   deleteChangesComponents() {
     this.activeLett = [];
     this.hideAvatars = [];

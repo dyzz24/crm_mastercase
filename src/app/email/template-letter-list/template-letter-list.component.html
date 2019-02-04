@@ -10,7 +10,7 @@
     (scroll_up_event) = this.scroll_up()
     >
   </app-email-header>
-    <div class="template_settings">
+    <div class="template_settings" *ngIf="this.id_selected_letter.length > 0">
         <button  type='button'
         title="Сделать избранными"
         (click) = 'this.important_all_letter()'

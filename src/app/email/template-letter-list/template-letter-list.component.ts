@@ -185,7 +185,7 @@ delete_one_tmp(id, e, index) {
       //     boxId: +3,
       //     address: this.emailServ.idPostForHTTP
       //   }).subscribe();
-
+    this.canc_select();
 
         setTimeout(() => {
         this.emailServ.draft_list.splice(index, 1); // удаляю из представления

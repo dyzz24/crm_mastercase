@@ -502,35 +502,28 @@ background: rgba(141, 175, 255, 0.507);
 
 
 .hidden__setting_panel {
-    overflow: hidden;
-height: 0px;
+    overflow: visible;
+height: 40px;
 display: flex;
 align-items: center;
 width: 100%;
 transition: .5s;
+border-bottom: 1px solid $border;
 }
 
-.hiddenTrash {
-    overflow: visible;
-    height: 40px;
-    border-bottom: 1px solid $border;
-}
 
-.hiddenMenu_plusHeight {
-    max-height: calc(100vh - 165px);
-}
 
 .important__background {
-    background: #ffe5e5;
+    background: #F8F3BA;
 
     &:hover {
-        background: #edd7d7;
+        background: #F9E977;
     }
     &.active {
-        background: #ff9999;
+        background: #F9E977;
     }
     &.active_checkboxes {
-        background: #ff9999;
+        background: #F9E977;
     }
 }
 

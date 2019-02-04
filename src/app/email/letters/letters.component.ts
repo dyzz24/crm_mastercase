@@ -163,7 +163,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   searchLetterFunc(text, allLettersList, stopFlag?) {
-    this.input_checked_cancell();
+    this.canc_select();
     if (this.protectToCopy === false) {
       this.lettersCopy = this.emailServ.lettersList; // сохраняю исходные письма и сношу флаг
       this.protectToCopy = true;
@@ -215,6 +215,16 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
 }
 
 
+  }
+
+
+  canc_select() { // отменяет выделение всех писем
+    this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => val = false);
+    this.emailServ.idLetters = [];
+    const allInputs = <any>document.querySelectorAll('.avatar_checkboxes');
+    for (const key of allInputs) {
+        key.checked = false;
+    }
   }
 
   selectedLetters(id, e, i) {
@@ -297,6 +307,8 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
         this.rout.navigate(['./'], { relativeTo: this.activatedRoute });
         this.emailServ.hiddenEmpty = false;
     }, 500);
+
+    this.canc_select();
   }
 
   // *****************************************************************************
@@ -399,27 +411,21 @@ data.map(val => {
             )
             .subscribe(data => {
     this.emailServ.lettersList = data;
-    this.input_checked_cancell();
+
 
       });
         }, 500);
     }
     }, 500);
+
+    this.canc_select();
   }
 
-  input_checked_cancell() { // ф-я сбрасывает чекбоксы
-                          // чистит ID, отменяет выделение по аватарке
-    const allInputs = document.querySelectorAll('.checkbox');
-    for (const key of <any>allInputs) {
-      key.checked = false;
-    }
-    this.emailServ.hideAvatars = []; // чтоб инпуты работали
-    this.emailServ.idLetters = []; // обнуляю корзину на удаление
-    this.emailServ.checkerTrash();
-  }
+
 
   importantMarkAll() {
     const id_for_important = this.emailServ.idLetters;
+
 
     const all_data_for_http = [];
     for (const key of this.emailServ.idLetters) {
@@ -440,13 +446,13 @@ data.map(val => {
           }
         }
       });
-
-      this.input_checked_cancell();
+      this.canc_select();
   }
 
   deleteRestoreLettersAll(box) {
 
     const id_for_delete = this.emailServ.idLetters;
+    this.canc_select();
 
     const all_data_for_http = [];
     for (const key of this.emailServ.idLetters) {
@@ -491,12 +497,12 @@ data.map(val => {
           .subscribe(data => {
 
   this.emailServ.lettersList = data;
-  this.input_checked_cancell();
+
     });
       }, 1200);
   }
   // this.emailServ.stateServ(); // save state on service
-  this.input_checked_cancell();
+
 }
 
 get_work(id, e, index) {

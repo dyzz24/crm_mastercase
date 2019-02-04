@@ -55,7 +55,7 @@
       </button>
     </div>
 
-    <div class="hidden__setting_panel" [class.hiddenTrash]='!emailServ.hiddenTrash'>
+    <div class="hidden__setting_panel" *ngIf="this.emailServ.idLetters.length > 0">
         <button  type='button'  (click)='deleteRestoreLettersAll(3)' *ngIf="this.emailServ.selectNum !==3; else restoreAll"
         title="Удалить"
         >
@@ -91,7 +91,7 @@
    
 
     <div class="letters__items" *ngIf="this.filterError === false; else searchErrorMessage">
-      <div class="letter__container" (scroll)='scrollDown($event)' [class.hiddenMenu_plusHeight]='!emailServ.hiddenTrash'>
+      <div class="letter__container" (scroll)='scrollDown($event)'>
         <div class='letter__prev'
         *ngFor='let letters of emailServ.lettersList, let i = index'
         routerLinkActive="active"
