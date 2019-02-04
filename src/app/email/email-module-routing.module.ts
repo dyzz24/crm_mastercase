@@ -9,6 +9,7 @@ import { TemplateLetterListComponent } from './template-letter-list/template-let
 import { AddEmailComponent } from './add-email/add-email.component';
 import { EmptyTemplateComponent } from './empty-template/empty-template.component';
 import { EmptyLettersComponent } from './empty-letters/empty-letters.component';
+import { WelcomeComponent } from './add-email/welcome/welcome.component';
 
 const routes: Routes = [
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
@@ -28,7 +29,8 @@ const routes: Routes = [
           {path: '**', component: EmptyLettersComponent}]},
   ]
 },
-{path: ':id/add_email', component: AddEmailComponent}
+{path: 'add_email', component: AddEmailComponent,
+children: [{path: 'welcome', component: WelcomeComponent}]}
 ];
 
 @NgModule({
