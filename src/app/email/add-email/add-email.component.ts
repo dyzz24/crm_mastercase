@@ -23,4 +23,14 @@ export class AddEmailComponent implements OnInit {
     }
   }
 
+  toggle_password_show() {
+    const password_inp = document.querySelector('.password');
+    const current_attribute = password_inp.getAttribute('type');
+    if (current_attribute === 'password') {
+      password_inp.setAttribute('type', 'text');
+    } else {
+      password_inp.setAttribute('type', 'password');
+    }
+  }
 }
+

@@ -384,4 +384,19 @@ public httpDownload(url: string, body, options?): Observable<any> {
     }, responseType: 'blob' as 'json'});
 }
 
+
+important_mark() {
+let flagged_for_http;
+
+  this.emailServ.lettersList.filter(val => {
+    if (val.mail_id === this.emailServ.currentId) {
+      flagged_for_http = !val.flagged;
+      val.flagged = flagged_for_http;
+      this.httpPost(`${global_params.ip}/mail/envelope/update`,
+    { mailId: +this.emailServ.currentId, flagged: flagged_for_http, address: this.emailServ.idPostForHTTP })
+      .subscribe();
+    }
+  });
+}
+
 }
