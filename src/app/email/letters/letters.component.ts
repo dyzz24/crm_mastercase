@@ -219,13 +219,14 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
   }
 
 
-  filters_select(id_for_send, select_for_html, inputs_checkbox, base_array, condition) { // БУДЕТ ИСПОЛЬЗОВАТЬСЯ В ОСНОВНОЙ КОЛБАСЕ ПИСЕМ
+  filters_select(id_for_send, select_for_html, inputs_checkbox, base_array, condition, flag) {
+    // БУДЕТ ИСПОЛЬЗОВАТЬСЯ В ОСНОВНОЙ КОЛБАСЕ ПИСЕМ
     // ф-я принимает 5 арг: массив id писем, массив булевых для представления, базовый массив с письмами и селектор рабочего инпута
     // и состояние поиска по главному массиву
     // condition - флаг поиска по массиву писем (либо)
             const allInputs = <any>document.querySelectorAll(inputs_checkbox); // беру все инпуты
             base_array.filter((val, ind) => { // пробегаюсь по главному массиву писем
-              if (val[condition] === true) { // если элемент массива совпадает с искомым условием
+              if (val[condition] === flag) { // если элемент массива совпадает с искомым условием
                 select_for_html[ind] = true; // в данных индексах представления ставлю тру для отображения в html
                 id_for_send.push(val.draft_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
                 allInputs[ind].checked = true; // ставлю инпуты с нужными индексами в тру (для отображение представления)
@@ -241,7 +242,27 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
             this.emailServ.hideAvatars,
             '.avatar_checkboxes',
             this.emailServ.lettersList,
-            'flagged');
+            'flagged', true);
+        }
+
+        if (e === 'unread') {
+          this.canc_select(); // очищаю предыдущее выделение (если есть) все инпуты, id писем и html привязку чищу
+          this.filters_select(
+            this.emailServ.idLetters,
+            this.emailServ.hideAvatars,
+            '.avatar_checkboxes',
+            this.emailServ.lettersList,
+            'seen', false);
+        }
+
+        if (e === 'attachments') {
+          this.canc_select(); // очищаю предыдущее выделение (если есть) все инпуты, id писем и html привязку чищу
+          this.filters_select(
+            this.emailServ.idLetters,
+            this.emailServ.hideAvatars,
+            '.avatar_checkboxes',
+            this.emailServ.lettersList,
+            'attachments', true);
         }
 
     }

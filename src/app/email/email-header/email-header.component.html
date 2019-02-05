@@ -32,6 +32,8 @@
       >
         <button class='letterMenuButt' (click) = 'this.select_canc_all_inputs_do(true)' >Выделить все письма</button>
         <button class='letterMenuButt' (click) = "this.filters_input('favor')">Избранные</button>
+        <button class='letterMenuButt' *ngIf="this.extended_options" (click) = "this.filters_input('unread')">Непрочитанные</button>
+        <button class='letterMenuButt' *ngIf="this.extended_options" (click) = "this.filters_input('attachments')">С вложениями</button>
         <button class='letterMenuButt' (click) = 'this.select_canc_all_inputs_do(false)'>Снять выделение</button>
     </div>
       

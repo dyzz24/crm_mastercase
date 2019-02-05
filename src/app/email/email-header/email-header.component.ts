@@ -26,6 +26,7 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   @Output() scroll_up_event = new EventEmitter(); // отправка события родителю для скрытия компонента папок
   @Input() success_search;
   @Input() not_success_search;
+  @Input() extended_options;
 
   constructor(
     private http: HttpClient,
@@ -46,7 +47,7 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-
+// console.log(this.extended_options)
   }
 
   ngDoCheck() {
