@@ -55,9 +55,10 @@
       </button>
     </div> -->
     <app-email-header
-    (search_function) = 'this.search_letter($event)'
-    [success_search] = 'this.succes_search_flag'
-    [not_success_search] = 'this.not_succes_search_flag'
+    (search_function) = 'this.searchLettersInput.setValue($event)'
+    [success_search] = ' this.successSearch'
+    [not_success_search] = 'this.filterError'
+    [start_search] = 'this.startSearch'
     (select_cancell_all_inputs) = 'this.select_all_or_cancell_all_inputs($event)'
     (filters_selected) = 'this.filters_select_letter($event)'
     (scroll_up_event) = 'scrollTop($event)'

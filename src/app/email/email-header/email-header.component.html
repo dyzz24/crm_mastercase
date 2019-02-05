@@ -47,6 +47,8 @@
       <span class='la la-search' *ngIf="this.search_work === false"></span>
       <span class='la la-check' *ngIf="this.success_search === true"></span>
       <span class='la la-frown-o' *ngIf="this.not_success_search === true"></span>
+
+      <span class='la la-refresh search-ref' *ngIf="this.start_search"></span>
       </div>
       <div class="right_btn_group" *ngIf="!hide_left_btn_status">
           <button  type='button'

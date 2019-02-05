@@ -99,3 +99,19 @@
         opacity: 1;
     }
 }
+
+
+.search-ref {
+    font-size: 20px;
+    line-height: 20px;
+    animation: searcher 2s infinite;
+}
+
+@keyframes searcher {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}

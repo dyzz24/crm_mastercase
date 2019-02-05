@@ -36,8 +36,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   searchStringForHTTP;
   searchIdForHTTP = [];
-  stopSearch = false;
-  startSearch = true;
+  startSearch = false;
   successSearch = false;
   sub;
   subscription: Subscription;
@@ -80,7 +79,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     //     }
     // });
 
-    // this.searchLettersInput.valueChanges.pipe(debounceTime(1500)).subscribe(datd => this.searchOnServer());
+    this.searchLettersInput.valueChanges.pipe().subscribe(datd => this.search_letter(datd));
+
+    this.searchLettersInput.valueChanges.pipe((debounceTime(1500))).subscribe(datd => this.search_on_server());
   }
   ngOnInit() {
     // this.emailServ.fullPath = this.activatedRoute.snapshot.url;
@@ -131,12 +132,13 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         this.protectToCopy = false; // разрешаю снова сохранять исходные письма
       this.filterError = false; // переключатель для "Письма не найдены" в html
       this.stopScrollingLoadFiles = false; // отменяю подгруз скроллом при работе поиска
+      this.startSearch = false;
       // this.filterError = false; // переключатель для "Письма не найдены" в html
       return;
     }
 
-    this.stopSearch = true;
-    this.startSearch = false;
+
+    this.startSearch = true;
     this.successSearch = false;
     this.searchIdForHTTP = [];
 
@@ -155,6 +157,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
       }
 
       this.searchStringForHTTP = data;
+    }
+
+    search_on_server() {
 
       if ( this.searchStringForHTTP === undefined || this.searchStringForHTTP === '') {
         return;
@@ -167,8 +172,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           if (data2.length === 0) {
             this.filterError = true; // если не найдены письма выдаст сообщение в разметке
             this.stopScrollingLoadFiles = false; //
-            this.stopSearch = false;
-            this.startSearch = true;
+            this.startSearch = false;
             this.successSearch = false;
             return;
           }
@@ -176,15 +180,16 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           this.stopScrollingLoadFiles = true;
           const temporaryArray = this.temporaryLetters; // временный массив с результатами поиска по клиенту
 
-          const allSearch = temporaryArray.concat(data.filter((item) => { // конкачу с массивом который пришел с сервера
+          const allSearch = temporaryArray.concat(data2.filter((item) => { // конкачу с массивом который пришел с сервера
             return temporaryArray.indexOf(item) < 0; // фильтрую дубляж
            }));
            this.emailServ.lettersList = allSearch; // в представление
            this.successSearch = true;
-           this.stopSearch = false;
         });
 
-  }
+    }
+
+
 
 
   ngOnDestroy() {

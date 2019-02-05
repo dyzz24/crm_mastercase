@@ -27,6 +27,7 @@ export class EmailHeaderComponent implements OnInit, DoCheck {
   @Input() success_search;
   @Input() not_success_search;
   @Input() extended_options;
+  @Input() start_search = false;
 
   constructor(
     private http: HttpClient,
