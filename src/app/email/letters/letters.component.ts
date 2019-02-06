@@ -104,7 +104,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             this.emailServ.notLettersFlag = false;
           }
           this.emailServ.lettersList = data; // главный массив всех всех писем
-          // console.log(this.emailServ.lettersList)
+          this.canc_select(); // отмена селекта если были выбраны письма
           this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => {
             return val = false;
 
@@ -172,7 +172,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           if (data2.length === 0) {
             this.filterError = true; // если не найдены письма выдаст сообщение в разметке
             this.stopScrollingLoadFiles = false; //
-            this.startSearch = false;
+            this.startSearch = false; // закончит крутилку
             this.successSearch = false;
             return;
           }
@@ -194,6 +194,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+
   }
 
   get_message() {
@@ -214,7 +215,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   }
 
 
-  urlLetterView(event, idLetter, id) {
+  urlLetterView(event, idLetter, id) { // перевод в прочитанное сообщение из непрочитанного
 if (this.emailServ.lettersList[idLetter].seen === false) {
     // tslint:disable-next-line:max-line-length
     this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, seen: true, address: this.emailServ.idPostForHTTP})
@@ -317,21 +318,10 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
         item => item !== +id // удаляю id из списка id
       );
     }
-
-    this.emailServ.checkerTrash(); // рудимент, потом отпадет
   }
 
-  // newMessage() {
-  //   this.rout.navigate([this.emailServ.urlParams + '/create']);
-  //   this.emailServ.fullPath = this.emailServ.urlParams + '/create';
-  //   this.emailServ.hiddenEmpty = true;
-  // }
 
-  statusMessageSpam(param) {
-    if (this.emailServ.lettersList[param].box_id === 4) {
-      return true;
-    }
-  }
+
 
   scrollTop() {
     const toTopBlock = document.querySelector('.letter__container');
@@ -388,11 +378,9 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     this.httpPost(`${global_params.ip}/mail/envelope/update`,
     { mailId: +id, flagged: boolean, address: this.emailServ.idPostForHTTP })
       .subscribe();
-    this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i]
-      .flagged;
+    this.emailServ.lettersList[i].flagged = !this.emailServ.lettersList[i].flagged;
   }
 
-  // tslint:disable-next-line:max-line-length
 
 
   scrollDown() {
@@ -432,7 +420,7 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
             this.emailServ.dataLetters = data.length;
 
 
-data.map(val => {
+data.map(val => { // добавление в хайд аватар флагов, для дальнейшего использования
   val = false;
   this.emailServ.hideAvatars.push(val);
 });
@@ -460,7 +448,6 @@ data.map(val => {
       // }
 
       const navigatePath = this.rout.url.replace(/\/view\/.*/, ''); // стартовый урл
-      this.emailServ.hiddenEmpty = false;
       this.rout.navigate([navigatePath]);
 
         this.emailServ.lettersList.splice(index, 1); // удаляю из представления
@@ -620,7 +607,7 @@ dragElemStart(elemId, seen_status, box_id, e) {
   e.dataTransfer.setData('box_id', box_id);
 }
 
-close_menu() {
+close_menu() { // закрывает меню колбасы конвертика
 
   this.open_hidden_menu = false;
 

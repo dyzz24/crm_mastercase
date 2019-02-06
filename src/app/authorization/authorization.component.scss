@@ -85,12 +85,13 @@
 
         &:focus {
             border-color: #0476C3;
-            color: white;
+            color: black;
         }
         &:hover {
             border-color: #0476C3;
         }
     }
+
 
     span {
         align-self: flex-start;

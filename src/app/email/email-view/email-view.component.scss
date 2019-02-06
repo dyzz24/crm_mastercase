@@ -195,6 +195,7 @@ p{
     width: 100%;
     display: flex;
     align-items: center;
+    margin-top: 4px;
     
 }
 .info_head {
@@ -210,6 +211,8 @@ p{
 .info__content_p {
     
     @include bables;
+    margin: 0;
+    margin-bottom: 4px;
     margin-right: 4px;
 
     p{
@@ -245,7 +248,7 @@ p{
     font-size: 12px;
     color: #b2b2b2;
     outline: none;
-    margin-top: 4px;
+    margin-bottom: 4px;
     &:hover:not(.input_return) {
         background:url('../../../assets/arr_down.png') no-repeat center;
         background-size: 50% auto;

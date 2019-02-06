@@ -71,9 +71,12 @@ export class FoldersComponent implements OnInit, DoCheck {
   }
 
   create_folder() {
+    if (this.folder_name_for_post === '' || this.folder_name_for_post === undefined) {
+      alert('Введите имя папки');
+      return;
+    }
 
       this.randomizer(this.user_folders); // собираю все айдишники в массив
-      console.log(this.user_folders);
       this.deepSearch(this.user_folders, this.id_folder); // главная функция
       this.closeViewer(); // закрыть
       const obj_for_resp = [{id: 1, childs: this.user_folders}];

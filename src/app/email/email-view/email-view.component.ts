@@ -106,8 +106,9 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
       {address: this.emailServ.idPostForHTTP, mailId: +data.id}).subscribe((dataMails) => {
         // const test = this.selected_letter_part2.push(dataMails);
 // console.log(dataMails);
-        this.emailServ.haveResponse = true;
+
         this.selectedLetter = dataMails; // ставлю активным письмом ответ с сервера
+        // console.log(this.selectedLetter);
         // console.log(this.selectedLetter);
         this.cahse_letters.push(this.selectedLetter); // добавляю в кэш уже ответ с сервера
         this.preload_to_wait_status = false; // отменяю крутилку

@@ -20,6 +20,7 @@ export class AttachPipePipe implements PipeTransform {
       case 'png':
       return 'la la-image';
       case 'doc':
+      case 'docx':
       return 'la la-file-word-o';
       case 'txt':
       return 'la la-file-text-o';

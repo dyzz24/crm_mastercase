@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, DoCheck, Inject, inject } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { ToastrService} from 'ngx-toastr';
@@ -42,7 +42,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public subject = ''; // subject
     public messages;
     public files_for_view = []; // имена файлов для HTML
-    public formData = new FormData(); // дата для отправки на серв файлов
+    // public formData = new FormData(); // дата для отправки на серв файлов
     public tmp_name;
     public open_select_address = false;
     public save_tmp_state = false;
@@ -340,13 +340,14 @@ export class NewMessageComponent implements OnInit, DoCheck {
   }
 
   sendMessage() {
+    const formData = new FormData;
     this.messages_sending = true; // крутилка on
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом
-    this.formData.append('files', this.files_for_view[i]);
+    formData.append('files', this.files_for_view[i]);
 }
 
 
-  this.formData.append('json', JSON.stringify({
+  formData.append('json', JSON.stringify({
     from: [
       {address: this.from}
     ],
@@ -356,13 +357,13 @@ export class NewMessageComponent implements OnInit, DoCheck {
       };
     })
     ,
-    copy: this.copy.map(val => {
+    cc: this.copy.map(val => {
       return {
         address: val
       };
     })
     ,
-    hidden_copy: this.hidden_copy.map(val => {
+    bcc: this.hidden_copy.map(val => {
       return {
         address: val
       };
@@ -372,17 +373,19 @@ export class NewMessageComponent implements OnInit, DoCheck {
     html: this.messages
   }));
 
-  this.httpPost(`${global_params.ip}/mail/envelope/send`, this.formData).subscribe(resp => {
+  this.httpPost(`${global_params.ip}/mail/envelope/send`, formData).subscribe(
+    (resp => {
+
+        const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
+          this._rout.navigate([navigatePath]);
+        this.messages_sending = false; // крутилка off
+        this.showSuccess('Письмо отправлено');
+    }),
+(err: HttpErrorResponse) => { // если ошибка
+  this.showError('Письмо НЕ отправлено');
+  this.messages_sending = false;
 });
 
-
-setTimeout(() => {
-  const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
-    this._rout.navigate([navigatePath]);
-  this.messages_sending = false; // крутилка off
-  this.emailServ.hiddenEmpty = false;
-  this.showSuccess('Письмо отправлено');
-}, 3000);
 }
 onFileChange(event) {
   const files  = event.target.files; // отловил файлы прикрепления
