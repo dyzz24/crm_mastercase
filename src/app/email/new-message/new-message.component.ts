@@ -138,43 +138,43 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 // this.copy = [];
                 // this.hidden_copy = [];
                 // this.messages = '';
-                this.subject = '';
-                if (this.messages === undefined) {
+                // this.subject = '';
+                if (this.messages === undefined || this.messages === '') {
                   this.messages = '';
                 }
                 if (dataMails[0].html === null) {
                               this.messages =   `${dataMails[0].text} <br>
-                               <blockquote type="cite"> ${this.messages} </blockquote>`;
+                                ${this.messages} `;
 
                  } else {
 
                             this.messages =   `${dataMails[0].html}  <br>
-                            <blockquote type="cite"> ${this.messages} </blockquote>`;
+                             ${this.messages} `;
                  }
-                 this.subject = dataMails[0].subject;
+                //  this.subject = dataMails[0].subject;
 
-                 if (dataMails[0].details && dataMails[0].details.recipients.to) {
+              //    if (dataMails[0].details && dataMails[0].details.recipients.to) {
 
-                dataMails[0].details.recipients.to.filter(val => {
-                  this.to.push(val.address);
-                });
+              //   dataMails[0].details.recipients.to.filter(val => {
+              //     this.to.push(val.address);
+              //   });
 
-              }
+              // }
 
-              if (dataMails[0].details && dataMails[0].details.recipients.cc) {
+              // if (dataMails[0].details && dataMails[0].details.recipients.cc) {
 
-                dataMails[0].details.recipients.cc.filter(val => {
-                  this.copy.push(val.address);
-                });
+              //   dataMails[0].details.recipients.cc.filter(val => {
+              //     this.copy.push(val.address);
+              //   });
 
-              }
+              // }
 
-              if (dataMails[0].details && dataMails[0].details.recipients.bcc) {
-                dataMails[0].details.recipients.bcc.filter(val => {
-                  this.hidden_copy.push(val.address);
-                });
+              // if (dataMails[0].details && dataMails[0].details.recipients.bcc) {
+              //   dataMails[0].details.recipients.bcc.filter(val => {
+              //     this.hidden_copy.push(val.address);
+              //   });
 
-              }
+              // }
 
               });
           }
@@ -255,6 +255,21 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.messages = '';
                 this.subject = '';
                 this.edit_template = false;
+          }
+
+          if (this.status === 'create_tmp') {
+            this.httpPost(
+              `${global_params.ip}/mail/envelope/`,
+              {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
+
+
+
+                if (dataMails.html === null) {
+                  this.messages = dataMails.text;
+                 } else {
+                  this.messages = dataMails.html;
+                 }
+              });
           }
 
 

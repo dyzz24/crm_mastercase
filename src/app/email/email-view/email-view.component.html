@@ -66,6 +66,14 @@ title="Переслать"
    <span class='la la-exclamation'></span>
   </button>
 
+  <button class='menu'
+routerLink="./create"
+[queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'create_tmp'}"
+title="Новый шаблон"
+>
+  <span class='new_tmp'></span>
+</button>
+
 
 </div>
 <div class="group__one">
