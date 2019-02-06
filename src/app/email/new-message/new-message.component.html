@@ -46,8 +46,11 @@
         </button>
   </div>
   <div class="message__body">
-    <div class="template_name" *ngIf="this.edit_template">Название шаблона: {{this.template_title}}</div>
-<div class="avatar__block">
+    <div class="template_name" *ngIf="this.edit_template"><p>Название шаблона: {{this.template_title}}</p>
+        <span (click)='this.toggle_inputs_field(true)' *ngIf="!this.hidden_input_fields">Раскрыть поля ввода</span>
+        <span (click)='this.toggle_inputs_field(false)' *ngIf="this.hidden_input_fields">Скрыть поля ввода</span>
+    </div>
+<div class="avatar__block" *ngIf="this.hidden_input_fields">
     <div class="avatar">
         <p class='avatar__title'>{{this?.from.charAt(0)}}</p>
       </div>
@@ -63,7 +66,7 @@
 </div>
 
 
-<div class="row__block">
+<div class="row__block" *ngIf="this.hidden_input_fields">
     <p class='head__p'>Кому: </p>
     <div class="new_message__bables" *ngFor="let item of this.to, let i = index" 
     [ngClass]="{not__addressess: this.to[0] === '' || this.to[0] === undefined }"
@@ -86,7 +89,7 @@
     
     >
 </div>
-<div class="row__block">
+<div class="row__block" *ngIf="this.hidden_input_fields">
     <p class='head__p'>Копия: </p>
     <div class="new_message__bables" *ngFor="let item of this.copy,let i = index" 
     [ngClass]="{not__addressess: this.copy.length === 0}"
@@ -108,7 +111,7 @@
     
     >
 </div>
-<div class="row__block">
+<div class="row__block" *ngIf="this.hidden_input_fields">
     <p class='head__p'>Скрытая: </p>
     <div class="new_message__bables" *ngFor="let item of this.hidden_copy,let i = index" 
     [ngClass]="{not__addressess: this.hidden_copy.length === 0}"
@@ -131,12 +134,12 @@
     >
 </div>
 
-<div class="row__block">
+<div class="row__block" *ngIf="this.hidden_input_fields">
     <p class='head__p'>Тема: </p>
 
     <textarea class='input_fields subject' [(ngModel)]='this.subject' >{{this.subject}}</textarea>
 </div>
-<div class="row__block end_group" >
+<div class="row__block end_group" *ngIf="this.hidden_input_fields">
   <label>
       <span class='la la-paperclip visible'></span>
   <input type='file' class='file_btn' (change)='onFileChange($event)' multiple>

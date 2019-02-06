@@ -48,7 +48,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public save_tmp_state = false;
     public messages_sending = false;
     public important_tmp = false;
-    edit_template = false;
+    public edit_template = false;
+    public hidden_input_fields = true;
     public template_title: string;
     public important_template: boolean;
     public subscription_emailServ_template_list: Subscription;
@@ -73,7 +74,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
           this.status = queryParam['status'];
           if (queryParam.edit_tmp === 'true') { // для колбасины и редактирования шаблонов
             this.edit_template = true;
-
+            this.hidden_input_fields = false;
             this.httpPost(
               `${global_params.ip}/mail/draft/`,
               {address: this.emailServ.idPostForHTTP, draftId: +this.mail_id}).subscribe((dataMails) => {
@@ -644,6 +645,10 @@ this.httpPost(
   }).subscribe(() => {
     this.showSuccess('Изменения сохранены');
   });
+}
+
+toggle_inputs_field(bool) {
+  this.hidden_input_fields = bool;
 }
 }
 
