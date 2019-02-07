@@ -32,6 +32,11 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
   not_succes_search_flag = false;
   draft_copy_search = [];
 
+  // для выделения шифтом
+  selected_one_input_elem;
+  min_max_arr = [];
+
+
   constructor(
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
@@ -51,6 +56,11 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
         {address: this.email_id}).subscribe((data) => {
           this.emailServ.draft_list = data;
           console.log(this.emailServ.draft_list);
+
+          this.selected_checkbox_for_html = this.emailServ.draft_list.map(val => {
+            return val = false;
+
+          });
         });
     });
 
@@ -75,6 +85,9 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
   }
 
   select_letter(e, index, id) {
+    if (e.shiftKey) {
+      return; // еслт по шифту - выходим
+    }
     if (e.target.checked) {
       this.selected_checkbox_for_html[index] = true;
       this.id_selected_letter = [...this.id_selected_letter, +id];
@@ -329,4 +342,70 @@ cancell_all_checked() {
     toTopBlock.scroll(0, 0);
   }
 
-}
+
+
+  select_some_letters(e, index) {
+
+    if (e.shiftKey) { // если зажали шифт
+      if (e.target.className === 'avatar_checkboxes hidden_checkbox') { // чтобы не всплывало событие до чекбокса
+
+        if (e.target.checked) { // если изменили состояние инпута на тру
+          if (!this.selected_one_input_elem) { // если с шифтом нажали без выбранного индекса по клику без шифта
+            this.min_max_arr = [0, index]; // получаю массив от индексного (чекнутого) элема до макс. длины
+            }
+            if (this.selected_one_input_elem) {
+              // tslint:disable-next-line:max-line-length
+              this.min_max_arr = [this.selected_one_input_elem, index]; // получаю массив от индексного (чекнутого) элема до макс. длины
+              this.min_max_arr.sort((a, b) => a - b);
+              this.selected_one_input_elem = undefined; // удаляю выбранный кликом элем
+              }
+            this.selected_checkbox_for_html.fill(true, this.min_max_arr[0], this.min_max_arr[1] + 1); // заполняю тру для  представления
+    for (let i = this.min_max_arr[0]; i <= this.min_max_arr[1]; i++) {
+            this.id_selected_letter.push(this.emailServ.draft_list[i].draft_id); // пушу айдишники
+          }
+          this.id_selected_letter = this.id_selected_letter.filter( // фильтрую дубли
+            (val, ind, self) => {
+        if (self.indexOf(val) === ind) {
+            return val;
+        }
+            }
+          );
+
+            // const allInputs = document.querySelectorAll('.checkbox') as HTMLDivElement;
+            const allInputs: HTMLDivElement = <any>document.querySelectorAll('.avatar_checkboxes.hidden_checkbox');
+            for (let i = this.min_max_arr[0]; i <= this.min_max_arr[1]; i++) {
+              allInputs[i].checked = true;
+            }
+
+        } else { // если по чекнутому чекбоксу нажали
+          e.target.checked = false; // скидываю его
+          const allInputs = <any>document.querySelectorAll('.avatar_checkboxes.hidden_checkbox');
+          if (!this.selected_one_input_elem) {
+            this.min_max_arr = [index, allInputs.length - 1]; // получаю массив от индексного (чекнутого) элема до макс. длины
+            }
+          if (this.selected_one_input_elem) {
+          // tslint:disable-next-line:max-line-length
+          this.min_max_arr = [this.selected_one_input_elem, index]; // получаю массив от индексного (чекнутого) элема до кликного индекса
+          this.min_max_arr.sort((a, b) => a - b);
+          this.selected_one_input_elem = undefined;
+          }
+
+          this.selected_checkbox_for_html.fill(false, this.min_max_arr[0], this.min_max_arr[1] + 1);
+
+            for (let i = this.min_max_arr[0]; i <= this.min_max_arr[1]; i++) {
+              allInputs[i].checked = false;
+            }
+            this.id_selected_letter.splice(index); // начиная с индекса по которому кликнули, удаляю все id-шки из выбранных
+        }
+      }
+            return;
+    }
+
+  this.selected_one_input_elem = index; // если просто клик, ловлю индекс
+
+
+    }
+
+  }
+
+

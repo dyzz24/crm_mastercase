@@ -68,7 +68,8 @@ title="Переслать"
 
   <button class='menu'
 routerLink="./create"
-[queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'create_tmp'}"
+[queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'create_tmp', 'new':'true'}"
+[queryParams] = "{'new':'true'}"
 title="Новый шаблон"
 >
   <span class='new_tmp'></span>

@@ -34,7 +34,9 @@
     [ngClass]="{checkbox_selected: this.selected_checkbox_for_html[i]}"
     [class.favorite_template] = 'letter.flagged'
     >
-    <input type="checkbox"  id='my_id{{letter.draft_id}}' class='avatar_checkboxes hidden_checkbox' (change)='select_letter($event, i, letter.draft_id)'>
+    <input type="checkbox"  id='my_id{{letter.draft_id}}' class='avatar_checkboxes hidden_checkbox' 
+    (click)='select_some_letters($event, i)'
+    (click)='select_letter($event, i, letter.draft_id)'>
       <label for='my_id{{letter.draft_id}}' class="checkbox_block"></label>
       <div class="setting_and_txt_group"
       routerLink="./create"

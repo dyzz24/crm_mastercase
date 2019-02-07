@@ -66,18 +66,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
 
-    // this.searchLettersInput.valueChanges.pipe().subscribe(data => {
-    //     if (data === '') {
-    //       this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList, true); // .toLowerCase() - отмена регистра при поиске
-    //           this.stopSearch = false;
-    //           this.startSearch = true;
-    //           this.successSearch = false;
-    //           this.searchStringForHTTP = '';
-    //     } else {
-    //       this.searchLetterFunc(data.toLowerCase(), this.emailServ.lettersList);
-    //       this.searchStringForHTTP = data.toLowerCase();
-    //     }
-    // });
 
     this.searchLettersInput.valueChanges.pipe().subscribe(datd => this.search_letter(datd));
 

@@ -73,6 +73,7 @@
     transition: .4s;
     flex-shrink: 0;
     position: relative;
+    user-select: none;
     
 
     &:hover {
@@ -110,6 +111,7 @@
     white-space: nowrap;
     overflow: hidden;
     flex: 1;
+    user-select: none;
 }
 
 .setting {
