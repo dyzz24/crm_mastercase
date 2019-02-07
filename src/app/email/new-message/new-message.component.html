@@ -3,10 +3,11 @@
     <div class="left__group">
       <div class="left__panel end">
         <button class='new_btn'
-        routerLink="../create"
+        routerLink="../../1/create"
         ><span class='la la-envelope'></span>Новое сообщение</button>
         <button class='new_btn'
         routerLink="../create"
+        [queryParams] = "{'new':'true'}"
         *ngIf="this.edit_template"
         ><span class='la la-folder'></span>Новый шаблон</button>
 
@@ -46,7 +47,7 @@
         </button>
   </div>
   <div class="message__body">
-    <div class="template_name" *ngIf="this.edit_template"><p>Название шаблона: {{this.template_title}}</p>
+    <div class="template_name" *ngIf="this.edit_template"><p [ngClass]="{opacity_off: !this.new_template_name}">Название шаблона: {{this.template_title}}</p>
         <span (click)='this.toggle_inputs_field(true)' *ngIf="!this.hidden_input_fields">Раскрыть поля ввода</span>
         <span (click)='this.toggle_inputs_field(false)' *ngIf="this.hidden_input_fields">Скрыть поля ввода</span>
     </div>

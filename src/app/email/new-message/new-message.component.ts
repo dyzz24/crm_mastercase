@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck, Inject, inject } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, Inject, inject, ViewChild, ElementRef } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -53,12 +53,16 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public template_title: string;
     public important_template: boolean;
     public subscription_emailServ_template_list: Subscription;
+    public new_template_name = true;
+
+    @ViewChild ('new_template_hidden', {read: ElementRef}) new_template_hidden: ElementRef;
 
 
 
 
 
   ngOnInit() {
+
     this.emailServ.hiddenEmpty = true;
     this.save_tmp_state = false; // открытие закрытие окна сохранения имени шаблона
     this.from = this.emailServ.idPostForHTTP;
@@ -72,7 +76,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
       (queryParam: any) => {
           this.mail_id = queryParam['id'];
           this.status = queryParam['status'];
+          const new_tmp_state = queryParam['new'];
+
           if (queryParam.edit_tmp === 'true') { // для колбасины и редактирования шаблонов
+            this.new_template_name = true;
             this.edit_template = true;
             this.hidden_input_fields = false;
             this.httpPost(
@@ -258,6 +265,14 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.edit_template = false;
           }
 
+          if (new_tmp_state === 'true') { // если зашли из шаблонов в новый шаблон - колбаса "кому" и тд появляется, скрывается
+                                                                                                              // "Название шаблона"
+            this.edit_template = true;
+            this.hidden_input_fields = false;
+            this.new_template_name = false;
+          }
+
+
           if (this.status === 'create_tmp') {
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
@@ -279,6 +294,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
   );
 
   }
+
   ngDoCheck() {
     // console.log(this.hidden_copy);
   }

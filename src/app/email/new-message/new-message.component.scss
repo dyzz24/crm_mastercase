@@ -309,6 +309,10 @@ label {
     
 }
 
+.opacity_off {
+    opacity: 0;
+}
+
 .attach_group {
     width: 100%;
     display: flex;
@@ -316,7 +320,7 @@ label {
     flex-direction: row;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 0 60px;
+    padding: 0 70px;
     height: 40px;
     box-sizing: border-box;
 
