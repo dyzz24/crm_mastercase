@@ -62,7 +62,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   id_for_request;
   index;
   cahse_letters = [];
-  // flagged_important_letter: boolean; // флаг текущего письма, важное не важное
+  important_flag: boolean; // флаг - важное или не важное письмо
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -81,11 +81,16 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
   ngOnInit() {
 
-    this.emailServ.hiddenEmpty = true; // скрытие "выберите письмо или нажмите написать"
+
 
 
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
+
+          this.activatedRoute.queryParams.subscribe(params => {
+            this.important_flag = params.imp_flag;
+          });
+
           this.emailServ.currentId = +data.id; // ID письма mail_id
           let flagged = true; // при каждом изменении роута получаю активный флаг
           this.preload_to_wait_status = true; // ставлю крутилку декоратор при каждом изменении роута
@@ -402,6 +407,7 @@ let flagged_for_http;
       .subscribe();
     }
   });
+  this.important_flag = flagged_for_http.toString();
 }
 
 }
