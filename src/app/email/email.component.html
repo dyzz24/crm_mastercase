@@ -9,18 +9,13 @@
       <div class="header">
         <p class="head_titl">Почта</p>
         <div class="header_leftGroup">
-          <button class="email-menu" (click)="inboxMenuShow()">
-            <span class="la la-bars"></span>
-            <p class="tooltip">Меню</p>
+          <button class="email-menu" (click)="inboxMenuShow()"  title="Настройки">
+            <span class="la la-cog"></span>
             <div class="hideInboxMenu" [ngClass]="{ visible: inboxMenuStatus }">
-              <button (click)="deleteInboxOpen()">Удалить ящик</button>
-              <!-- <button>Редактировать ящик</button> -->
-              <button (click)="settingOpen()">Настройки</button>
             </div>
           </button>
           <button class="email-menu">
             <span class="la la-pencil-square-o"></span>
-            <p class="tooltip">Что-то</p>
           </button>
         </div>
 
@@ -126,7 +121,7 @@
         <div
           class="emails__list"
           [ngClass]="{
-            left_activ_strip: email.address === this.emailServ?.idPostForHTTP
+            bold_active: email.address === this.emailServ?.idPostForHTTP
           }"
           
           (click)="showHiddenBlock(i)"
@@ -135,17 +130,22 @@
             <div class="avatar">
               <p>{{ email.address.charAt(0) }}</p>
             </div>
-            <p>{{ email.address }}</p>
+            <p class='title_email'>{{ email.address }}</p>
           </div>
-          <button>
+
+          <div class="email_icons_group">
+          <button class='settings_email' title="Настройки ящика">
             <span
-              class="la la-lg la-angle-down"
-              *ngIf="visibl[i] === false || visibl[i] === undefined"
+              class="la la-cog"
             >
             </span>
-            <span class="la la-lg la-angle-up" *ngIf="visibl[i] === true">
-            </span>
           </button>
+          <button title="Свернуть / развернуть">
+            <span class="la la-lg la-angle-down"></span>
+          </button>
+        </div>
+
+
         </div>
         <div
           class="hiddenMenu"
@@ -321,6 +321,7 @@
               routerLink="./{{this.emailItems[i].address}}/2"
             >
               <p>Исходящие</p>
+              <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][2] !== 0">{{this.emailServ.counts[email.address][2]}}</p>
             </div>
           </div>
           <div
@@ -333,6 +334,7 @@
               routerLink="./{{this.emailItems[i].address}}/3"
             >
               <p>Удаленные</p>
+              <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][3] !== 0">{{this.emailServ.counts[email.address][3]}}</p>
             </div>
           </div>
           <div
@@ -345,6 +347,7 @@
               routerLink="./{{this.emailItems[i].address}}/5"
             >
               <p>Спам</p>
+              <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][5] !== 0">{{this.emailServ.counts[email.address][5]}}</p>
             </div>
           </div>
 

@@ -92,6 +92,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
             this.emailServ.notLettersFlag = false;
           }
           this.emailServ.lettersList = data; // главный массив всех всех писем
+          // console.log( this.emailServ.lettersList)
           this.canc_select(); // отмена селекта если были выбраны письма
           this.emailServ.hideAvatars = this.emailServ.lettersList.map(val => {
             return val = false;
@@ -209,6 +210,11 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, seen: true, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[idLetter].seen = true;
+
+
+  this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] =
+  this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] - 1; // вычитаю 1 непрочитанное из счетчика непрочитанных
+
 }
   }
 
@@ -443,7 +449,7 @@ data.map(val => { // добавление в хайд аватар флагов,
       if (this.emailServ.lettersList.length <= 17) {// если подзагруза не было, восстанавливаю стартовое кол-во
         setTimeout(() => {
           this.httpPost(
-            `${global_params.ip}/mail/box/`,
+            `${global_params.ip}/mail/envelope/`,
               // tslint:disable-next-line:max-line-length
               {
                 address: this.emailServ.idPostForHTTP,
@@ -492,9 +498,11 @@ data.map(val => { // добавление в хайд аватар флагов,
       this.canc_select();
   }
 
+
   deleteRestoreLettersAll(box) {
 
     const id_for_delete = this.emailServ.idLetters;
+
 
     const all_data_for_http = [];
     for (const key of this.emailServ.idLetters) {
@@ -505,18 +513,34 @@ data.map(val => { // добавление в хайд аватар флагов,
       );
     }
 
-    this.httpPost(`${global_params.ip}/mail/box/update`, all_data_for_http).subscribe(data => {
+    this.httpPost(`${global_params.ip}/mail/envelope/update`, all_data_for_http).subscribe(data => {
     }
     );
 
     this.emailServ.lettersList.filter((val, ind, arr) => {
       for (const key of id_for_delete) {
 
+
         if (val.mail_id === key) {
+
+          if (val.seen === false) { // проверяю, если письма непрочитанные
+
+this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] =
+this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] - 1; // вычитаю 1 непрочитанное из счетчика непрочитанных
+                                                                                      // в текущей папке
+if (!this.emailServ.counts[this.emailServ.idPostForHTTP][box]) { // если вдруг такой ключ не создан ещё
+  this.emailServ.counts[this.emailServ.idPostForHTTP][box] = 0;
+}
+this.emailServ.counts[this.emailServ.idPostForHTTP][box] =
+this.emailServ.counts[this.emailServ.idPostForHTTP][box] + 1; // и пребавляю непрочитанные в папку
+                                                                                      // в которую переносим письма
+          }
 
           arr[ind] = 'null'; // ставлю позицию в null для фильтрации и удаления
           return arr;
         }
+
+
       }
     });
     this.emailServ.lettersList = this.emailServ.lettersList.filter(

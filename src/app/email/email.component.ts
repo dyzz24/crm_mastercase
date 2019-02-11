@@ -39,7 +39,8 @@ export class EmailComponent implements OnInit, DoCheck {
 
   selected_box;
   selected_folders;
-adress;
+  adress;
+
 
   constructor(
     public element: ElementRef,
@@ -60,7 +61,6 @@ adress;
           clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
           this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
-
       this.emailServ.all_user_mail_address = data2.boxes.map(val => {
         return val.address;
       });
@@ -85,6 +85,7 @@ adress;
       // const fold = counts['seo@insat.ru']
 
       this.emailServ.counts = counts;
+      console.log(this.emailServ.counts);
 
     });
 

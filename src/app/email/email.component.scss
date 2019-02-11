@@ -56,7 +56,7 @@ button {
 
 .header {
     width: 100%;
-    height: 40px;
+    height: 50px;
     align-items: center; 
     // border-bottom: 1px solid $border;
     box-sizing: border-box;
@@ -80,7 +80,7 @@ a,p{
     color:$text-color;
 }
 .head_titl {
-    color: #002d48;
+    color: #092a55;
 }
 
 .header_leftGroup {
@@ -101,7 +101,7 @@ a,p{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4px 0 20px;
+    padding: 0 14px 0 20px;
     border-bottom: 1px solid #d9e6f7;
     position: relative;
     transition: .4s;
@@ -122,21 +122,10 @@ a,p{
     }
 }
 
-.left_activ_strip {
-    position: relative;
-    &::before {
-        content: '';
-        position: absolute;
-        top:0;
-        left: 0;
-        height: 100%;
-        width: 4px;
-        background: #074b86;
-    }
-}
+
 
 .type_message {
-    height: 40px;
+    height: 50px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -221,18 +210,9 @@ a,p{
 }
 
 .active_typeMess {
-    background: #d9e6f7;
+    background: #D9E6F7;
     font-weight: bold;
     position: relative;
-    &::before {
-        content: '';
-        position: absolute;
-        top:0;
-        left: 0;
-        height: 100%;
-        width: 4px;
-        background: #074b86;
-    }
     }
 
     .email__num {
@@ -545,9 +525,9 @@ ul {
 
 .counter {
     margin-left: 10px;
-    border-radius: 11px;
-    background-color: #6b80a0;
-    color: white !important;
+    border-radius: 12px;
+    background-color: rgba(130, 187, 225, 0.5);
+    color: #262626;
     font-weight: normal !important;
     padding: 0 6px;
     box-sizing: border-box;
@@ -561,6 +541,27 @@ ul {
     height: 18px;
     background-size: 100% 100%;
     flex-shrink: 0;
+}
+
+.bold_active {
+    font-weight: 700;
+}
+
+
+.email_icons_group {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.title_email {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.settings_email {
+margin-right: 25px;
 }
 
 
