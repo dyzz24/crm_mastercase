@@ -352,7 +352,6 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
         })
         .subscribe();
         this.rout.navigate(['./'], { relativeTo: this.activatedRoute });
-        this.emailServ.hiddenEmpty = false;
     }, 500);
 
     this.canc_select();
@@ -441,7 +440,7 @@ data.map(val => { // добавление в хайд аватар флагов,
         this.emailServ.lettersList.splice(index, 1); // удаляю из представления
 
 
-      if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
+      if (this.emailServ.lettersList.length <= 17) {// если подзагруза не было, восстанавливаю стартовое кол-во
         setTimeout(() => {
           this.httpPost(
             `${global_params.ip}/mail/box/`,
@@ -496,7 +495,6 @@ data.map(val => { // добавление в хайд аватар флагов,
   deleteRestoreLettersAll(box) {
 
     const id_for_delete = this.emailServ.idLetters;
-    this.canc_select();
 
     const all_data_for_http = [];
     for (const key of this.emailServ.idLetters) {
@@ -524,6 +522,8 @@ data.map(val => { // добавление в хайд аватар флагов,
     this.emailServ.lettersList = this.emailServ.lettersList.filter(
       a => a !== 'null' // возвращаю массив без null (удаленных элементов)
     );
+
+    this.canc_select();
 
     if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
 

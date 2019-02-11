@@ -1,4 +1,5 @@
-import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy,
+  AfterViewInit } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpRequest } from '@angular/common/http';
@@ -61,6 +62,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   id_for_request;
   index;
   cahse_letters = [];
+  // flagged_important_letter: boolean; // флаг текущего письма, важное не важное
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -104,8 +106,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
       `${global_params.ip}/mail/envelope/`,
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP, mailId: +data.id}).subscribe((dataMails) => {
-        // const test = this.selected_letter_part2.push(dataMails);
-// console.log(dataMails);
 
         this.selectedLetter = dataMails; // ставлю активным письмом ответ с сервера
         // console.log(this.selectedLetter);
