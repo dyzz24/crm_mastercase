@@ -216,7 +216,8 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
     this.checkerLengthArray_bcc_cc();
     this.checkerLength_addressess();
     this.current_index_checker(n);
-
+    // const queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+    // queryParams['imp_flag'] = this.emailServ.lettersList[1].flagged;
   }
 
   hideMenuShow() {

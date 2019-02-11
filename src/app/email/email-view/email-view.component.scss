@@ -31,8 +31,12 @@ p{
 
 
 .one_butt {
-    margin: 0;
+
     flex-shrink: 0;
+
+    &:last-child {
+        margin: 0;
+    }
 
 }
 
@@ -70,7 +74,7 @@ p{
 }
 
 .header_letter__view {
-    @include header(row,40px);
+    @include header(row,50px);
     border:0px;
     border-bottom: 1px solid $border;
     padding: 0 10px;
@@ -585,10 +589,6 @@ p{
 .none_display {
     
     opacity: .2;
-}
-
-.new__mess {
-    margin: 0px;
 }
 
 .quickResponse__mail_status {

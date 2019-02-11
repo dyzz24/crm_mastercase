@@ -14,6 +14,8 @@
     // overflow: hidden;
     position: relative;
         z-index: 1;
+        border-bottom: 1px solid #D9E6F7;
+        box-sizing: border-box;
 
     .input_group {
         flex: 1;
@@ -46,11 +48,20 @@
         height: 20px;
         margin: 0;
         
-
-        span {
-            font-size: 18px;
-        }
     }
+}
+
+.la {
+    color: #9CABC2;
+    font-size: 21px;
+
+    &:hover {
+        color: #0476C3;
+    }
+}
+
+.triangl {
+    font-size: 15px;
 }
 
 

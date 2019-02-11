@@ -45,12 +45,7 @@
 
 button {
     margin: 0;
-    span {
-        color:#9cabc1;
-    }
-    &:hover span {
-        color: #092955;
-    }
+
 }
 
 
@@ -551,6 +546,7 @@ ul {
 .email_icons_group {
     display: flex;
     flex-shrink: 0;
+    margin-left: 22px;
 }
 
 .title_email {
@@ -561,7 +557,7 @@ ul {
 }
 
 .settings_email {
-margin-right: 25px;
+margin-right: 20px;
 }
 
 

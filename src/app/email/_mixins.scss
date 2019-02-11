@@ -284,8 +284,17 @@ button {
     border: none;
     outline: none;
     padding: 0 0 0 0;
-    margin: 0 2px 0 2px;
+    margin: 0 20px 0 0px;
     flex-shrink: 0;
+
+    span {
+        color: #9CABC2;
+        transition: .2s;
+    }
+
+    &:hover span{
+        color: #0476C3;
+    }
     
 // span {
     
@@ -398,7 +407,7 @@ button {
         .create_btn {
             background: #0476C3;
             width: auto;
-            // height: 38px;
+            height: auto;
             line-height: 1;
             font-size: 13px;
             color: white;
@@ -407,7 +416,9 @@ button {
             padding: 8px 28px;
             box-sizing: border-box;
             white-space: nowrap;
+            margin: 0;
         }
+
 
         
 .new_btn {
