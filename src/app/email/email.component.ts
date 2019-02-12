@@ -103,7 +103,6 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
     this.cd.detectChanges();
   }
 
-
   ngDoCheck() {
     // console.log(this.user_folders);
   }

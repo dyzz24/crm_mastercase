@@ -504,12 +504,13 @@ p{
     font-family: 'Roboto-Regular' ,Arial, sans-serif;
     padding: 5px 10px;
     box-sizing: border-box;
-    margin-left: 8px;
-    height: 30px;
-    border-radius: 10px;
-    border: 1px solid #929292;
+    margin-left: 10px;
+    height: 34px;
+    border-radius: 2px;
+    border: 1px solid #D9E6F7;
     outline: none;
     resize: none;
+    color: rgba(196, 206, 223, 0.5);
   
 
     &:focus {

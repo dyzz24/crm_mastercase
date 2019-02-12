@@ -87,6 +87,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
 
+
           this.activatedRoute.queryParams.subscribe(params => {
             this.important_flag = params.imp_flag;
           });
@@ -101,7 +102,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
                   this.checkerLengthArray_bcc_cc();
                   this.checkerLength_addressess();
                   this.emailServ.activeLett[data.id] = true; // ставлю в колбасе активным письмом
-                  this.emailServ.hiddenEmpty = true; // удалю вообще скоро
                   this.preload_to_wait_status = false; // отменяю крутилку
                   flagged = false; // скидываю флаг, чтоб не делать запрос
                 }

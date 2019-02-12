@@ -18,8 +18,8 @@ export class AppComponent {
     if (!this.new_ip) {
       return;
     }
-    global_params.ip = `http://${this.new_ip}`;
-    global_params.socket_ip = `ws://${this.new_ip}`;
+    global_params.ip = `http://${this.new_ip}:3000`;
+    global_params.socket_ip = `ws://${this.new_ip}:3000`;
     console.log(global_params);
   }
 }

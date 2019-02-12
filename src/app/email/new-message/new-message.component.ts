@@ -193,7 +193,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
           }
 
           if (this.status === 'reply') { // если нажали "ответить"
-
+          this.new_template_name = false;
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
@@ -211,6 +211,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
           }
 
           if (this.status === 'reply_all') {  // ответить всем
+            this.new_template_name = false;
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
@@ -237,6 +238,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
           }
 
           if (this.status === 'forward') { // если нажали переслать
+            this.new_template_name = false;
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
@@ -256,6 +258,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
                 this.messages = '';
                 this.subject = '';
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
+                this.new_template_name = false;
           }
 
           if (new_tmp_state === 'true') { // если зашли из шаблонов в новый шаблон - колбаса "кому" и тд появляется, скрывается
@@ -303,13 +306,12 @@ export class NewMessageComponent implements OnInit, DoCheck {
       if (e.target.value === undefined || e.target.value === '') { // если пустая строка - выхожу
         return;
       }
-      if (arr[0] === '' || arr[0] === undefined) { // если первый элемент  = ''
-                          // (такое бывает, когда нажимаю создать новое письмо, ибо передает '' от сервиса), удаляю его
-          arr.shift();
-      }
-      const regExsp = /[а-яё]/i; // регулярка для проверки русских символов
-      if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) { // если в троке нет @ или есть русский символ
-        this.showError('Введите корректный адрес (en + @)'); // выдаст сообщение об ошибке и выкинет
+      // if (arr[0] === '' || arr[0] === undefined) { // если первый элемент  = ''
+      //                     // (такое бывает, когда нажимаю создать новое письмо, ибо передает '' от сервиса), удаляю его
+      //     arr.shift();
+      // }
+      const validation_flag = this.validation(e.target.value);
+      if (validation_flag === false) {
         return;
       }
       arr.push(e.target.value); // добавляю в массив значение с таргета
@@ -326,12 +328,16 @@ export class NewMessageComponent implements OnInit, DoCheck {
       return;
     }
     if (e.key === 'Enter' && e.target.value !== '') { // отлавливаю клик на Enter
-      if (arr[0] === '' || arr[0] === undefined) {
-        arr.shift();
-      }
-      const regExsp = /[а-яё]/i;
-      if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) {
-        this.showError('Введите корректный адрес (en + @)');
+      // if (arr[0] === '' || arr[0] === undefined) {
+      //   arr.shift();
+      // }
+      // const regExsp = /[а-яё]/i;
+      // if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) {
+      //   this.showError('Введите корректный адрес (en + @)');
+      //   return;
+      // }
+      const validation_flag = this.validation(e.target.value);
+      if (validation_flag === false) {
         return;
       }
       // const new_data = {address: e.target.value}
@@ -343,6 +349,17 @@ export class NewMessageComponent implements OnInit, DoCheck {
         }});
       e.target.value = '';
     }
+  }
+
+  validation(val) { // ф-я валидатор, проверяет введенные значения
+    const regExsp = /[а-яё]/i; // регулярка на русские символы
+      if (val.indexOf('@') < 0 || // если нет @
+      val.search(regExsp) >= 0 || // если есть русские символы
+      val.indexOf('!') > 0 // если есть  знак !
+       ) {
+        this.showError('Введите корректный адрес (en + @)');
+        return false;
+      }
   }
 
   delete_data_clickEvent(arr, e, index) { // удаление при клике на крестик в бабле
@@ -411,8 +428,8 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
   this.httpPost(`${global_params.ip}/mail/envelope/send`, formData).subscribe(
     (resp => { // если ответ положительный, отключаю прелоадер, возвращаюсь на урл с которого отправили
 
-        const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл
-          this._rout.navigate([navigatePath]);
+
+        this.closeViewer(); // функция сбрасывает урл и ловит папаметр для отображения важное / не важное письмо
         this.messages_sending = false; // крутилка off
         this.showSuccess('Письмо отправлено');
     }),
@@ -420,6 +437,10 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
   this.showError('Письмо НЕ отправлено');
   this.messages_sending = false; // выключаю крутилку
 });
+
+
+
+
 
 }
 onFileChange(event) { // прикрепление файлов с инпута

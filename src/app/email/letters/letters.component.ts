@@ -224,7 +224,6 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +mail_id, seen: false, address: this.emailServ.idPostForHTTP})
     .subscribe(); // перевожу в прочитанные сообщения
   this.emailServ.lettersList[index].seen = false;
-  console.log(this.emailServ.lettersList[index]);
 
   this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] =
   this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] + 1; // вычитаю 1 непрочитанное из счетчика непрочитанных
@@ -561,9 +560,9 @@ this.emailServ.counts[this.emailServ.idPostForHTTP][box] + 1; // и пребав
       a => a !== 'null' // возвращаю массив без null (удаленных элементов)
     );
 
-    this.canc_select();
+    this.canc_select(); // сбрасываю инпуты
 
-    if (this.emailServ.lettersList.length <= this.emailServ.lettersAmount) {// если подзагруза не было, восстанавливаю стартовое кол-во
+    if (this.emailServ.lettersList.length <= 17) {// если подзагруза не было, восстанавливаю стартовое кол-во
 
       setTimeout(() => {
         this.httpPost(
