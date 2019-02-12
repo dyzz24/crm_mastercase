@@ -361,8 +361,16 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 
   closeViewer() {
-    const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл, если закрыли окно нового сообщения
-    this._rout.navigate([navigatePath]);
+const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл, если закрыли окно нового сообщения
+const queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+this.emailServ.lettersList.filter(val => {
+  if (val.mail_id === this.emailServ.currentId) {
+    queryParams['imp_flag'] =  val.flagged;
+  }
+});
+this._rout.navigate([navigatePath], { relativeTo: this.activatedRoute,  // передача queryParams из компонента
+queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
+
   }
 
 
