@@ -165,7 +165,7 @@ background: rgba(141, 175, 255, 0.507);
 }
 
 .letter__container {
-    height: auto;
+    height: 100vh;
     max-height: calc(100vh - 105px);
     overflow: auto;
     box-sizing: border-box;
