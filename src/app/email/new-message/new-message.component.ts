@@ -66,6 +66,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
     this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
       (queryParam: any) => {
+          this.hidden_input_fields = true;
           this.mail_id = queryParam['id']; // отлавливаю ID письма для последующего запроса (для шаблонов, ответить всем, ответить и тд)
           this.status = queryParam['status']; // статус - для работы с шаблонами
           const new_tmp_state = queryParam['new']; // для создания шаблонов

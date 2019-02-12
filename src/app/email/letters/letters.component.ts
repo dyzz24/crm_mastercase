@@ -390,7 +390,7 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
 
 
   scrollDown() {
-    if (this.stopScrollingLoadFiles === true) {
+    if (this.stopScrollingLoadFiles === true) { // если идет поиск по письмам - не подгружаю на скроле файлы
       return;
     }
     const container = document.querySelector('.letter__container');
@@ -399,15 +399,15 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
     const scrollPosition = container.scrollTop; // ** величина текущей прокрутки scroll
     const maxScroll = maxScrollHeight - maxHeight; //  100% от макс возможного скролла
     const persent = (scrollPosition * 100) / maxScroll; // текущий скролл в процентах
-    if (persent > 85) {
+    if (persent > 85) { // если проскролили почти донизу
       if (this.emailServ.stopFlag === false) {
-        if (this.emailServ.dataLetters !== this.emailServ.lettersAmount) {
-          this.counterAmount = 0;
-          return;
+        if (this.emailServ.dataLetters !== this.emailServ.lettersAmount) { // в ответе с сервера приходят конверты
+          this.counterAmount = 0;                                     // если длина пачки конвертов отличается от подгружаемого лимита
+          return;                                                   // выхожу и не загружаю больше (значит все письма с сервера отгружены)
         }
-        this.emailServ.stopFlag = true;
-        this.counterAmount = this.counterAmount + this.emailServ.lettersAmount;
-
+        this.emailServ.stopFlag = true; // ставлю флаг, чтобы не дублировать запросы на сервер
+        this.counterAmount = this.counterAmount + this.emailServ.lettersAmount; // счетчик загруженных писем
+                                              // используется для запроса на следующую пачку (25 к примеру) писем
         this.httpPost(
           `${global_params.ip}/mail/box/`,
             // tslint:disable-next-line:max-line-length
@@ -422,14 +422,15 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
             this.emailServ.lettersList = this.emailServ.lettersList.concat(
               data
             );
-            this.emailServ.stopFlag = false;
-            this.emailServ.dataLetters = data.length;
+            this.emailServ.stopFlag = false; // отключаю флаг и разрешаю снова слать запросы на сервер
+            this.emailServ.dataLetters = data.length; // чекаю длинну присланного массива, что бы если загружены все - больше не грузить
 
 
-data.map(val => { // добавление в хайд аватар флагов, для дальнейшего использования
-  val = false;
-  this.emailServ.hideAvatars.push(val);
-});
+
+                data.map(val => { // добавление в хайд аватар флагов, для дальнейшего использования
+                  val = false;
+                  this.emailServ.hideAvatars.push(val);
+                });
 
             // this.emailServ.stateServ();
           });
