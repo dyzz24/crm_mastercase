@@ -149,7 +149,8 @@
           >
             <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.from_address}}</p>
 
-            <p class='letter__caption' [class.headText__status-new]="letters.seen === false">{{letters.preview}}...</p>
+            <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="letters.preview">{{letters.preview}}</p>
+            <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="!letters.preview">Без темы</p>
           
              <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->
 
@@ -180,7 +181,7 @@
               </ng-template>
               <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 3, i)' *ngIf='this.emailServ.lettersList[i].box_id !== 3'>Удалить</button>
               <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 1, i)' *ngIf='this.emailServ.lettersList[i].box_id === 3'>Восстановить</button>
-              
+              <button class='letterMenuButt unread_btn' (click)='unread(this.emailServ.lettersList[i].mail_id, i)' *ngIf='this.emailServ.lettersList[i].seen === true'>Сделать непрочитанным</button>
             </div>
           </div>
         </div>
@@ -201,7 +202,7 @@
   
   </div>
   
-    <app-splitter left min='100' max='500' positionLeft='-3.5'></app-splitter>
+    <app-splitter left min='190' max='500' positionLeft='-3.5'></app-splitter>
   
  
 

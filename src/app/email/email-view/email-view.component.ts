@@ -111,12 +111,11 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
       `${global_params.ip}/mail/envelope/`,
       // tslint:disable-next-line:max-line-length
       {address: this.emailServ.idPostForHTTP, mailId: +data.id}).subscribe((dataMails) => {
-
+        this.preload_to_wait_status = false; // отменяю крутилку
         this.selectedLetter = dataMails; // ставлю активным письмом ответ с сервера
         // console.log(this.selectedLetter);
-        // console.log(this.selectedLetter);
         this.cahse_letters.push(this.selectedLetter); // добавляю в кэш уже ответ с сервера
-        this.preload_to_wait_status = false; // отменяю крутилку
+
 
 
         this.checkerLengthArray_bcc_cc();
@@ -207,8 +206,10 @@ return;
 
 current_id =  this.emailServ.lettersList[current_index].mail_id; // получаю новое id для урла
 
-
-this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); // перехожу по урлу
+const queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+queryParams['imp_flag'] = this.emailServ.lettersList[current_index].flagged;
+this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute,  // передача queryParams из компонента
+queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
 }
 
 
@@ -216,8 +217,6 @@ this._rout.navigate(['../' + current_id], { relativeTo: this.activatedRoute }); 
     this.checkerLengthArray_bcc_cc();
     this.checkerLength_addressess();
     this.current_index_checker(n);
-    // const queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
-    // queryParams['imp_flag'] = this.emailServ.lettersList[1].flagged;
   }
 
   hideMenuShow() {

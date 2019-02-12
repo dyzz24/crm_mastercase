@@ -84,7 +84,6 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
         `${global_params.ip}/mail/box/`,
         // tslint:disable-next-line:max-line-length
         {address: this.emailServ.idPostForHTTP, boxId: this.emailServ.selectNum, limit: this.emailServ.lettersAmount, offset: 0}).subscribe((data) => {
-
     this.emailServ.haveResponse = true;
           if (data.length === 0) {
             this.emailServ.notLettersFlag = true; // индикация, что письма отсутствуют
@@ -102,7 +101,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
           this.emailServ.dataLetters = this.emailServ.lettersAmount;
           });
 
-    }); // подписка
+    }); // подписка на изменение роута
 
 
   }
@@ -205,6 +204,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
 
 
   urlLetterView(event, idLetter, id) { // перевод в прочитанное сообщение из непрочитанного
+    if (event.target.classList.contains('unread_btn')) {
+      return;
+    }
 if (this.emailServ.lettersList[idLetter].seen === false) {
     // tslint:disable-next-line:max-line-length
     this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, seen: true, address: this.emailServ.idPostForHTTP})
@@ -216,6 +218,17 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
   this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] - 1; // вычитаю 1 непрочитанное из счетчика непрочитанных
 
 }
+  }
+
+  unread(mail_id, index) {
+    this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +mail_id, seen: false, address: this.emailServ.idPostForHTTP})
+    .subscribe(); // перевожу в прочитанные сообщения
+  this.emailServ.lettersList[index].seen = false;
+  console.log(this.emailServ.lettersList[index]);
+
+  this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] =
+  this.emailServ.counts[this.emailServ.idPostForHTTP][this.emailServ.selectedMess] + 1; // вычитаю 1 непрочитанное из счетчика непрочитанных
+  return;
   }
 
 

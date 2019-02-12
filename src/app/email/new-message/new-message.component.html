@@ -11,8 +11,8 @@
         *ngIf="this.edit_template"
         ><span class='la la-folder'></span>Новый шаблон</button>
 
-        <button class='new_btn'
-        *ngIf="this.edit_template"
+        <button class='new_btn' #important_tmp
+        *ngIf="this.new_template_name"
         title="Избранное"
         (click) = 'this.emailServ.important_template(this.important_template, this.mail_id)'
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck, Inject, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, Inject, inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -54,7 +54,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public important_template: boolean;
     public subscription_emailServ_template_list: Subscription;
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
-
 
 
 
@@ -263,6 +262,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.edit_template = true;
             this.hidden_input_fields = false;
             this.new_template_name = false;
+
+
+
           }
 
 
@@ -458,6 +460,7 @@ add_drag_input_data(objForData) { // ф-я принимает объект с ф
     this.files_for_view.push(val[key]); // добавляю в массив с файлами
     }
   }
+
 });
 
 
@@ -482,7 +485,7 @@ save_template() { // функция фохранения шаблона
     this.showError('Введите имя шаблона');
     return;
   }
-  const to_send = this.to.map(val => { // массив с графами "кому" привожу к вижу {addr:some@}
+  const to_send = this.to.map(val => { // массив с графами "кому" привожу к виду {addr:some@}
     return {address: val};
 });
   const cc_send = this.copy.map(val => { // массив с графами "копия"

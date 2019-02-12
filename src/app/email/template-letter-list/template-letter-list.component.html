@@ -11,6 +11,12 @@
     [extended_options] = 'false'
     >
   </app-email-header>
+
+  <div class="preloader__letters" *ngIf="this.emailServ.haveResponse === false; else messagesDownload">
+    <div class="cssload-speeding-wheel"></div>
+    <p>ЗАГРУЗКА</p>
+  </div>
+  <ng-template #messagesDownload>  
     <div class="template_settings" *ngIf="this.id_selected_letter.length > 0">
         <button  type='button'
         title="Сделать избранными"
@@ -70,13 +76,14 @@
   </div>
 </div>
 
-
+</ng-template>
 <ng-template #search_not_found>
 <p>Шаблоны не найдены</p>
 </ng-template>
 
 
   </div>
+
   <app-splitter left min='100' max='500' positionLeft='-0.5'></app-splitter>
   <div class="template__container">
     <router-outlet></router-outlet>
