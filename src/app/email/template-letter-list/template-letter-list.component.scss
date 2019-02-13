@@ -1,6 +1,7 @@
 
 @import '../mixins';
 @import '../../../colors';
+@import '../preloader';
 
 
 
@@ -135,6 +136,7 @@
         height: 100%;
         line-height: 1;
         position: relative;
+        color: #9CABC2;
 
         &::before {
             width: 100%;
@@ -164,6 +166,7 @@
         &__btn {
             line-height: 18px;
             width: 100%;
+            height: auto;
             color: #262626;
             padding: 5px;
             cursor: pointer;

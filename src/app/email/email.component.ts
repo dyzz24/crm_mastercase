@@ -1,5 +1,6 @@
 
-import { Component, OnInit, ElementRef, DoCheck, ViewChild, Inject} from '@angular/core';
+import { Component, OnInit, ElementRef, DoCheck, ViewChild, Inject, ChangeDetectorRef,
+ChangeDetectionStrategy, AfterViewInit} from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { EmailServiceService } from './email-service.service';
 import { AuthorizationService } from '../authorization.service';
@@ -13,9 +14,10 @@ import {global_params} from '../global';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
-  styleUrls: ['./email.component.scss']
+  styleUrls: ['./email.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmailComponent implements OnInit, DoCheck {
+export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
 
   emailItems;
@@ -40,11 +42,13 @@ export class EmailComponent implements OnInit, DoCheck {
   selected_box;
   selected_folders;
   adress;
+  current_address;
 
 
   constructor(
     public element: ElementRef,
     private _rout: Router,
+    private cd: ChangeDetectorRef,
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(SocketService) private socketServ: SocketService,
@@ -56,10 +60,8 @@ export class EmailComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-   const requestInterval = setInterval(() => {
-        if (this.authorizationServ.accessToken !== undefined) {
-          clearInterval(requestInterval); // если токен не пришел, продолжает опрашивать сервис авторизации
-          this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
+
+      this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
       this.emailServ.all_user_mail_address = data2.boxes.map(val => {
         return val.address;
@@ -68,6 +70,7 @@ export class EmailComponent implements OnInit, DoCheck {
 
          return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
       });
+
       this.emailServ.folders = data2.boxes;
 
       this.socketServ.lettersSocketConnect();
@@ -91,11 +94,16 @@ export class EmailComponent implements OnInit, DoCheck {
 
 
 
-        }
-      }, 1000);
+
 
 
   }
+
+  ngAfterViewInit() {
+    this.cd.detectChanges();
+  }
+
+
   ngDoCheck() {
     // console.log(this.user_folders);
   }

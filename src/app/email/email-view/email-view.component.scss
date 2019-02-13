@@ -89,6 +89,7 @@ p{
 
 .download {
     border: 1px solid $border;
+    box-sizing: border-box;
     margin-left: 40px;
     flex-shrink: 0;
 }
@@ -587,8 +588,9 @@ p{
 }
 
 .none_display {
-    
+    cursor: default;
     opacity: .2;
+
 }
 
 .quickResponse__mail_status {
@@ -677,6 +679,7 @@ p{
     background: url('../../../assets/tmp_black.svg') no-repeat center;
     background-size: 18px 18px;
 }
+
 
 
 

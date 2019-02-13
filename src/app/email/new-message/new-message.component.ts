@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck, Inject, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, Inject, inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -59,7 +59,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 
 
-
   ngOnInit() {
 
 
@@ -67,6 +66,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
     this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
       (queryParam: any) => {
+          this.hidden_input_fields = true;
           this.mail_id = queryParam['id']; // отлавливаю ID письма для последующего запроса (для шаблонов, ответить всем, ответить и тд)
           this.status = queryParam['status']; // статус - для работы с шаблонами
           const new_tmp_state = queryParam['new']; // для создания шаблонов
@@ -263,6 +263,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
             this.edit_template = true;
             this.hidden_input_fields = false;
             this.new_template_name = false;
+
+
+
           }
 
 
@@ -358,8 +361,16 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 
   closeViewer() {
-    const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл, если закрыли окно нового сообщения
-    this._rout.navigate([navigatePath]);
+const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл, если закрыли окно нового сообщения
+const queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+this.emailServ.lettersList.filter(val => {
+  if (val.mail_id === this.emailServ.currentId) {
+    queryParams['imp_flag'] =  val.flagged;
+  }
+});
+this._rout.navigate([navigatePath], { relativeTo: this.activatedRoute,  // передача queryParams из компонента
+queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
+
   }
 
 
@@ -458,6 +469,7 @@ add_drag_input_data(objForData) { // ф-я принимает объект с ф
     this.files_for_view.push(val[key]); // добавляю в массив с файлами
     }
   }
+
 });
 
 
@@ -482,7 +494,7 @@ save_template() { // функция фохранения шаблона
     this.showError('Введите имя шаблона');
     return;
   }
-  const to_send = this.to.map(val => { // массив с графами "кому" привожу к вижу {addr:some@}
+  const to_send = this.to.map(val => { // массив с графами "кому" привожу к виду {addr:some@}
     return {address: val};
 });
   const cc_send = this.copy.map(val => { // массив с графами "копия"

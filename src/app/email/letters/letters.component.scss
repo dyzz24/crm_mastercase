@@ -61,15 +61,7 @@ $font-color: $icons-color;
     
 }
 
-.preloader__letters {
-    width: 100%;
-    height: 100%;
-    background-color: #f3f5f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+
 
 
 
@@ -173,7 +165,7 @@ background: rgba(141, 175, 255, 0.507);
 }
 
 .letter__container {
-    height: auto;
+    height: 100vh;
     max-height: calc(100vh - 105px);
     overflow: auto;
     box-sizing: border-box;

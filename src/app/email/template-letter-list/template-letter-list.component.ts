@@ -48,12 +48,14 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.activatedRoute.params.subscribe(params => {
+      this.emailServ.haveResponse = false;
       this.email_id = params.email_id;
       this.emailServ.idPostForHTTP = this.email_id;
       this.httpPost(
         `${global_params.ip}/mail/draft/`,
         // tslint:disable-next-line:max-line-length
         {address: this.email_id}).subscribe((data) => {
+          this.emailServ.haveResponse = true;
           this.emailServ.draft_list = data;
           console.log(this.emailServ.draft_list);
 
