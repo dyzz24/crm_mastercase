@@ -68,6 +68,10 @@ export class FoldersListComponent implements OnInit, DoCheck, OnDestroy {
     this.emailServ.lettersList = this.emailServ.lettersList.filter((val2 , ind) => {
       if (val2.mail_id === +val && val2.seen === false) { // ловлю непрочитанные письма (для счетчика писем у папок)
         const previous_folders_box_id = val2.box_id; // ловлю предыдущий бокс папки (откуда перенес)
+
+        if (this.emailServ.counts[this.emailServ.idPostForHTTP][id_folder] === undefined) {
+          this.emailServ.counts[this.emailServ.idPostForHTTP][id_folder] = 0;
+        }
         this.emailServ.counts[this.emailServ.idPostForHTTP][id_folder] =
       +this.emailServ.counts[this.emailServ.idPostForHTTP][id_folder] + 1 ; // меняю счетчик папки в которую перенес
       this.emailServ.counts[this.emailServ.idPostForHTTP][previous_folders_box_id] =

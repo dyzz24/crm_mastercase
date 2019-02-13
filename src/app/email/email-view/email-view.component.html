@@ -15,19 +15,22 @@
         >
             <span class='la la-envelope-o'></span>
           </button>
-          <button (click)='selectMess(-1)' 
+          <button (click)='selectMess(-1)' class='group_btn'
           title="Следующее сообщение"
           >
               <span class='la la-angle-left' ></span>
             </button>
-              <button  (click)='selectMess(1)'
+              <button  (click)='selectMess(1)' class='end_group'
               title="Предыдущее сообщение"
               >
                   <span class='la la-angle-right'></span>
                 </button>
+
+                <div class="stick_splitter"></div>
    
 
   <button class='menu'
+  class='group_btn'
   routerLink="./create"
   [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'reply'}"
   title="Ответить"
@@ -35,6 +38,7 @@
     <span class='la la-mail-reply'></span>
 </button>
 <button class='menu' *ngIf="this.selectedLetter?.details.recipients.to.length !== 1; else non_active_btn"
+class='group_btn'
 routerLink="./create"
 [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'reply_all'}"
 title="Ответить всем"
@@ -42,11 +46,12 @@ title="Ответить всем"
   <span class='la la-reply-all'></span>
 </button>
 <ng-template #non_active_btn >
-    <button class='menu none_display'>
+    <button class='menu none_display group_btn'>
           <span class='la la-reply-all'></span>
         </button>
 </ng-template>
 <button class='menu'
+class='end_group'
 routerLink="./create"
 [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'forward'}"
 title="Переслать"
@@ -54,13 +59,15 @@ title="Переслать"
   <span class='la la-share'></span>
 </button>
 
-  <button class='menu' (click)='deleteLetter()'
+<div class="stick_splitter"></div>
+
+  <button class='menu group_btn' (click)='deleteLetter()'
   title="Удалить сообщение"
   >
    <span class='la la-trash-o'></span>
   </button>
 
-  <button class='menu' (click)='important_mark()' *ngIf="this.important_flag !== undefined"
+  <button class='menu group_btn' (click)='important_mark()' *ngIf="this.important_flag !== undefined"
   >
    <span class='mc flag_disable' title="Пометить как важное" *ngIf="this.important_flag === 'false'"></span>
    <span class='mc flag_active' title="Убрать из важных" *ngIf="this.important_flag === 'true'"></span>
@@ -76,9 +83,9 @@ title="Новый шаблон"
 
 
 </div>
-<div class="group__one">
+<div class="two__one">
  
-      <button class='one_butt' (click)='hideMenuShow()' title="Меню">
+      <button class='one_butt end_group' (click)='hideMenuShow()' title="Меню">
       <span class='la la-ellipsis-h'></span>
     </button>
     <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
@@ -87,7 +94,8 @@ title="Новый шаблон"
         >Распечатать</button>
         <button class='letterMenuButt' (click)='preserv_saver()'>Сохранить в закладках</button>
       </div>
-
+      
+      <div class="stick_splitter"></div>
 
     <button class='one_butt' (click)='closeViewer()'
     title="Закрыть"

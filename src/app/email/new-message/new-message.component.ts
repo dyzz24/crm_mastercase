@@ -302,6 +302,16 @@ export class NewMessageComponent implements OnInit, DoCheck {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
+  clear_msg() {
+                this.to = [];
+                this.copy = [];
+                this.hidden_copy = [];
+                this.messages = '';
+                this.subject = '';
+                this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
+                this.new_template_name = false;
+  }
+
   add_data(arr, e) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов
       if (e.target.value === undefined || e.target.value === '') { // если пустая строка - выхожу
         return;
