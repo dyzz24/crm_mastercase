@@ -69,17 +69,29 @@
     height: 30px;
     border-radius: 50%;
     cursor: pointer;
-    background: url('../../../assets/template_icon.svg') no-repeat center , #6B7FA0;
+    background: #6B7FA0;
     background-size: 18px 18px;
     transition: .4s;
     flex-shrink: 0;
     position: relative;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
 
     &:hover {
         background: url('../../../assets/checked.svg') no-repeat center , #2D5A81;
     background-size: 18px 18px;
+    }
+
+    &:hover span {
+        display: none;
+    }
+
+    span {
+        color: white;
+        font-size: 18px;
     }
 
 }

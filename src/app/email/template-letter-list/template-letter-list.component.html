@@ -43,7 +43,9 @@
     <input type="checkbox"  id='my_id{{letter.draft_id}}' class='avatar_checkboxes hidden_checkbox' 
     (click)='select_some_letters($event, i)'
     (click)='select_letter($event, i, letter.draft_id)'>
-      <label for='my_id{{letter.draft_id}}' class="checkbox_block"></label>
+      <label for='my_id{{letter.draft_id}}' class="checkbox_block">
+        <span class='mc template_icon'></span>
+      </label>
       <div class="setting_and_txt_group"
       routerLink="./create"
       [queryParams] = "{'id':letter.draft_id, 'status':'template', 'edit_tmp':true}"
