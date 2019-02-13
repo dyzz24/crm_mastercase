@@ -28,6 +28,7 @@
 
 .flag_active:before {
   content: "\e900";
+  color: #D93025;
 }
 .flag_disable:before {
   content: "\e901";
@@ -41,7 +42,7 @@
 .important:before {
   content: "\e904";
 }
-.template:before {
+.template_icon:before {
   content: "\e905";
 }
 .triangle:before {

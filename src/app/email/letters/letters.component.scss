@@ -369,7 +369,7 @@ background: rgba(141, 175, 255, 0.507);
 
 .letter__name,
 .letter__caption {
-    color: #929292;
+    color: #262626;
     font-size: 13px; 
     line-height: 20px;
     width: 100%;
@@ -514,16 +514,16 @@ box-sizing: border-box;
 
 
 .important__background {
-    background: #F8F3BA;
+    background: #FFE5E5;
 
     &:hover {
-        background: #F9E977;
+        background: #FEB4B4;
     }
     &.active {
-        background: #F9E977;
+        background: #FEB4B4;
     }
     &.active_checkboxes {
-        background: #F9E977;
+        background: #FEB4B4;
     }
 }
 
