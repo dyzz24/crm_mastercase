@@ -1,60 +1,74 @@
 <div class="add_email">
-<div class="form_body">
-   <div class="header">
-     <p>Добавить почтовый ящик</p>
-     <button 
-    title="Закрыть"
-    >
-        <span class='la la-close'></span>
-      </button>
-   </div>
-  <div class="selected">
-      <input name='tab_selected' type='radio' value="one_tab" id='1' (change)='test($event)' checked  class='inp_1'>
-      <label for="1">Основные настройки</label>
-      <input name='tab_selected' type='radio' value="two_tab" id='2' (change)='test($event)' class='inp_2'>
-      <label for="2">Настройки</label>  
-  </div>
-
-  <div class="setting_one_page" [ngClass]="{active: this.tab_open === 1}">
-    <p>Общие</p>
-    <div class="input_group">
-      <p>Адрес почты</p>
-      <input type="text" placeholder="admin@insat.ru">
-    </div>
-
-    <div class="input_group last">
-        <p>Пароль</p>
-        <div class="password_group">
-            <input type="password" placeholder="Пароль" class='password'>
-            <i (click) = 'toggle_password_show()' class="la la-eye-slash"></i>
-            </div>
-      </div>
-      <button class="next_step">Продолжить</button>
-  </div>
-  <div class="setting_two_page" [ngClass]="{active: this.tab_open === 2}">
-      <div class="input_group last">
-          <p>Имя пользователя для почты</p>
-          <input type="text" placeholder="admin">
+    <div class="form_body">
+        <div class="header">
+            <p>Добавить почтовый ящик</p>
+            <button
+                    title="Закрыть"
+                    (click)="onClose()"
+            >
+                <span class='la la-close'></span>
+            </button>
         </div>
+        <div class="selected">
+            <input name='tab_selected' type='radio' value="one_tab" id='1' (change)='test($event)' checked
+                   class='inp_1'>
+            <label for="1">Основные настройки</label>
+            <input name='tab_selected' type='radio' value="two_tab" id='2' (change)='test($event)' class='inp_2'>
+            <label for="2">Настройки</label>
+        </div>
+        <div class="setting_one_page" [ngClass]="{active: this.tab_open === 1}">
+<!--            <p>Общие</p>-->
+            <form name="form" (ngSubmit)="f.form.valid && testBox()" #f="ngForm" novalidate>
+                <div class="input_group">
+                    <p>Адрес почты</p>
+                    <input class="form-control" type="text" placeholder="admin@insat.ru" name="email"
+                           [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required [(ngModel)]="pair.email"
+                           #email="ngModel">
+                    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                        <div *ngIf="email.errors.required">Поле обязательно для заполнения.</div>
+                    </div>
+                </div>
 
-        <p class="title">
-          Входящая почта
-        </p>
+                <div class="input_group last">
+                    <p>Пароль</p>
+                    <div class="password_group">
+                        <input class="form-control password" type="password" placeholder="Пароль" name="password"
+                               [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required
+                               [(ngModel)]="pair.password" #password="ngModel">
+                        <i (click)='toggle_password_show()' class="la la-eye-slash"></i>
+                        <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                            <div *ngIf="password.errors.required">Поле обязательно для заполнения.</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="next_step">Продолжить</button><!--
+                <button class="next_step" (click)="testBox(event)">Продолжить</button>-->
+            </form>
+        </div>
+        <div class="setting_two_page" [ngClass]="{active: this.tab_open === 2}">
+            <div class="input_group last">
+                <p>Имя пользователя для почты</p>
+                <input type="text" placeholder="admin">
+            </div>
 
-        <div class="selected_group">
-            <div class="input_group">
-                <p>Тип</p>
-                <select>
-                    <option value='SMTP'>SMTP</option>
-                    <option value="POP">POP</option>
-                  </select>
-              </div>
+            <p class="title">
+                Входящая почта
+            </p>
 
-              <div class="input_group">
-                  <p>Порт</p>
-                  <select>
-                      <option value='993'>993</option>
-                      <option value="110">110</option>
+            <div class="selected_group">
+                <div class="input_group">
+                    <p>Тип</p>
+                    <select>
+                        <option value='SMTP'>SMTP</option>
+                        <option value="POP">POP</option>
+                    </select>
+                </div>
+
+                <div class="input_group">
+                    <p>Порт</p>
+                    <select>
+                        <option value='993'>993</option>
+                        <option value="110">110</option>
                     </select>
                 </div>
 
@@ -63,28 +77,28 @@
                     <select>
                         <option value='SSL_TLS-yes'>Да</option>
                         <option value="SSL_TLS-no">Нет</option>
-                      </select>
-                  </div>
-        </div>
+                    </select>
+                </div>
+            </div>
 
-        <div class="input_group">
-            <p>Сервер входящей почты</p>
-            <input type="text" placeholder="Адрес почтового сервера">
-          </div>
+            <div class="input_group">
+                <p>Сервер входящей почты</p>
+                <input type="text" placeholder="Адрес почтового сервера">
+            </div>
 
-          <div class="label_group">
-          <input type="checkbox" name="" id="encryption">
+            <div class="label_group">
+                <input type="checkbox" name="" id="encryption">
 
-         
-          <label for="encryption">
-                <div class="custom_checkbox">
-              
+
+                <label for="encryption">
+                    <div class="custom_checkbox">
+
                     </div>
-              Использовать шифрование пароля</label>
-          </div>
+                    Использовать шифрование пароля</label>
+            </div>
 
-          <p class="title">
-              Исходящая почта
+            <p class="title">
+                Исходящая почта
             </p>
 
             <div class="selected_group">
@@ -92,61 +106,61 @@
                     <p>Тип</p>
                     <select disabled>
                         <option selected value='auto'>Авто</option>
-                      </select>
-                  </div>
-    
-                  <div class="input_group">
-                      <p>Порт</p>
-                      <select>
-                          <option value='port_465'>465</option>
-                          <option value="port_25">25</option>
-                        </select>
-                    </div>
-    
-                    <div class="input_group">
-                        <p>SSL\TLS</p>
-                        <select>
-                            <option value='SSL_TLS-yes'>Да</option>
-                            <option value="SSL_TLS-no">Нет</option>
-                          </select>
-                      </div>
+                    </select>
+                </div>
+
+                <div class="input_group">
+                    <p>Порт</p>
+                    <select>
+                        <option value='port_465'>465</option>
+                        <option value="port_25">25</option>
+                    </select>
+                </div>
+
+                <div class="input_group">
+                    <p>SSL\TLS</p>
+                    <select>
+                        <option value='SSL_TLS-yes'>Да</option>
+                        <option value="SSL_TLS-no">Нет</option>
+                    </select>
+                </div>
             </div>
 
             <div class="input_group">
                 <p>Сервер Исходящей почты</p>
                 <input type="text" placeholder="Адрес почтового сервера">
-              </div>
+            </div>
 
-              <div class="label_group">
-                  <input type="checkbox" name="" id="matches" checked
-                  (change) = 'toggle_edit_login($event)'
-                  >
-                  
-                  <label for="matches">
-                        <div class="custom_checkbox"></div>
+            <div class="label_group">
+                <input type="checkbox" name="" id="matches" checked
+                       (change)='toggle_edit_login($event)'
+                >
+
+                <label for="matches">
+                    <div class="custom_checkbox"></div>
                     Логин совпадает с входящей почтой</label>
-                  </div>
+            </div>
 
-                  <div class="hide_inputs" *ngIf="this.hide_inputs">
-                        <div class="input_group">
-                                <p>Адрес почты</p>
-                                <input type="text" placeholder="Адрес почтового сервера">
-                              </div>
+            <div class="hide_inputs" *ngIf="this.hide_inputs">
+                <div class="input_group">
+                    <p>Адрес почты</p>
+                    <input type="text" placeholder="Адрес почтового сервера">
+                </div>
 
-                              <div class="input_group">
-                                    <p>Пароль</p>
-                                    <input type="text" placeholder="Пароль">
-                                  </div>
-                  </div>
+                <div class="input_group">
+                    <p>Пароль</p>
+                    <input type="text" placeholder="Пароль">
+                </div>
+            </div>
 
-                  <button class="next_step"
-                  routerLink="./welcome"
-                  >Продолжить</button>
-  </div>
-  
-  
+            <button class="next_step"
+                    routerLink="./welcome"
+            >Продолжить
+            </button>
+        </div>
 
-</div>
+
+    </div>
 
 </div>
 <router-outlet></router-outlet>
