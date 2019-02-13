@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'mastercase_icons';
+  src:  url('../../.././assets/fonts/mastercase_icons.eot?ohdx2u');
+  src:  url('../../.././assets/fonts/mastercase_icons.eot?ohdx2u#iefix') format('embedded-opentype'),
+    url('../../.././assets/fonts/mastercase_icons.ttf?ohdx2u') format('truetype'),
+    url('../../.././assets/fonts/mastercase_icons.woff?ohdx2u') format('woff'),
+    url('../../.././assets/fonts/mastercase_icons.svg?ohdx2u#mastercase_icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.mc {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'mastercase_icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 21px;
+  color: #9CABC2;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+.flag_active:before {
+  content: "\e900";
+}
+.flag_disable:before {
+  content: "\e901";
+}
+.folder:before {
+  content: "\e902";
+}
+.home:before {
+  content: "\e903";
+}
+.important:before {
+  content: "\e904";
+}
+.template:before {
+  content: "\e905";
+}
+.triangle:before {
+  content: "\e906";
+}

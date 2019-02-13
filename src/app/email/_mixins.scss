@@ -343,11 +343,13 @@ button {
 
     .letterMenuButt {
         width: 100%;
-        height: auto;
+        height: 40px;
         color:$text-color;
-        padding: 5px;
+        padding: 0 20px;
         cursor: pointer;
         background: white;
+        border-radius: 0px;
+        justify-content: flex-start;
         transition: .4s;
         &:hover {
             background: #c9c8c8;

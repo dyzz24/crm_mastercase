@@ -8,7 +8,9 @@
         [ngClass]="{open_preserver: hidden_preserver}">
           <button *ngFor="let urls of this.urls_array, let i = index"
     
-          (click)='state_url_go(i)'
+         
+          routerLink="{{this.urls_array[i].url_states}}"
+          (click) = 'state_url_go(i)'
           ><span class='la la-bookmark'></span></button>
       </div>
 </button>

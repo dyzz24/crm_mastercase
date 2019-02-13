@@ -24,35 +24,35 @@
               <ul *ngFor="let folder of this.user_folders">
                     <li>
                       <div class="wrapper" data-id={{folder.id}} (click)='get_folder_id($event)'>
-                      <span class='folders_span'></span>
+                      <span class='mc folder'></span>
                           <p class='folders_name'>{{folder.title}}</p>
                       </div>
                       </li>
                                   <ul *ngFor="let folder_1level of folder.childs">
                                   <li>
                                     <div class="wrapper" data-id={{folder_1level.id}} (click)='get_folder_id($event)'>
-                                    <span class='folders_span'></span>
+                                    <span class='mc folder'></span>
                                   <p class='folders_name' >{{folder_1level.title}}</p>
                                     </div>
                                     </li>
                                       <ul *ngFor="let folder_2level of folder_1level.childs">
                                         <li>
                                           <div class="wrapper" data-id={{folder_2level.id}} (click)='get_folder_id($event)'>
-                                          <span class='folders_span'></span>
+                                          <span class='mc folder'></span>
                                           <p class='folders_name'>{{folder_2level.title}}</p>
                                           </div>
                                             </li>
                                           <ul *ngFor="let folder_3level of folder_2level.childs">
                                               <li>
                                                 <div class="wrapper" data-id={{folder_3level.id}} (click)='get_folder_id($event)'>
-                                                <span class='folders_span'></span>
+                                                <span class='mc folder'></span>
                                                 <p class='folders_name' >{{folder_3level.title}}</p>
                                                 </div>
                                                 </li>
                                                 <ul *ngFor="let folder_MAXlevel of folder_3level.childs">
                                                     <li class='max_level_closed'>
                                                       <div class="wrapper non_activ">
-                                                        <span class='folders_span'></span>
+                                                        <span class='mc folder'></span>
                                                       <p class='folders_name' data-id={{folder_MAXlevel.id}} >{{folder_MAXlevel.title}}</p>
                                                     </div>
                                                     </li>

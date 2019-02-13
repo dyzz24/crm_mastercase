@@ -85,14 +85,18 @@
     position: absolute;
     top: 100%;
     left: 100%;
-    width: 135px;
+    width: 175px;
+
     height: auto;
     background: white;
     top: 40px;
-    left: 55px;
+    left: 45px;
+
     box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
     display: none;
     flex-direction: column;
+    border-radius: 4px;
+    padding: 5px 0;
 
     &.active {
         display: flex;
@@ -100,6 +104,8 @@
         animation: anim_top_menu .4s forwards;
     }
 }
+
+
 
 @keyframes anim_top_menu {
     0% {
@@ -126,4 +132,8 @@
     100% {
         transform: rotate(360deg)
     }
+}
+
+.rotate_state {
+    transform: rotate(180deg);
 }

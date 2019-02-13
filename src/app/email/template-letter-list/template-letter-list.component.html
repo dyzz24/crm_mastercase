@@ -52,17 +52,17 @@
       <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.draft_id}} class='settings_checkbox hidden_checkbox'
       (change) = 'cancell_checked($event, i)'
       >
-      <div class="hidden_settings">
-        <button class='hidden_settings__btn'
+      <div class="hideMenu">
+        <button class='letterMenuButt'
         (click) = 'delete_one_tmp(letter.draft_id, $event, i)'
         >Удалить</button>
 
-        <button class='hidden_settings__btn'
+        <button class='letterMenuButt'
         (click) = 'favorite_tmp(letter.draft_id, letter.flagged, i)'
         *ngIf="!letter.flagged"
         >Добавить в избранное</button>
 
-        <button class='hidden_settings__btn'
+        <button class='letterMenuButt'
         (click) = 'favorite_tmp(letter.draft_id, letter.flagged, i)'
         *ngIf="letter.flagged"
         >Удалить из избранных</button>

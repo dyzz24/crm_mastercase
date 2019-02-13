@@ -5,7 +5,7 @@
                 <li>
                         <div class="wrapper" data-id={{1}} (click)='change_folder($event)'
                         [ngClass]="{non_activ: this.emailServ.selectedMess === 1}">
-                    <span class='folders_span'></span>
+                    <span class='mc folder'></span>
                       <p class='folders_name' 
                       >Входящие</p>
                         </div>
@@ -17,7 +17,7 @@
             [ngClass]="{non_activ: this.emailServ.selectedMess === folder.id}"
             data-id={{folder.id}} (click)='change_folder($event)'
             >
-            <span class='folders_span'></span>
+            <span class='mc folder'></span>
               <p class='folders_name' >{{folder.title}}</p>
             </div>
             </li>
@@ -28,7 +28,7 @@
                           data-id={{folder_1level.id}} 
                       (click)='change_folder($event)'
                           >
-                          <span class='folders_span'></span>
+                          <span class='mc folder'></span>
                       <p class='folders_name' >{{folder_1level.title}}</p>
                     </div>
                     </li>
@@ -39,7 +39,7 @@
                                 data-id={{folder_2level.id}}
                                 (click)='change_folder($event)'
                                 >
-                                <span class='folders_span' ></span>
+                                <span class='mc folder' ></span>
                               <p class='folders_name' >{{folder_2level.title}}</p>
                             </div>
                             </li>
@@ -48,7 +48,7 @@
                                       <div class="wrapper" [ngClass]="{non_activ: this.emailServ.selectedMess === folder_3level.id}"
                                       data-id={{folder_3level.id}}
                                       (click)='change_folder($event)'>
-                                    <span class='folders_span'></span>
+                                    <span class='mc folder'></span>
                                     <p class='folders_name'>{{folder_3level.title}}</p>
                                     </div>
                                     </li>
@@ -58,7 +58,7 @@
                                                 <div class="wrapper non_activ"
                                                 data-id={{folder_MAXlevel.id}}
                                                 (click)='change_folder($event)'>
-                                              <span class='folders_span'></span>
+                                              <span class='mc folder'></span>
                                               <p class='folders_name'>{{folder_MAXlevel.title}}</p>
                                               </div>
                                             </li>

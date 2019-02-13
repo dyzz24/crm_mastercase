@@ -429,7 +429,10 @@ background: rgba(141, 175, 255, 0.507);
 
 
 .hideMenu {
-    @include hideMenu(180px,auto,0px,100%,white);   
+    @include hideMenu(200px,auto,0px,100%,white);   
+    padding: 5px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
 }
 
 

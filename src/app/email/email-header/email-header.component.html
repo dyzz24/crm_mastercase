@@ -19,10 +19,10 @@
     class='mini_btn'
     (click) = 'toggle_header_menu()'
     >
-        <span class='la la-caret-down triangl'
+        <span class='mc triangle'
         *ngIf="!this.hidden_top_menu"
         ></span>
-        <span class='la la-caret-up triangl'
+        <span class='mc triangle rotate_state'
         *ngIf="this.hidden_top_menu"
         ></span>
       </button>
@@ -31,7 +31,7 @@
       [ngClass]="{active: this.hidden_top_menu}"
       >
         <button class='letterMenuButt' (click) = 'this.select_canc_all_inputs_do(true)' >Выделить все письма</button>
-        <button class='letterMenuButt' (click) = "this.filters_input('favor')">Избранные</button>
+        <button class='letterMenuButt' (click) = "this.filters_input('favor')">Помеченные</button>
         <button class='letterMenuButt' *ngIf="this.extended_options" (click) = "this.filters_input('unread')">Непрочитанные</button>
         <button class='letterMenuButt' *ngIf="this.extended_options" (click) = "this.filters_input('attachments')">С вложениями</button>
         <button class='letterMenuButt' (click) = 'this.select_canc_all_inputs_do(false)'>Снять выделение</button>

@@ -62,8 +62,8 @@ title="Переслать"
 
   <button class='menu' (click)='important_mark()' *ngIf="this.important_flag !== undefined"
   >
-   <span class='la la-star-o' title="Пометить как важное" *ngIf="this.important_flag === 'false'"></span>
-   <span class='la la-star' title="Убрать из важных" *ngIf="this.important_flag === 'true'"></span>
+   <span class='mc flag_disable' title="Пометить как важное" *ngIf="this.important_flag === 'false'"></span>
+   <span class='mc flag_active' title="Убрать из важных" *ngIf="this.important_flag === 'true'"></span>
   </button>
 
   <button class='menu'
@@ -71,7 +71,7 @@ routerLink="./create"
 [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'create_tmp', 'new':'true'}"
 title="Новый шаблон"
 >
-  <span class='new_tmp'></span>
+  <span class='mc template'></span>
 </button>
 
 

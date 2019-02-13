@@ -186,7 +186,7 @@
               routerLink="./{{this.emailItems[i].address}}/{{folder.id}}"
               id={{folder.id}}
               >
-                <span class="folders_span"></span>
+                <span class="mc folder"></span>
                 <p *ngIf="folder.title !== undefined">{{folder.title}}</p>
                 <p *ngIf="folder.title === undefined">Папка без имени</p>
                 <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder.id] !== 0">{{this.emailServ.counts[email.address][folder.id]}}</p>
@@ -215,7 +215,7 @@
               (click)="goUrl(1)"
               id={{folder_1level.id}}
                   >
-                    <span class="folders_span"></span>
+                    <span class="mc folder"></span>
                 <p *ngIf="folder_1level.title !== undefined">{{folder_1level.title}}</p>
                 <p *ngIf="folder_1level.title === undefined">Папка без имени</p>
                     <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_1level.id] !== 0 ">{{this.emailServ.counts[email.address][folder_1level.id]}}</p>
@@ -244,7 +244,7 @@
               (click)="goUrl(1)"
               id={{folder_2level.id}}
                       >
-                        <span class="folders_span"></span>
+                        <span class="mc folder"></span>
                         
 
                         <p *ngIf="folder_2level.title !== undefined">{{folder_2level.title}}</p>
@@ -273,7 +273,7 @@
               (click)="goUrl(1)"
               id={{folder_3level.id}}
                           >
-                            <span class="folders_span"></span>
+                            <span class="mc folder"></span>
                             <p *ngIf="folder_3level.title !== undefined">{{folder_3level.title}}</p>
                             <p *ngIf="folder_3level.title === undefined">Папка без имени</p>
                             <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_3level.id] !== 0">{{this.emailServ.counts[email.address][folder_3level.id]}}</p>
@@ -300,7 +300,7 @@
               (click)="goUrl(1)"
               id={{folder_4level.id}}
                               >
-                                <span class="folders_span"></span>
+                                <span class="mc folder"></span>
                                 <p *ngIf="folder_4level.title !== undefined">{{folder_4level.title}}</p>
                             <p *ngIf="folder_4level.title === undefined">Папка без имени</p>
                                 <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_4level.id] !== 0">{{this.emailServ.counts[email.address][folder_4level.id]}}</p>

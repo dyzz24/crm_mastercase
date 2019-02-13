@@ -108,7 +108,7 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
   }
 
   cancell_checked(e, index) {
-    const allInputs = <any>document.querySelectorAll('.settings_checkbox');
+    const allInputs = <any>document.querySelectorAll('.hideMenu');
           for (let i = 0; i <= allInputs.length - 1; i++) {
             if (index === i) {
               continue;

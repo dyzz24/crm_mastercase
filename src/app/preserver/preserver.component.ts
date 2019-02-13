@@ -11,7 +11,7 @@ export class PreserverComponent implements OnInit {
   hidden_preserver = false;
   urls_array = [{url_states: ''}];
 
-  constructor(private rout: Router) { }
+  constructor(private rout: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -50,7 +50,9 @@ export class PreserverComponent implements OnInit {
 
 state_url_go(i) {
   // this.rout.navigate(['/']); // костыль, но работает (а теперь и без костыля)
-  this.rout.navigate([this.urls_array[i].url_states]);
+  console.log(this.urls_array);
+//   this.rout.navigate([this.urls_array[i].url_states], { relativeTo: this.activatedRoute  // передача queryParams из компонента
+// });
 
 }
 

@@ -149,18 +149,23 @@
     }
 }
 
-.hidden_settings {
+
+
+.hideMenu {
     position: absolute;
     top:50%;
     transform: translateY(-50%);
     right: 45px;
-    width: 150px;
+    width: 200px;
     background: white;
     display: flex;
     z-index: 1;
-    display: flex;
     flex-direction: column;
     box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
+
+    padding: 5px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
 
 
         &__btn {
@@ -176,16 +181,16 @@
         }
 
 }
-.settings_checkbox + .hidden_settings {
+.settings_checkbox + .hideMenu {
         display: none;
 }
 
-.settings_checkbox:checked + .hidden_settings {
+.settings_checkbox:checked + .hideMenu {
     display: flex;
 }
 
-.settings_checkbox:checked + .hidden_settings + .setting {
-    background: #6B7FA0;
+.settings_checkbox:checked + .hideMenu + .setting span{
+    color: #6B7FA0;
 }
 
 
