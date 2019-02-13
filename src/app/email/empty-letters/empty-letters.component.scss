@@ -18,6 +18,26 @@
 
 }
 
+.wave_svg{
+    animation: wave_anim 3s linear;
+    stroke-width: 1.5;
+    stroke: #4AB7FF;
+    stroke-dasharray: 200;
+  stroke-dashoffset: 1;
+       }
+
+
+
+@keyframes wave_anim {
+    from {
+        stroke-dashoffset: 200;
+    }
+to {
+    stroke-dashoffset: 0;
+
+}
+}
+
 
 .main__butt {
     width: 200px;
