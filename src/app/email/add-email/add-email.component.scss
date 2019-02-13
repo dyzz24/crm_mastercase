@@ -116,6 +116,18 @@
 
 }
 
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.form-control.is-invalid~.invalid-feedback {
+    display: block;
+}
+
 .setting_two_page {
     box-sizing: border-box;
     padding: 24px 136px 50px 136px;
@@ -168,13 +180,14 @@
 }
 
 .password_group {
-    display: flex;
+/*    display: flex;*/
     align-items: center;
     position: relative;
 
     i { font-size: 18px;
         position: absolute;
         right: 9px;
+        top: 9px;
         color: #DADADA;
 
         &:hover {
@@ -282,6 +295,7 @@ select {
             margin-right: 10px;
     }
 }
+
 
 ::-webkit-input-placeholder  {color: rgba(196, 206, 223, 0.5);}
 ::-moz-placeholder          {color: rgba(196, 206, 223, 0.5);}
