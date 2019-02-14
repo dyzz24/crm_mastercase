@@ -1,4 +1,6 @@
-<button type='button' class='new_btn' (click)='show_hide_templContainer($event)'>
+<button type='button' class='new_btn' (click)='show_hide_templContainer($event)'
+[ngClass]="{active_btn: show_hidden_templ}"
+>
   <span class='mc template_icon'></span>
   Шаблоны
 </button>

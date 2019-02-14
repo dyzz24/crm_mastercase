@@ -145,7 +145,12 @@
           <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].mail_id)'
 
           >
-            <p class='letter__name' [class.headText__status-new]="letters.seen === false" >{{letters.from_address}}</p>
+            <p class='letter__name' [class.headText__status-new]="letters.seen === false"
+
+
+
+                                  
+            >{{letters.from_address}}</p>
 
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="letters.preview">{{letters.preview}}</p>
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="!letters.preview">Без темы</p>
@@ -166,9 +171,6 @@
             >
               <span class='la la-ellipsis-h'></span>
             </button> -->
-            <label class="setting" for="sett_{{letters.mail_id}}">
-              <span class='la la-ellipsis-h'></span>
-          </label>
           <input type="checkbox" name='settings_inputs_group'  id=sett_{{letters.mail_id}} class='settings_checkbox hidden_checkbox'
           (change) = 'cancell_checked($event, i)'
           >
@@ -187,6 +189,9 @@
               <button class='letterMenuButt' (click)='deleteRestoreLetter(this.emailServ.lettersList[i].mail_id, $event, 1, i)' *ngIf='this.emailServ.lettersList[i].box_id === 3'>Восстановить</button>
               <button class='letterMenuButt unread_btn' (click)='unread(this.emailServ.lettersList[i].mail_id, i)' *ngIf='this.emailServ.lettersList[i].seen === true'>Сделать непрочитанным</button>
             </div>
+            <label class="setting" for="sett_{{letters.mail_id}}">
+                <span class='la la-ellipsis-h'></span>
+            </label>
           </div>
         </div>
         </div>

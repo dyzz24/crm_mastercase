@@ -9,7 +9,7 @@
     display: none;
     position: absolute;
     top:8px;
-    left: 270px;
+    left: 280px;
     width: 200px;
     max-height: 290px;
     background: white;
@@ -21,8 +21,9 @@
 .visibl_templ {
     display: flex;
 }
-.active_btn {
-    background: rgba(75, 121, 187, 0.3);
+.active_btn,
+.active_btn span {
+    color: #0476C3;
 }
 
 .header_tmp {
@@ -151,4 +152,6 @@
         display: block;          
     }
 }
+
+
 

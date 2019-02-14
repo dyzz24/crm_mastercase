@@ -568,8 +568,8 @@ box-sizing: border-box;
     }
 }
 
-.folders_do_active {
-    background: #a2b3cc;
+.folders_do_active span{
+    color: #0476C3;
 }
 
 
@@ -667,5 +667,8 @@ display: flex;
 }
 
 .settings_checkbox:checked + .hideMenu + .setting span{
-color: rgb(90, 146, 236);
+color: #0476C3;
 }
+
+
+
