@@ -442,8 +442,12 @@ button {
     }
     &:hover,
     &:hover span {
-        color: rgb(73, 118, 185);
+        color: #074B86;
     }
+}
+
+.new_btn__title {
+    margin-left: 10px;
 }
 
 .title_txt {

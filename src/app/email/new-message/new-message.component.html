@@ -5,12 +5,12 @@
         <button class='new_btn'
         routerLink="../create"
         (click) = 'clear_msg()'
-        ><span class='la la-envelope'></span>Новое сообщение</button>
+        ><span class='la la-envelope'></span><span class='new_btn__title'>Новое сообщение</span></button>
         <button class='new_btn'
         routerLink="../create"
         [queryParams] = "{'new':'true'}"
         *ngIf="this.edit_template"
-        ><span class='mc template_icon'></span>Новый шаблон</button>
+        ><span class='mc template_icon'></span><span class='new_btn__title'>Новый шаблон</span></button>
 
         <button class='new_btn'
         *ngIf="this.new_template_name"
