@@ -609,3 +609,11 @@ box-sizing: border-box;
 .hidden_checkbox {
     display: none;
 }
+
+.empty__cont {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

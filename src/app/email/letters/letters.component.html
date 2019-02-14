@@ -10,22 +10,19 @@
       <ng-template #messagesDownload>  
       <div class="no-messages" *ngIf='this.emailServ.notLettersFlag === true && this.stopSearch !== true && this.filterError !== true; 
       else haveMess'>
-      <div class="header">
-          <div class="header__search">
-            <input type="text" placeholder="Поиск" [formControl]='searchLettersInput' class='search__inp'>
-            <div class="search__icons">
-            <span class='la la-min la-search' *ngIf="this.startSearch === true"></span>
-            <span class='la  la-min la-refresh search-ref' *ngIf="this.stopSearch === true"></span>
-            <span class='la la-min la-check' *ngIf="this.successSearch === true"></span>
-            </div>
-          </div>
-          <button class='letters__refresh' type='button' (click)='get_message()' title="Обновить">
-            <span class='la  la-refresh'></span>
-          </button>
-          <button class='letters__locate' (click)='scrollTop($event)' type='button' title="Наверх">
-            <span class='la  la-long-arrow-up'></span>
-          </button>
-        </div>
+
+
+        <app-email-header
+    (search_function) = 'this.searchLettersInput.setValue($event)'
+    [success_search] = ' this.successSearch'
+    [not_success_search] = 'this.filterError'
+    [start_search] = 'this.startSearch'
+    (select_cancell_all_inputs) = 'this.select_all_or_cancell_all_inputs($event)'
+    (filters_selected) = 'this.filters_select_letter($event)'
+    (scroll_up_event) = 'scrollTop($event)'
+    [extended_options] = 'true'
+    >
+  </app-email-header>
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>

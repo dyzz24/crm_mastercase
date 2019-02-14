@@ -51,6 +51,7 @@ export class PreserverComponent implements OnInit {
 state_url_go(i) {
   // this.rout.navigate(['/']); // костыль, но работает (а теперь и без костыля)
   console.log(this.urls_array);
+  console.log(this.rout.url);
 //   this.rout.navigate([this.urls_array[i].url_states], { relativeTo: this.activatedRoute  // передача queryParams из компонента
 // });
 

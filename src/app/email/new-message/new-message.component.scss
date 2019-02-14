@@ -320,8 +320,8 @@ label {
     flex-direction: row;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 0 70px;
-    height: 28px;
+    padding: 16px 70px;
+    height: auto;
     box-sizing: border-box;
 
 
@@ -582,6 +582,10 @@ label {
         }
     }
 
+
+    .mini_prev_attach {
+        height: 90px;
+    }
 
 
 

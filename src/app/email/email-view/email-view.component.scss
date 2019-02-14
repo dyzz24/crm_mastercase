@@ -227,7 +227,7 @@ p{
     width: 100%;
     display: flex;
     align-items: center;
-    margin-top: 4px;
+    margin-top: 8px;
     
 }
 .info_head {
@@ -483,7 +483,7 @@ p{
 //     margin-right: 4px;
 // }
 .hideMenu {
-    @include hideMenu (180px, auto, 0, 0, white);
+    @include hideMenu (200px, auto, 0, 0, white);
     top:100%;
     display: none;
     

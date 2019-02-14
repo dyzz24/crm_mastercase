@@ -139,8 +139,8 @@
     align-self: flex-end;
     margin-bottom: 5px;
 
-    &:hover {
-            background: #6B7FA0;
+    &:hover span{
+            color: #6B7FA0;
     }
 
     span {
@@ -202,7 +202,7 @@
 }
 
 .settings_checkbox:checked + .hideMenu + .setting span{
-    color: #6B7FA0;
+    color: rgb(90, 146, 236);
 }
 
 
