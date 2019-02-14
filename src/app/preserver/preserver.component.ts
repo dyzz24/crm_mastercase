@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-preserver',
   templateUrl: './preserver.component.html',
-  styleUrls: ['./preserver.component.scss']
+  styleUrls: ['./preserver.component.scss'],
 })
 export class PreserverComponent implements OnInit {
 

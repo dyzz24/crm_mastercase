@@ -25,7 +25,7 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
   id_selected_letter = [];
 
   toggle_flag = true;
-
+  open_hidden_menu = false;
 
   protectToCopy = false;
   succes_search_flag = false;
@@ -108,13 +108,29 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
   }
 
   cancell_checked(e, index) {
-    const allInputs = <any>document.querySelectorAll('.hideMenu');
+    const allInputs = <any>document.querySelectorAll('.settings_checkbox');
           for (let i = 0; i <= allInputs.length - 1; i++) {
             if (index === i) {
               continue;
             }
             allInputs[i].checked = false;
           }
+
+          if (e.target.checked === true) {
+            this.open_hidden_menu = true;
+          } else {
+            this.open_hidden_menu = false;
+          }
+}
+
+close_menu() { // закрывает меню колбасы конвертика
+
+  this.open_hidden_menu = false;
+
+  const allInputs = <any>document.querySelectorAll('.settings_checkbox');
+  for (let i = 0; i <= allInputs.length - 1; i++) {
+    allInputs[i].checked = false;
+  }
 }
 
 

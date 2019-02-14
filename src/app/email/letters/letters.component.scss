@@ -564,6 +564,7 @@ box-sizing: border-box;
 
     &.visible {
          display: block;
+
     }
 }
 
@@ -616,4 +617,55 @@ box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+.setting {
+    width: 20px;
+    height: 10px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin-bottom: 5px;
+
+    &:hover span{
+            color: #6B7FA0;
+    }
+
+    span {
+        width: 100%;
+        height: 100%;
+        line-height: 1;
+        position: relative;
+        color: #9CABC2;
+
+        &::before {
+            width: 100%;
+            height: 100%;
+            line-height: 1;
+            position: absolute;
+            left: 0;
+            bottom: 50%;
+        }
+    }
+}
+
+.hidden_checkbox {
+    display: none;
+}
+
+.settings_checkbox + .hideMenu {
+    display: none;
+}
+
+.settings_checkbox:checked + .hideMenu {
+display: flex;
+}
+
+.settings_checkbox:checked + .hideMenu + .setting span{
+color: rgb(90, 146, 236);
 }

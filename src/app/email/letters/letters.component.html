@@ -140,6 +140,7 @@
         <div class="link_activ"
         routerLink="view/{{emailServ.lettersList[i].mail_id}}"
         [queryParams] = "{'imp_flag': emailServ.lettersList[i].flagged}"
+        
         >
           <div class='info' (click)='urlLetterView($event, i, emailServ.lettersList[i].mail_id)'
 
@@ -160,11 +161,17 @@
             title='Вложения'
             >
             </span>
-            <button class='letter__settings' (click)='menuShow($event, i)'  [class.time-icons__status-new]="letters.seen === false"
+            <!-- <button class='letter__settings' (click)='menuShow($event, i)'  [class.time-icons__status-new]="letters.seen === false"
             title="Меню"
             >
               <span class='la la-ellipsis-h'></span>
-            </button>
+            </button> -->
+            <label class="setting" for="sett_{{letters.mail_id}}">
+              <span class='la la-ellipsis-h'></span>
+          </label>
+          <input type="checkbox" name='settings_inputs_group'  id=sett_{{letters.mail_id}} class='settings_checkbox hidden_checkbox'
+          (change) = 'cancell_checked($event, i)'
+          >
             <div class="hideMenu" (click)='close_menu()'>
                 <button class='letterMenuButt' *ngIf="!this.emailServ.lettersList[i].work_user_id" (click)='get_work(emailServ.lettersList[i].mail_id, $event, i)'>Взять в работу</button>
                 <button class='letterMenuButt' *ngIf="this.emailServ.lettersList[i].work_user_id" (click)='delete_work(emailServ.lettersList[i].mail_id, $event, i)'>Удалить из работы</button>

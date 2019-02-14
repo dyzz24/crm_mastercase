@@ -1,6 +1,7 @@
 
 <div class="template">
   <div class="template__list">
+      <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
     <app-email-header
     (search_function) = 'this.search_in_templates($event)'
     [success_search] = 'this.succes_search_flag'
@@ -90,4 +91,6 @@
   <div class="template__container">
     <router-outlet></router-outlet>
   </div>
+
+  
 </div>

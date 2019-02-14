@@ -636,10 +636,10 @@ close_menu() { // закрывает меню колбасы конвертик�
 
   this.open_hidden_menu = false;
 
-      const allHideBlock = document.querySelectorAll('.hideMenu');
-      for (let key = 0; key < allHideBlock.length; key++) {
-          allHideBlock[key].classList.remove('visible');
-      }
+  const allInputs = <any>document.querySelectorAll('.settings_checkbox');
+  for (let i = 0; i <= allInputs.length - 1; i++) {
+    allInputs[i].checked = false;
+  }
 }
 
 select_some_letters(e, index) {
@@ -706,6 +706,26 @@ this.selected_one_input_elem = index; // если просто клик, лов�
 
 
   }
+
+  cancell_checked(e, index) {
+
+    const allInputs = <any>document.querySelectorAll('.settings_checkbox');
+          for (let i = 0; i <= allInputs.length - 1; i++) {
+            if (index === i) {
+              continue;
+            }
+            allInputs[i].checked = false;
+          }
+
+          if (e.target.checked === true) {
+            this.open_hidden_menu = true;
+          } else {
+            this.open_hidden_menu = false;
+          }
+
+
+}
+
 
 
 
