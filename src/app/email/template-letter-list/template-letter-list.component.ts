@@ -47,28 +47,31 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.activatedRoute.params.subscribe(params => {
-      this.emailServ.haveResponse = false;
-      this.email_id = params.email_id;
-      this.emailServ.idPostForHTTP = this.email_id;
+
+
+
+    this.subscription = this.activatedRoute.params.subscribe(params => { // при каждом изменении роута
+      this.emailServ.haveResponse = false; // включаю крутилку загрузки как пришел ответ
+      this.email_id = params.email_id; // имя ящика (seo@)
+      this.emailServ.idPostForHTTP = this.email_id; // присваиваю в глобальную
       this.httpPost(
         `${global_params.ip}/mail/draft/`,
         // tslint:disable-next-line:max-line-length
         {address: this.email_id}).subscribe((data) => {
-          this.emailServ.haveResponse = true;
-          this.emailServ.draft_list = data;
+          this.emailServ.haveResponse = true; // отключаю крутилку
+          this.emailServ.draft_list = data; // список всех шаблонов
           console.log(this.emailServ.draft_list);
 
           this.selected_checkbox_for_html = this.emailServ.draft_list.map(val => {
-            return val = false;
+            return val = false; // заполняю фалсами массив для чекбоксов
 
           });
         });
     });
 
     this.subscription_emailServ_template_list = this.emailServ.draft_list_edited.subscribe(params => {
-      if (params === 'delete') {
-        this.canc_select();
+      if (params === 'delete') { // подписываюсь на событие из 3 компонента (удалить шаблон)
+        this.canc_select(); // отмеяю чекбоксы
       }
 
     });
@@ -86,13 +89,13 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
-  select_letter(e, index, id) {
+  select_letter(e, index, id) { // выбор чекбокса так же как в letterlist
     if (e.shiftKey) {
       return; // еслт по шифту - выходим
     }
     if (e.target.checked) {
       this.selected_checkbox_for_html[index] = true;
-      this.id_selected_letter = [...this.id_selected_letter, +id];
+      this.id_selected_letter = [...this.id_selected_letter, +id]; // засовываю id письма по клику
       this.id_selected_letter = this.id_selected_letter.filter(
         (val, ind, self) => {
           return self.indexOf(val) === ind;
@@ -107,7 +110,7 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancell_checked(e, index) {
+  cancell_checked(e, index) { // отменяю чекбокс выделение
     const allInputs = <any>document.querySelectorAll('.settings_checkbox');
           for (let i = 0; i <= allInputs.length - 1; i++) {
             if (index === i) {
@@ -117,13 +120,13 @@ export class TemplateLetterListComponent implements OnInit, OnDestroy {
           }
 
           if (e.target.checked === true) {
-            this.open_hidden_menu = true;
+            this.open_hidden_menu = true; // блок заглушка для "кликните в любом месте и исчезнет меню"
           } else {
             this.open_hidden_menu = false;
           }
 }
 
-close_menu() { // закрывает меню колбасы конвертика
+close_menu() { // закрывает меню колбасы конвертика при клике на блок заглушку
 
   this.open_hidden_menu = false;
 
@@ -134,16 +137,6 @@ close_menu() { // закрывает меню колбасы конвертик�
 }
 
 
-// selected_all() {
-//   if (this.toggle_flag) {
-//   this._select();
-// } else {
-//   this.canc_select();
-// }
-
-//   this.toggle_flag = ! this.toggle_flag;
-
-// }
 
 canc_select() { // отменяет выделение всех писем
   this.selected_checkbox_for_html = this.emailServ.draft_list.map(val => val = false);
@@ -183,20 +176,16 @@ search_in_templates(data) {
   }
 
   const new_search_array = this.draft_copy_search.filter((val, ind) => {
-    if (val.title && val.title.toLowerCase().indexOf(data) >= 0 ) { // сам поиск
+    if (val.title && val.title.toLowerCase().indexOf(data) >= 0 ) { // сам поиск ищу по имени шаблона
       return val;
     }});
 
     if (new_search_array.length > 0) { // если совпадения есть
       this.emailServ.draft_list = new_search_array;
-      this.succes_search_flag = true;
+      this.succes_search_flag = true; // отправляю флаг что нашли письма
+      this.not_succes_search_flag = false; // удаляю флаг что письма не нашли (если остался)
     }
 
-    if (new_search_array.length > 0) { // если совпадения есть
-      this.emailServ.draft_list = new_search_array;
-      this.succes_search_flag = true;
-      this.not_succes_search_flag = false;
-    }
 
     if (new_search_array.length === 0) { // если совпадений нет
       this.emailServ.draft_list = new_search_array;
@@ -225,7 +214,7 @@ delete_one_tmp(id, e, index) {
 }, 500);
 }
 
-favorite_tmp(id, flagged, index) {
+favorite_tmp(id, flagged, index) { // сделать шаблон избранным
 
     this.httpPost(
       `${this.emailServ.ip}/mail/draft/update`,
@@ -233,8 +222,8 @@ favorite_tmp(id, flagged, index) {
         flagged: !flagged,
         address: this.emailServ.idPostForHTTP
       }).subscribe((data) => {});
-      this.cancell_all_checked();
-      this.emailServ.draft_list[index].flagged = !flagged;
+      this.cancell_all_checked(); // скидываем активный чекбокс меню
+      this.emailServ.draft_list[index].flagged = !flagged; // меняю на противоположное
 
 }
 

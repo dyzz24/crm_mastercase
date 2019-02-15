@@ -27,6 +27,7 @@ export class AttachPipePipe implements PipeTransform {
       case 'mp3':
       return 'la la-file-audio-o';
       case 'zip':
+      case 'rar':
       return 'la la-file-archive-o';
       case 'ppt':
       return 'la la-file-powerpoint-o';

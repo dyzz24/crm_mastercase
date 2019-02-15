@@ -25,6 +25,7 @@
     flex-direction: column;
     height: calc(100vh - 110px);
     box-sizing: border-box;
+    background: white;
 
 
     .inp__mess {
@@ -251,8 +252,12 @@ label {
     transition: .2s;
     border-radius: 10px;
     cursor: pointer;
-    &:hover {
-        background: rgba(75, 121, 187, 0.3);
+
+    span {
+        color: #9CABC2;
+    }
+    &:hover span{
+        color: #074B86;
     }
 }
 
@@ -586,6 +591,20 @@ label {
     .mini_prev_attach {
         height: 90px;
     }
+
+
+    .la-file-o {color:#4F4F4F }
+    .la-file-excel-o {color: #339861}
+    .la-file-pdf-o {color: #E54D4D}
+    .la-image {color: #8B5D3C}
+    .la-file-word-o {color: #0E75BD}
+
+    .la-file-text-o {color: #6FBDC5}
+
+    .la-file-audio-o {color: #A263BA}
+    .la-file-archive-o {color: #EFAF48}
+    .la-file-powerpoint-o {color: #ED8144}
+
 
 
 

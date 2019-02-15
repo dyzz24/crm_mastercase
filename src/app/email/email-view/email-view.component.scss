@@ -486,6 +486,8 @@ p{
     @include hideMenu (200px, auto, 0, 0, white);
     top:100%;
     display: none;
+    padding: 5px 0;
+    border-radius: 2px;
     
 }
 @keyframes menuEffect {
@@ -503,7 +505,7 @@ p{
 }
 
 .quickResponse {
-    border-top: 1px solid $border;
+    background:    #F7FBFE;
     width: 100%;
     height: 50px;
     position: absolute;
@@ -542,7 +544,8 @@ p{
     border: 1px solid #D9E6F7;
     outline: none;
     resize: none;
-    color: rgba(196, 206, 223, 1);
+    color: rgb(16, 17, 17);
+    background: #F7FBFE;
   
 
     &:focus {
@@ -550,6 +553,13 @@ p{
     }
 
 }
+
+::-webkit-input-placeholder  {color: #C4CEDF}
+::-moz-placeholder          {color: #C4CEDF}
+:-moz-placeholder           {color: #C4CEDF}
+:-ms-input-placeholder      {color: #C4CEDF}
+
+
 .button__send {
     
     width: 94px;
@@ -592,7 +602,7 @@ p{
 
 .quickResponse__active {
     height: 180px;
-    background: white;
+    background: #F7FBFE;
     padding: 10px;
 }
 

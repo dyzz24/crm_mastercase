@@ -114,8 +114,13 @@
     &.active { 
         display: block;          
     }
+
+    span {
+        color: #9CABC2
+    }
     span:hover::before {
         content: "\f318";
+        color: #F9E977;
     }
 
     li {
@@ -152,6 +157,12 @@
         display: block;          
     }
 }
+
+.new_btn__title {
+    margin-left: 10px;
+}
+
+
 
 
 
