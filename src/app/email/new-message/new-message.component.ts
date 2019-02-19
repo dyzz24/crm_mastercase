@@ -11,6 +11,9 @@ import { DatePipe } from '@angular/common';
 import { isDate } from '@angular/common/src/i18n/format_date';
 import {global_params} from '../../global';
 
+import { FormControl, ReactiveFormsModule} from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+
 
 
 @Component({
@@ -21,6 +24,9 @@ import {global_params} from '../../global';
 export class NewMessageComponent implements OnInit, DoCheck {
 
   private babl_menu_show = [];
+  public messages;
+  public messages_for_draft: FormControl = new FormControl('');
+  public id_for_draft;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -30,6 +36,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     @Inject(NewMessageService) private newMessageService: NewMessageService,
     private activatedRoute: ActivatedRoute
     ) {
+      this.messages_for_draft.valueChanges.pipe((debounceTime(1500))).subscribe(data => this.save_draft(data));
      }
      public from;
      private mail_id; // del
@@ -40,7 +47,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public copy = []; // array for send copy
     public hidden_copy = []; // array for send hidd copy
     public subject = ''; // subject
-    public messages;
+
     public files_for_view = []; // имена файлов для HTML
     // public formData = new FormData(); // дата для отправки на серв файлов
     public tmp_name;
@@ -55,7 +62,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public subscription_emailServ_template_list: Subscription;
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
 
-
+save_draft(data) {
+  // this.messages_for_draft.setValue('');
+  console.log( data);
+}
 
 
 
