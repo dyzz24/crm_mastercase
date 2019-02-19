@@ -198,13 +198,27 @@ title="Новый шаблон"
 </div>
 <div class="quickResponse__content">
     <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
-        <div class="info__row">
+        <div class="info__row last_row">
             <p class='info_head'>Кому: </p>
             <div class='info__content_p mrg_off'><p>{{this.selectedLetter?.from_address}}</p></div>
         </div>
-        <button class='one_butt' (click)='show_quick_form(true)'>
-            <span class='la la-min la-close'></span>
-        </button>
+        <button class='one_butt end_group' (click)='hideMenuShow()' title="Меню">
+            <span class='la la-ellipsis-h'></span>
+          </button>
+          <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
+              <button class='letterMenuButt' (click)='print()'
+              title="Удалить сообщение"
+              >Распечатать</button>
+              <button class='letterMenuButt' (click)='preserv_saver()'>Сохранить в закладках</button>
+            </div>
+            
+            <div class="stick_splitter"></div>
+      
+          <button class='one_butt' (click)='closeViewer()'
+          title="Закрыть"
+          >
+              <span class='la la-close'></span>
+            </button>
         
   </div>
   <textarea  class='quickResponse__inp' 
@@ -215,13 +229,14 @@ title="Новый шаблон"
   #input_cleaner></textarea>
   <div class="quickResponse__panel" [ngClass]='{panel__active: quickResponse_active}'>
     <div class="panel__left">
-    <button class='button__send' (click)='quick_send($event)'><span>Отправить</span></button>
+    <input type="submit" value="Отправить" (click)='quick_send($event)'>
     <div class="left__panel end">
-    <button>
+    <button class='add_files'>
         <span class='la la-paperclip visible'></span>
         <input type='file' class='quickResponse__files_btn' multiple (change)='onFileChange($event)'
         >
       </button>
+      <div class="stick_splitter"></div>
     </div>
 
           <p class='btn__text'

@@ -115,7 +115,7 @@ p{
 
 
 .download {
-    border: 1px solid $border;
+
     box-sizing: border-box;
     margin-left: 40px;
     margin-right: 0px;
@@ -228,6 +228,10 @@ p{
     display: flex;
     align-items: center;
     margin-top: 8px;
+
+    &.last_row {
+        margin-top: 0px;
+    }
     
 }
 .info_head {
@@ -469,6 +473,7 @@ p{
     top:0;
     left: 0;
     z-index: 15;
+    
 }
 
 
@@ -512,10 +517,11 @@ p{
     bottom: 0;
     right: 0;
     display: flex;
-    padding: 0 40px 0 10px;
+    padding: 0 40px 0 20px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    border-top: 1px solid #d9e6f7;
 
     .avatar__block {
         display: flex;
@@ -545,7 +551,7 @@ p{
     outline: none;
     resize: none;
     color: rgb(16, 17, 17);
-    background: #F7FBFE;
+    background: rgb(255, 255, 255);
   
 
     &:focus {
@@ -603,7 +609,7 @@ p{
 .quickResponse__active {
     height: 180px;
     background: #F7FBFE;
-    padding: 10px;
+    padding: 10px 10px 15px 10px;
 }
 
 .inp__active {
@@ -721,6 +727,14 @@ p{
     height: 20px;
     background: url('../../../assets/tmp_black.svg') no-repeat center;
     background-size: 18px 18px;
+}
+
+[type='submit'] {
+    margin-right: 40px;
+}
+
+.add_files {
+    margin: 0;
 }
 
 

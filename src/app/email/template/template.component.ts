@@ -166,11 +166,13 @@ export class TemplateComponent implements OnInit, DoCheck {
       this.all_tmp.push(select_templ);
     }
     this.httpPost(
-      `${global_params.ip}/mail/draft_update`,
-      {id: select_templ.draft_id,
+      `${global_params.ip}/mail/draft/update`,
+      {draftId: select_templ.draft_id,
         flagged: !select_templ.flagged,
         address: this.emailServ.idPostForHTTP
       }).subscribe((data) => {});
+
+
   }
 
 
