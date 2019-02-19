@@ -64,9 +64,17 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public subscription_emailServ_template_list: Subscription;
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
 
+
 save_draft(data) {
-  if (data === '') { // если пустая строка, делаю выход чтобы не пулять пустой запрос
+
+  if (data === ''
+  || data === null
+  || this.edit_template === true) { // если пустая строка, и в шаблонах находимся
+    // делаю выход чтобы не пулять пустой запрос
     return;
+  }
+  if (!this.id_for_draft) { // если id черновика не установлен
+
   }
   console.log( data);
 }
@@ -78,7 +86,7 @@ save_draft(data) {
 
     this.from = this.emailServ.idPostForHTTP; // поле от кого по умолчанию
 
-    this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить и тд)
+    this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить, шаблон, создать и тд)
       (queryParam: any) => {
           this.hidden_input_fields = true;
           this.mail_id = queryParam['id']; // отлавливаю ID письма для последующего запроса (для шаблонов, ответить всем, ответить и тд)
@@ -280,6 +288,7 @@ save_draft(data) {
             this.edit_template = true;
             this.hidden_input_fields = false;
             this.new_template_name = false;
+
 
 
 
