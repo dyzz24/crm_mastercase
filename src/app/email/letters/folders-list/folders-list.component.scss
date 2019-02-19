@@ -1,9 +1,9 @@
 @import '../../mixins';
 
 .visible {
-    width: 248px;
+    width: 300px;
     height: auto;
-    max-height: 240px;
+    max-height: 340px;
     position: absolute;
     z-index: 9;
     display: flex;
@@ -82,9 +82,10 @@ span {
         color: #0472be;
     } 
 
-    &:hover:not(.non_activ) .folders_span  {
-        background: url('../../../../assets/folder_hover.png') no-repeat center;
-        background-size: 100% 100%;
+
+
+    &:hover:not(.non_activ) span  {
+        color: #0472be;
     }
 
     &.non_activ {

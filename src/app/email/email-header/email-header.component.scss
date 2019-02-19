@@ -86,7 +86,7 @@
     position: absolute;
     top: 100%;
     left: 100%;
-    width: 175px;
+    width: 185px;
 
     height: auto;
     background: white;
@@ -97,6 +97,7 @@
     display: none;
     flex-direction: column;
     border-radius: 4px;
+    border: 1px solid #E2E7EF;
     padding: 5px 0;
 
     &.active {

@@ -36,7 +36,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
     @Inject(NewMessageService) private newMessageService: NewMessageService,
     private activatedRoute: ActivatedRoute
     ) {
-      this.messages_for_draft.valueChanges.pipe((debounceTime(1500))).subscribe(data => this.save_draft(data));
+      this.messages_for_draft.valueChanges.pipe((debounceTime(global_params.timeout_save_draft))).subscribe(data => this.save_draft(data));
+
+
      }
      public from;
      private mail_id; // del
@@ -63,7 +65,9 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
 
 save_draft(data) {
-  // this.messages_for_draft.setValue('');
+  if (data === '') { // если пустая строка, делаю выход чтобы не пулять пустой запрос
+    return;
+  }
   console.log( data);
 }
 

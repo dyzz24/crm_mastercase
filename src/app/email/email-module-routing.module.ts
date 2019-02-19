@@ -10,6 +10,7 @@ import { AddEmailComponent } from './add-email/add-email.component';
 import { EmptyTemplateComponent } from './empty-template/empty-template.component';
 import { EmptyLettersComponent } from './empty-letters/empty-letters.component';
 import { WelcomeComponent } from './add-email/welcome/welcome.component';
+import { DraftsComponent } from './drafts/drafts.component';
 
 const routes: Routes = [
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
@@ -19,6 +20,10 @@ const routes: Routes = [
   children: [{path: 'create', component: NewMessageComponent},
 
               {path: '**', component: EmptyTemplateComponent}]
+  },
+
+  {path: ':email_id/drafts', component: DraftsComponent, canActivate: [EmailGuardGuard],
+  children: [{path: 'create', component: NewMessageComponent}]
   },
 
     {path: ':id1/:id', component: LettersComponent, canActivate: [EmailGuardGuard],

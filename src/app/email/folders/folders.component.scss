@@ -157,8 +157,9 @@
 
 .to_invest_folders {
     position: absolute;
-    width: 250px;
-    height: 240px;
+    width: 300px;
+    height: auto;
+    max-height: 340px;
     background: white;
     left: 100%;
     top: 100%;

@@ -28,6 +28,7 @@ import { EmailHeaderComponent } from './email-header/email-header.component';
 import { EmptyTemplateComponent } from './empty-template/empty-template.component';
 import { EmptyLettersComponent } from './empty-letters/empty-letters.component';
 import { WelcomeComponent } from './add-email/welcome/welcome.component';
+import { DraftsComponent } from './drafts/drafts.component';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { WelcomeComponent } from './add-email/welcome/welcome.component';
     EmptyTemplateComponent,
     EmptyLettersComponent,
     WelcomeComponent,
+    DraftsComponent,
   ],
   providers: [EmailServiceService, NewMessageService],
 })
