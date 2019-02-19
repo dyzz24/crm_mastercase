@@ -76,7 +76,7 @@ save_draft(data) {
   if (!this.id_for_draft) { // если id черновика не установлен
 
   }
-  console.log( data);
+  console.log(data);
 }
 
 

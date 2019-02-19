@@ -50,6 +50,7 @@
     transition: .4s;
     position: relative;
     flex-shrink: 0;
+    overflow: hidden;
 
     &:hover {
         background: #E0E0E0;
