@@ -50,7 +50,7 @@
     transition: .4s;
     position: relative;
     flex-shrink: 0;
-    overflow: hidden;
+
 
     &:hover {
         background: #E0E0E0;
@@ -102,6 +102,10 @@
     background-size: 18px 18px;
 }
 
+.avatar_checkboxes:checked + .checkbox_block span {
+    display: none;
+}
+
 .hidden_checkbox {
     display: none;
 }
@@ -117,6 +121,7 @@
     display: flex;
     align-items: center;
     outline: none;
+    justify-content: space-between;
 }
 
 .text_info {
@@ -124,7 +129,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    flex: 1;
+    width: 200px;
     user-select: none;
 }
 

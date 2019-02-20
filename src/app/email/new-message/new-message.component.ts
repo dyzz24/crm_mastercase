@@ -65,16 +65,28 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
 
 
+
+
 save_draft(data) {
+
 
   if (data === ''
   || data === null
-  || this.edit_template === true) { // если пустая строка, и в шаблонах находимся
+  || this.edit_template === true
+  || this.status === 'draft') { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
     return;
   }
   if (!this.id_for_draft) { // если id черновика не установлен
 
+    const fields = this.creating_template_and_draft_fields();
+
+    this.httpPost(
+      `${global_params.ip}/mail/rough/create`,
+      fields).subscribe((dataMails) => {
+        console.log(dataMails);
+        this.id_for_draft = dataMails.roughId;
+      });
   }
   console.log(data);
 }
@@ -91,6 +103,7 @@ save_draft(data) {
           this.hidden_input_fields = true;
           this.mail_id = queryParam['id']; // отлавливаю ID письма для последующего запроса (для шаблонов, ответить всем, ответить и тд)
           this.status = queryParam['status']; // статус - для работы с шаблонами
+
           const new_tmp_state = queryParam['new']; // для создания шаблонов
 
           if (queryParam.edit_tmp === 'true') { // для дерева писем и редактирования шаблонов
@@ -274,7 +287,7 @@ save_draft(data) {
           }
 
           if  (this.status === undefined) { // если без параметров, просто пустое письмо (на ф-ю Новое письмо)
-              this.to = [];
+                this.to = [];
                 this.copy = [];
                 this.hidden_copy = [];
                 this.messages = '';
@@ -288,9 +301,6 @@ save_draft(data) {
             this.edit_template = true;
             this.hidden_input_fields = false;
             this.new_template_name = false;
-
-
-
 
           }
 
@@ -307,6 +317,57 @@ save_draft(data) {
                  } else {
                   this.messages = dataMails.html;
                  }
+              });
+          }
+
+          if (this.status === 'draft') { // черновики, добавление их в активное письмо
+                this.to = [];
+                this.copy = [];
+                this.hidden_copy = [];
+                this.messages = '';
+                this.subject = '';
+                this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
+                this.new_template_name = false;
+            this.httpPost(
+              `${global_params.ip}/mail/rough/`,
+              { roughId: +this.mail_id}).subscribe((dataMails) => {
+// console.log(dataMails);
+                if (this.messages === undefined || this.messages === '') { // если данных нет, вставляем пустую строку
+                  this.messages = '';
+                }
+                if (dataMails.html === null) { // если шаблон без html добавляем к телу активного письма содержимое шаблона
+                              this.messages =   `${dataMails.text}`;
+
+                 } else { // иначе добавляем текст
+
+                            this.messages =   `${dataMails.html} `;
+                 }
+
+                 this.subject = dataMails.subject;
+
+                 if (dataMails.details && dataMails.details.recipients.to) {
+
+                dataMails.details.recipients.to.filter(val => {
+                  this.to.push(val.address);
+                });
+
+              }
+
+              if (dataMails.details && dataMails.details.recipients.cc) {
+
+                dataMails.details.recipients.cc.filter(val => {
+                  this.copy.push(val.address);
+                });
+
+              }
+
+              if (dataMails.details && dataMails.details.recipients.bcc) {
+                dataMails.details.recipients.bcc.filter(val => {
+                  this.hidden_copy.push(val.address);
+                });
+
+              }
+
               });
           }
 
@@ -527,9 +588,43 @@ add_drag_input_data(objForData) { // ф-я принимает объект с ф
 });
 
 
-
 }
 // ШАБЛОНЫ СОХРАНЯЕМ ************************************ //
+
+creating_template_and_draft_fields() {
+  const to_send = this.to.map(val => { // массив с графами "кому" привожу к виду {addr:some@}
+    return {address: val};
+});
+  const cc_send = this.copy.map(val => { // массив с графами "копия"
+    return {address: val};
+});
+const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
+  return {address: val};
+});
+
+  const object_for_template_list = {
+    address: this.from, // имейл кто создал шаблон
+    title: this.tmp_name, // имя шаблона
+    text: null, // текст не отправляем
+    html: this.messages, // поле с текстом шаблона (или его html)
+    subject: this.subject || null, // либо есть либо Null
+    flagged: this.important_tmp, // флаг (тру фолс)
+    recipients: {
+    from: [
+      {address: this.from,
+      }
+    ],
+   to: to_send,
+   cc: cc_send,
+   bcc: bcc_send
+  }
+  };
+
+  return object_for_template_list;
+}
+
+
+
 open_save_template() {
 this.save_tmp_state = ! this.save_tmp_state; // открываю интерфейс создания шаблона (введите имя)
 this.important_tmp = false; // снимаю флаг важное, если осталось с предыдущего раза
@@ -548,40 +643,17 @@ save_template() { // функция фохранения шаблона
     this.showError('Введите имя шаблона');
     return;
   }
-  const to_send = this.to.map(val => { // массив с графами "кому" привожу к виду {addr:some@}
-    return {address: val};
-});
-  const cc_send = this.copy.map(val => { // массив с графами "копия"
-    return {address: val};
-});
-const bcc_send = this.hidden_copy.map(val => { // массив с графами "Скрытая копия"
-  return {address: val};
-});
   this.save_tmp_state = false; // закрыть поле ввода имени шаблона
-  const object_for_template_list = {
-    address: this.from, // имейл кто создал шаблон
-    title: this.tmp_name, // имя шаблона
-    text: null, // текст не отправляем
-    html: this.messages, // поле с текстом шаблона (или его html)
-    subject: this.subject || null, // либо есть либо Null
-    flagged: this.important_tmp, // флаг (тру фолс)
-    recipients: {
-    from: [
-      {address: this.from,
-      }
-    ],
-   to: to_send,
-   cc: cc_send,
-   bcc: bcc_send
-  }
-  };
+
+  const fields = this.creating_template_and_draft_fields();
+
   this.httpPost(
     `${global_params.ip}/mail/draft/create`,
     // tslint:disable-next-line:max-line-length
-    object_for_template_list).subscribe((data) => {
+    fields).subscribe((data) => {
 
-      object_for_template_list['draft_id'] = data.draftId;
-      this.emailServ.draft_list.push(object_for_template_list);
+      fields['draft_id'] = data.draftId;
+      this.emailServ.draft_list.push(fields);
 
     });
   this.tmp_name = ''; // очищаю инпут после сохранения шаблона

@@ -55,7 +55,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
       this.email_id = params.email_id; // имя ящика (seo@)
       this.emailServ.idPostForHTTP = this.email_id; // присваиваю в глобальную
       this.httpPost(
-        `${global_params.ip}/mail/draft/`,
+        `${global_params.ip}/mail/rough/`,
         // tslint:disable-next-line:max-line-length
         {address: this.email_id}).subscribe((data) => {
           this.emailServ.haveResponse = true; // отключаю крутилку
@@ -176,7 +176,7 @@ search_in_templates(data) {
   }
 
   const new_search_array = this.draft_copy_search.filter((val, ind) => {
-    if (val.title && val.title.toLowerCase().indexOf(data) >= 0 ) { // сам поиск ищу по имени шаблона
+    if (val.preview && val.preview.toLowerCase().indexOf(data) >= 0 ) { // сам поиск ищу по превью черновика
       return val;
     }});
 

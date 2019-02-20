@@ -1,4 +1,4 @@
-<!-- 
+
 <div class="template">
   <div class="template__list">
       <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
@@ -41,37 +41,37 @@
     [ngClass]="{checkbox_selected: this.selected_checkbox_for_html[i]}"
     [class.favorite_template] = 'letter.flagged'
     >
-    <input type="checkbox"  id='my_id{{letter.draft_id}}' class='avatar_checkboxes hidden_checkbox' 
+    <input type="checkbox"  id='my_id{{letter.rough_id}}' class='avatar_checkboxes hidden_checkbox' 
     (click)='select_some_letters($event, i)'
-    (click)='select_letter($event, i, letter.draft_id)'>
-      <label for='my_id{{letter.draft_id}}' class="checkbox_block">
-        <span class='mc template_icon'></span>
+    (click)='select_letter($event, i, letter.rough_id)'>
+      <label for='my_id{{letter.rough_id}}' class="checkbox_block">
+        <span class='la la-envelope'></span>
       </label>
       <div class="setting_and_txt_group"
       routerLink="./create"
-      [queryParams] = "{'id':letter.draft_id, 'status':'template', 'edit_tmp':true}"
+      [queryParams] = "{'id':letter.rough_id, 'status':'draft'}"
       >
-      <div class="text_info">{{letter.title}}</div>
-      <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.draft_id}} class='settings_checkbox hidden_checkbox'
+      <div class="text_info">{{letter.preview}}</div>
+      <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.rough_id}} class='settings_checkbox hidden_checkbox'
       (change) = 'cancell_checked($event, i)'
       >
       <div class="hideMenu">
         <button class='letterMenuButt'
-        (click) = 'delete_one_tmp(letter.draft_id, $event, i)'
+        (click) = 'delete_one_tmp(letter.rough_id, $event, i)'
         >Удалить</button>
 
         <button class='letterMenuButt'
-        (click) = 'favorite_tmp(letter.draft_id, letter.flagged, i)'
+        (click) = 'favorite_tmp(letter.rough_id, letter.flagged, i)'
         *ngIf="!letter.flagged"
         >Добавить в избранное</button>
 
         <button class='letterMenuButt'
-        (click) = 'favorite_tmp(letter.draft_id, letter.flagged, i)'
+        (click) = 'favorite_tmp(letter.rough_id, letter.flagged, i)'
         *ngIf="letter.flagged"
         >Удалить из избранных</button>
       
       </div>
-      <label class="setting" for="sett_{{letter.draft_id}}">
+      <label class="setting" for="sett_{{letter.rough_id}}">
           <span class='la la-ellipsis-h'></span>
       </label>
       
@@ -81,7 +81,7 @@
 
 </ng-template>
 <ng-template #search_not_found>
-<p>Шаблоны не найдены</p>
+<p>Черновики не найдены</p>
 </ng-template>
 
 
@@ -93,4 +93,4 @@
   </div>
 
   
-</div> -->
+</div>
