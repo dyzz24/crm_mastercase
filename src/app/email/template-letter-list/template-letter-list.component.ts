@@ -217,7 +217,7 @@ delete_one_tmp(id, e, index) {
 favorite_tmp(id, flagged, index) { // сделать шаблон избранным
 
     this.httpPost(
-      `${this.emailServ.ip}/mail/draft/update`,
+      `${global_params.ip}/mail/draft/update`,
       {id: id,
         flagged: !flagged,
         address: this.emailServ.idPostForHTTP
@@ -290,7 +290,7 @@ cancell_all_checked() {
     }
 
     this.httpPost(
-      `${this.emailServ.ip}/mail/draft/update`,
+      `${global_params.ip}/mail/draft/update`,
       all_data_for_http).subscribe((data) => {}); // всё это отправляю
 
     this.emailServ.draft_list.filter(val => { // прохожусь по массиву всех конвертиков
@@ -319,7 +319,7 @@ cancell_all_checked() {
     }
 
     this.httpPost(
-      `${this.emailServ.ip}/mail/draft/update`,
+      `${global_params.ip}/mail/draft/update`,
       all_data_for_http).subscribe((data) => {});
 
 

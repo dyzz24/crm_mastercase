@@ -63,6 +63,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public important_template: boolean;
     public subscription_emailServ_template_list: Subscription;
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
+    public new_tmp_state;
+    public can_save_tmp;
 
 
 
@@ -81,12 +83,12 @@ save_draft(data) {
 
     const fields = this.creating_template_and_draft_fields();
 
-    this.httpPost(
-      `${global_params.ip}/mail/rough/create`,
-      fields).subscribe((dataMails) => {
-        console.log(dataMails);
-        this.id_for_draft = dataMails.roughId;
-      });
+    // this.httpPost(
+    //   `${global_params.ip}/mail/rough/create`,
+    //   fields).subscribe((dataMails) => {
+    //     console.log(dataMails);
+    //     this.id_for_draft = dataMails.roughId;
+    //   });
   }
   console.log(data);
 }
@@ -103,8 +105,9 @@ save_draft(data) {
           this.hidden_input_fields = true;
           this.mail_id = queryParam['id']; // отлавливаю ID письма для последующего запроса (для шаблонов, ответить всем, ответить и тд)
           this.status = queryParam['status']; // статус - для работы с шаблонами
-
-          const new_tmp_state = queryParam['new']; // для создания шаблонов
+          this.edit_template = false;
+          this.new_tmp_state = queryParam['new']; // для создания шаблонов
+          this.can_save_tmp = queryParam['can_save']; // возможность сохранять шаблоны при добавлении новых из компонента template
 
           if (queryParam.edit_tmp === 'true') { // для дерева писем и редактирования шаблонов
             this.new_template_name = true; // показываем имя шаблона в папке шаблоны
@@ -296,9 +299,9 @@ save_draft(data) {
                 this.new_template_name = false;
           }
 
-          if (new_tmp_state === 'true') { // если зашли из шаблонов в новый шаблон - колбаса "кому" и тд появляется, скрывается
+          if (this.new_tmp_state === 'true') { // если зашли из шаблонов в новый шаблон - колбаса "кому" и тд появляется, скрывается
                                                                                                               // "Название шаблона"
-            this.edit_template = true;
+            this.edit_template = false;
             this.hidden_input_fields = false;
             this.new_template_name = false;
 
@@ -328,6 +331,7 @@ save_draft(data) {
                 this.subject = '';
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
+
             this.httpPost(
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {

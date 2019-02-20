@@ -37,7 +37,7 @@
       <app-template 
       [ip]='this.emailServ.ip' 
       [email_address]='this.emailServ.idPostForHTTP'
-      *ngIf="!this.edit_template"
+      *ngIf="!this.edit_template && this.new_tmp_state !== 'true'"
       ></app-template>
       </div>
 
@@ -187,9 +187,9 @@
       <div class="qu__bottom_block">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
       <div class="stick_splitter"></div>
-      <button class='save_templ' (click)='open_save_template()' *ngIf="this.status !== 'template'">Сохранить как шаблон</button>
+      <button class='save_templ' (click)='open_save_template()' *ngIf="this.status !== 'template' || this.can_save_tmp === 'true'">Сохранить как шаблон</button>
       
-      <button class='save_templ' *ngIf="this.status === 'template'" (click)='send_and_save_tmp($event)'>Сохранить изменения</button>
+      <button class='save_templ' *ngIf="this.edit_template === true" (click)='send_and_save_tmp($event)'>Сохранить изменения</button>
       </div> 
     </div>
     

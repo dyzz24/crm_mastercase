@@ -16,7 +16,7 @@
     <ul class="favorit_tmp" *ngIf="!this.favor_search_state; else not_have_favor">
       <li *ngFor="let favorit_tmp of this.favorit_tmp, let i = index" (click)='select_tmp($event, this.favorit_tmp)'
       routerLink="./"
-        [queryParams] = "{'id':this.favorit_tmp.draft_id, 'status':'template'}"
+        [queryParams] = "{'id':this.favorit_tmp.draft_id, 'status':'template','can_save': true}"
       >
         <span class='la la-star' (click)='favorite_do(this.favorit_tmp, $event)'></span> 
         <p>{{favorit_tmp.title}}</p>
