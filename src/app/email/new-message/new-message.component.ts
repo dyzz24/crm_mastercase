@@ -83,12 +83,12 @@ save_draft(data) {
 
     const fields = this.creating_template_and_draft_fields();
 
-    // this.httpPost(
-    //   `${global_params.ip}/mail/rough/create`,
-    //   fields).subscribe((dataMails) => {
-    //     console.log(dataMails);
-    //     this.id_for_draft = dataMails.roughId;
-    //   });
+    this.httpPost(
+      `${global_params.ip}/mail/rough/create`,
+      fields).subscribe((dataMails) => {
+        console.log(dataMails);
+        this.id_for_draft = dataMails.roughId;
+      });
   }
   console.log(data);
 }
