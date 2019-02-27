@@ -240,10 +240,11 @@ if (this.emailServ.lettersList[idLetter].seen === false) {
             base_array.filter((val, ind) => { // пробегаюсь по главному массиву писем
               if (val[condition] === flag) { // если элемент массива совпадает с искомым условием
                 select_for_html[ind] = true; // в данных индексах представления ставлю тру для отображения в html
-                id_for_send.push(val.draft_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
+                id_for_send.push(val.mail_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
                 allInputs[ind].checked = true; // ставлю инпуты с нужными индексами в тру (для отображение представления)
               }
             });
+
       }
 
       filters_select_letter(e) {

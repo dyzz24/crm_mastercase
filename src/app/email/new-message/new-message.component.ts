@@ -71,11 +71,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 save_draft(data) {
 
-
   if (data === ''
   || data === null
   || this.edit_template === true
-  || this.status === 'draft') { // если пустая строка, и в шаблонах находимся
+  ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
     return;
   }
@@ -83,14 +82,30 @@ save_draft(data) {
 
     const fields = this.creating_template_and_draft_fields();
 
+
     this.httpPost(
       `${global_params.ip}/mail/rough/create`,
       fields).subscribe((dataMails) => {
-        console.log(dataMails);
         this.id_for_draft = dataMails.roughId;
       });
+  } else { // иначе обновляю существующий черновик
+    const fields = this.creating_template_and_draft_fields();
+    fields['roughId'] = +this.id_for_draft;
+    this.httpPost(
+      `${global_params.ip}/mail/rough/update`,
+      fields).subscribe((dataMails) => {
+      });
   }
-  console.log(data);
+
+}
+
+delete_draft() { // при отправке письма удаляю его из черновиков
+  this.httpPost(
+    `${global_params.ip}/mail/rough/delete`,
+    {roughId: +this.id_for_draft}).subscribe((dataMails) => {
+    });
+
+    this.emailServ.delete_draft_send_messages(+this.id_for_draft); // и чищу представление черновиков (если мы в них)
 }
 
 
@@ -332,6 +347,9 @@ save_draft(data) {
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
 
+                this.id_for_draft = this.mail_id; // сразу получаю id текущего черновика,
+                                                  // что бы находясь в компоненте обновлять их а не создавать новые
+
             this.httpPost(
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
@@ -478,11 +496,13 @@ save_draft(data) {
   closeViewer() {
 const navigatePath = this._rout.url.replace(/\/create.*/, ''); // стартовый урл, если закрыли окно нового сообщения
 const queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+if (this.emailServ.lettersList) {
 this.emailServ.lettersList.filter(val => {
   if (val.mail_id === this.emailServ.currentId) {
     queryParams['imp_flag'] =  val.flagged;
   }
 });
+}
 this._rout.navigate([navigatePath], { relativeTo: this.activatedRoute,  // передача queryParams из компонента
 queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
 
@@ -530,6 +550,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
         this.closeViewer(); // функция сбрасывает урл и ловит папаметр для отображения важное / не важное письмо
         this.messages_sending = false; // крутилка off
         this.showSuccess('Письмо отправлено');
+        this.delete_draft();
     }),
 (err: HttpErrorResponse) => { // если ошибка
   this.showError('Письмо НЕ отправлено');
@@ -592,6 +613,7 @@ add_drag_input_data(objForData) { // ф-я принимает объект с ф
 });
 
 
+
 }
 // ШАБЛОНЫ СОХРАНЯЕМ ************************************ //
 
@@ -612,7 +634,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
     text: null, // текст не отправляем
     html: this.messages, // поле с текстом шаблона (или его html)
     subject: this.subject || null, // либо есть либо Null
-    flagged: this.important_tmp, // флаг (тру фолс)
+    flagged: this.important_tmp || null, // флаг (тру фолс)
     recipients: {
     from: [
       {address: this.from,

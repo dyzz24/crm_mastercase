@@ -37,6 +37,7 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .list__prev {
@@ -171,7 +172,7 @@
 
 .hideMenu {
     position: absolute;
-    top:50%;
+    top:100%;
     transform: translateY(-50%);
     right: 45px;
     width: 200px;

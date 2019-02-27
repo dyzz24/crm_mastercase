@@ -23,7 +23,7 @@ const routes: Routes = [
   },
 
   {path: ':email_id/drafts', component: DraftsComponent, canActivate: [EmailGuardGuard],
-  children: [{path: 'create', component: NewMessageComponent}]
+  children: [{path: 'create', component: NewMessageComponent}, {path: '**', component: EmptyLettersComponent}]
   },
 
     {path: ':id1/:id', component: LettersComponent, canActivate: [EmailGuardGuard],

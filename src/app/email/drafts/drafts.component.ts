@@ -76,6 +76,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
 
     });
 
+
   }
 
   ngOnDestroy() {
@@ -198,14 +199,14 @@ search_in_templates(data) {
 
 delete_one_tmp(id, e, index) {
   e.target.closest('.list__prev').classList.add('dellLetter'); // отловили парента - дали красивую анимашку
-  this.cancell_all_checked(); // сняли чекбокс с нипута меню (чьлю ушло меню)
+  this.cancell_all_checked(); // сняли чекбокс с нипута меню (чтобы ушло меню)
 
-      // this.httpPost(`${this.emailServ.ip}/mail/setbox`, {
-      //     draftId: +id,
-      //     boxId: +3,
-      //     address: this.emailServ.idPostForHTTP
-      //   }).subscribe();
-    this.canc_select();
+      this.httpPost(
+        `${global_params.ip}/mail/rough/delete`,
+        {roughId: +id}).subscribe((dataMails) => {
+        });
+
+    this.canc_select(); // сняли выделение с чекбокса аватар
 
         setTimeout(() => {
         this.emailServ.draft_list.splice(index, 1); // удаляю из представления
@@ -214,11 +215,11 @@ delete_one_tmp(id, e, index) {
 }, 500);
 }
 
-favorite_tmp(id, flagged, index) { // сделать шаблон избранным
+favorite_tmp(id, flagged, index) { // сделать черновик избранным
 
     this.httpPost(
-      `${this.emailServ.ip}/mail/draft/update`,
-      {id: id,
+      `${this.emailServ.ip}/mail/rough/update`,
+      {roughId: id,
         flagged: !flagged,
         address: this.emailServ.idPostForHTTP
       }).subscribe((data) => {});
@@ -267,7 +268,7 @@ cancell_all_checked() {
         base_array.filter((val, ind) => { // пробегаюсь по главному массиву писем
           if (val[condition] === true) { // если элемент массива совпадает с искомым условием
             select_for_html[ind] = true; // в данных индексах представления ставлю тру для отображения в html
-            id_for_send.push(val.draft_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
+            id_for_send.push(val.rough_id); // пушу id искомых писем в пустой массивец (для отправки на серв к примеру)
             allInputs[ind].checked = true; // ставлю инпуты с нужными индексами в тру (для отображение представления)
           }
         });

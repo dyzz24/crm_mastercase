@@ -82,6 +82,7 @@ export class EmailServiceService {
   public draft_list_edited = new Subject<any>();
 
 
+
   constructor( private rout: Router, private activatedRoute: ActivatedRoute,
     private http: HttpClient, private authorizationServ: AuthorizationService) {
   }
@@ -106,13 +107,24 @@ export class EmailServiceService {
 
 
 
-        // так как Денис захотел возможность удалять шаблоны из 3го окна
+        // возможность удалять шаблоны из 3го окна
             // а это не связанный с колбасой компонент
-            // пришлось связывать их общим сервером
+            // пришлось связывать их общим сервисомм
             // но возникла трудность с шаблонами которые чекбоксены (чекбокс не слетал при удалении)
             // поэтому я отправляю компоненту списка шаблонов (колбасе)
             // событие, что бы тот снял чекбоксы (вызвал ф-ю снятия)
             // он подписан на это событие
+  }
+
+  delete_draft_send_messages(roughtId) {
+if (this.draft_list) {
+    this.draft_list.filter((val, ind, arr) => { // прохожусь по массиву всех конвертиков
+      if  (+val.rough_id === +roughtId)  { // если нашлись
+        arr.splice(ind, 1); }});
+        this.draft_list_edited.next('delete');
+      } else {
+        return;
+      }
   }
 
   important_template(flagged, draft_id) {
