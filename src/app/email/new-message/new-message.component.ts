@@ -74,6 +74,7 @@ save_draft(data) {
   if (data === ''
   || data === null
   || this.edit_template === true
+  || this.new_tmp_state === 'true'
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
     return;

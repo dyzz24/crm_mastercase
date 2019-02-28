@@ -170,7 +170,9 @@
               <p class="email__num">{{ email.count }}</p>
             </div>
             <button (click)='open_hidden_folders($event, 1, i, true, this.emailItems[i].address)' *ngIf="this?.user_folders[i].length !== 0"
-            ><span class="la la-lg la-angle-down"></span></button>
+            ><span class="la la-lg la-angle-down" *ngIf="this.current_address_folder_open !== this.emailItems[i].address"></span>
+            <span class="la la-lg la-angle-up" *ngIf="this.current_address_folder_open === this.emailItems[i].address"></span>
+          </button>
           </div>
 
           <div class="hidden_subfolder" 
@@ -197,8 +199,10 @@
               <button (click)='open_hidden_folders($event, folder.id, i)'
               *ngIf="folder.childs"
 
-              ><span class="la la-lg la-angle-down"
-              ></span></button>
+              >
+              <span class="la la-lg la-angle-down" *ngIf="!folder.is_open"></span>
+              <span class="la la-lg la-angle-up" *ngIf="folder.is_open"></span>
+            </button>
             </div>
             <div class="hidden_subfolder"
             
@@ -226,9 +230,10 @@
                   </div>
                   <button (click)='open_hidden_folders($event, folder_1level.id, i)'
                   *ngIf="folder_1level.childs"
-                  ><span class="la la-lg la-angle-down"
-
-                  ></span></button>
+                  >
+                  <span class="la la-lg la-angle-down" *ngIf="!folder_1level.is_open"></span>
+                  <span class="la la-lg la-angle-up" *ngIf="folder_1level.is_open"></span>
+                </button>
                 </div>
 
                 <div class="hidden_subfolder"
@@ -259,7 +264,8 @@
                       <button (click)='open_hidden_folders($event, folder_2level.id, i)'
                       *ngIf="folder_2level.childs"
                       >
-                        <span class="la la-lg la-angle-down"></span>
+                      <span class="la la-lg la-angle-down" *ngIf="!folder_2level.is_open"></span>
+                      <span class="la la-lg la-angle-up" *ngIf="folder_2level.is_open"></span>
                       </button>
                     </div>
                     <div class="hidden_subfolder"
@@ -287,7 +293,8 @@
                           <button (click)='open_hidden_folders($event, folder_3level.id, i)'
                           *ngIf="folder_3level.childs"
                           >
-                            <span class="la la-lg la-angle-down"></span>
+                          <span class="la la-lg la-angle-down" *ngIf="!folder_3level.is_open"></span>
+                          <span class="la la-lg la-angle-up" *ngIf="folder_3level.is_open"></span>
                           </button>
                         </div>
                         <div class="hidden_subfolder"

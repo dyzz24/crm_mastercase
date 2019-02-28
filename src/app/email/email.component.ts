@@ -68,16 +68,13 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
       this.emailServ.all_user_mail_address = data2.boxes.map(val => {
         return val.address;
       });
-      const folder_state = JSON.parse(localStorage.getItem('folders_state'));
-      if (folder_state === null) {
-        this.user_folders =  data2.boxes.map(item => {
+
+        this.user_folders = JSON.parse(localStorage.getItem('folders_state')) ||  data2.boxes.map(item => {
 
           return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
        });
-      } else {
-        this.user_folders = folder_state;
-      }
-      console.log(folder_state);
+
+
 
 
 
