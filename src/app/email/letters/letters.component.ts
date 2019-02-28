@@ -77,6 +77,7 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
     this.subscription = this.activatedRoute.params.subscribe(params => {
       this.emailServ.idPostForHTTP = params.id1;
       this.emailServ.selectedMess = +params.id;
+
       this.emailServ.selectNum = +params.id;
       this.emailServ.haveResponse = false; // если убрать - не будет индикации при навигации по папкам (хз грузит или нет)
       // tslint:disable-next-line:forin

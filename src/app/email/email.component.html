@@ -169,11 +169,14 @@
               <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][1] !== 0">{{this.emailServ.counts[email.address][1]}}</p>
               <p class="email__num">{{ email.count }}</p>
             </div>
-            <button (click)='open_hidden_folders($event)' *ngIf="this?.user_folders[i].length !== 0"><span class="la la-lg la-angle-down"></span></button>
+            <button (click)='open_hidden_folders($event, 1, i, true, this.emailItems[i].address)' *ngIf="this?.user_folders[i].length !== 0"
+            ><span class="la la-lg la-angle-down"></span></button>
           </div>
 
           <div class="hidden_subfolder" 
-          routerLinkActive="visibl_hidden_folders"
+          
+          [ngClass]="{visibl_hidden_folders: this.current_address_folder_open === this.emailItems[i].address}"
+          
           >
               <div class="folders__child" *ngFor="let folder of this?.user_folders[i]">
             <div class="type_message"
@@ -191,14 +194,15 @@
                 <p *ngIf="folder.title === undefined">Папка без имени</p>
                 <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder.id] !== 0">{{this.emailServ.counts[email.address][folder.id]}}</p>
               </div>
-              <button (click)='open_hidden_folders($event)'
+              <button (click)='open_hidden_folders($event, folder.id, i)'
               *ngIf="folder.childs"
 
               ><span class="la la-lg la-angle-down"
               ></span></button>
             </div>
             <div class="hidden_subfolder"
-            routerLinkActive="visibl_hidden_folders"
+            
+            [ngClass]="{visibl_hidden_folders: folder.is_open}"
             
             >
        
@@ -220,7 +224,7 @@
                 <p *ngIf="folder_1level.title === undefined">Папка без имени</p>
                     <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_1level.id] !== 0 ">{{this.emailServ.counts[email.address][folder_1level.id]}}</p>
                   </div>
-                  <button (click)='open_hidden_folders($event)'
+                  <button (click)='open_hidden_folders($event, folder_1level.id, i)'
                   *ngIf="folder_1level.childs"
                   ><span class="la la-lg la-angle-down"
 
@@ -228,7 +232,8 @@
                 </div>
 
                 <div class="hidden_subfolder"
-                routerLinkActive="visibl_hidden_folders"
+                
+                [ngClass]="{visibl_hidden_folders: folder_1level.is_open}"
                 >
                   <div class="folders__child" *ngFor="let folder_2level of folder_1level.childs">
                     <div  class="type_message"
@@ -251,14 +256,15 @@
                         <p *ngIf="folder_2level.title === undefined">Папка без имени</p>
                         <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_2level.id] !== 0">{{this.emailServ.counts[email.address][folder_2level.id]}}</p>
                       </div>
-                      <button (click)='open_hidden_folders($event)'
+                      <button (click)='open_hidden_folders($event, folder_2level.id, i)'
                       *ngIf="folder_2level.childs"
                       >
                         <span class="la la-lg la-angle-down"></span>
                       </button>
                     </div>
                     <div class="hidden_subfolder"
-                    routerLinkActive="visibl_hidden_folders"
+                    
+                    [ngClass]="{visibl_hidden_folders: folder_2level.is_open}"
                     >
                       <div class="folders__child" *ngFor="let folder_3level of folder_2level.childs">
                         <div  class="type_message"
@@ -278,14 +284,15 @@
                             <p *ngIf="folder_3level.title === undefined">Папка без имени</p>
                             <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][folder_3level.id] !== 0">{{this.emailServ.counts[email.address][folder_3level.id]}}</p>
                           </div>
-                          <button (click)='open_hidden_folders($event)'
+                          <button (click)='open_hidden_folders($event, folder_3level.id, i)'
                           *ngIf="folder_3level.childs"
                           >
                             <span class="la la-lg la-angle-down"></span>
                           </button>
                         </div>
                         <div class="hidden_subfolder"
-                        routerLinkActive="visibl_hidden_folders"
+                        
+                        [ngClass]="{visibl_hidden_folders: folder_3level.is_open}"
                         >
                           <div class="folders__child" *ngFor="let folder_4level of folder_3level.childs">
                             <div  class="type_message"

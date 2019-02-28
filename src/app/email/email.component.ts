@@ -42,7 +42,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
   selected_box;
   selected_folders;
   adress;
-  current_address;
+  current_address_folder_open;
 
 
   constructor(
@@ -60,16 +60,27 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
   ngOnInit() {
 
+    this.current_address_folder_open = localStorage.getItem('open_folder_address');
+
 
       this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data2) => {
       this.emailItems = data2.boxes;
       this.emailServ.all_user_mail_address = data2.boxes.map(val => {
         return val.address;
       });
-      this.user_folders = data2.boxes.map(item => {
+      const folder_state = JSON.parse(localStorage.getItem('folders_state'));
+      if (folder_state === null) {
+        this.user_folders =  data2.boxes.map(item => {
 
-         return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
-      });
+          return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
+       });
+      } else {
+        this.user_folders = folder_state;
+      }
+      console.log(folder_state);
+
+
+
 
       this.emailServ.folders = data2.boxes;
 
@@ -114,12 +125,55 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
     this.selected_folders = folders;
   }
 
-  open_hidden_folders(e) {
+  open_hidden_folders(e, folder_id?, index?, first_flag?, address?) {
+    if (first_flag) {
+      const storage_address = localStorage.getItem('open_folder_address');
+      if (storage_address === null || storage_address !== address) {
+        localStorage.setItem('open_folder_address', address);
+        this.current_address_folder_open = address;
+      } else {
+        localStorage.setItem('open_folder_address', null);
+        this.current_address_folder_open = null;
+      }
+          return;
+    }
+
+    // console.log(index);
       const parent = e.target.closest('.folders__child');
       const hiddenFolders = parent.querySelector('.hidden_subfolder');
       hiddenFolders.classList.toggle('visibl_hidden_folders');
+
       // this.emailServ.hiddenEmpty = false;
 
+
+this.deep_search(this.user_folders, folder_id);
+
+  }
+
+  deep_search(arr, folder_id) {
+      arr.filter((val, ind, array) => {
+        if (val.length > 0) {
+          this.deep_search(val, folder_id);
+        }
+
+          if (val.childs) {
+            this.deep_search(val.childs, folder_id);
+          }
+
+          if (+val.id === +folder_id) {
+            console.log(val);
+if (array[ind]['is_open'] === true) {
+  array[ind]['is_open'] = false;
+} else {
+  array[ind]['is_open'] = true;
+}
+
+
+          }
+
+      });
+      localStorage.setItem('folders_state', JSON.stringify(arr));
+      // console.log(this.user_folders);
   }
 
 
