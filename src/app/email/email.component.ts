@@ -123,8 +123,8 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   open_hidden_folders(e, folder_id?, index?, first_flag?, address?) {
-    if (first_flag) {
-      const storage_address = localStorage.getItem('open_folder_address');
+    if (first_flag) { // если открыли корневую вкладку
+      const storage_address = localStorage.getItem('open_folder_address'); // пушим адрес ящика в локал
       if (storage_address === null || storage_address !== address) {
         localStorage.setItem('open_folder_address', address);
         this.current_address_folder_open = address;
@@ -135,13 +135,6 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
           return;
     }
 
-    // console.log(index);
-      const parent = e.target.closest('.folders__child');
-      const hiddenFolders = parent.querySelector('.hidden_subfolder');
-      hiddenFolders.classList.toggle('visibl_hidden_folders');
-
-      // this.emailServ.hiddenEmpty = false;
-
 
 this.deep_search(this.user_folders, folder_id);
 
@@ -149,27 +142,28 @@ this.deep_search(this.user_folders, folder_id);
 
   deep_search(arr, folder_id) {
       arr.filter((val, ind, array) => {
-        if (val.length > 0) {
+
+        if (typeof(val) === 'object' && val.length > 0) { // если есть ещё вложенность
           this.deep_search(val, folder_id);
         }
 
-          if (val.childs) {
+          if (val.childs) { // если у объектов есть чилды массивы, пройтись по ним
             this.deep_search(val.childs, folder_id);
           }
 
-          if (+val.id === +folder_id) {
-            console.log(val);
+          if (+val.id === +folder_id) { // если нужная папка содержит заданный id
+
 if (array[ind]['is_open'] === true) {
   array[ind]['is_open'] = false;
 } else {
-  array[ind]['is_open'] = true;
+  array[ind]['is_open'] = true; // добавляю ключ к объекту
 }
 
 
           }
 
       });
-      localStorage.setItem('folders_state', JSON.stringify(arr));
+      localStorage.setItem('folders_state', JSON.stringify(arr)); // сохраняю массив в локал
       // console.log(this.user_folders);
   }
 

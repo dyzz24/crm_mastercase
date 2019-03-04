@@ -2,6 +2,17 @@
 <div class="letters">
   
   <div class='letter__list'>
+      <app-email-header
+      (search_function) = 'this.searchLettersInput.setValue($event)'
+      [success_search] = ' this.successSearch'
+      [not_success_search] = 'this.filterError'
+      [start_search] = 'this.startSearch'
+      (select_cancell_all_inputs) = 'this.select_all_or_cancell_all_inputs($event)'
+      (filters_selected) = 'this.filters_select_letter($event)'
+      (scroll_up_event) = 'scrollTop($event)'
+      [extended_options] = 'true'
+      >
+    </app-email-header>
       <div class="clickable_cancel_block" (click)='close_menu()' [ngClass]="{visible: this.open_hidden_menu}"></div> 
     <div class="preloader__letters" *ngIf="this.emailServ.haveResponse === false; else messagesDownload">
         <div class="cssload-speeding-wheel"></div>
@@ -12,17 +23,7 @@
       else haveMess'>
 
 
-        <app-email-header
-    (search_function) = 'this.searchLettersInput.setValue($event)'
-    [success_search] = ' this.successSearch'
-    [not_success_search] = 'this.filterError'
-    [start_search] = 'this.startSearch'
-    (select_cancell_all_inputs) = 'this.select_all_or_cancell_all_inputs($event)'
-    (filters_selected) = 'this.filters_select_letter($event)'
-    (scroll_up_event) = 'scrollTop($event)'
-    [extended_options] = 'true'
-    >
-  </app-email-header>
+        
 <div class="empty__cont">
   <p>Писем нет но вы держитесь</p>
 </div>
@@ -51,17 +52,7 @@
         <p class="tooltip">Наверх</p>
       </button>
     </div> -->
-    <app-email-header
-    (search_function) = 'this.searchLettersInput.setValue($event)'
-    [success_search] = ' this.successSearch'
-    [not_success_search] = 'this.filterError'
-    [start_search] = 'this.startSearch'
-    (select_cancell_all_inputs) = 'this.select_all_or_cancell_all_inputs($event)'
-    (filters_selected) = 'this.filters_select_letter($event)'
-    (scroll_up_event) = 'scrollTop($event)'
-    [extended_options] = 'true'
-    >
-  </app-email-header>
+
 
     <div class="hidden__setting_panel" *ngIf="this.emailServ.idLetters.length > 0">
         <button  type='button'  (click)='deleteRestoreLettersAll(3)' *ngIf="this.emailServ.selectNum !==3; else restoreAll"

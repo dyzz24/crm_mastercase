@@ -497,9 +497,9 @@ p{
 }
 
 
-pre {
+pre, p, span {
     // display: none;
-    white-space: pre-wrap;
+    white-space: pre-wrap !important;
 }
 @keyframes menuEffect {
     0% {

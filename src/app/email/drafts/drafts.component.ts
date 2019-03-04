@@ -199,8 +199,7 @@ search_in_templates(data) {
 
 delete_one_tmp(id, e, index) {
   e.target.closest('.list__prev').classList.add('dellLetter'); // отловили парента - дали красивую анимашку
-  this.cancell_all_checked(); // сняли чекбокс с нипута меню (чтобы ушло меню)
-
+  this.close_menu(); // закрытие попапа открытого меню
       this.httpPost(
         `${global_params.ip}/mail/rough/delete`,
         {roughId: +id}).subscribe((dataMails) => {
@@ -216,7 +215,7 @@ delete_one_tmp(id, e, index) {
 }
 
 favorite_tmp(id, flagged, index) { // сделать черновик избранным
-
+  this.close_menu(); // закрытие попапа открытого меню
     this.httpPost(
       `${this.emailServ.ip}/mail/rough/update`,
       {roughId: id,
@@ -236,7 +235,7 @@ cancell_all_checked() {
 }
 
 
-    select_cancell_inputs(e) {
+    select_cancell_inputs(e) { // с компонента header передаю событие
 
       if  (e === true) {
         this._select();
