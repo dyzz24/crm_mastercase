@@ -130,6 +130,22 @@ p{
     box-sizing: border-box;
     width: 100%;
     word-break: break-word;
+    // white-space: pre-wrap !important;
+
+// правила для html писем со своим файлом style, которые перебивают наши стили и ломают верстку
+    img {
+        width: 400px !important;
+        max-width: 100% !important;
+    }
+
+    div, table {
+        width: 100% !important;
+    }
+
+    p, span, pre {
+        white-space: pre-wrap !important;
+    }
+    
 }
 
 

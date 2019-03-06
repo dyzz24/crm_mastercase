@@ -340,7 +340,7 @@
               class="link_area"
               routerLink="./{{this.emailItems[i].address}}/2"
             >
-              <p>Исходящие</p>
+              <p>Отправленные</p>
               <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][2] !== 0">{{this.emailServ.counts[email.address][2]}}</p>
             </div>
           </div>

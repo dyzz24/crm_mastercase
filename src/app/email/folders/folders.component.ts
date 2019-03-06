@@ -94,6 +94,8 @@ export class FoldersComponent implements OnInit, DoCheck {
       return false; // выхожу из ф-ии
     }
 
+    // const all_folders = JSON.parse(localStorage.getItem('folders_state'));
+
     for (let i = 0; i < arr.length; i++) {
       if (Array.isArray(arr[i].childs)) { // пробегаюсь по всем массивам - чилдам
         this.deepSearch(arr[i].childs, id_folders_select);

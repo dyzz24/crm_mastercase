@@ -55,7 +55,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 10px 40px 50px 70px;
+    padding: 10px 40px 0px 70px;
+    margin-bottom: 100px;
 }
 .quill_styles {
     flex: 1;
@@ -358,7 +359,8 @@ label {
 .qu__bottom_block {
     display: flex;
     align-items: center;
-    padding-top: 35px;
+    position: fixed;
+    bottom: 50px;
     box-sizing: border-box;
     flex-shrink: 0;
 }

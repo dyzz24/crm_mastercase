@@ -144,7 +144,7 @@ this.deep_search(this.user_folders, folder_id);
   deep_search(arr, folder_id) {
       arr.filter((val, ind, array) => {
 
-        if (typeof(val) === 'object' && val.length > 0) { // если есть ещё вложенность
+        if (Array.isArray(val) && val.length > 0) { // если есть ещё массивы вложенность
           this.deep_search(val, folder_id);
         }
 

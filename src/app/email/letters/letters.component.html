@@ -153,7 +153,9 @@
 
           >
             <p class='time' [class.time-icons__status-new]="letters.seen === false">{{letters.date | timerPipe}}</p>
-            <span class="la la-paperclip" [class.visible]="this.emailServ.lettersList[i].attachments !== false" [class.time-icons__status-new]="letters.seen === false"
+            <span class="la la-paperclip" 
+            [class.visible]="this.emailServ.lettersList[i].attachments !== false" 
+            [class.time-icons__status-new]="letters.seen === false"
             title='Вложения'
             >
             </span>
