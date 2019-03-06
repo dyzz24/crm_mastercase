@@ -139,7 +139,7 @@ title="Новый шаблон"
             <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
-              <div class='info__content_p' *ngIf="this.selectedLetter?.details.recipients.to.length === 1; else have_many_addresses"><p>Вам</p></div>
+              <div class='info__content_p' *ngIf="this.selectedLetter?.details.recipients.to.length === 1; else have_many_addresses"><p>{{this.selectedLetter?.details.recipients.to[0].address}}</p></div>
               <ng-template #have_many_addresses>
               <div class='info__content_p' *ngFor="let item of this?.cut_addressess_array"><p>{{item.address}}</p></div>
               <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.details.recipients.to.length'

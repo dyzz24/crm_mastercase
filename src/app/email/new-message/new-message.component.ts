@@ -65,6 +65,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
     public new_tmp_state;
     public can_save_tmp;
+    public save_draft_protest: Boolean = false;
 
 
 
@@ -75,6 +76,7 @@ save_draft(data) {
   || data === null
   || this.edit_template === true
   || this.new_tmp_state === 'true'
+  || this.save_draft_protest
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
     return;
@@ -101,6 +103,9 @@ save_draft(data) {
 }
 
 delete_draft() { // при отправке письма удаляю его из черновиков
+  if (this.save_draft_protest) {
+    return;
+  }
   this.httpPost(
     `${global_params.ip}/mail/rough/delete`,
     {roughId: +this.id_for_draft}).subscribe((dataMails) => {
@@ -551,7 +556,9 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
         this.closeViewer(); // функция сбрасывает урл и ловит папаметр для отображения важное / не важное письмо
         this.messages_sending = false; // крутилка off
         this.showSuccess('Письмо отправлено');
+        this.save_draft_protest = true; // если отправили раньше чем сохранили в черновики, отменяем сохранение
         this.delete_draft();
+
     }),
 (err: HttpErrorResponse) => { // если ошибка
   this.showError('Письмо НЕ отправлено');

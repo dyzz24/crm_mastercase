@@ -96,6 +96,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
       // const fold = counts['seo@insat.ru']
 
       this.emailServ.counts = counts;
+
       // console.log(this.emailServ.counts);
 
     });
