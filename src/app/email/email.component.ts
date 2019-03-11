@@ -103,7 +103,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
       this.emailServ.counts = counts;
 
-      console.log(this.emailServ.counts);
+      // console.log(this.emailServ.counts);
 
     });
 

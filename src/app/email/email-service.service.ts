@@ -117,12 +117,12 @@ export class EmailServiceService {
   }
 
   delete_draft_send_messages(roughtId) {
-if (this.draft_list) {
+if (this.draft_list) { // если мы в черновиках - удалить отправленное из представления черновиков
     this.draft_list.filter((val, ind, arr) => { // прохожусь по массиву всех конвертиков
       if  (+val.rough_id === +roughtId)  { // если нашлись
         arr.splice(ind, 1); }});
         this.draft_list_edited.next('delete');
-      } else {
+      } else { // если не в черновиках, выхожу
         return;
       }
   }
