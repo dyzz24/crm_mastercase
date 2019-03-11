@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { ToastrService} from 'ngx-toastr';
-import { ReadVarExpr } from '@angular/compiler';
+import { ReadVarExpr, IfStmt } from '@angular/compiler';
 import {NewMessageService} from '../new-message/new-message.service';
 import { DatePipe } from '@angular/common';
 import { isDate } from '@angular/common/src/i18n/format_date';
@@ -66,6 +66,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public new_tmp_state;
     public can_save_tmp;
     public save_draft_protest: Boolean = false;
+    public draft_template_cashes = [];
 
 
 
@@ -192,14 +193,14 @@ delete_draft() { // при отправке письма удаляю его и�
             this.httpPost(
               `${global_params.ip}/mail/draft/`,
               { draftId: +this.mail_id}).subscribe((dataMails) => {
-                console.log(dataMails);
+
                 this.template_title = dataMails[0].title;
                 // this.to = [];
                 // this.copy = [];
                 // this.hidden_copy = [];
                 // this.messages = '';
                 // this.subject = '';
-                if (this.messages_for_draft === undefined ||
+                if (this.messages_for_draft.value === undefined ||
                   this.messages_for_draft.value === '') { // если данных нет, вставляем пустую строку
                     this.messages_for_draft.reset();
                 }
@@ -357,48 +358,25 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.id_for_draft = this.mail_id; // сразу получаю id текущего черновика,
                                                   // что бы находясь в компоненте обновлять их а не создавать новые
 
+                let draft_flagged = true;
+                this.draft_template_cashes.filter(val => { // прохожусь по сохраненным черновикам
+                    if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
+                        draft_flagged = false; // отменяю дальнейший запрос
+                        this.add_fields_draft(val); // вставляю поля для черновика
+                    }
+                });
+
+
+            if (draft_flagged) { // если совпадений нет, пуляю запрос и заполняю поля из ответа с сервера
             this.httpPost(
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
-// console.log(dataMails);
-                if (this.messages_for_draft.value === undefined ||
-                  this.messages_for_draft.value === '') { // если данных нет, вставляем пустую строку
-                    this.messages_for_draft.reset();
-                }
-                if (dataMails.html === null) { // если шаблон без html добавляем к телу активного письма содержимое шаблона
-                  this.messages_for_draft.setValue(`${dataMails.text}`);
+                this.draft_template_cashes.push(dataMails);
 
-                 } else { // иначе добавляем текст
-
-                  this.messages_for_draft.setValue(`${dataMails.html}`);
-                 }
-
-                 this.subject = dataMails.subject;
-
-                 if (dataMails.details && dataMails.details.recipients.to) {
-
-                dataMails.details.recipients.to.filter(val => {
-                  this.to.push(val.address);
-                });
-
-              }
-
-              if (dataMails.details && dataMails.details.recipients.cc) {
-
-                dataMails.details.recipients.cc.filter(val => {
-                  this.copy.push(val.address);
-                });
-
-              }
-
-              if (dataMails.details && dataMails.details.recipients.bcc) {
-                dataMails.details.recipients.bcc.filter(val => {
-                  this.hidden_copy.push(val.address);
-                });
-
-              }
+                this.add_fields_draft(dataMails);
 
               });
+            }
           }
 
 
@@ -408,8 +386,49 @@ delete_draft() { // при отправке письма удаляю его и�
 
   }
 
+
+  add_fields_draft(object_for_add) { // ф-я для заполнения полей в черновиках
+    if (this.messages_for_draft.value === undefined ||
+      this.messages_for_draft.value === '') { // если данных нет, вставляем пустую строку, обнуляя форму
+        this.messages_for_draft.reset();
+    }
+    if (object_for_add.html === null) { // если шаблон без html добавляем к телу активного письма содержимое шаблона
+      this.messages_for_draft.setValue(`${object_for_add.text}`);
+
+     } else { // иначе добавляем текст
+
+      this.messages_for_draft.setValue(`${object_for_add.html}`);
+     }
+
+     this.subject = object_for_add.subject;
+
+     if (object_for_add.details && object_for_add.details.recipients.to) {
+
+    object_for_add.details.recipients.to.filter(val => {
+      this.to.push(val.address);
+    });
+
+  }
+
+  if (object_for_add.details && object_for_add.details.recipients.cc) {
+
+    object_for_add.details.recipients.cc.filter(val => {
+      this.copy.push(val.address);
+    });
+
+  }
+
+  if (object_for_add.details && object_for_add.details.recipients.bcc) {
+    object_for_add.details.recipients.bcc.filter(val => {
+      this.hidden_copy.push(val.address);
+    });
+
+  }
+  }
+
+
   ngDoCheck() {
-    // console.log(this.messages_for_draft.value);
+    // console.log(this.draft_template_cashes);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
