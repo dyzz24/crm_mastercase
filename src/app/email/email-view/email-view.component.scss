@@ -130,11 +130,12 @@ p{
     box-sizing: border-box;
     width: 100%;
     word-break: break-word;
+   
     // white-space: pre-wrap !important;
 
 // правила для html писем со своим файлом style, которые перебивают наши стили и ломают верстку
     img {
-        width: 400px !important;
+        // width: 400px !important;
         max-width: 100% !important;
     }
 
@@ -142,9 +143,15 @@ p{
         width: 100% !important;
     }
 
+    table {
+        margin: 0 !important;
+    }
+
     p, span, pre {
         white-space: pre-wrap !important;
+        
     }
+
     
 }
 

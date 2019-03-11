@@ -103,9 +103,7 @@ save_draft(data) {
 }
 
 delete_draft() { // при отправке письма удаляю его из черновиков
-  if (this.save_draft_protest) {
-    return;
-  }
+
   this.httpPost(
     `${global_params.ip}/mail/rough/delete`,
     {roughId: +this.id_for_draft}).subscribe((dataMails) => {
@@ -193,6 +191,7 @@ delete_draft() { // при отправке письма удаляю его и�
             this.httpPost(
               `${global_params.ip}/mail/draft/`,
               { draftId: +this.mail_id}).subscribe((dataMails) => {
+                console.log(dataMails);
                 this.template_title = dataMails[0].title;
                 // this.to = [];
                 // this.copy = [];
@@ -549,6 +548,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
     html: this.messages // отправляем пиьма как html документ
   }));
 
+
   this.httpPost(`${global_params.ip}/mail/envelope/send`, formData).subscribe(
     (resp => { // если ответ положительный, отключаю прелоадер, возвращаюсь на урл с которого отправили
 
@@ -556,6 +556,11 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
         this.closeViewer(); // функция сбрасывает урл и ловит папаметр для отображения важное / не важное письмо
         this.messages_sending = false; // крутилка off
         this.showSuccess('Письмо отправлено');
+        if (!this.emailServ.counts[this.from][2]) {
+          this.emailServ.counts[this.from][2] = 1; // counter для счетчика отправленных писем
+        } else {
+          this.emailServ.counts[this.from][2] = +this.emailServ.counts[this.from][2] + 1;
+        }
         this.save_draft_protest = true; // если отправили раньше чем сохранили в черновики, отменяем сохранение
         this.delete_draft();
 

@@ -69,10 +69,16 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
         return val.address;
       });
 
-        this.user_folders = JSON.parse(localStorage.getItem('folders_state')) ||  data2.boxes.map(item => {
+        this.user_folders =  data2.boxes.map(item => {
 
           return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
        });
+
+      //  console.log(this.user_folders);
+      //  const state_folders = JSON.parse(localStorage.getItem('folders_state'));
+
+
+
 
 
 
@@ -97,7 +103,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
       this.emailServ.counts = counts;
 
-      // console.log(this.emailServ.counts);
+      console.log(this.emailServ.counts);
 
     });
 
