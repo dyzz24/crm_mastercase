@@ -141,13 +141,14 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.to = [];
                 this.copy = [];
                 this.hidden_copy = []; // чистим графы кому и тд, от предыдущего шаблона
-                this.messages = '';
+
+                this.messages_for_draft.reset();
                 this.subject = '';
                 if (dataMails[0].html === null) { // если html в письме нет - берем графу tetx
-                  this.messages = dataMails[0].text;
+                  this.messages_for_draft = dataMails[0].text;
 
                  } else {
-                  this.messages = dataMails[0].html; // иначе парсим html
+                  this.messages_for_draft = dataMails[0].html; // иначе парсим html
                  }
                  this.subject = dataMails[0].subject; // подставляем тему
                  if (dataMails[0].details && dataMails[0].details.recipients.to) {    // заполняем графы кому и тд если они есть в шаблоне
@@ -198,17 +199,18 @@ delete_draft() { // при отправке письма удаляю его и�
                 // this.hidden_copy = [];
                 // this.messages = '';
                 // this.subject = '';
-                if (this.messages === undefined || this.messages === '') { // если данных нет, вставляем пустую строку
-                  this.messages = '';
+                if (this.messages_for_draft === undefined ||
+                  this.messages_for_draft.value === '') { // если данных нет, вставляем пустую строку
+                    this.messages_for_draft.reset();
                 }
                 if (dataMails[0].html === null) { // если шаблон без html добавляем к телу активного письма содержимое шаблона
-                              this.messages =   `${dataMails[0].text} <br>
-                                ${this.messages} `;
+                  this.messages_for_draft.setValue( `${dataMails[0].text} <br>
+                  ${this.messages_for_draft.value} `);
 
                  } else { // иначе добавляем текст
 
-                            this.messages =   `${dataMails[0].html}  <br>
-                             ${this.messages} `;
+                  this.messages_for_draft.setValue(`${dataMails[0].html}  <br>
+                  ${this.messages_for_draft.value}`)  ;
                  }
                 //  this.subject = dataMails[0].subject;
 
@@ -259,11 +261,11 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.subject = `RE: ${dataMails.subject}`;
                 if (dataMails.html === null) {
 
-                  this.messages = `${dataMails.from_address} писал :
-                  <blockquote type="cite"> ${dataMails.text} </blockquote>`;
+                  this.messages_for_draft.setValue(`${dataMails.from_address} писал :
+                  <blockquote type="cite"> ${dataMails.text} </blockquote>`);
                  } else { // ставим в цитату текст письма на который отвечаем
-                  this.messages = `${dataMails.from_address} писал :
-                  <blockquote type="cite"> ${dataMails.html} </blockquote>`;
+                  this.messages_for_draft.setValue(`${dataMails.from_address} писал :
+                  <blockquote type="cite"> ${dataMails.html} </blockquote>`);
                  }
               });
           }
@@ -286,11 +288,11 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.to.push(dataMails.from_address); // добавляем к адресатам в ответе того, от кого пришло письмо
 
                 if (dataMails.html === null) {
-                  this.messages = `${dataMails.from_address} писал :
-                  <blockquote> ${dataMails.text} </blockquote>`;
+                  this.messages_for_draft.setValue(`${dataMails.from_address} писал :
+                  <blockquote> ${dataMails.text} </blockquote>`);
                  } else {
-                  this.messages = `${dataMails.from_address} писал :
-                  <blockquote> ${dataMails.html} </blockquote>`;
+                  this.messages_for_draft.setValue(`${dataMails.from_address} писал :
+                  <blockquote> ${dataMails.html} </blockquote>`);
                  }
               });
           }
@@ -302,9 +304,9 @@ delete_draft() { // при отправке письма удаляю его и�
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.subject = `${dataMails.subject}`;
                 if (dataMails.html === null) {
-                  this.messages = dataMails.text; // просто берем содержимое письма и тему
+                  this.messages_for_draft.setValue(dataMails.text); // просто берем содержимое письма и тему
                  } else {
-                  this.messages = dataMails.html;
+                  this.messages_for_draft.setValue(dataMails.html);
                  }
               });
           }
@@ -313,7 +315,7 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.to = [];
                 this.copy = [];
                 this.hidden_copy = [];
-                this.messages = '';
+                this.messages_for_draft.reset();
                 this.subject = '';
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
@@ -336,9 +338,9 @@ delete_draft() { // при отправке письма удаляю его и�
 
 
                 if (dataMails.html === null) {
-                  this.messages = dataMails.text;
+                  this.messages_for_draft.setValue(dataMails.text);
                  } else {
-                  this.messages = dataMails.html;
+                  this.messages_for_draft.setValue(dataMails.html);
                  }
               });
           }
@@ -347,7 +349,7 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.to = [];
                 this.copy = [];
                 this.hidden_copy = [];
-                this.messages = '';
+                this.messages_for_draft.reset();
                 this.subject = '';
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
@@ -359,15 +361,16 @@ delete_draft() { // при отправке письма удаляю его и�
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
 // console.log(dataMails);
-                if (this.messages === undefined || this.messages === '') { // если данных нет, вставляем пустую строку
-                  this.messages = '';
+                if (this.messages_for_draft.value === undefined ||
+                  this.messages_for_draft.value === '') { // если данных нет, вставляем пустую строку
+                    this.messages_for_draft.reset();
                 }
                 if (dataMails.html === null) { // если шаблон без html добавляем к телу активного письма содержимое шаблона
-                              this.messages =   `${dataMails.text}`;
+                  this.messages_for_draft.setValue(`${dataMails.text}`);
 
                  } else { // иначе добавляем текст
 
-                            this.messages =   `${dataMails.html} `;
+                  this.messages_for_draft.setValue(`${dataMails.html}`);
                  }
 
                  this.subject = dataMails.subject;
@@ -406,7 +409,7 @@ delete_draft() { // при отправке письма удаляю его и�
   }
 
   ngDoCheck() {
-    // console.log(this.hidden_copy);
+    // console.log(this.messages_for_draft.value);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -417,7 +420,7 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.to = [];
                 this.copy = [];
                 this.hidden_copy = [];
-                this.messages = '';
+                this.messages_for_draft.reset();
                 this.subject = '';
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
@@ -545,7 +548,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
     })
     ,
     subject: this.subject,
-    html: this.messages // отправляем пиьма как html документ
+    html: this.messages_for_draft.value // отправляем пиьма как html документ
   }));
 
 
@@ -645,7 +648,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
     address: this.from, // имейл кто создал шаблон
     title: this.tmp_name, // имя шаблона
     text: null, // текст не отправляем
-    html: this.messages, // поле с текстом шаблона (или его html)
+    html: this.messages_for_draft.value, // поле с текстом шаблона (или его html)
     subject: this.subject || null, // либо есть либо Null
     flagged: this.important_tmp || null, // флаг (тру фолс)
     recipients: {
@@ -791,7 +794,7 @@ this.httpPost(
   // tslint:disable-next-line:max-line-length
   {address: this.from, // имейл
     draftId: +this.mail_id,
-    html: this.messages,
+    html: this.messages_for_draft.value,
     subject: this.subject,
     recipients: {
     from: [
