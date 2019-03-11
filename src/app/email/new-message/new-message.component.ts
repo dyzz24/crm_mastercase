@@ -145,10 +145,10 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.messages_for_draft.reset();
                 this.subject = '';
                 if (dataMails[0].html === null) { // если html в письме нет - берем графу tetx
-                  this.messages_for_draft = dataMails[0].text;
+                  this.messages_for_draft.setValue(dataMails[0].text);
 
                  } else {
-                  this.messages_for_draft = dataMails[0].html; // иначе парсим html
+                  this.messages_for_draft.setValue(dataMails[0].html); // иначе парсим html
                  }
                  this.subject = dataMails[0].subject; // подставляем тему
                  if (dataMails[0].details && dataMails[0].details.recipients.to) {    // заполняем графы кому и тд если они есть в шаблоне

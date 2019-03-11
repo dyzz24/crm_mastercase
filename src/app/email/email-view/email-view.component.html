@@ -37,7 +37,7 @@
   >
     <span class='la la-mail-reply'></span>
 </button>
-<button class='menu' *ngIf="this.selectedLetter?.details.recipients.to.length !== 1; else non_active_btn"
+<button class='menu' *ngIf="this.selectedLetter?.details.recipients.to.length !== 1 || this.selectedLetter?.details.recipients.cc; else non_active_btn"
 class='group_btn'
 routerLink="./create"
 [queryParams] = "{'id':this.selectedLetter?.mail_id, 'status':'reply_all'}"
@@ -132,7 +132,7 @@ title="Новый шаблон"
               <div class='panel__name'>
                 
                 <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
-                <p class='email__name'>{{this.selectedLetter?.from_address}}</p>
+                <p class='email__name' title="{{this.selectedLetter?.from_address}}">{{this.selectedLetter?.from_address}}</p>
               </div>
           <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
             </div>
