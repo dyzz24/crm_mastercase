@@ -714,6 +714,17 @@ pre{
 
 
 
+.bables_view {
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+}
+
+
+
 
 
 .quickResponse__mail_status {

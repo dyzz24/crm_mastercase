@@ -29,6 +29,7 @@ import { EmptyTemplateComponent } from './empty-template/empty-template.componen
 import { EmptyLettersComponent } from './empty-letters/empty-letters.component';
 import { WelcomeComponent } from './add-email/welcome/welcome.component';
 import { DraftsComponent } from './drafts/drafts.component';
+import { BablesMenuComponent } from './bables-menu/bables-menu.component';
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ import { DraftsComponent } from './drafts/drafts.component';
     EmptyLettersComponent,
     WelcomeComponent,
     DraftsComponent,
+    BablesMenuComponent,
   ],
   providers: [EmailServiceService, NewMessageService],
 })

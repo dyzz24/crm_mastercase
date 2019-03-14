@@ -130,10 +130,14 @@ title="Новый шаблон"
           </div>
             <div class="r__info">
             <div class="panel">
-              <div class='panel__name'>
+              <div class='panel__name bables_view' (click) = 'this.show_bables()'>
                 
                 <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
                 <p class='email__name' title="{{this.selectedLetter?.from_address}}">{{this.selectedLetter?.from_address}}</p>
+                  <app-bables-menu 
+                  [change_bables_state] = 'this.show_bables_state'
+                  [email_params] = 'this.selectedLetter?.from_address'
+                  ></app-bables-menu>
               </div>
           <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
             </div>

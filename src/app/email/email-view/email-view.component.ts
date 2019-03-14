@@ -63,6 +63,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   index;
   cahse_letters = [];
   important_flag: boolean; // флаг - важное или не важное письмо
+  show_bables_state: Boolean = false;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -409,6 +410,10 @@ let flagged_for_http;
     }
   });
   this.important_flag = flagged_for_http.toString();
+}
+
+show_bables() {
+    this.show_bables_state = ! this.show_bables_state;
 }
 
 }
