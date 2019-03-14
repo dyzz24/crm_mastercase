@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 import { isDate } from '@angular/common/src/i18n/format_date';
 import {global_params} from '../../global';
 
-import { FormControl, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
 
@@ -26,6 +26,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
   private babl_menu_show = [];
   public messages;
   public messages_for_draft: FormControl = new FormControl('');
+  public form_fields_group: FormGroup;
   public id_for_draft;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
@@ -34,7 +35,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     @Inject(ToastrService) private toastrServ: ToastrService,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
     @Inject(NewMessageService) private newMessageService: NewMessageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
     ) {
       this.messages_for_draft.valueChanges.pipe((debounceTime(global_params.timeout_save_draft))).subscribe(data => this.save_draft(data));
 
@@ -48,7 +50,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public to = []; // array for send
     public copy = []; // array for send copy
     public hidden_copy = []; // array for send hidd copy
-    public subject = ''; // subject
+
 
     public files_for_view = []; // имена файлов для HTML
     // public formData = new FormData(); // дата для отправки на серв файлов
@@ -127,10 +129,18 @@ delete_draft() { // при отправке письма удаляю его и�
     this.emailServ.delete_draft_send_messages(+this.id_for_draft); // и чищу представление черновиков (если мы в них)
 }
 
+get get_form_state() {return this.form_fields_group.controls; }
+
+
 
 
   ngOnInit() {
-
+    this.form_fields_group = this.formBuilder.group({
+      from_address: ['', [Validators.required, Validators.email]],
+      copy_address: ['', Validators.email],
+      hiddencopy_address: ['', Validators.email],
+      subject: ['']
+    });
 
     this.from = this.emailServ.idPostForHTTP; // поле от кого по умолчанию
 
@@ -158,14 +168,17 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.hidden_copy = []; // чистим графы кому и тд, от предыдущего шаблона
 
                 this.messages_for_draft.reset();
-                this.subject = '';
+                this.form_fields_group.reset();
+
                 if (dataMails[0].html === null) { // если html в письме нет - берем графу tetx
                   this.messages_for_draft.setValue(dataMails[0].text);
 
                  } else {
                   this.messages_for_draft.setValue(dataMails[0].html); // иначе парсим html
                  }
-                 this.subject = dataMails[0].subject; // подставляем тему
+                //  this.form_fields_group.setValue() = dataMails[0].subject; // подставляем тему
+                 this.form_fields_group.controls.subject.setValue(dataMails[0].subject);
+
                  if (dataMails[0].details && dataMails[0].details.recipients.to) {    // заполняем графы кому и тд если они есть в шаблоне
                  const newArray_to = [];                                             // по данным с сервера
                 dataMails[0].details.recipients.to.filter(val => {
@@ -263,7 +276,7 @@ delete_draft() { // при отправке письма удаляю его и�
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address];
-                this.subject = `RE: ${dataMails.subject}`;
+                this.form_fields_group.controls.subject.setValue(`RE: ${dataMails.subject}`);
               });
           }
 
@@ -273,7 +286,7 @@ delete_draft() { // при отправке письма удаляю его и�
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address]; // вставляем поле кому ответить, отвечаем одному адресату
-                this.subject = `RE: ${dataMails.subject}`;
+                this.form_fields_group.controls.subject.setValue(`RE: ${dataMails.subject}`);
                 if (dataMails.html === null) {
 
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
@@ -291,7 +304,7 @@ delete_draft() { // при отправке письма удаляю его и�
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
 
-                this.subject = `RE: ${dataMails.subject}`;
+                this.form_fields_group.controls.subject.setValue(`RE: ${dataMails.subject}`);
                 const newArray = [];
                 dataMails.details.recipients.to.filter(val => { // пробегаемся по всем кто в копии
                   if (val.address !== this.emailServ.idPostForHTTP) {
@@ -317,7 +330,8 @@ delete_draft() { // при отправке письма удаляю его и�
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
-                this.subject = `${dataMails.subject}`;
+
+                this.form_fields_group.controls.subject.setValue(`RE: ${dataMails.subject}`);
                 if (dataMails.html === null) {
                   this.messages_for_draft.setValue(dataMails.text); // просто берем содержимое письма и тему
                  } else {
@@ -401,7 +415,7 @@ delete_draft() { // при отправке письма удаляю его и�
       this.messages_for_draft.setValue(`${object_for_add.html}`);
      }
 
-     this.subject = object_for_add.subject;
+     this.form_fields_group.controls.subject.setValue(object_for_add.subject);
 
      if (object_for_add.details && object_for_add.details.recipients.to) {
 
@@ -429,7 +443,7 @@ delete_draft() { // при отправке письма удаляю его и�
 
 
   ngDoCheck() {
-    // console.log(this.draft_template_cashes);
+    // console.log(this.get_form_state.subject);
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -441,60 +455,65 @@ delete_draft() { // при отправке письма удаляю его и�
                 this.copy = [];
                 this.hidden_copy = [];
                 this.messages_for_draft.reset();
-                this.subject = '';
+                this.form_fields_group.reset();
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
   }
 
-  add_data(arr, e) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов
-      if (e.target.value === undefined || e.target.value === '') { // если пустая строка - выхожу
+  add_data(arr, data) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов
+    if (data.errors && data.errors.required) { // если пустая строка - выхожу
+      this.showError('Необходимо добавить адрес получателя');
         return;
-      }
+    }
 
-      const validation_flag = this.validation(e.target.value);
-      if (validation_flag === false) {
-        return;
-      }
-      arr.push(e.target.value); // добавляю в массив значение с таргета
+    if (data.value === '') {
+      return;
+    }
+
+
+
+    if (data.errors && data.errors.email) {
+      this.showError('Введите корректный имейл в формате en + @');
+      return;
+    }
+
+
+      arr.push(data.value); // добавляю в массив значение с таргета
       arr.filter((val, ind, self) => {
         if (self.indexOf(val) !== ind) { // если такое значение уже есть в массиве (бабл уже создан)
           arr.pop(); // удаляю последнее добавленное push'ем значение
           this.showError('Адрес уже есть');
         }});
-      e.target.value = ''; // чищу значение с таргета
+
+      data.reset();
   }
-  add_data_keyEvent(arr,  e) { // срабатывает при клике на Enter, функция принимает массив для работы, действие аналогично ф-ии сверху
-    if (e.key === 'Backspace' && e.target.value === '') { // если нажали на backspace - удалили последний
+  add_data_keyEvent(arr,  e, data) { // срабатывает при клике на Enter, функция принимает массив для работы, действие аналогично ф-ии сверху
+    e.stopPropagation();
+    if (e.key === 'Backspace' && data.value === null || data.value === '') { // если нажали на backspace - удалили последний
       arr.pop();
       return;
     }
-    if (e.key === 'Enter' && e.target.value !== '') { // отлавливаю клик на Enter
-
-      const validation_flag = this.validation(e.target.value);
-      if (validation_flag === false) {
+    if (e.key === 'Enter') { // отлавливаю клик на Enter
+      if (data.errors && data.errors.email) {
+        this.showError('Введите корректный имейл в формате en + @');
         return;
       }
+
+      if (data.errors && data.errors.required) { // если пустая строка - выхожу
+        this.showError('Необходимо добавить адрес получателя');
+          return;
+      }
       // const new_data = {address: e.target.value}
-      arr.push(e.target.value);
+      arr.push(data.value);
       arr.filter((val, ind, self) => {
         if (self.indexOf(val) !== ind) {
           arr.pop();
           this.showError('Адрес уже есть');
         }});
-      e.target.value = '';
+        data.reset();
     }
   }
 
-  validation(val) { // ф-я валидатор, проверяет введенные значения
-    const regExsp = /[а-яё]/i; // регулярка на русские символы
-      if (val.indexOf('@') < 0 || // если нет @
-      val.search(regExsp) >= 0 || // если есть русские символы
-      val.indexOf('!') > 0 // если есть  знак !
-       ) {
-        this.showError('Введите корректный адрес (en + @)');
-        return false;
-      }
-  }
 
   delete_data_clickEvent(arr, e, index) { // удаление при клике на крестик в бабле
     arr.splice(index, 1); // удалили по текущему индексу в массиве
@@ -557,7 +576,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
       };
     })
     ,
-    subject: this.subject,
+    subject: this.form_fields_group.controls.subject.value,
     html: this.messages_for_draft.value // отправляем пиьма как html документ
   }));
 
@@ -659,7 +678,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
     title: this.tmp_name, // имя шаблона
     text: null, // текст не отправляем
     html: this.messages_for_draft.value, // поле с текстом шаблона (или его html)
-    subject: this.subject || null, // либо есть либо Null
+    subject: this.form_fields_group.controls.subject.value || null, // либо есть либо Null
     flagged: this.important_tmp || null, // флаг (тру фолс)
     recipients: {
     from: [
@@ -747,6 +766,10 @@ show_babl_menu(e) {
 
 }
 edit_babl_open(e) { // клик по кнопке всплывающего меню
+
+if (e.sourceCapabilities === null) {
+  return;
+}
       const target_babl = e.target.closest('.new_message__bables'); // таргет клика
       const target_babl_name = target_babl.querySelector('.babl_name'); // получаю имя бабла
       const target_babl_input = target_babl.querySelector('.babl_inp'); // получаю инпут для ввода в бабле
@@ -805,7 +828,7 @@ this.httpPost(
   {address: this.from, // имейл
     draftId: +this.mail_id,
     html: this.messages_for_draft.value,
-    subject: this.subject,
+    subject: this.form_fields_group.controls.subject.value,
     recipients: {
     from: [
       {address: this.from,

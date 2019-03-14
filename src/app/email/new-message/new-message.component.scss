@@ -63,6 +63,12 @@
     border: 1px solid #d9e6f7;
 }
 
+form {
+    width: 100%;
+}
+
+
+
 
 
 
@@ -157,7 +163,10 @@
     color:$text-color;
     padding: 0;
     margin: 0;
+
+    
 }
+
 
 .new_message__bables {
     @include bables;

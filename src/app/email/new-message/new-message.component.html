@@ -67,8 +67,10 @@
       </div>
 </div>
 
+<form [formGroup]="form_fields_group">
+<div class="row__block" *ngIf="this.hidden_input_fields"
 
-<div class="row__block" *ngIf="this.hidden_input_fields">
+>
     <p class='head__p'>Кому: </p>
     <div class="new_message__bables" *ngFor="let item of this.to, let i = index" 
     [ngClass]="{not__addressess: this.to[0] === '' || this.to[0] === undefined }"
@@ -85,9 +87,11 @@
         <button class="babl__menu_btn" (click)='edit_babl_open($event)'>Редактировать</button>
       </div>
     </div>
-    <input class='input_fields' 
-    (blur)="add_data(this.to, $event)" 
-    (keydown)='add_data_keyEvent(this.to, $event)'
+    <input class='input_fields'
+    formControlName = 'from_address' 
+    
+    (blur)="add_data(this.to, this.get_form_state.from_address)" 
+    (keydown)='add_data_keyEvent(this.to, $event, this.get_form_state.from_address)'
     
     >
 </div>
@@ -108,7 +112,8 @@
         </div>
       </div>
     <input class='input_fields' 
-    (blur)="add_data(this.copy, $event)" 
+    formControlName = 'copy_address'
+    (blur)="add_data(this.copy, this.get_form_state.copy_address)" 
     (keydown)=' add_data_keyEvent(this.copy, $event)'
     
     >
@@ -130,7 +135,8 @@
         </div>
       </div>
     <input class='input_fields' 
-    (blur)="add_data(this.hidden_copy, $event)" 
+    formControlName = 'hiddencopy_address'
+    (blur)="add_data(this.hidden_copy, this.get_form_state.hiddencopy_address)" 
     (keydown)=' add_data_keyEvent(this.hidden_copy, $event)'
     
     >
@@ -139,8 +145,12 @@
 <div class="row__block" *ngIf="this.hidden_input_fields">
     <p class='head__p'>Тема: </p>
 
-    <textarea class='input_fields subject' [(ngModel)]='this.subject' >{{this.subject}}</textarea>
+    <textarea class='input_fields subject' 
+    formControlName = 'subject'
+
+    >{{this.get_form_state.subject.value}}</textarea>
 </div>
+</form>
 <div class="row__block end_group" *ngIf="this.hidden_input_fields">
   <label>
       <span class='la la-paperclip visible'></span>
