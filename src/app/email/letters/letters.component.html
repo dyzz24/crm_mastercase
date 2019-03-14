@@ -143,7 +143,7 @@
                                   
             >{{letters.from_address}}</p>
 
-            <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="letters.preview">{{letters.preview}}</p>
+            <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="letters.preview" title="{{letters.preview}}">{{letters.preview}}</p>
             <p class='letter__caption' [class.headText__status-new]="letters.seen === false" *ngIf="!letters.preview">Без темы</p>
           
              <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->

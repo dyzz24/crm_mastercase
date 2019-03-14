@@ -65,8 +65,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public new_template_name = true; // отображение имени шаблона ( в папке шаблоны )
     public new_tmp_state;
     public can_save_tmp;
-    public save_draft_protest: Boolean = false;
-    public draft_template_cashes: Array<{rough_id: number}> = [];
+    public save_draft_protect: Boolean = false;
+    public draft_template_cashes = [];
 
 
 
@@ -78,10 +78,10 @@ save_draft(data) {
   || data === null
   || this.edit_template === true
   || this.new_tmp_state === 'true'
-  || this.save_draft_protest
+  || this.save_draft_protect
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
-    this.save_draft_protest = false;
+    // this.save_draft_protect = false;
     return;
   }
 
@@ -107,6 +107,7 @@ save_draft(data) {
         this.draft_template_cashes.filter((val, ind, arr) => { // прохожусь по сохраненным черновикам
           if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
              arr.splice(ind, 1);
+             arr.push(fields);
           }
       });
       }
@@ -355,7 +356,7 @@ delete_draft() { // при отправке письма удаляю его и�
 
           if (this.status === 'draft') { // черновики, добавление их в активное письмо
                 this.clear_msg();
-                this.save_draft_protest = true;
+                // this.save_draft_protect = true;
                 this.id_for_draft = this.mail_id; // сразу получаю id текущего черновика,
                                                   // что бы находясь в компоненте обновлять их а не создавать новые
                 let draft_flagged = true;
@@ -573,7 +574,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
         } else {
           this.emailServ.counts[this.from][2] = +this.emailServ.counts[this.from][2] + 1;
         }
-        this.save_draft_protest = true; // если отправили раньше чем сохранили в черновики, отменяем сохранение
+        this.save_draft_protect = true; // если отправили раньше чем сохранили в черновики, отменяем сохранение
         this.delete_draft();
 
     }),

@@ -392,17 +392,24 @@ p{
     &:hover {
         overflow: visible;
         z-index: 6;
-
+    }
+    &:hover span {
+        border: 1px solid #d9e6f7;
+        padding: 4px;
+        box-sizing: border-box;
+        box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
     }
 
     span {
         line-height: 1;
-        line-height: 24.5px;
+        line-height: 27.5px;
         background: white;
         display: block;
         // border-bottom: 1px solid #d9e6f7;
         // padding-bottom: 6px;
         box-sizing: border-box;
+        transition: .2s;
+        border-color:  #d9e6f7;
     }
 }
 
@@ -705,11 +712,9 @@ pre{
     
 }
 
-.none_display {
-    cursor: default;
-    opacity: .2;
 
-}
+
+
 
 .quickResponse__mail_status {
     position: absolute;

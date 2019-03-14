@@ -293,8 +293,13 @@ button {
         transition: .2s;
     }
 
-    &:hover span{
+    &:hover:not(:disabled) span{
         color: #074B86;
+    }
+
+    &:disabled {
+    cursor: default;
+    opacity: .2;
     }
     
 // span {
