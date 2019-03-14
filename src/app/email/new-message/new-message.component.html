@@ -114,7 +114,7 @@
     <input class='input_fields' 
     formControlName = 'copy_address'
     (blur)="add_data(this.copy, this.get_form_state.copy_address)" 
-    (keydown)=' add_data_keyEvent(this.copy, $event)'
+    (keydown)=' add_data_keyEvent(this.copy, $event, this.get_form_state.copy_address)'
     
     >
 </div>
@@ -137,7 +137,7 @@
     <input class='input_fields' 
     formControlName = 'hiddencopy_address'
     (blur)="add_data(this.hidden_copy, this.get_form_state.hiddencopy_address)" 
-    (keydown)=' add_data_keyEvent(this.hidden_copy, $event)'
+    (keydown)=' add_data_keyEvent(this.hidden_copy, $event, this.get_form_state.hiddencopy_address)'
     
     >
 </div>

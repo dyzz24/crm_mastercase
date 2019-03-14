@@ -461,12 +461,12 @@ get get_form_state() {return this.form_fields_group.controls; }
   }
 
   add_data(arr, data) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов
-    if (data.errors && data.errors.required) { // если пустая строка - выхожу
+    if (data.errors && data.errors.required && arr.length === 0) { // если пустая строка - выхожу
       this.showError('Необходимо добавить адрес получателя');
         return;
     }
 
-    if (data.value === '') {
+    if (data.value === '' || !data.value) {
       return;
     }
 
@@ -499,7 +499,11 @@ get get_form_state() {return this.form_fields_group.controls; }
         return;
       }
 
-      if (data.errors && data.errors.required) { // если пустая строка - выхожу
+      if (data.value === '' || !data.value) {
+        return;
+      }
+
+      if (data.errors && data.errors.required && arr.length === 0) { // если пустая строка - выхожу
         this.showError('Необходимо добавить адрес получателя');
           return;
       }
@@ -547,6 +551,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
 
 
   sendMessage() {
+    console.log(this.form_fields_group)
     const formData = new FormData; // создаю объект new FormData
     this.messages_sending = true; // включаю крутилку прелоадер что письмо отправляется
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
