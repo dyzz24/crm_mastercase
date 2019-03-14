@@ -302,7 +302,9 @@ background: rgba(141, 175, 255, 0.507);
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
-      width: 220px;
+      flex-grow: 1;
+      flex-shrink: 1;
+      width: 0;
       overflow: hidden;
   }
 

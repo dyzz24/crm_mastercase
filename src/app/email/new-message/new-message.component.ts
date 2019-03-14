@@ -66,7 +66,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public new_tmp_state;
     public can_save_tmp;
     public save_draft_protest: Boolean = false;
-    public draft_template_cashes = [];
+    public draft_template_cashes: Array<{rough_id: number}> = [];
+
 
 
 
@@ -80,8 +81,10 @@ save_draft(data) {
   || this.save_draft_protest
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
+    this.save_draft_protest = false;
     return;
   }
+
   if (!this.id_for_draft) { // если id черновика не установлен
 
     const fields = this.creating_template_and_draft_fields();
@@ -99,6 +102,16 @@ save_draft(data) {
       `${global_params.ip}/mail/rough/update`,
       fields).subscribe((dataMails) => {
       });
+
+      if (this.status === 'draft') {
+        this.draft_template_cashes.filter((val, ind, arr) => { // прохожусь по сохраненным черновикам
+          if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
+             arr.splice(ind, 1);
+          }
+      });
+      }
+
+
   }
 
 }
@@ -313,13 +326,7 @@ delete_draft() { // при отправке письма удаляю его и�
           }
 
           if  (this.status === undefined) { // если без параметров, просто пустое письмо (на ф-ю Новое письмо)
-                this.to = [];
-                this.copy = [];
-                this.hidden_copy = [];
-                this.messages_for_draft.reset();
-                this.subject = '';
-                this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
-                this.new_template_name = false;
+            this.clear_msg();
           }
 
           if (this.new_tmp_state === 'true') { // если зашли из шаблонов в новый шаблон - колбаса "кому" и тд появляется, скрывается
@@ -347,17 +354,10 @@ delete_draft() { // при отправке письма удаляю его и�
           }
 
           if (this.status === 'draft') { // черновики, добавление их в активное письмо
-                this.to = [];
-                this.copy = [];
-                this.hidden_copy = [];
-                this.messages_for_draft.reset();
-                this.subject = '';
-                this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
-                this.new_template_name = false;
-
+                this.clear_msg();
+                this.save_draft_protest = true;
                 this.id_for_draft = this.mail_id; // сразу получаю id текущего черновика,
                                                   // что бы находясь в компоненте обновлять их а не создавать новые
-
                 let draft_flagged = true;
                 this.draft_template_cashes.filter(val => { // прохожусь по сохраненным черновикам
                     if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
@@ -371,7 +371,7 @@ delete_draft() { // при отправке письма удаляю его и�
             this.httpPost(
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
-                this.draft_template_cashes.push(dataMails);
+                this.draft_template_cashes.push(dataMails); // добавляю письмо в кэш
 
                 this.add_fields_draft(dataMails);
 
@@ -435,7 +435,7 @@ delete_draft() { // при отправке письма удаляю его и�
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
   }
 
-  clear_msg() {
+  clear_msg() { // очистка заполнения письма
                 this.to = [];
                 this.copy = [];
                 this.hidden_copy = [];
@@ -449,10 +449,7 @@ delete_draft() { // при отправке письма удаляю его и�
       if (e.target.value === undefined || e.target.value === '') { // если пустая строка - выхожу
         return;
       }
-      // if (arr[0] === '' || arr[0] === undefined) { // если первый элемент  = ''
-      //                     // (такое бывает, когда нажимаю создать новое письмо, ибо передает '' от сервиса), удаляю его
-      //     arr.shift();
-      // }
+
       const validation_flag = this.validation(e.target.value);
       if (validation_flag === false) {
         return;
@@ -471,14 +468,7 @@ delete_draft() { // при отправке письма удаляю его и�
       return;
     }
     if (e.key === 'Enter' && e.target.value !== '') { // отлавливаю клик на Enter
-      // if (arr[0] === '' || arr[0] === undefined) {
-      //   arr.shift();
-      // }
-      // const regExsp = /[а-яё]/i;
-      // if (e.target.value.indexOf('@') < 0 || e.target.value.search(regExsp) >= 0) {
-      //   this.showError('Введите корректный адрес (en + @)');
-      //   return;
-      // }
+
       const validation_flag = this.validation(e.target.value);
       if (validation_flag === false) {
         return;

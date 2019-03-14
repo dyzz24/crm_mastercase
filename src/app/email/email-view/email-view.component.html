@@ -105,7 +105,8 @@ title="Новый шаблон"
 
   </div>
   </div>
-  <div class="subject"><p class='subject__theme'>Тема: {{this.selectedLetter?.subject}}</p>
+  <div class="subject"><p class='subject__theme'>
+    <span>Тема: {{this.selectedLetter?.subject}} </span></p>
      
  
           <div class='in_work' [class.in_work_not-me]="this.selectedLetter?.work_user_id.userId !== this.authorizationServ.userId" 

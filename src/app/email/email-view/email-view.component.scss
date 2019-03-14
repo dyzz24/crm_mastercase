@@ -353,17 +353,57 @@ p{
     padding: 0 20px;
     box-sizing: border-box;
     border-bottom: 1px solid $border;
+    position: relative;
+    z-index: 4;
+
+    &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0px;
+    bottom: 0;
+    // display: none;
+    pointer-events: none;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to left,#fff,rgba(255,255,255,.9));
+    z-index: 4;
+    }
 }
 
 .subject__theme {
-    max-width: 650px;
+    // max-width: 650px;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    // white-space: nowrap;
+    cursor: default;
     margin:  0;
     padding: 0;
     font-size: 14px;
     font-weight: 600;
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 0;
+    overflow: hidden;
+    position: relative;
+    overflow: hidden;
+    height: 24.5px;
+    transition: .4s;
+
+    &:hover {
+        overflow: visible;
+        z-index: 6;
+
+    }
+
+    span {
+        line-height: 1;
+        line-height: 24.5px;
+        background: white;
+        display: block;
+        // border-bottom: 1px solid #d9e6f7;
+        // padding-bottom: 6px;
+        box-sizing: border-box;
+    }
 }
 
 
@@ -371,12 +411,12 @@ p{
     height: 24px;
     display: flex;
     align-items: center;
-
     border: 1px solid #8ecdf6;
     box-sizing: border-box;
     border-radius: 12px;
     padding: 0px 10px;
-    position: relative;
+    z-index: 5;
+    background: white;
     p {
         white-space: nowrap;
         font-size: 13px;
