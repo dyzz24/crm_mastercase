@@ -130,7 +130,9 @@ title="Новый шаблон"
           </div>
             <div class="r__info">
             <div class="panel">
-              <div class='panel__name bables_view' (click) = 'this.show_bables()'>
+              <div class='panel__name bables_view' (click) = 'this.show_bables()'
+              [ngClass]="{active_babl: this.show_bables_state}"
+              >
                 
                 <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
                 <p class='email__name' title="{{this.selectedLetter?.from_address}}">{{this.selectedLetter?.from_address}}</p>

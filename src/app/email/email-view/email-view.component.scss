@@ -241,7 +241,7 @@ p{
     white-space: nowrap;
     overflow: hidden;
     line-height: 15px;
-    color: #989898 !important;
+    color: #989898;
 
    
 }
@@ -820,6 +820,14 @@ pre{
 
 .add_files {
     margin: 0;
+}
+
+
+.active_babl {
+    background: #80b5fa;
+   p {
+       color: white;
+   }
 }
 
 
