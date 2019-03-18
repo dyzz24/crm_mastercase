@@ -1,7 +1,7 @@
 .bables_view {
     cursor: pointer;
     position: relative;
-    z-index: 1;
+    z-index: 6;
     overflow: visible;
     display: flex;
     justify-content: center;
@@ -46,8 +46,23 @@
 
 .active_babl {
     background: #80b5fa;
-    z-index: 2;
+    z-index: 7;
    p {
        color: white;
    }
+}
+
+.hidden_pop-up {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    display: none;
+
+
+    &.active {
+        display: block;
+    }
 }

@@ -1,4 +1,4 @@
-<div class='bables_view' (click) = 'this.show_bables()'
+<div class='bables_view' (click) = 'this.show_bables($event)'
               [ngClass]="{active_babl: this.show_bables_state}"
               >
                 
@@ -9,3 +9,4 @@
                   [name_params] = 'this.email'
                   ></app-bubble-menu>
               </div>
+    <div class="hidden_pop-up" [ngClass]="{active: this.show_bables_state}" (click) = 'this.show_bables($event, true)'></div>
