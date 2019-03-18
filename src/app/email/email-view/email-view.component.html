@@ -130,25 +130,32 @@ title="Новый шаблон"
           </div>
             <div class="r__info">
             <div class="panel">
-              <div class='panel__name bables_view' (click) = 'this.show_bables()'
-              [ngClass]="{active_babl: this.show_bables_state}"
+              <app-bubble 
+              [name] = 'this.selectedLetter?.from_name'
+              [email] = 'this.selectedLetter?.from_address'
               >
-                
-                <p class='full_name' *ngIf="this.selectedLetter?.from_name !== null">{{this.selectedLetter?.from_name}}</p>
-                <p class='email__name' title="{{this.selectedLetter?.from_address}}">{{this.selectedLetter?.from_address}}</p>
-                  <app-bables-menu 
-                  [change_bables_state] = 'this.show_bables_state'
-                  [email_params] = 'this.selectedLetter?.from_address'
-                  ></app-bables-menu>
-              </div>
+              </app-bubble>
           <p class='time'>{{this.selectedLetter?.date | timerPipe}}</p>
             </div>
             <div class="info__row">
               <p class="info_head">Кому: </p>
               <div class="cut__visible_block">
-              <div class='info__content_p' *ngIf="this.selectedLetter?.details.recipients.to.length === 1; else have_many_addresses"><p>{{this.selectedLetter?.details.recipients.to[0].address}}</p></div>
+
+                  <app-bubble 
+
+                  *ngIf="this.selectedLetter?.details.recipients.to.length === 1; else have_many_addresses"
+                  [email] = 'this.selectedLetter?.details.recipients.to[0].address'
+                  ></app-bubble>
+                
+               
               <ng-template #have_many_addresses>
-              <div class='info__content_p' *ngFor="let item of this?.cut_addressess_array"><p>{{item.address}}</p></div>
+                  <app-bubble 
+                  
+                  *ngFor="let item of this?.cut_addressess_array"
+                  [email] = 'item.address'
+                  >
+                  </app-bubble>
+              
               <input type='button' class='addressess' [class.input_return]='this?.cut_addressess_array.length === this.selectedLetter?.details.recipients.to.length'
               *ngIf="this.selectedLetter?.details.recipients.to.length > 3"
               (click)='all_view($event)' 
@@ -159,7 +166,13 @@ title="Новый шаблон"
             <div class="info__row" *ngIf="this.selectedLetter?.details.recipients.cc !== undefined">
                 <p class="info_head">Копия:</p>
                 <div class="cut__visible_block">
-                <div class='info__content_p' *ngFor="let item of this?.cut_cc_adressess_array"><p>{{item.address}}</p></div>
+
+                <app-bubble 
+                  
+                  *ngFor="let item of this?.cut_cc_adressess_array"
+                  [email] = 'item.address'
+                  >
+                  </app-bubble>
                 <input type='button' class='cc' [class.input_return]='this?.cut_cc_adressess_array.length === this.selectedLetter?.details.recipients.cc.length'
                 *ngIf="this.selectedLetter?.details.recipients.cc.length > 3"
                 (click)='all_view($event)' 

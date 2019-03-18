@@ -1,0 +1,11 @@
+<div class='bables_view' (click) = 'this.show_bables()'
+              [ngClass]="{active_babl: this.show_bables_state}"
+              >
+                
+                <p class='full_name' *ngIf="this.name !== null">{{this.name}}</p>
+                <p class='email__name' title="{{this.email}}">{{this.email}}</p>
+                  <app-bubble-menu 
+                  [change_menu_state] = 'show_bables_state'
+                  [name_params] = 'this.email'
+                  ></app-bubble-menu>
+              </div>

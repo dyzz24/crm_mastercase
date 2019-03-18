@@ -30,6 +30,9 @@ import { EmptyLettersComponent } from './empty-letters/empty-letters.component';
 import { WelcomeComponent } from './add-email/welcome/welcome.component';
 import { DraftsComponent } from './drafts/drafts.component';
 import { BablesMenuComponent } from './bables-menu/bables-menu.component';
+import { BubbleModuleModule } from '../bubble-module/bubble-module.module';
+import { BubbleComponent } from '../bubble-module/bubble/bubble.component';
+import { BubbleMenuComponent } from '../bubble-module/bubble-menu/bubble-menu.component';
 
 @NgModule({
   imports: [
@@ -40,7 +43,8 @@ import { BablesMenuComponent } from './bables-menu/bables-menu.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ToastContainerModule
+    ToastContainerModule,
+    BubbleModuleModule
   ],
   declarations: [
     EmailComponent,
@@ -65,6 +69,7 @@ import { BablesMenuComponent } from './bables-menu/bables-menu.component';
     WelcomeComponent,
     DraftsComponent,
     BablesMenuComponent,
+
   ],
   providers: [EmailServiceService, NewMessageService],
 })

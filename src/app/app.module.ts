@@ -19,6 +19,7 @@ import {SettingModule} from './setting/setting.module';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
+import { BubbleModuleModule } from './bubble-module/bubble-module.module';
 
 
 
@@ -40,6 +41,7 @@ import { HomeComponent } from './home/home.component';
     BrowserModule,
     AppRoutingModule,
     EmailModuleModule,
+    BubbleModuleModule,
     SettingModule,
     HttpClientModule,
     FormsModule,
