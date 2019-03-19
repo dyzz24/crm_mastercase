@@ -28,6 +28,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
   public messages_for_draft: FormControl = new FormControl('');
   public form_fields_group: FormGroup;
   public id_for_draft;
+  public sign_message_status = false;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -394,7 +395,9 @@ get get_form_state() {return this.form_fields_group.controls; }
             }
           }
 
-
+            if (this.status === 'sign') {
+                this.sign_message_status = true;
+            }
 
       }
   );
@@ -458,6 +461,7 @@ get get_form_state() {return this.form_fields_group.controls; }
                 this.form_fields_group.reset();
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
+                this.sign_message_status = false;
   }
 
   add_data(arr, data) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов

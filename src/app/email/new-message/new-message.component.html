@@ -1,4 +1,4 @@
-<div class="newMessage__container" (dragover)='dragStart($event)'>
+<div class="newMessage__container" (dragover)='dragStart($event)' *ngIf="!this.sign_message_status; else sign_container">
   <div class="header">
     <div class="left__group">
       <div class="left__panel end">
@@ -245,6 +245,18 @@
       </div>
     </div>
 </div>
+
+
+<ng-template #sign_container>  
+    <div class="editor-qu sing_qu">
+    <quill-editor
+    class='quill_styles'
+    style="white-space: pre-wrap;"
+    >
+    </quill-editor>
+  </div>
+
+  </ng-template>
 
 
 
