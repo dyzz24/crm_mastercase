@@ -26,7 +26,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
 
 
-  inboxMenuStatus = false;
+
   createMenuStatus = false;
   deleteMenuStatus = false;
   folder_create = false;
@@ -211,9 +211,9 @@ if (array[ind]['is_open'] === true) {
 
 
 
-  inboxMenuShow() {
-    this.inboxMenuStatus = ! this.inboxMenuStatus;
-  }
+  // inboxMenuShow() {
+  //   this.inboxMenuStatus = ! this.inboxMenuStatus;
+  // }
   createInboxOpen() {
     this.createMenuStatus = ! this.createMenuStatus;
   }

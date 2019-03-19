@@ -16,7 +16,7 @@ export class BubbleComponent implements OnInit {
 
 
   @Input() name: String = '' || null; // имя пользователя для отображения в бабле
-  @Input() email: String; // его ящик
+  @Input() email: String = '' || null; // его ящик
 
 
 
