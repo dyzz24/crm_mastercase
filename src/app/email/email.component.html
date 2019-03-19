@@ -134,10 +134,11 @@
           </div>
 
           <div class="email_icons_group">
-          <button class='settings_email' title="Настройки ящика">
+          <button class='settings_email' title="Настройки ящика"
+          routerLink="./{{this.emailItems[i].address}}/sign"
+          >
             <span
-              class="la la-cog"
-            >
+              class="la la-cog">
             </span>
           </button>
           <button title="Свернуть / развернуть">

@@ -551,7 +551,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
 
 
   sendMessage() {
-    console.log(this.form_fields_group)
+    // console.log(this.form_fields_group)
     const formData = new FormData; // создаю объект new FormData
     this.messages_sending = true; // включаю крутилку прелоадер что письмо отправляется
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма

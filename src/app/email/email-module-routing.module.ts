@@ -11,11 +11,17 @@ import { EmptyTemplateComponent } from './empty-template/empty-template.componen
 import { EmptyLettersComponent } from './empty-letters/empty-letters.component';
 import { WelcomeComponent } from './add-email/welcome/welcome.component';
 import { DraftsComponent } from './drafts/drafts.component';
+import { SignatureComponent } from './signature/signature.component';
+import { SignatureCreateComponent } from './signature/signature-create/signature-create.component';
 
 const routes: Routes = [
+
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
   children:
   [
+    {path: ':email_id/sign', component: SignatureComponent, canActivate: [EmailGuardGuard], children: [
+      {path: 'create', component: NewMessageComponent}, {path: '**', component: SignatureCreateComponent}
+    ]},
     {path: ':email_id/template', component: TemplateLetterListComponent, canActivate: [EmailGuardGuard],
   children: [{path: 'create', component: NewMessageComponent},
 

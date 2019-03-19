@@ -33,6 +33,9 @@ import { BablesMenuComponent } from './bables-menu/bables-menu.component';
 import { BubbleModuleModule } from '../bubble-module/bubble-module.module';
 import { BubbleComponent } from '../bubble-module/bubble/bubble.component';
 import { BubbleMenuComponent } from '../bubble-module/bubble-menu/bubble-menu.component';
+import { SignatureComponent } from './signature/signature.component';
+import { SignatureListComponent } from './signature/signature-list/signature-list.component';
+import { SignatureCreateComponent } from './signature/signature-create/signature-create.component';
 
 @NgModule({
   imports: [
@@ -69,6 +72,9 @@ import { BubbleMenuComponent } from '../bubble-module/bubble-menu/bubble-menu.co
     WelcomeComponent,
     DraftsComponent,
     BablesMenuComponent,
+    SignatureComponent,
+    SignatureListComponent,
+    SignatureCreateComponent,
 
   ],
   providers: [EmailServiceService, NewMessageService],
