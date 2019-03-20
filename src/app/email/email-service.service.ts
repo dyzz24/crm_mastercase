@@ -18,6 +18,7 @@ export class EmailServiceService {
   typeMess: string;
   activeLett: Array<boolean> = []; // активное письмо в lettersList
   hideAvatars: Array<boolean> = [];
+  signature_list: Array<any>;
   senderName: string;
   time: string;
   avatar: any;

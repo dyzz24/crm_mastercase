@@ -36,6 +36,7 @@ import { BubbleMenuComponent } from '../bubble-module/bubble-menu/bubble-menu.co
 import { SignatureComponent } from './signature/signature.component';
 import { SignatureListComponent } from './signature/signature-list/signature-list.component';
 import { SignatureCreateComponent } from './signature/signature-create/signature-create.component';
+import { EmailSettingComponent } from './email-setting/email-setting.component';
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import { SignatureCreateComponent } from './signature/signature-create/signature
     SignatureComponent,
     SignatureListComponent,
     SignatureCreateComponent,
+    EmailSettingComponent,
 
   ],
   providers: [EmailServiceService, NewMessageService],

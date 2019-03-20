@@ -82,6 +82,7 @@ save_draft(data) {
   || this.edit_template === true
   || this.new_tmp_state === 'true'
   || this.save_draft_protect
+  || this.status === 'sign'
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
     // this.save_draft_protect = false;
@@ -589,7 +590,9 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
     html: this.messages_for_draft.value // отправляем пиьма как html документ
   }));
 
-
+  if (this.to.length === 0 && this.copy.length === 0 && this.hidden_copy.length === 0) {
+    this.showError('необходимо добавить получателей');
+  }
   this.httpPost(`${global_params.ip}/mail/envelope/send`, formData).subscribe(
     (resp => { // если ответ положительный, отключаю прелоадер, возвращаюсь на урл с которого отправили
 
@@ -683,10 +686,10 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
 });
 
   const object_for_template_list = {
-    address: this.from, // имейл кто создал шаблон
-    title: this.tmp_name, // имя шаблона
+    address: this.from || null, // имейл кто создал шаблон
+    title: this.tmp_name || null, // имя шаблона
     text: null, // текст не отправляем
-    html: this.messages_for_draft.value, // поле с текстом шаблона (или его html)
+    html: this.messages_for_draft.value || null, // поле с текстом шаблона (или его html)
     subject: this.form_fields_group.controls.subject.value || null, // либо есть либо Null
     flagged: this.important_tmp || null, // флаг (тру фолс)
     recipients: {

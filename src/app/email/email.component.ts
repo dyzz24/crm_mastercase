@@ -73,7 +73,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
           return item.boxes.filter(val => val.id === 1).map(item2 => item2.childs)[0] || [];
        });
-
+       this.visibl = JSON.parse(localStorage.getItem('opened_email')) || [];
       //  console.log(this.user_folders);
       //  const state_folders = JSON.parse(localStorage.getItem('folders_state'));
 
@@ -189,6 +189,7 @@ if (array[ind]['is_open'] === true) {
       this.visibl[j] = false;
     }
     this.visibl[param] = !this.visibl[param];
+    localStorage.setItem('opened_email', JSON.stringify(this.visibl));
   }
 
 

@@ -7,6 +7,7 @@
     @include header(row);
         background: #f7fbfe;
         padding: 0 10px 0 10px;
+        border-bottom: 1px solid #D9E6F7;
 }
 
 %title_text {
@@ -592,6 +593,18 @@ label {
     .mini_prev_attach {
         height: 90px;
     }
+
+
+    .sing_qu  {
+        height: 522px;
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
+
+    .sign__sbmt {
+        margin-left: 70px;
+    }
+   
 
 
     .la-file-o {color:#4F4F4F }

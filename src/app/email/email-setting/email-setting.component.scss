@@ -1,0 +1,88 @@
+@import '../mixins';
+.email_setting {
+    padding: 60px 0 0px 60px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.setting__list {
+    width: 240px;
+    flex-shrink: 0;
+    border-right: 1px solid #d9e6f7;
+    background: #f7fbfe;
+    box-sizing: border-box;
+    overflow: auto;
+    z-index: 4;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1) inset;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    transition: .4s;
+    border-bottom: 1px solid #d9e6f7;
+
+    p {
+        color: #092a55;
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    button {
+        margin-right: 10px;
+    }
+}
+
+.setting {
+    width: 100%;
+    height: 50px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    font-weight: bold;
+font-size: 13px;
+line-height: normal;
+color: #092A55;
+line-height: 50px;
+cursor: pointer;
+outline: none;
+
+&:hover {
+    background:  #E8F0FB;
+}
+
+&.active {
+    background: #D9E6F7;
+}
+}
+
+.additional__setting {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 51px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: normal;
+font-size: 13px;
+color: #092A55;
+transition: .4s;
+
+        &:hover {
+            background:  #E8F0FB;
+        }
+}
+
+.setting__wind {
+        width: 100%;
+        height: 100%;
+}

@@ -13,15 +13,12 @@ import { WelcomeComponent } from './add-email/welcome/welcome.component';
 import { DraftsComponent } from './drafts/drafts.component';
 import { SignatureComponent } from './signature/signature.component';
 import { SignatureCreateComponent } from './signature/signature-create/signature-create.component';
+import { EmailSettingComponent } from './email-setting/email-setting.component';
 
 const routes: Routes = [
-
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
   children:
   [
-    {path: ':email_id/sign', component: SignatureComponent, canActivate: [EmailGuardGuard], children: [
-      {path: 'create', component: NewMessageComponent}, {path: '**', component: SignatureCreateComponent}
-    ]},
     {path: ':email_id/template', component: TemplateLetterListComponent, canActivate: [EmailGuardGuard],
   children: [{path: 'create', component: NewMessageComponent},
 
@@ -41,7 +38,13 @@ const routes: Routes = [
   ]
 },
 {path: 'add_email', component: AddEmailComponent,
-children: [{path: 'welcome', component: WelcomeComponent}]}
+children: [{path: 'welcome', component: WelcomeComponent}]},
+
+{ path: 'email-setting', component: EmailSettingComponent, children: [
+  {path: 'sign', component: SignatureComponent, canActivate: [EmailGuardGuard], children: [
+    {path: 'create', component: NewMessageComponent}, {path: '**', component: SignatureCreateComponent}
+  ]},
+]},
 ];
 
 @NgModule({

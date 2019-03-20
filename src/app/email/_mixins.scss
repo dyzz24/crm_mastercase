@@ -515,8 +515,9 @@ button {
 
 [type='submit'] {
     color:white;
-    width: 120px;
-	height: 28px;
+    width: auto;
+    padding: 0 20px;
+	height: 40px;
     background: #0476C3;
 box-shadow: 0px 2px 4px rgba(9, 41, 85, 0.2);
 border-radius: 2px;

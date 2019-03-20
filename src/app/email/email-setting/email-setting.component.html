@@ -1,0 +1,26 @@
+<div class="email_setting">
+
+<div class="setting__list">
+  <div class="header">
+    <p>Настройки почты</p>
+    <button  title="Назад"
+    [routerLink]="['/email']"
+    >
+<span class='la la-long-arrow-left'></span>
+          </button>
+  </div>
+
+  <div class="setting"
+  [routerLink]="['./sign']" routerLinkActive="active" 
+  >Подпись</div>
+
+  <div class="additional__setting">Глобальные настройки</div>
+  <div class="additional__setting">Создание подписи</div>
+</div>
+
+<div class="setting__wind">
+    <router-outlet></router-outlet>
+</div>
+
+
+</div>

@@ -9,10 +9,10 @@
       <div class="header">
         <p class="head_titl">Почта</p>
         <div class="header_leftGroup">
-          <button class="email-menu" (click)="inboxMenuShow()"  title="Настройки">
+          <button class="email-menu"  title="Настройки" 
+          [routerLink]="['/email-setting']"
+          >
             <span class="la la-cog"></span>
-            <div class="hideInboxMenu" [ngClass]="{ visible: inboxMenuStatus }">
-            </div>
           </button>
           <button class="email-menu">
             <span class="la la-pencil-square-o"></span>
@@ -135,14 +135,14 @@
 
           <div class="email_icons_group">
           <button class='settings_email' title="Настройки ящика"
-          routerLink="./{{this.emailItems[i].address}}/sign"
           >
             <span
               class="la la-cog">
             </span>
           </button>
-          <button title="Свернуть / развернуть">
-            <span class="la la-lg la-angle-down"></span>
+          <button title="Свернуть / развернуть" >
+            <span class="la la-lg la-angle-down" *ngIf="!this.visibl[i]"></span>
+            <span class="la la-lg la-angle-up" *ngIf="this.visibl[i]"></span>
           </button>
         </div>
 
