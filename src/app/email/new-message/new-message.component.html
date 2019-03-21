@@ -291,7 +291,26 @@
     </quill-editor>
   </div>
 
-  <input class='sign__sbmt' type="submit" value='Сохранить подпись'>
+  <input class='sign__sbmt' type="submit" value='Сохранить подпись' (click) = 'this.save_sign_open()'>
+
+<div class="sign__popup" *ngIf="this.save_sign_popup">
+    <div class="save_sign">
+      <div class="save__header">
+        <p>Сохранение подписи</p>
+      </div>
+      <div class="save__body">
+        <div class="save__row">
+          <p>Название подписи</p>
+          <input type="text" [formControl]="sign_name" placeholder="Название подписи" autofocus>
+        </div>
+        <div class="save__row btn_block">
+          <button type="submit" (click) = this.save_sign_complite(true)>Сохранить</button>
+          <button type="reset" (click) = this.save_sign_complite(false)>Отмена</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
 
   </ng-template>
 

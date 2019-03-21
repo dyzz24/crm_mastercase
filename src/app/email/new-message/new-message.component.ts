@@ -27,8 +27,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
   public messages;
   public messages_for_draft: FormControl = new FormControl('');
   public form_fields_group: FormGroup;
+  public sign_name: FormControl = new FormControl('', [Validators.required]);
   public id_for_draft;
   public sign_message_status = false;
+  public save_sign_popup = false;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -143,6 +145,8 @@ get get_form_state() {return this.form_fields_group.controls; }
       hiddencopy_address: ['', Validators.email],
       subject: ['']
     });
+
+
 
     this.from = this.emailServ.idPostForHTTP; // поле от кого по умолчанию
 
@@ -858,5 +862,34 @@ this.httpPost(
 toggle_inputs_field(bool) { // скрыть / показать поля ввода кому, копия и тд (для шаблона)
   this.hidden_input_fields = bool;
 }
+
+    save_sign_open() {
+      if (this.messages_for_draft.value === '') {
+        this.showError('Подпись пуста');
+        return;
+      } else {
+        this.save_sign_popup = true;
+      }
+    }
+
+    save_sign_complite(bool) {
+      if (bool) {
+
+        if (this.sign_name.status === 'VALID') {
+          // отправка запроса
+          this.save_sign_popup = false;
+          this.sign_name.reset();
+          this.messages_for_draft.reset();
+          this.showSuccess('Подпись сохранена');
+        } else {
+          this.showError('Введите имя подписи');
+          return;
+        }
+
+      } else {
+        this.save_sign_popup = false;
+        this.sign_name.reset();
+      }
+    }
 }
 

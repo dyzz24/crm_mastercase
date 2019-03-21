@@ -513,11 +513,11 @@ button {
     flex-direction: column;
 }
 
-[type='submit'] {
+[type='submit'], [type='reset'] {
     color:white;
     width: auto;
     padding: 0 20px;
-	height: 40px;
+	height: 28px;
     background: #0476C3;
 box-shadow: 0px 2px 4px rgba(9, 41, 85, 0.2);
 border-radius: 2px;
@@ -526,6 +526,14 @@ border-radius: 2px;
     // align-self: flex-start;
     font-size: 13px;
     border: none;
+}
 
+
+
+[type='reset'] {
+        border: 1px solid #0476C3;
+        color: #0476C3;
+        background: #F7FBFE;
+        margin-left: 10px;
 }
     
