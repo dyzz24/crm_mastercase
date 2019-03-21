@@ -76,9 +76,13 @@ outline: none;
 font-size: 13px;
 color: #092A55;
 transition: .4s;
+outline: none;
 
         &:hover {
             background:  #E8F0FB;
+        }
+        &.active {
+            background: #D9E6F7;
         }
 }
 

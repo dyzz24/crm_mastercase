@@ -2,12 +2,35 @@
 
 
 
-<app-signature-list [email_id] = 'this.email_id'>
+<app-signature-list [email_id] = 'this.email_id' *ngIf="this.global_sett !== 'true'">
 
 </app-signature-list>
     
-<div class="empty">
+<div class="empty" *ngIf="this.global_sett !== 'true'">
 <router-outlet></router-outlet>
+</div>
+
+<div class="settings" *ngIf="this.global_sett === 'true'">
+    <div class="settings__header">
+        <a href="" [routerLink]="['/email-setting']" >Настройки почты</a> <span> / </span>
+        <a href="" [routerLink]="['./sign']" routerLinkActive="router-link-active" >Подпись</a> <span> / </span>
+        <a class='active' href="" 
+        [routerLink]="['./sign']"
+        [queryParams] = "{'sett':'true'}">Глобальные настройки</a>
+    </div>
+
+    <div class="setting__body">
+        <h2>Выберите подпись по умолчанию</h2>
+        <span>E-mail</span>
+        <select name="email"  [formControl]='email_selected'>
+            <option *ngFor='let email of this.email_address, let i = index'  [ngValue] = "email">{{email}}</option>
+        </select>
+        <span>Подпись для выбранного email</span>
+        <select name="sign"  [formControl]='sign_selected'>
+                <option *ngFor='let sign of this.email_address, let i = index'  [ngValue] = "sign">{{sign}}</option>
+        </select>
+        <button>Сохранить</button>
+    </div>
 </div>
 
 </div>

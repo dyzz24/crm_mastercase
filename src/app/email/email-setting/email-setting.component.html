@@ -11,11 +11,16 @@
   </div>
 
   <div class="setting"
-  [routerLink]="['./sign']" routerLinkActive="active" 
+  [routerLink]="['./sign']" routerLinkActive="active"
   >Подпись</div>
 
-  <div class="additional__setting">Глобальные настройки</div>
-  <div class="additional__setting">Создание подписи</div>
+  <div class="additional__setting" [routerLink]="['./sign']" routerLinkActive="active" 
+  [queryParams] = "{'sett':'true'}"
+  >Глобальные настройки</div>
+  <div class="additional__setting"
+  [routerLink]="['./sign/create']" routerLinkActive="active" 
+  [queryParams] = "{'status':'sign'}"
+  >Создание подписи</div>
 </div>
 
 <div class="setting__wind">

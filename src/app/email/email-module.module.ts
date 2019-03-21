@@ -37,6 +37,7 @@ import { SignatureComponent } from './signature/signature.component';
 import { SignatureListComponent } from './signature/signature-list/signature-list.component';
 import { SignatureCreateComponent } from './signature/signature-create/signature-create.component';
 import { EmailSettingComponent } from './email-setting/email-setting.component';
+import { SignatureSettingsComponent } from './signature/signature-settings/signature-settings.component';
 
 @NgModule({
   imports: [
@@ -77,6 +78,7 @@ import { EmailSettingComponent } from './email-setting/email-setting.component';
     SignatureListComponent,
     SignatureCreateComponent,
     EmailSettingComponent,
+    SignatureSettingsComponent,
 
   ],
   providers: [EmailServiceService, NewMessageService],
