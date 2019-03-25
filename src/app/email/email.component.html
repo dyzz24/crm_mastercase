@@ -8,11 +8,18 @@
       -->
       <div class="header">
         <p class="head_titl">Почта</p>
-        <div class="header_leftGroup">
-          <button class="email-menu"  title="Настройки" 
-          [routerLink]="['/email-setting']"
+        <div class="header_leftGroup" [ngClass]="{visible_group: this.state_menu}">
+          <button class="email-menu global_menu" 
+          
+          (click) = 'this.toggle_state_menu()'
           >
             <span class="la la-cog"></span>
+
+            <div class="hidden__sett" [ngClass]="{visibl: this.state_menu}">
+              <button [routerLink]="['/email-setting']" >Все настройки</button>
+              <button [routerLink]="['/email-setting/sign-preview']" >Подпись</button
+                ><button>Что-то ещё</button>
+            </div>
           </button>
           <button class="email-menu">
             <span class="la la-pencil-square-o"></span>

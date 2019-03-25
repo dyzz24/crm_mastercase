@@ -147,7 +147,6 @@ get get_form_state() {return this.form_fields_group.controls; }
     });
 
 
-
     this.from = this.emailServ.idPostForHTTP; // поле от кого по умолчанию
 
     this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить, шаблон, создать и тд)
@@ -296,7 +295,7 @@ get get_form_state() {return this.form_fields_group.controls; }
                 if (dataMails.html === null) {
 
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
-                  <blockquote type="cite"> ${dataMails.text} </blockquote>`);
+                  <blockquote type="cite"> ${dataMails.text} </blockquote> `);
                  } else { // ставим в цитату текст письма на который отвечаем
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
                   <blockquote type="cite"> ${dataMails.html} </blockquote>`);

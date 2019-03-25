@@ -22,7 +22,7 @@
     border-right: 1px solid $border;
     background: #f7fbfe;
     box-sizing: border-box;
-    overflow: auto;
+    overflow: visible;
     z-index: 9;
     box-shadow: -7px 0 18px 4px rgba(0,0,0,.1) inset;
 }
@@ -63,7 +63,7 @@ button {
     border-bottom: 1px solid #d9e6f7;
     &:hover .header_leftGroup{
         width: auto;
-        // overflow: visible;
+        overflow: visible;
     }
     &:hover {
         background: #d9e6f7;
@@ -88,12 +88,70 @@ a,p{
     button {
         margin-left: 12px;
     }
+
+    &.visible_group {
+        visibility: visible;
+        width: auto;
+        overflow: visible;
+    }
 }
 .email-menu {
-    overflow: hidden;
+    // overflow: hidden;
 
     transition: .4s;
     margin-left: 4px;
+    position: relative;
+}
+
+// .global_menu {
+
+//     &:hover .header_leftGroup {
+//         visibility: visible;
+//         width: auto;
+//         overflow: visible;
+//     }
+
+//     &:hover .hidden__sett{
+//             display: flex;
+//     }
+// }
+
+.hidden__sett {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 200px;
+
+    background: #FFFFFF;
+        border: 1px solid #B5BFD0;
+        box-sizing: border-box;/* тень своя */
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        z-index: 12;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 5px;
+        box-sizing: border-box;
+
+        button {
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            padding-left: 20px;
+            font-size: 13px;
+            color: #262626;
+            transition: .4s;
+            margin: 0;
+            text-align: left;
+            display: block;
+
+            &:hover {
+                background: #D9E6F7;
+            }
+        }
+
+    
 }
 
 

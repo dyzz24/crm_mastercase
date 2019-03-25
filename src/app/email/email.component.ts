@@ -31,6 +31,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
   deleteMenuStatus = false;
   folder_create = false;
   createSettingStatus = false;
+  state_menu = false;
   visibl: Array<boolean> = [];
 
   inboxName;
@@ -120,6 +121,10 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
 
   ngDoCheck() {
     // console.log(this.user_folders);
+  }
+
+  toggle_state_menu() {
+    this.state_menu = ! this.state_menu;
   }
 
 

@@ -16,6 +16,7 @@ import { SignatureCreateComponent } from './signature/signature-create/signature
 import { EmailSettingComponent } from './email-setting/email-setting.component';
 import { SignatureSettingsComponent } from './signature/signature-settings/signature-settings.component';
 import { SignatureListComponent } from './signature/signature-list/signature-list.component';
+import { SignPreviewComponent } from './signature/sign-preview/sign-preview.component';
 
 const routes: Routes = [
   { path: 'email', component: EmailComponent, canActivate: [EmailGuardGuard],
@@ -46,6 +47,7 @@ children: [{path: 'welcome', component: WelcomeComponent}]},
   {path: 'sign', component: SignatureComponent, canActivate: [EmailGuardGuard], children: [
     {path: 'create', component: NewMessageComponent}, {path: '**', component: SignatureCreateComponent},
   ]},
+  {path: 'sign-preview', component: SignPreviewComponent},
   {path: 'global', component: SignatureSettingsComponent}
 ]},
 ];
