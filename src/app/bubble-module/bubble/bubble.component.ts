@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import {BubbleServiceService} from '../bubble-service.service';
 import { Observable, Subscription } from 'rxjs';
 
@@ -17,14 +17,24 @@ export class BubbleComponent implements OnInit {
 
   @Input() name: String = '' || null; // имя пользователя для отображения в бабле
   @Input() email: String = '' || null; // его ящик
+  @Input() m_top: String = '';
+  @Input() m_right: String = '';
+  @Input() orientation: string;
 
 
 
 
 
-  constructor(private bublService: BubbleServiceService) { }
+  constructor(private bublService: BubbleServiceService, public element: ElementRef) { }
 
   ngOnInit() {
+    if (this.m_top !== '' || this.m_right !== '') {
+
+      this.element.nativeElement.querySelector('.bables_view').style.marginTop = this.m_top + 'px';
+      this.element.nativeElement.querySelector('.bables_view').style.marginRight = this.m_right + 'px';
+    }
+
+
     this.subscriber_on_cancell = this.bublService.cancell_all_bables.subscribe(val => {
         this.show_bables_state = val; // подписка для скрытия остальных баблов (активный только один бабл)
         this.flagged = val;
@@ -53,7 +63,8 @@ this.flagged = true; // перевести флаг
 } else { // если кликнули второй раз на бабл
 
   this.bublService.cancell_all_bables.next(false); // скрыть текущий бабл и все остальные, флаг в первоначальное
-  this.flagged = true;
+  this.flagged = false;
+
 }
 
 

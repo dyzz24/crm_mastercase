@@ -209,6 +209,69 @@ title="Новый шаблон"
     <div class='cont_html' [innerText]="this.selectedLetter?.text"></div>
   </ng-template>
   </div>
+
+<div class="correspondence">
+  <div class="correspondence__row">
+    <div class="row__avatar"></div>
+    <div class="row__bables">
+        <app-bubble 
+        [m_top] = '0'
+        [m_right] = '0'
+        [orientation] = "'top'"
+        [email] = 'this.selectedLetter?.from_address'
+        >
+        </app-bubble>
+    </div>
+    <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
+    <div class="row__settings">
+        <button title="Меню"><span class="la la-bars"></span></button>
+        <button title="Важное"><span class="mc flag_disable"></span></button>
+        <button title="Вложения"><span class="la la-paperclip"></span></button>
+        <p class="setting__time">23.02.2019 22:45</p>
+    </div>
+  </div>
+
+  <div class="correspondence__row">
+      <div class="row__avatar"></div>
+      <div class="row__bables">
+          <app-bubble 
+          [m_top] = '0'
+          [m_right] = '0'
+          [email] = 'this.selectedLetter?.from_address'
+          [orientation] = "'top'"
+          >
+          </app-bubble>
+      </div>
+      <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
+      <div class="row__settings">
+          <button title="Меню"><span class="la la-bars"></span></button>
+          <button title="Важное"><span class="mc flag_disable"></span></button>
+          <button title="Вложения"><span class="la la-paperclip"></span></button>
+          <p class="setting__time">23.02.2019 22:45</p>
+      </div>
+    </div>
+
+    <div class="correspondence__row">
+        <div class="row__avatar"></div>
+        <div class="row__bables">
+            <app-bubble 
+            [m_top] = '0'
+            [m_right] = '0'
+            [email] = 'this.selectedLetter?.from_address'
+            [orientation] = "'top'"
+            >
+            </app-bubble>
+        </div>
+        <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
+        <div class="row__settings">
+            <button title="Меню"><span class="la la-bars"></span></button>
+            <button title="Важное"><span class="mc flag_disable"></span></button>
+            <button title="Вложения"><span class="la la-paperclip"></span></button>
+            <p class="setting__time">23.02.2019 22:45</p>
+        </div>
+      </div>
+</div>
+
 </div>
 <div class="quickResponse quickResponse__active" [ngClass]='{quickResponse__active: quickResponse_active}'>
     <div class="avatar__block" [ngClass]='{avatar__active: quickResponse_active}'>
@@ -274,6 +337,8 @@ title="Новый шаблон"
 </div>
 </div>
 </div>
+
+
 </div>
 </div>
 <app-preserver></app-preserver>

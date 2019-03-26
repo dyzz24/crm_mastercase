@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-bubble-menu',
@@ -9,10 +9,18 @@ export class BubbleMenuComponent implements OnInit {
 
   @Input() change_menu_state: Boolean = false;
   @Input() name_params;
+  @Input() orientation: String;
 
-  constructor() { }
+  constructor(public element: ElementRef) { }
 
+  private hidder_arrow = false;
   ngOnInit() {
+
+    if (this.orientation === 'top') {
+      this.element.nativeElement.style.top = '-55px';
+      this.hidder_arrow = true;
+      // this.element.nativeElement.querySelector('.bables__arrowdecoration').style.display = 'none';
+    }
   }
 
   copy_address() {
