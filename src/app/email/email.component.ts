@@ -120,7 +120,7 @@ export class EmailComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   ngDoCheck() {
-    // console.log(this.user_folders);
+    // console.log(this.state_menu);
   }
 
   toggle_state_menu() {

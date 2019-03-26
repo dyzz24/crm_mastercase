@@ -24,6 +24,7 @@ export class SignatureListComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.activatedRoute.params.subscribe(params => {
       console.log(params);
+      // this.emailServ.signature_list = [{title: 'phph'}, {title: 'jsjsjs'}];
     });
   }
 

@@ -316,13 +316,64 @@ background: rgba(141, 175, 255, 0.507);
       justify-content: space-between;
       position: relative;
       align-items: flex-end;
-      padding: 10px 10px 0px 5px;
+      padding: 5px 10px 5px 5px;
       box-sizing: border-box;
       flex-shrink: 0;
       z-index: 6;
     
 
   }
+
+    .inwork {
+        width: 20px;
+        height: 100%;
+        margin: 0 5px;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        &__btn_take {
+            width: 100%;
+            height: 20px;
+            background: url('../../../assets/takeinwork.svg') no-repeat center;
+            background-size: 100% 100%;
+            cursor: pointer;
+
+            &.my_inwork {
+                background: url('../../../assets/my_inwork.svg') no-repeat center;
+                background-size: 100% 100%;
+            }
+
+            &.not_my {
+                background: url('../../../assets/not_my_inwork.svg') no-repeat center;
+                background-size: 100% 100%;
+            }
+        }
+    }
+
+    .row__block {
+        display: flex;
+        width: 100%;
+        align-items: flex-end;
+  
+    }
+
+    .counter {
+        margin-right: 5px;
+        padding: 0px 5px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border: 1px solid #9CABC2;
+        display: flex;
+        align-items: center;
+
+        span {
+            font-size: 11px;
+            line-height: 16px;
+            color: #9CABC2;
+        }
+    }
+
   .time {
           
     color: $time-icons;
@@ -350,10 +401,10 @@ background: rgba(141, 175, 255, 0.507);
 }
 .la-paperclip {
     width: 8px;
-    height: 7px;
     font-size: 10px;
     line-height: 1;
     color:$time-icons;
+    flex-shrink: 0;
 }
 
 [class^='letter']{
@@ -631,28 +682,20 @@ box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    align-self: flex-end;
-    margin-bottom: 5px;
+    overflow: hidden;
 
     &:hover span{
             color: #6B7FA0;
     }
 
     span {
-        width: 100%;
         height: 100%;
-        line-height: 1;
-        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
         color: #9CABC2;
 
-        &::before {
-            width: 100%;
-            height: 100%;
-            line-height: 1;
-            position: absolute;
-            left: 0;
-            bottom: 50%;
-        }
+       
     }
 }
 

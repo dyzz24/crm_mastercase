@@ -116,6 +116,7 @@ a,p{
 //     }
 // }
 
+
 .hidden__sett {
     position: absolute;
     top: 15px;
@@ -615,6 +616,21 @@ ul {
 
 .settings_email {
 margin-right: 20px;
+}
+
+.canc__openmenu {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    // background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    z-index: 5;
+    display: none;
+
+
+    &.active_menu {
+        display: block;
+    }
 }
 
 

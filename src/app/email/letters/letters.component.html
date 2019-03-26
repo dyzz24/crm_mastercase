@@ -149,6 +149,14 @@
              <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->
 
           </div>
+          <div class="inwork">
+            <div class="inwork__btn_take" title="Взять в работу"
+            (click)='get_work(emailServ.lettersList[i].mail_id, $event, i)'
+            [ngClass]="{my_inwork: this.emailServ.lettersList[i]?.work_user_id && this.emailServ.lettersList[i]?.work_user_id.userId === this.authorizationServ.userId , 
+              not_my: this.emailServ.lettersList[i]?.work_user_id && this.emailServ.lettersList[i]?.work_user_id.userId !== this.authorizationServ.userId
+            }"
+            ></div>
+          </div>
           <div class="settings" (click)='urlLetterView($event, i, emailServ.lettersList[i].mail_id)'
 
           >
@@ -159,11 +167,9 @@
             title='Вложения'
             >
             </span>
-            <!-- <button class='letter__settings' (click)='menuShow($event, i)'  [class.time-icons__status-new]="letters.seen === false"
-            title="Меню"
-            >
-              <span class='la la-ellipsis-h'></span>
-            </button> -->
+
+        <div class="row__block">
+          <div class="counter"><span>0</span></div>
           <input type="checkbox" name='settings_inputs_group'  id=sett_{{letters.mail_id}} class='settings_checkbox hidden_checkbox'
           (change) = 'cancell_checked($event, i)'
           >
@@ -186,6 +192,7 @@
                 <span class='la la-ellipsis-h'></span>
             </label>
           </div>
+        </div>
         </div>
         </div>
         <div class="letters__end" *ngIf="this.emailServ.dataLetters !== this.emailServ.lettersAmount">

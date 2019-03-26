@@ -872,7 +872,7 @@ toggle_inputs_field(bool) { // скрыть / показать поля ввод
     }
 
     save_sign_complite(bool) {
-      if (bool) {
+      if (bool) { // bool - сохранить / отменить
 
         if (this.sign_name.status === 'VALID') {
           // отправка запроса

@@ -64,6 +64,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   cahse_letters = [];
   important_flag: boolean; // флаг - важное или не важное письмо
   show_bables_state: Boolean = false;
+  not_to_addresses: Boolean = false;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -114,15 +115,21 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
       {address: this.emailServ.idPostForHTTP, mailId: +data.id}).subscribe((dataMails) => {
         this.preload_to_wait_status = false; // отменяю крутилку
         this.selectedLetter = dataMails; // ставлю активным письмом ответ с сервера
-        // console.log(this.selectedLetter)
         // console.log(this.selectedLetter);
         this.cahse_letters.push(this.selectedLetter); // добавляю в кэш уже ответ с сервера
 
 
 
         this.checkerLengthArray_bcc_cc();
-        this.checkerLength_addressess();
+
+        if (this.selectedLetter.details.recipients.to === undefined) {
+          this.selectedLetter.details.recipients.to = [{address: this.emailServ.idPostForHTTP}];
+
+        } else {
+          this.checkerLength_addressess();
+        }
         this.emailServ.hiddenEmpty = true;
+
         });
           this.emailServ.activeLett[data.id] = true; // делаю активным в колбасе письмо
 
@@ -156,6 +163,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
   }
   checkerLength_addressess() {
+
 
       this.cut_addressess_array = [];
       this.cut_addressess_array = this.selectedLetter.details.recipients.to.slice(0, 3);

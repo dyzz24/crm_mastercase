@@ -36,7 +36,7 @@
             </label>
             <div class="setting_and_txt_group"
             routerLink="./create"
-            [queryParams] = "{'id':letter.rough_id, 'status':'draft'}"
+            [queryParams] = "{'id':letter.rough_id}"
             >
             <div class="text_info">{{letter.preview}}</div>
             <input type="checkbox" name='settings_inputs_group'  id=sett_{{letter.rough_id}} class='settings_checkbox hidden_checkbox'

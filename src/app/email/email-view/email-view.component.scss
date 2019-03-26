@@ -354,7 +354,7 @@ p{
     box-sizing: border-box;
     border-bottom: 1px solid $border;
     position: relative;
-    z-index: 4;
+    z-index: 7;
 
     &::before {
     content: '';
@@ -410,6 +410,7 @@ p{
         box-sizing: border-box;
         transition: .2s;
         border-color:  #d9e6f7;
+        word-break: break-all;
     }
 }
 
