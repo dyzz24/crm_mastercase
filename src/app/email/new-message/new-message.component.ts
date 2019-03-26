@@ -77,7 +77,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 
 
-save_draft(data) {
+
+save_draft(data, add_new_files?, copy_files?) {
 
   if (data === ''
   || data === null
@@ -106,27 +107,60 @@ save_draft(data) {
       formData).subscribe((dataMails) => {
         this.id_for_draft = dataMails.roughId;
       });
+
+
   } else { // иначе обновляю существующий черновик
-    const fields = this.creating_template_and_draft_fields();
-    fields['roughId'] = +this.id_for_draft;
-    const formData = new FormData; // создаю объект new FormData
-  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
-    formData.append('files', this.files_for_view[i]);
+
+
+    if (add_new_files) {
+      // this.files_for_view = [...object_for_add.details.attachments];
+      const fields = this.creating_template_and_draft_fields();
+      fields['roughId'] = +this.id_for_draft;
+      fields['attachments'] = [];
+      const formData = new FormData; // создаю объект new FormData
+    for (let i = 0; i < add_new_files.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+      formData.append('files', add_new_files[i]);
+  }
+
+  for (let i = 0; i < copy_files.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+    // formData.append('files', this.files_for_view[i]);
+    fields['attachments'].push({hash: copy_files[i].hash, size: copy_files[i].size,
+      name: copy_files[i].name});
 }
-  formData.append('json', JSON.stringify(fields));
+
+    formData.append('json', JSON.stringify(fields));
+
     this.httpPost(
       `${global_params.ip}/mail/rough/update`,
       formData).subscribe((dataMails) => {
+        this.files_for_view = dataMails;
       });
 
-      if (this.status === 'draft') {
-        this.draft_template_cashes.filter((val, ind, arr) => { // прохожусь по сохраненным черновикам
-          if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
-             arr.splice(ind, 1);
-             arr.push(fields);
-          }
+      return;
+    } else {
+
+    const formData = new FormData; // создаю объект new FormData
+    const fields = this.creating_template_and_draft_fields();
+    fields['roughId'] = +this.id_for_draft;
+    fields['attachments'] = [];
+    if (this.files_for_view.length > 0) {
+      for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+        // formData.append('files', this.files_for_view[i]);
+        fields['attachments'].push({hash: this.files_for_view[i].hash, size: this.files_for_view[i].size,
+          name: this.files_for_view[i].name});
+    }
+    }
+
+  formData.append('json', JSON.stringify(fields));
+
+  // console.log(formData)
+    this.httpPost(
+      `${global_params.ip}/mail/rough/update`,
+      formData).subscribe((dataMails) => {
+        this.files_for_view = dataMails;
+        console.log(this.files_for_view);
       });
-      }
+    }
 
 
   }
@@ -386,28 +420,26 @@ get get_form_state() {return this.form_fields_group.controls; }
           if (this.status === 'draft') { // черновики, добавление их в активное письмо
                 this.clear_msg();
                 // this.save_draft_protect = true;
-                this.id_for_draft = this.mail_id; // сразу получаю id текущего черновика,
+                this.id_for_draft = +this.mail_id; // сразу получаю id текущего черновика,
                                                   // что бы находясь в компоненте обновлять их а не создавать новые
-                let draft_flagged = true;
-                this.draft_template_cashes.filter(val => { // прохожусь по сохраненным черновикам
-                    if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
-                        draft_flagged = false; // отменяю дальнейший запрос
-                        this.add_fields_draft(val); // вставляю поля для черновика
-                    }
-                });
+            //     let draft_flagged = true;
+            //     this.draft_template_cashes.filter(val => { // прохожусь по сохраненным черновикам
+            //         if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
+            //             draft_flagged = false; // отменяю дальнейший запрос
+            //             this.add_fields_draft(val); // вставляю поля для черновика
+            //         }
+            //     });
 
 
-            if (draft_flagged) { // если совпадений нет, пуляю запрос и заполняю поля из ответа с сервера
+            // if (draft_flagged) { // если совпадений нет, пуляю запрос и заполняю поля из ответа с сервера
             this.httpPost(
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
-                this.draft_template_cashes.push(dataMails); // добавляю письмо в кэш
+                // this.draft_template_cashes.push(dataMails); // добавляю письмо в кэш
                 this.add_fields_draft(dataMails);
 
-                console.log(dataMails);
 
               });
-            }
           }
 
             if (this.status === 'sign') {
@@ -479,6 +511,8 @@ get get_form_state() {return this.form_fields_group.controls; }
                 this.copy = [];
                 this.hidden_copy = [];
                 this.messages_for_draft.reset();
+                this.files_for_view = [];
+                this.newMessageService.files = [];
                 this.form_fields_group.reset();
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
@@ -672,21 +706,25 @@ drop(e) {
 
 delete_attach(index) { // удаляю прикрепленный файл по его индексу в массиве файлов
   this.files_for_view.splice(index, 1);
+  this.save_draft('wirk');
 }
 
 
 add_drag_input_data(objForData) { // ф-я принимает объект с файлом
   // console.log(obj)
   const newArray = [objForData]; // засунул в массив для работы
-
+  const new_files = [];
+  const copy_files = [...this.files_for_view];
   newArray.map((val) => {
  // tslint:disable-next-line:forin
   for (const key in val) { // пробегаюсь по файлам в массиве
     if (val[key].name !== 'item' && val[key].name !== undefined) { // если имя файла не item и und
     this.files_for_view.push(val[key]); // добавляю в массив с файлами
+    new_files.push(val[key]);
     }
   }
 
+  this.save_draft('work', new_files, copy_files);
   console.log(this.files_for_view);
 
 });
