@@ -94,19 +94,29 @@ save_draft(data) {
   if (!this.id_for_draft) { // если id черновика не установлен
 
     const fields = this.creating_template_and_draft_fields();
+    const formData = new FormData; // создаю объект new FormData
+  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+    formData.append('files', this.files_for_view[i]);
+}
+  formData.append('json', JSON.stringify(fields));
 
 
     this.httpPost(
       `${global_params.ip}/mail/rough/create`,
-      fields).subscribe((dataMails) => {
+      formData).subscribe((dataMails) => {
         this.id_for_draft = dataMails.roughId;
       });
   } else { // иначе обновляю существующий черновик
     const fields = this.creating_template_and_draft_fields();
     fields['roughId'] = +this.id_for_draft;
+    const formData = new FormData; // создаю объект new FormData
+  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+    formData.append('files', this.files_for_view[i]);
+}
+  formData.append('json', JSON.stringify(fields));
     this.httpPost(
       `${global_params.ip}/mail/rough/update`,
-      fields).subscribe((dataMails) => {
+      formData).subscribe((dataMails) => {
       });
 
       if (this.status === 'draft') {
@@ -392,8 +402,9 @@ get get_form_state() {return this.form_fields_group.controls; }
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
                 this.draft_template_cashes.push(dataMails); // добавляю письмо в кэш
-
                 this.add_fields_draft(dataMails);
+
+                console.log(dataMails);
 
               });
             }
@@ -444,6 +455,12 @@ get get_form_state() {return this.form_fields_group.controls; }
     object_for_add.details.recipients.bcc.filter(val => {
       this.hidden_copy.push(val.address);
     });
+
+  }
+
+  if (object_for_add.details && object_for_add.details.attachments.length > 0) {
+
+       this.files_for_view = [...object_for_add.details.attachments];
 
   }
   }
@@ -670,6 +687,8 @@ add_drag_input_data(objForData) { // ф-я принимает объект с ф
     }
   }
 
+  console.log(this.files_for_view);
+
 });
 
 
@@ -690,7 +709,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
 
   const object_for_template_list = {
     address: this.from || null, // имейл кто создал шаблон
-    title: this.tmp_name || null, // имя шаблона
+    // title: this.tmp_name || null, // имя шаблона
     text: null, // текст не отправляем
     html: this.messages_for_draft.value || null, // поле с текстом шаблона (или его html)
     subject: this.form_fields_group.controls.subject.value || null, // либо есть либо Null
@@ -732,6 +751,8 @@ save_template() { // функция фохранения шаблона
   this.save_tmp_state = false; // закрыть поле ввода имени шаблона
 
   const fields = this.creating_template_and_draft_fields();
+  fields['title'] = this.tmp_name || null;
+
 
   this.httpPost(
     `${global_params.ip}/mail/draft/create`,
