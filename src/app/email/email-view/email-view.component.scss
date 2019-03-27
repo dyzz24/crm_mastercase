@@ -555,16 +555,6 @@ p{
 }
 
 
-
-
-// .menu:first-child {
-//     position: relative;
-//     transition: .4s;
-//     margin-left: 4px;
-// }
-// .menu:last-child {
-//     margin-right: 4px;
-// }
 .hideMenu {
     @include hideMenu (200px, auto, 0, 0, white);
     top:100%;

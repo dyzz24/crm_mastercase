@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from '../../authorization.service';
 import {global_params} from '../../global';
 import { FormControl} from '@angular/forms';
+import { EmailServiceService } from '../email-service.service';
 
 
 @Component({
@@ -21,19 +22,27 @@ export class SignatureComponent implements OnInit {
 
   public email_selected: FormControl = new FormControl('');
   public sign_selected: FormControl = new FormControl('');
+  succes_search_flag = false;
+  not_succes_search_flag = false;
+  selected_checkbox_for_html = [];
+  id_selected_letter: Array<number> = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
+    @Inject(EmailServiceService) public emailServ: EmailServiceService
 
     ) {
 
      }
 
   ngOnInit() {
+    this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data) => {
+      console.log(data);
+      this.emailServ.signature_list = data.signatures;
+    });
 
       this.subscription = this.activatedRoute.queryParams.subscribe(params => {
-
         this.global_sett = params.sett;
         if (this.global_sett === 'true') {
           if (!this.email_address) {

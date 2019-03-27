@@ -31,6 +31,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
   public id_for_draft;
   public sign_message_status = false;
   public save_sign_popup = false;
+  public all_signatures: any;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -72,6 +73,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public can_save_tmp;
     public save_draft_protect: Boolean = false;
     public draft_template_cashes = [];
+    public current_sign: any;
+
 
 
 
@@ -449,7 +452,22 @@ get get_form_state() {return this.form_fields_group.controls; }
           }
 
             if (this.status === 'sign') {
+
                 this.sign_message_status = true;
+                if (!this.mail_id) {
+                    this.messages_for_draft.reset();
+                }
+                this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data) => {
+
+                  data.signatures.filter(val => {
+                      if (+this.mail_id === +val.id) {
+                        this.messages_for_draft.setValue(val.text);
+                        this.current_sign = val;
+
+                      }
+                  });
+                });
+
             }
 
       }
@@ -463,6 +481,11 @@ get get_form_state() {return this.form_fields_group.controls; }
       this.messages_for_draft.value === '') { // если данных нет, вставляем пустую строку, обнуляя форму
         this.messages_for_draft.reset();
     }
+
+    if (object_for_add.html === '<p>null</p>') {
+      object_for_add.html = '';
+    }
+
     if (object_for_add.html === null) { // если шаблон без html добавляем к телу активного письма содержимое шаблона
       this.messages_for_draft.setValue(`${object_for_add.text}`);
 
@@ -929,29 +952,54 @@ toggle_inputs_field(bool) { // скрыть / показать поля ввод
 }
 
     save_sign_open() {
-      if (this.messages_for_draft.value === '') {
+
+      if (this.mail_id) { // если есть this.mail_id => подпись выбрана
+        if (this.messages_for_draft.value === '' || this.messages_for_draft.value === null) {
+          this.showError('Подпись пуста'); // проверка на непустую подпись
+          return;
+        }
+        this.httpPost(`${global_params.ip}/mail/signature/update`, { // делаем запрос на обновление
+          signatureId: +this.mail_id,
+          text: this.messages_for_draft.value,
+          title: this.current_sign.title // берем существующий title, для обновления
+        }).subscribe((data) => {
+            this.showSuccess('Подпись обновлена');
+          });
+          return;
+      }
+
+      // если this.mail_id нет - делаем проверку на непустую строку
+
+      if (this.messages_for_draft.value === '' || this.messages_for_draft.value === null) {
         this.showError('Подпись пуста');
         return;
       } else {
-        this.save_sign_popup = true;
+        this.save_sign_popup = true; // если необходимые поля заполнены - открываю попап
       }
     }
 
     save_sign_complite(bool) {
       if (bool) { // bool - сохранить / отменить
 
-        if (this.sign_name.status === 'VALID') {
-          // отправка запроса
-          this.save_sign_popup = false;
-          this.sign_name.reset();
-          this.messages_for_draft.reset();
-          this.showSuccess('Подпись сохранена');
+        if (this.sign_name.status === 'VALID') { // если валидация имени подписи ок => идем на создание
+
+
+          this.httpPost(`${global_params.ip}/mail/signature/create`, {
+            text: this.messages_for_draft.value, title: this.sign_name.value}).subscribe((data) => {
+              this.save_sign_popup = false;
+              // this.emailServ.signature_list.unshift({id: 88, title: this.sign_name.value});
+              this.sign_name.reset();
+              this.messages_for_draft.reset();
+
+              this.showSuccess('Подпись сохранена');
+            });
+
         } else {
           this.showError('Введите имя подписи');
           return;
         }
 
-      } else {
+      } else { // по нажатию на кнопку "отмена"
         this.save_sign_popup = false;
         this.sign_name.reset();
       }

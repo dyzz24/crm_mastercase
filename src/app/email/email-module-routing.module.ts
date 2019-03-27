@@ -48,7 +48,6 @@ children: [{path: 'welcome', component: WelcomeComponent}]},
     {path: 'create', component: NewMessageComponent}, {path: '**', component: SignatureCreateComponent},
   ]},
   {path: 'sign-preview', component: SignPreviewComponent},
-  {path: 'global', component: SignatureSettingsComponent}
 ]},
 ];
 

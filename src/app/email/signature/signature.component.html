@@ -2,7 +2,10 @@
 
 
 
-<app-signature-list [email_id] = 'this.email_id' *ngIf="this.global_sett !== 'true'">
+<app-signature-list 
+[email_id] = 'this.email_id' 
+
+*ngIf="this.global_sett !== 'true'">
 
 </app-signature-list>
     
@@ -12,8 +15,8 @@
 
 <div class="settings" *ngIf="this.global_sett === 'true'">
     <div class="settings__header">
-        <a href="" [routerLink]="['/email-setting']" >Настройки почты</a> <span> / </span>
-        <a href="" [routerLink]="['/email-setting/sign-preview']" routerLinkActive="router-link-active" >Подпись</a> <span> / </span>
+        <a  [routerLink]="['/email-setting']" >Настройки почты</a> <span> / </span>
+        <a  [routerLink]="['/email-setting/sign-preview']" routerLinkActive="router-link-active" >Подпись</a> <span> / </span>
         <a class='active'>Глобальные настройки</a>
     </div>
 
