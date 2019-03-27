@@ -358,6 +358,7 @@ button {
         border-radius: 0px;
         justify-content: flex-start;
         transition: .4s;
+        white-space: nowrap;
         &:hover {
             background: #c9c8c8;
         }

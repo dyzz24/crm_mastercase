@@ -1,5 +1,6 @@
 import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy,
-  AfterViewInit } from '@angular/core';
+  AfterViewInit,
+  ViewChildren} from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpRequest } from '@angular/common/http';
@@ -44,6 +45,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('input_cleaner')
   input_cleaner: ElementRef;
   @ViewChild(PreserverComponent)  preserver_component: PreserverComponent;
+
   visibleMenu = false;
   nameFrom;
   messages;
@@ -65,6 +67,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   important_flag: boolean; // флаг - важное или не важное письмо
   show_bables_state: Boolean = false;
   not_to_addresses: Boolean = false;
+  hidden__accordeon: Boolean = true;
   // subject = this.selectedLetter.subject;
   // draft = this.selectedLetter.draft;
 
@@ -89,7 +92,7 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
 
         this.subscription = this.activatedRoute.params.subscribe(data => {
 
-
+          this.hidden__accordeon = true; // скрываю аккордеон при обновлении роута (если он есть и открыт с предыдущего раза)
           this.activatedRoute.queryParams.subscribe(params => {
             this.important_flag = params.imp_flag;
           });
@@ -424,4 +427,26 @@ show_bables() {
     this.show_bables_state = ! this.show_bables_state;
 }
 
+visible_accordeon() {
+  this.hidden__accordeon = false;
 }
+
+
+cancell_checked(e, index) {
+// console.log(e.target.checked)
+  const target_parent = e.target.closest('.correspondence');
+  const allInputs = <any>target_parent.querySelectorAll('.checked_state'); // по другому получает пустую ноду из за ViewEncapsulation.Native
+  for (let i = 0; i < allInputs.length; i++) {
+    if (index === i) {
+      continue;
+    }
+    allInputs[i].checked = false;
+  }
+
+  // e.target.checked = true;
+
+}
+}
+
+
+

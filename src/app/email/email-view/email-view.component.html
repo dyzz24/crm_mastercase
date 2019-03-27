@@ -224,32 +224,74 @@ title="Новый шаблон"
     </div>
     <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
     <div class="row__settings">
-        <button title="Меню"><span class="la la-bars"></span></button>
+
+        <input type="checkbox" class='checked_state' id="menu_1"  (change) = 'cancell_checked($event, 0)' >
+        <label title="Меню" for="menu_1"><span class="la la-bars"></span></label>
+        <div class="hidden__menu">
+          <button class="letterMenuButt">Ответить</button>
+          <button class="letterMenuButt">Ответить всем</button>
+          <button class="letterMenuButt">Переслать</button>
+          <button class="letterMenuButt">Удалить</button>
+          <button class="letterMenuButt">В спам</button>
+          <button class="letterMenuButt">Сделать непрочитанным</button>
+        </div>
         <button title="Важное"><span class="mc flag_disable"></span></button>
         <button title="Вложения"><span class="la la-paperclip"></span></button>
         <p class="setting__time">23.02.2019 22:45</p>
     </div>
   </div>
 
-  <div class="correspondence__row">
-      <div class="row__avatar"></div>
-      <div class="row__bables">
-          <app-bubble 
-          [m_top] = '0'
-          [m_right] = '0'
-          [email] = 'this.selectedLetter?.from_address'
-          [orientation] = "'top'"
-          >
-          </app-bubble>
-      </div>
-      <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
-      <div class="row__settings">
-          <button title="Меню"><span class="la la-bars"></span></button>
-          <button title="Важное"><span class="mc flag_disable"></span></button>
-          <button title="Вложения"><span class="la la-paperclip"></span></button>
-          <p class="setting__time">23.02.2019 22:45</p>
-      </div>
+  <div class="correspondence__row centered" (click) = 'visible_accordeon()' *ngIf="this.hidden__accordeon">
+
+      Открыть цепочку писем
+
     </div>
+
+    <div class="correspondence__hidden" *ngIf="!this.hidden__accordeon">
+
+        <div class="correspondence__row">
+            <div class="row__avatar"></div>
+            <div class="row__bables">
+                <app-bubble 
+                [m_top] = '0'
+                [m_right] = '0'
+                [email] = "'dmitry@mail.ru'"
+                [orientation] = "'top'"
+                >
+                </app-bubble>
+            </div>
+            <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
+            <div class="row__settings">
+                <input type="checkbox" class='checked_state' id="menu_3" >
+        <label title="Меню" for="menu_3"><span class="la la-bars"></span></label>
+                <button title="Важное"><span class="mc flag_disable"></span></button>
+                <button title="Вложения"><span class="la la-paperclip"></span></button>
+                <p class="setting__time">23.02.2019 22:45</p>
+            </div>
+          </div>
+
+          <div class="correspondence__row">
+              <div class="row__avatar"></div>
+              <div class="row__bables">
+                  <app-bubble 
+                  [m_top] = '0'
+                  [m_right] = '0'
+                  [email] = "'veryverylongemailaddressess__11.12.13@mail.ru'"
+                  [orientation] = "'top'"
+                  >
+                  </app-bubble>
+              </div>
+              <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
+              <div class="row__settings">
+                  <button title="Меню"><span class="la la-bars"></span></button>
+                  <button title="Важное"><span class="mc flag_disable"></span></button>
+                  <button title="Вложения"><span class="la la-paperclip"></span></button>
+                  <p class="setting__time">23.02.2019 22:45</p>
+              </div>
+            </div>
+
+    </div>
+    
 
     <div class="correspondence__row">
         <div class="row__avatar"></div>
@@ -264,7 +306,17 @@ title="Новый шаблон"
         </div>
         <div class="row__preview">Текст превью у письма очень большое или не очень большое</div>
         <div class="row__settings">
-            <button title="Меню"><span class="la la-bars"></span></button>
+            
+        <input type="checkbox" class='checked_state' id="menu_2" (change) = 'cancell_checked($event, 1)' >
+        <label title="Меню" for="menu_2"><span class="la la-bars"></span></label>
+        <div class="hidden__menu">
+          <button class="letterMenuButt">Ответить</button>
+          <button class="letterMenuButt">Ответить всем</button>
+          <button class="letterMenuButt">Переслать</button>
+          <button class="letterMenuButt">Удалить</button>
+          <button class="letterMenuButt">В спам</button>
+          <button class="letterMenuButt">Сделать непрочитанным</button>
+        </div>
             <button title="Важное"><span class="mc flag_disable"></span></button>
             <button title="Вложения"><span class="la la-paperclip"></span></button>
             <p class="setting__time">23.02.2019 22:45</p>

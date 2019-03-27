@@ -334,12 +334,13 @@ p{
 
 .mess__content {
     width: 100%;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 195px);
     overflow: auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     background: #D9E6F7;
+    justify-content: space-between;
 
     &_body {
         background: white;
@@ -570,6 +571,7 @@ p{
     display: none;
     padding: 5px 0;
     border-radius: 4px;
+    z-index: 8;
     
 }
 
@@ -849,6 +851,7 @@ pre{
     flex-shrink: 0;
     margin-top: 10px;
     background: #D9E6F7;
+    
 
     &__row {
         width: 100%;
@@ -860,6 +863,34 @@ pre{
         margin-bottom: 2px;
         background: white;
         box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+
+        &.centered {
+            font-size: 13px;
+            color: #262626;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    }
+
+    &__hidden {
+        display: flex;
+        height: auto;
+    flex-direction: column;
+    flex-shrink: 0;
+    animation: opacity_go .4s linear;
+    }
+}
+
+@keyframes opacity_go {
+    from {
+        transform: scale(0);
+        opacity: .4;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
@@ -896,13 +927,20 @@ pre{
     flex-shrink: 0;
     padding-left: 10px;
     box-sizing: border-box;
+    position: relative;
 
-    button {
+    button:not(.letterMenuButt) {
         margin-right: 20px;
     }
 
     .la-paperclip {
         visibility: visible;
+    }
+
+    label{
+        
+        margin-right: 20px;
+        cursor: pointer;
     }
 }
 
@@ -910,4 +948,43 @@ pre{
     font-size: 13px;
     text-align: center;
     color: #9CABC2;
+}
+
+.checked_state {
+    display: none;
+}
+
+.checked_state + label + .hidden__menu {
+    display: none;
+}
+
+.checked_state:checked + label + .hidden__menu {
+    display:flex;
+}
+
+.checked_state + label {
+    color: #9CABC2;
+}
+
+.checked_state:checked + label {
+    color: #074B86;
+}
+
+
+
+.hidden__menu {
+    position: absolute;
+    background: #26262654;
+    right: 100%;
+    bottom: 0;
+    flex-direction: column;
+    background: white;
+
+
+    animation: menuEffect .4s;
+    box-shadow: -7px 0 18px 4px rgba(0, 0, 0, 0.1);
+    z-index: 6;
+    padding: 5px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
 }

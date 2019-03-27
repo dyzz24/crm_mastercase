@@ -94,8 +94,8 @@ save_draft(data, add_new_files?, copy_files?) {
 
   if (!this.id_for_draft) { // если id черновика не установлен
 
-    const fields = this.creating_template_and_draft_fields();
-    const formData = new FormData; // создаю объект new FormData
+    const fields = this.creating_template_and_draft_fields(); // заполняю поля для отправки
+    const formData = new FormData;
   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
     formData.append('files', this.files_for_view[i]);
 }
@@ -106,38 +106,44 @@ save_draft(data, add_new_files?, copy_files?) {
       `${global_params.ip}/mail/rough/create`,
       formData).subscribe((dataMails) => {
         this.id_for_draft = dataMails.roughId;
+        if (dataMails.attachments.length > 0 ) {
+          this.files_for_view = [...dataMails.attachments];
+        }
       });
 
 
   } else { // иначе обновляю существующий черновик
 
 
-    if (add_new_files) {
-      // this.files_for_view = [...object_for_add.details.attachments];
-      const fields = this.creating_template_and_draft_fields();
-      fields['roughId'] = +this.id_for_draft;
-      fields['attachments'] = [];
-      const formData = new FormData; // создаю объект new FormData
-    for (let i = 0; i < add_new_files.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+    if (add_new_files && copy_files) { // если аргумент функции есть (срабатывает при прикреплении файла к письма)
+
+      const fields = this.creating_template_and_draft_fields(); // создаю поля черновика
+      fields['roughId'] = +this.id_for_draft; // присваиваю id черновику
+      fields['attachments'] = []; // пустой массив аттачментов в ключах
+      const formData = new FormData;
+
+      if (add_new_files !== null) { // если передали новый файл
+    for (let i = 0; i < add_new_files.length; i++) { // добавляю в форм дэйт файлы переданные аргументом (новые)
       formData.append('files', add_new_files[i]);
   }
+}
 
-  for (let i = 0; i < copy_files.length; i++) { // добавляю в форм дэйт циклом файлы с письма
-    // formData.append('files', this.files_for_view[i]);
+  for (let i = 0; i < copy_files.length; i++) { // обновляю уже существующие файлы (второй аргумент ф-ии)
+
     fields['attachments'].push({hash: copy_files[i].hash, size: copy_files[i].size,
       name: copy_files[i].name});
 }
 
     formData.append('json', JSON.stringify(fields));
+    console.log(fields);
 
     this.httpPost(
       `${global_params.ip}/mail/rough/update`,
       formData).subscribe((dataMails) => {
-        this.files_for_view = dataMails;
+        this.files_for_view = dataMails; // получаю файлы с хэшем с сервера для представления
       });
-
       return;
-    } else {
+    } else { // простое создание черновика без файлов (флаги-файлы не переданы)
 
     const formData = new FormData; // создаю объект new FormData
     const fields = this.creating_template_and_draft_fields();
@@ -706,7 +712,8 @@ drop(e) {
 
 delete_attach(index) { // удаляю прикрепленный файл по его индексу в массиве файлов
   this.files_for_view.splice(index, 1);
-  this.save_draft('wirk');
+  console.log(this.files_for_view);
+  this.save_draft('work', null, this.files_for_view);
 }
 
 
@@ -749,7 +756,7 @@ const bcc_send = this.hidden_copy.map(val => { // массив с графами
     address: this.from || null, // имейл кто создал шаблон
     // title: this.tmp_name || null, // имя шаблона
     text: null, // текст не отправляем
-    html: this.messages_for_draft.value || null, // поле с текстом шаблона (или его html)
+    html: this.messages_for_draft.value, // поле с текстом шаблона (или его html)
     subject: this.form_fields_group.controls.subject.value || null, // либо есть либо Null
     flagged: this.important_tmp || null, // флаг (тру фолс)
     recipients: {
