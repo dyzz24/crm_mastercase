@@ -2,7 +2,7 @@ import { Component, OnInit, Input, DoCheck, Inject, inject, ViewChild, ElementRe
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { AuthorizationService } from '../../authorization.service';
 import { ToastrService} from 'ngx-toastr';
 import { ReadVarExpr, IfStmt } from '@angular/compiler';
@@ -31,7 +31,8 @@ export class NewMessageComponent implements OnInit, DoCheck {
   public id_for_draft;
   public sign_message_status = false;
   public save_sign_popup = false;
-  public all_signatures: any;
+  public default_signatures_settings: any;
+  public all_signatures_list: any;
   constructor(
     @Inject(EmailServiceService) public emailServ: EmailServiceService,
     private _rout: Router,
@@ -50,6 +51,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
      private mail_id; // del
      private status; // del
      subscription: Subscription;
+     private subscribe_changed_from_address: Subscription;
+     change_from_address = new Subject<any>();
+     current_from_address: string;
+
 
     public to = []; // array for send
     public copy = []; // array for send copy
@@ -74,6 +79,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public save_draft_protect: Boolean = false;
     public draft_template_cashes = [];
     public current_sign: any;
+
 
 
 
@@ -190,6 +196,33 @@ get get_form_state() {return this.form_fields_group.controls; }
 
 
 
+    changed_sign(current_address, message) {
+      message = message || '';
+      this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'})
+    .subscribe((data) => {
+      this.default_signatures_settings = data.signaturesMap;
+      this.all_signatures_list = data.signatures;
+
+      let current_sign_id = '';
+      let current_sign = '' ;
+      this.default_signatures_settings.filter(val2 => {
+            if (val2.address === current_address) {
+              current_sign_id = val2.signature_id;
+            }
+      }
+            );
+
+            this.all_signatures_list.filter(val3 => {
+              if (val3.id === current_sign_id) {
+                current_sign = val3.text;
+              }
+          });
+
+          this.messages_for_draft.setValue(`${message} <br> ${current_sign}`);
+    });
+
+    }
+
 
   ngOnInit() {
     this.form_fields_group = this.formBuilder.group({
@@ -200,7 +233,16 @@ get get_form_state() {return this.form_fields_group.controls; }
     });
 
 
+
+
+
+
     this.from = this.emailServ.idPostForHTTP; // поле от кого по умолчанию
+
+
+
+    // this.sub = this.from.pipe().subscribe(val => console.log(val));
+    // console.log(this.from.forEach)
 
     this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить, шаблон, создать и тд)
       (queryParam: any) => {
@@ -344,14 +386,28 @@ get get_form_state() {return this.form_fields_group.controls; }
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
                 this.to = [dataMails.from_address]; // вставляем поле кому ответить, отвечаем одному адресату
+
+
+
+
+
+
+
                 this.form_fields_group.controls.subject.setValue(`RE: ${dataMails.subject}`);
                 if (dataMails.html === null) {
 
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
-                  <blockquote type="cite"> ${dataMails.text} </blockquote> `);
+                  <blockquote type="cite"> ${dataMails.text} </blockquote>
+                  `);
+
+                  this.changed_sign(this.from, this.messages_for_draft.value);
+
                  } else { // ставим в цитату текст письма на который отвечаем
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
-                  <blockquote type="cite"> ${dataMails.html} </blockquote>`);
+                  <blockquote type="cite"> ${dataMails.html} </blockquote>
+                  `);
+
+                  this.changed_sign(this.from, this.messages_for_draft.value);
                  }
               });
           }
@@ -375,10 +431,16 @@ get get_form_state() {return this.form_fields_group.controls; }
 
                 if (dataMails.html === null) {
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
-                  <blockquote> ${dataMails.text} </blockquote>`);
+                  <blockquote> ${dataMails.text} </blockquote>
+
+                  `);
+                  this.changed_sign(this.from, this.messages_for_draft.value);
                  } else {
                   this.messages_for_draft.setValue(`${dataMails.from_address} писал :
-                  <blockquote> ${dataMails.html} </blockquote>`);
+                  <blockquote> ${dataMails.html} </blockquote>
+
+                  `);
+                  this.changed_sign(this.from, this.messages_for_draft.value);
                  }
               });
           }
@@ -391,15 +453,18 @@ get get_form_state() {return this.form_fields_group.controls; }
 
                 this.form_fields_group.controls.subject.setValue(`RE: ${dataMails.subject}`);
                 if (dataMails.html === null) {
-                  this.messages_for_draft.setValue(dataMails.text); // просто берем содержимое письма и тему
+                  this.messages_for_draft.setValue(`${dataMails.text} `); // просто берем содержимое письма и тему
+                  this.changed_sign(this.from, this.messages_for_draft.value);
                  } else {
-                  this.messages_for_draft.setValue(dataMails.html);
+                  this.messages_for_draft.setValue(`${dataMails.html} `);
+                  this.changed_sign(this.from, this.messages_for_draft.value);
                  }
               });
           }
 
           if  (this.status === undefined) { // если без параметров, просто пустое письмо (на ф-ю Новое письмо)
             this.clear_msg();
+            this.changed_sign(this.from, this.messages_for_draft.value);
           }
 
           if (this.new_tmp_state === 'true') { // если зашли из шаблонов в новый шаблон - колбаса "кому" и тд появляется, скрывается
@@ -844,7 +909,9 @@ select_new_address(e) { // выбор с какого ящика отправл�
   }
   if (e.target.classList.contains('select_li')) { // если выбрали какой то адрес
       this.from = e.target.innerText; // вставляю его текст
+      this.changed_sign(this.from, this.messages_for_draft.value);
       this.open_select_address = false; // закрываю окно выбора
+
   }
 }
 
@@ -987,7 +1054,7 @@ toggle_inputs_field(bool) { // скрыть / показать поля ввод
           this.httpPost(`${global_params.ip}/mail/signature/create`, {
             text: this.messages_for_draft.value, title: this.sign_name.value}).subscribe((data) => {
               this.save_sign_popup = false;
-              // this.emailServ.signature_list.unshift({id: 88, title: this.sign_name.value});
+              this.emailServ.signature_list.unshift({id: data.signatureId, title: this.sign_name.value});
               this.sign_name.reset();
               this.messages_for_draft.reset();
 
