@@ -20,18 +20,18 @@
         <a class='active'>Глобальные настройки</a>
     </div>
 
-    <div class="setting__body">
+    <form class="setting__body" [formGroup]="sign_form">
         <h2>Выберите подпись по умолчанию</h2>
         <span>E-mail</span>
-        <select name="email"  [formControl]='email_selected'>
+        <select name="email"  formControlName='email_selected'>
             <option *ngFor='let email of this.email_address, let i = index'  [ngValue] = "email">{{email}}</option>
         </select>
         <span>Подпись для выбранного email</span>
-        <select name="sign"  [formControl]='sign_selected'>
-                <option *ngFor='let sign of this.email_address, let i = index'  [ngValue] = "sign">{{sign}}</option>
+        <select name="sign"  formControlName='sign_selected' [ngClass]="{invalid_validations: this.valid.sign_selected.errors && this.submitted}">
+                <option *ngFor='let sign of this.emailServ.signature_list, let i = index'  [ngValue] = "sign.id">{{sign.title}}</option>
         </select>
-        <button>Сохранить</button>
-    </div>
+        <button (click) = 'this.change__signature()'>Сохранить</button>
+    </form>
 </div>
 
 </div>

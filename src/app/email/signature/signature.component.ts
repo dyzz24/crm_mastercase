@@ -4,8 +4,9 @@ import {Subscription, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from '../../authorization.service';
 import {global_params} from '../../global';
-import { FormControl} from '@angular/forms';
+import { FormControl, Validators, FormBuilder, FormGroup} from '@angular/forms';
 import { EmailServiceService } from '../email-service.service';
+import { ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -20,23 +21,32 @@ export class SignatureComponent implements OnInit {
   private global_sett: string;
   private email_address;
 
-  public email_selected: FormControl = new FormControl('');
-  public sign_selected: FormControl = new FormControl('');
+  // public email_selected: FormControl = new FormControl('', [Validators.required]);
+  // public sign_selected: FormControl = new FormControl('', [Validators.required]);
+  public sign_form: FormGroup;
   succes_search_flag = false;
   not_succes_search_flag = false;
   selected_checkbox_for_html = [];
   id_selected_letter: Array<number> = [];
+  submitted: Boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,
     @Inject(AuthorizationService) private authorizationServ: AuthorizationService,
-    @Inject(EmailServiceService) public emailServ: EmailServiceService
+    @Inject(EmailServiceService) public emailServ: EmailServiceService,
+    @Inject(ToastrService) private toastrServ: ToastrService,
+    private formBuilder: FormBuilder
 
     ) {
 
      }
 
   ngOnInit() {
+    this.sign_form = this.formBuilder.group({
+      email_selected: ['', [Validators.required]],
+      sign_selected: ['', [Validators.required]]
+    });
+
     this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'}).subscribe((data) => {
       console.log(data);
       this.emailServ.signature_list = data.signatures;
@@ -50,7 +60,7 @@ export class SignatureComponent implements OnInit {
             this.email_address = data.boxes.map(val => {
               return val.address;
             });
-            this.email_selected.setValue(this.email_address[0]);
+            this.sign_form.controls.email_selected.setValue(this.email_address[0]);
           });
         }
         }
@@ -60,6 +70,25 @@ export class SignatureComponent implements OnInit {
 
   public httpPost(url: string, body, options?): Observable<any> {
     return this.http.post(url, body, {headers: {Authorization: `Bearer ${this.authorizationServ.accessToken}`}});
+  }
+
+  get valid() {
+    return this.sign_form.controls;
+  }
+
+
+
+  change__signature() {
+    this.submitted = true;
+    if (this.sign_form.invalid) {
+      this.toastrServ.error('Выберите подпись');
+      return;
+    }
+    this.httpPost(`${global_params.ip}/mail/signature/address`, {
+      signatureId: +this.sign_form.controls.sign_selected.value,
+      address: this.sign_form.controls.email_selected.value}).subscribe((data) => {
+        this.toastrServ.show('Подпись назначена');
+      });
   }
 
 
