@@ -590,9 +590,17 @@ this.emailServ.counts[this.emailServ.idPostForHTTP][box] + 1; // и пребав
 
 get_work(id, e, index) {
 
-
+if (!this.emailServ.lettersList[index].work_user_id) {
   this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, workUserId: true, address: this.emailServ.idPostForHTTP })
   .subscribe();
+  return;
+}
+
+
+if (this.emailServ.lettersList[index].work_user_id.userId === this.authorizationServ.userId) {
+  this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +id, workUserId: false, address: this.emailServ.idPostForHTTP })
+  .subscribe();
+}
 
 }
 

@@ -87,6 +87,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
 
 
 
+
 save_draft(data, add_new_files?, copy_files?) {
 
   if (data === ''
@@ -95,9 +96,11 @@ save_draft(data, add_new_files?, copy_files?) {
   || this.new_tmp_state === 'true'
   || this.save_draft_protect
   || this.status === 'sign'
+  || this.save_draft_protect
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
     // this.save_draft_protect = false;
+    this.save_draft_protect = false;
     return;
   }
 
@@ -144,7 +147,7 @@ save_draft(data, add_new_files?, copy_files?) {
 }
 
     formData.append('json', JSON.stringify(fields));
-    console.log(fields);
+
 
     this.httpPost(
       `${global_params.ip}/mail/rough/update`,
@@ -196,29 +199,31 @@ get get_form_state() {return this.form_fields_group.controls; }
 
 
 
-    changed_sign(current_address, message) {
-      message = message || '';
+changed_sign(current_address, message) {
+  // принимает 2 аргумента, текущий адрес отправки, и сообщение
+      message = message || ''; // если сообщения нет пустая строка
       this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'})
     .subscribe((data) => {
-      this.default_signatures_settings = data.signaturesMap;
-      this.all_signatures_list = data.signatures;
-
-      let current_sign_id = '';
-      let current_sign = '' ;
+      this.default_signatures_settings = data.signaturesMap; // настройки по умолчанию для конкретных ящиков
+      this.all_signatures_list = data.signatures; // список всех подписей
+      let current_sign_id = ''; // текущий ID
+      let current_sign = '' ; // текущая активная подпись
       this.default_signatures_settings.filter(val2 => {
-            if (val2.address === current_address) {
-              current_sign_id = val2.signature_id;
+            if (val2.address === current_address) { // прохожусь по карте подписей
+              current_sign_id = val2.signature_id; // если есть совпадение ставлю в id
+            } else {
+              current_sign_id = data.signatureId || null; // если нет - ставлю id подписи по умолчанию (общей)
             }
       }
             );
 
             this.all_signatures_list.filter(val3 => {
               if (val3.id === current_sign_id) {
-                current_sign = val3.text;
+                current_sign = val3.text; // ищу текущую подпись для конкретного ящика
               }
           });
 
-          this.messages_for_draft.setValue(`${message} <br> ${current_sign}`);
+          this.messages_for_draft.setValue(`${message} <br> ${current_sign}`); // ставлю в представление
     });
 
     }
@@ -464,6 +469,7 @@ get get_form_state() {return this.form_fields_group.controls; }
 
           if  (this.status === undefined) { // если без параметров, просто пустое письмо (на ф-ю Новое письмо)
             this.clear_msg();
+            this.save_draft_protect = true;
             this.changed_sign(this.from, this.messages_for_draft.value);
           }
 
@@ -493,7 +499,7 @@ get get_form_state() {return this.form_fields_group.controls; }
 
           if (this.status === 'draft') { // черновики, добавление их в активное письмо
                 this.clear_msg();
-                // this.save_draft_protect = true;
+                this.save_draft_protect = true;
                 this.id_for_draft = +this.mail_id; // сразу получаю id текущего черновика,
                                                   // что бы находясь в компоненте обновлять их а не создавать новые
             //     let draft_flagged = true;
@@ -611,6 +617,7 @@ get get_form_state() {return this.form_fields_group.controls; }
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
                 this.sign_message_status = false;
+                this.changed_sign(this.from, '');
   }
 
   add_data(arr, data) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов
@@ -707,9 +714,11 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
     // console.log(this.form_fields_group)
     const formData = new FormData; // создаю объект new FormData
     this.messages_sending = true; // включаю крутилку прелоадер что письмо отправляется
-  for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
-    formData.append('files', this.files_for_view[i]);
-}
+//   for (let i = 0; i < this.files_for_view.length; i++) { // добавляю в форм дэйт циклом файлы с письма
+//     formData.append('files', this.files_for_view[i]);
+// }
+
+console.log(this.files_for_view);
 
 
   formData.append('json', JSON.stringify({ // добавляю json с необходимыми полями
@@ -736,6 +745,8 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
     ,
     subject: this.form_fields_group.controls.subject.value,
     html: this.messages_for_draft.value // отправляем пиьма как html документ
+    ,
+    attachments: this.files_for_view
   }));
 
   if (this.to.length === 0 && this.copy.length === 0 && this.hidden_copy.length === 0) {
@@ -820,7 +831,7 @@ add_drag_input_data(objForData) { // ф-я принимает объект с ф
   }
 
   this.save_draft('work', new_files, copy_files);
-  console.log(this.files_for_view);
+  // console.log(this.files_for_view, newArray);
 
 });
 

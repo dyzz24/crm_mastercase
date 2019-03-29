@@ -21,7 +21,7 @@
     </div>
 
     <form class="setting__body" [formGroup]="sign_form">
-        <h2>Выберите подпись по умолчанию</h2>
+        <h2>Выберите подпись для ящика</h2>
         <span>E-mail</span>
         <select name="email"  formControlName='email_selected'>
             <option *ngFor='let email of this.email_address, let i = index'  [ngValue] = "email">{{email}}</option>
@@ -32,6 +32,17 @@
         </select>
         <button (click) = 'this.change__signature()'>Сохранить</button>
     </form>
+
+    <form class="setting__body">
+            <h2>Выберите подпись по умолчанию (для всех)</h2>
+
+            <span>Подпись</span>
+            <select name="sign"  [formControl]='sign_selected_default' 
+            [ngClass]="{invalid_validations: this.default_valid && this.submitted_default}">
+                    <option *ngFor='let sign of this.emailServ.signature_list, let i = index'  [ngValue] = "sign.id">{{sign.title}}</option>
+            </select>
+            <button (click) = 'this.change__signature_def()'>Сохранить</button>
+        </form>
 </div>
 
 </div>

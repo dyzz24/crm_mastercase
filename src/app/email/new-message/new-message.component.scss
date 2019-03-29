@@ -680,6 +680,64 @@ label {
         margin-top: 50px;
         justify-content: flex-end;
     }
+    
+
+    .submit_group {
+        display: flex;
+        background: #0476C3;
+        position: relative;
+
+        label {
+            width: 40px;
+            height: 28px;
+            padding: 0;
+            justify-content: center;
+
+             
+        }
+    }
+
+    .inp_check + .hidden_submit_block + label {
+        
+        span {
+            &::before {
+                content: "\f16b";
+            }
+        }
+    }
+
+    .inp_check:checked + .hidden_submit_block + label {
+
+        background: rgb(2, 49, 80);
+        border-radius: 0px;
+        span {
+            &::before {
+                content: "\f168";
+            }
+        }
+    }
+
+    .hidden_submit_block {
+        position: absolute;
+        bottom: 110%;
+        left: 105px;
+        // width: 150px;
+        // height: 100px;
+        // background: red;
+        
+    }
+
+    .inp_check + .hidden_submit_block{
+        display: none;
+    }
+
+    .inp_check:checked + .hidden_submit_block{
+        display: block;
+    }
+
+    .inp_check {
+        display: none;
+    }
    
 
 

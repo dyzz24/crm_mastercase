@@ -21,14 +21,15 @@ export class SignatureComponent implements OnInit {
   private global_sett: string;
   private email_address;
 
-  // public email_selected: FormControl = new FormControl('', [Validators.required]);
-  // public sign_selected: FormControl = new FormControl('', [Validators.required]);
+
+  public sign_selected_default: FormControl = new FormControl('', [Validators.required]);
   public sign_form: FormGroup;
   succes_search_flag = false;
   not_succes_search_flag = false;
   selected_checkbox_for_html = [];
   id_selected_letter: Array<number> = [];
   submitted: Boolean = false;
+  submitted_default: Boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,
@@ -76,6 +77,11 @@ export class SignatureComponent implements OnInit {
     return this.sign_form.controls;
   }
 
+  get default_valid() {
+
+    return this.sign_selected_default.errors;
+  }
+
 
 
   change__signature() {
@@ -88,6 +94,18 @@ export class SignatureComponent implements OnInit {
       signatureId: +this.sign_form.controls.sign_selected.value,
       address: this.sign_form.controls.email_selected.value}).subscribe((data) => {
         this.toastrServ.show('Подпись назначена');
+      });
+  }
+
+  change__signature_def() {
+    this.submitted_default = true;
+    if (this.default_valid) {
+      return;
+    }
+    this.httpPost(`${global_params.ip}/mail/signature/default`, {
+      signatureId: +this.sign_selected_default.value,
+      }).subscribe((data) => {
+        this.toastrServ.show('Подпись по умолчанию назначена');
       });
   }
 

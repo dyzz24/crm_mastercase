@@ -4,7 +4,7 @@
       <div class="left__panel end">
         <button class='new_btn'
         routerLink="../create"
-        
+        (click) = 'this.clear_msg()'
         ><span class='la la-envelope'></span><span class='new_btn__title'>Новое сообщение</span></button>
         <button class='new_btn'
         routerLink="../create"
@@ -194,7 +194,15 @@
       
       </quill-editor>
       <div class="qu__bottom_block">
+          <div class="submit_group">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
+      <input type="checkbox" name="" id="inp_check" class='inp_check'>
+      <div class="hidden_submit_block">
+          <input type="submit" value='Отправить и обработать' (click)='sendMessage()'>
+      </div>
+      <label for="inp_check"><span class='la'></span></label>
+      
+          </div>
       <div class="stick_splitter"></div>
       <button class='save_templ' (click)='open_save_template()' *ngIf="this.status !== 'template' || this.can_save_tmp === 'true'">Сохранить как шаблон</button>
       

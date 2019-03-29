@@ -149,7 +149,10 @@
              <!-- <div class='letter__text' [innerHTML]="letters.html | innerTextPipe "></div> -->
 
           </div>
-          <div class="inwork">
+          <div class="inwork" [ngClass]="{visible_inwork: this.emailServ.lettersList[i]?.work_user_id && this.emailServ.lettersList[i]?.work_user_id.userId === this.authorizationServ.userId 
+          || this.emailServ.lettersList[i]?.work_user_id && this.emailServ.lettersList[i]?.work_user_id.userId !== this.authorizationServ.userId
+          }"
+          >
             <div class="inwork__btn_take" title="Взять в работу"
             (click)='get_work(emailServ.lettersList[i].mail_id, $event, i)'
             [ngClass]="{my_inwork: this.emailServ.lettersList[i]?.work_user_id && this.emailServ.lettersList[i]?.work_user_id.userId === this.authorizationServ.userId , 

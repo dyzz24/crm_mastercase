@@ -328,9 +328,11 @@ background: rgba(141, 175, 255, 0.507);
         width: 20px;
         height: 100%;
         margin: 0 5px;
-        display: flex;
+        display: none;
         align-items: center;
         flex-shrink: 0;
+        animation: scaler .2s linear;
+
 
         &__btn_take {
             width: 100%;
@@ -348,6 +350,19 @@ background: rgba(141, 175, 255, 0.507);
                 background: url('../../../assets/not_my_inwork.svg') no-repeat center;
                 background-size: 100% 100%;
             }
+        }
+
+        &.visible_inwork {
+            display: flex;
+        }
+    }
+
+    @keyframes scaler {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
         }
     }
 
@@ -602,6 +617,10 @@ box-sizing: border-box;
     outline: none;
     box-sizing: border-box;
     border-bottom: 1px solid $border;
+
+    &:hover .inwork{
+        display: flex;
+    }
 }
 
 
