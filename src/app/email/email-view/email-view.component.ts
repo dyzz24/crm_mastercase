@@ -28,6 +28,7 @@ export interface SelectedLetter {
     bcc: any;
   },
   attachments: any};
+  finished?: boolean;
 }
 
 
@@ -442,10 +443,30 @@ cancell_checked(e, index) {
     }
     allInputs[i].checked = false;
   }
-
   // e.target.checked = true;
-
 }
+
+  process_letter(bool) {
+
+    if (bool) {
+
+      this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +this.selectedLetter.mail_id,
+        finished: true, address: this.emailServ.idPostForHTTP })
+  .subscribe();
+  this.emailServ.lettersList = this.emailServ.lettersList.filter(val => val.mail_id !== this.selectedLetter.mail_id);
+
+  this.selectedLetter.finished = true;
+      } else {
+        this.httpPost(`${global_params.ip}/mail/envelope/update`, { mailId: +this.selectedLetter.mail_id,
+          finished: false, address: this.emailServ.idPostForHTTP })
+    .subscribe();
+    this.emailServ.lettersList = this.emailServ.lettersList.filter(val => val.mail_id !== this.selectedLetter.mail_id);
+    this.selectedLetter.finished = false;
+      }
+
+  console.log(this.selectedLetter);
+}
+
 }
 
 

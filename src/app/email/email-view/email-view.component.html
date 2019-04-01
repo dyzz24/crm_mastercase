@@ -84,6 +84,18 @@ title="Новый шаблон"
 
 </div>
 <div class="two__one">
+
+    <button class='one_butt'  title="Обработать письмо" (click) = 'process_letter(true)'
+    *ngIf="!this.selectedLetter.finished"
+    >
+        <span class='la la-check'></span>
+      </button>
+
+      <button class='one_butt'  title="Удалить из обработанных" (click) = 'process_letter(false)'
+    *ngIf="this.selectedLetter.finished"
+    >
+        <span class='la la-ban'></span>
+      </button>
  
       <button class='one_butt end_group' (click)='hideMenuShow()' title="Меню">
       <span class='la la-ellipsis-h'></span>

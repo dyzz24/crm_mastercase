@@ -339,6 +339,20 @@
           </div>
           </div>
         </div>
+        <div
+        (click)="goUrl(1)"
+        routerLinkActive="active_typeMess"
+        class="type_message"
+      >
+        <div
+          class="link_area"
+          routerLink="./{{this.emailItems[i].address}}/6"
+        >
+          <p>Обработанные</p>
+          <p class='counter' *ngIf="this.emailServ.counts[email.address] !== undefined && this.emailServ.counts[email.address][6] !== 0">{{this.emailServ.counts[email.address][6]}}</p>
+        </div>
+      </div>
+
           <div
             (click)="goUrl(1)"
             routerLinkActive="active_typeMess"
