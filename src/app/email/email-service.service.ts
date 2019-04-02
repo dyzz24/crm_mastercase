@@ -86,6 +86,8 @@ export class EmailServiceService {
 
   constructor( private rout: Router, private activatedRoute: ActivatedRoute,
     private http: HttpClient, private authorizationServ: AuthorizationService) {
+
+
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
@@ -100,11 +102,6 @@ export class EmailServiceService {
             this.draft_list_edited.next('delete');
           }
         });
-        // this.httpPost(`${global_params.ip}/mail/setbox`, {
-        //   draftId: +draft_id,
-        //   boxId: +3,
-        //   address: this.idPostForHTTP
-        // }).subscribe();
 
 
 

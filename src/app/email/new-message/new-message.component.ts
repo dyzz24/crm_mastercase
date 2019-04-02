@@ -79,6 +79,7 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public save_draft_protect: Boolean = false;
     public draft_template_cashes = [];
     public current_sign: any;
+    public process_and_sendstate = false;
 
 
 
@@ -223,7 +224,15 @@ changed_sign(current_address, message) {
               }
           });
 
-          this.messages_for_draft.setValue(`${message} <br> ${current_sign}`); // ставлю в представление
+          // const message_without_sign = message.
+
+          // console.log(message.match(current_sign));
+
+          this.messages_for_draft.setValue(`${message} <br> ${current_sign}`);
+
+
+
+
     });
 
     }
@@ -241,7 +250,6 @@ changed_sign(current_address, message) {
 
 
 
-
     this.from = this.emailServ.idPostForHTTP; // поле от кого по умолчанию
 
 
@@ -252,6 +260,7 @@ changed_sign(current_address, message) {
     this.subscription = this.activatedRoute.queryParams.subscribe( // передача параметров в новое сообщение (ответить, шаблон, создать и тд)
       (queryParam: any) => {
           this.hidden_input_fields = true;
+          this.process_and_sendstate = false;
           this.mail_id = queryParam['id']; // отлавливаю ID письма для последующего запроса (для шаблонов, ответить всем, ответить и тд)
           this.status = queryParam['status']; // статус - для работы с шаблонами
           this.edit_template = false;
@@ -387,6 +396,7 @@ changed_sign(current_address, message) {
 
           if (this.status === 'reply') { // если нажали "ответить"
           this.new_template_name = false;
+          this.process_and_sendstate = true;
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
@@ -419,6 +429,7 @@ changed_sign(current_address, message) {
 
           if (this.status === 'reply_all') {  // ответить всем
             this.new_template_name = false;
+            this.process_and_sendstate = true;
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
@@ -452,6 +463,7 @@ changed_sign(current_address, message) {
 
           if (this.status === 'forward') { // если нажали переслать
             this.new_template_name = false;
+            this.process_and_sendstate = true;
             this.httpPost(
               `${global_params.ip}/mail/envelope/`,
               {address: this.emailServ.idPostForHTTP, mailId: +this.mail_id}).subscribe((dataMails) => {
@@ -710,7 +722,7 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
   }
 
 
-  sendMessage() {
+  sendMessage(processing?) {
     // console.log(this.form_fields_group)
     const formData = new FormData; // создаю объект new FormData
     this.messages_sending = true; // включаю крутилку прелоадер что письмо отправляется
@@ -746,7 +758,8 @@ console.log(this.files_for_view);
     subject: this.form_fields_group.controls.subject.value,
     html: this.messages_for_draft.value // отправляем пиьма как html документ
     ,
-    attachments: this.files_for_view
+    attachments: this.files_for_view,
+    finished: processing
   }));
 
   if (this.to.length === 0 && this.copy.length === 0 && this.hidden_copy.length === 0) {

@@ -197,10 +197,10 @@
           <div class="submit_group">
       <input type="submit" value='Отправить' (click)='sendMessage()'>
       <input type="checkbox" name="" id="inp_check" class='inp_check'>
-      <div class="hidden_submit_block">
-          <input type="submit" value='Отправить и обработать' (click)='sendMessage()'>
+      <div class="hidden_submit_block" >
+          <input type="submit" value='Отправить и обработать' (click)='sendMessage(true)'>
       </div>
-      <label for="inp_check"><span class='la'></span></label>
+      <label for="inp_check" *ngIf="this.process_and_sendstate"><span class='la'></span></label>
       
           </div>
       <div class="stick_splitter"></div>

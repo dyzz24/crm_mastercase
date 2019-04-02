@@ -464,7 +464,10 @@ cancell_checked(e, index) {
     this.selectedLetter.finished = false;
       }
 
-  console.log(this.selectedLetter);
+      const navigatePath = this._rout.url.replace(/\/view.*/, '');
+    this._rout.navigate([navigatePath], { relativeTo: this.activatedRoute });
+
+  // console.log(this.selectedLetter);
 }
 
 }
