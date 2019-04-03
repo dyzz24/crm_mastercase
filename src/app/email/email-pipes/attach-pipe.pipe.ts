@@ -9,7 +9,7 @@ export class AttachPipePipe implements PipeTransform {
 
   transform(item): any {
 
-    switch (item.substr(item.lastIndexOf('.') + 1)) {
+    switch (item.toLowerCase().substr(item.lastIndexOf('.') + 1)) {
       case 'p7s':
       return 'la la-file-o';
       case 'xls':

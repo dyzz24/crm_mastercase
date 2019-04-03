@@ -14,6 +14,7 @@ import {global_params} from '../../global';
 
 
 
+
 @Component({
   selector: 'app-letters',
   templateUrl: './letters.component.html',
@@ -74,6 +75,9 @@ export class LettersComponent implements DoCheck, OnInit, OnDestroy {
   ngOnInit() {
     // this.emailServ.fullPath = this.activatedRoute.snapshot.url;
     // this.emailServ.hiddenEmpty = true;
+
+
+
     this.subscription = this.activatedRoute.params.subscribe(params => {
       this.emailServ.idPostForHTTP = params.id1;
       this.emailServ.selectedMess = +params.id;

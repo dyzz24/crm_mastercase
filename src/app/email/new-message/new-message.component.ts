@@ -80,6 +80,10 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public draft_template_cashes = [];
     public current_sign: any;
     public process_and_sendstate = false;
+    // tslint:disable-next-line:no-unused-expression
+    public current_active_sign;
+
+
 
 
 
@@ -95,13 +99,12 @@ save_draft(data, add_new_files?, copy_files?) {
   || data === null
   || this.edit_template === true
   || this.new_tmp_state === 'true'
-  || this.save_draft_protect
+
   || this.status === 'sign'
-  || this.save_draft_protect
+
   ) { // если пустая строка, и в шаблонах находимся
     // делаю выход чтобы не пулять пустой запрос
-    // this.save_draft_protect = false;
-    this.save_draft_protect = false;
+
     return;
   }
 
@@ -177,7 +180,7 @@ save_draft(data, add_new_files?, copy_files?) {
       `${global_params.ip}/mail/rough/update`,
       formData).subscribe((dataMails) => {
         this.files_for_view = dataMails;
-        console.log(this.files_for_view);
+        // console.log(this.files_for_view);
       });
     }
 
@@ -201,6 +204,7 @@ get get_form_state() {return this.form_fields_group.controls; }
 
 
 changed_sign(current_address, message) {
+
   // принимает 2 аргумента, текущий адрес отправки, и сообщение
       message = message || ''; // если сообщения нет пустая строка
       this.httpPost(`${global_params.ip}/mail/box`, {} , {contentType: 'application/json'})
@@ -224,11 +228,12 @@ changed_sign(current_address, message) {
               }
           });
 
-          // const message_without_sign = message.
 
-          // console.log(message.match(current_sign));
 
-          this.messages_for_draft.setValue(`${message} <br> ${current_sign}`);
+
+          this.messages_for_draft.setValue(`${message.replace(this.current_active_sign, '')} ${current_sign}`);
+
+          this.current_active_sign = current_sign;
 
 
 
@@ -237,7 +242,6 @@ changed_sign(current_address, message) {
 
     }
 
-
   ngOnInit() {
     this.form_fields_group = this.formBuilder.group({
       from_address: ['', [Validators.required, Validators.email]],
@@ -245,6 +249,11 @@ changed_sign(current_address, message) {
       hiddencopy_address: ['', Validators.email],
       subject: ['']
     });
+
+
+
+
+
 
 
 
@@ -513,17 +522,7 @@ changed_sign(current_address, message) {
                 this.clear_msg();
                 this.save_draft_protect = true;
                 this.id_for_draft = +this.mail_id; // сразу получаю id текущего черновика,
-                                                  // что бы находясь в компоненте обновлять их а не создавать новые
-            //     let draft_flagged = true;
-            //     this.draft_template_cashes.filter(val => { // прохожусь по сохраненным черновикам
-            //         if (val.rough_id === +this.id_for_draft) { // если есть совпадение с текущим id
-            //             draft_flagged = false; // отменяю дальнейший запрос
-            //             this.add_fields_draft(val); // вставляю поля для черновика
-            //         }
-            //     });
 
-
-            // if (draft_flagged) { // если совпадений нет, пуляю запрос и заполняю поля из ответа с сервера
             this.httpPost(
               `${global_params.ip}/mail/rough/`,
               { roughId: +this.mail_id}).subscribe((dataMails) => {
@@ -629,7 +628,7 @@ changed_sign(current_address, message) {
                 this.edit_template = false; // скрываем графы редактирования шаблона (если включены)
                 this.new_template_name = false;
                 this.sign_message_status = false;
-                this.changed_sign(this.from, '');
+
   }
 
   add_data(arr, data) { // срабатывает по блюру, функция принимает массив для работы - добавление баблов
@@ -937,6 +936,7 @@ select_new_address(e) { // выбор с какого ящика отправл�
       this.open_select_address = false; // закрываю окно выбора
 
   }
+
 }
 
 show_babl_menu(e) {

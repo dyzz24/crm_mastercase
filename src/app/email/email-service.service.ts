@@ -87,7 +87,6 @@ export class EmailServiceService {
   constructor( private rout: Router, private activatedRoute: ActivatedRoute,
     private http: HttpClient, private authorizationServ: AuthorizationService) {
 
-
   }
 
   public httpPost(url: string, body, options?): Observable<any> {
