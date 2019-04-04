@@ -349,19 +349,16 @@ title="Новый шаблон"
             <p class='info_head'>Кому: </p>
             <div class='info__content_p mrg_off'><p>{{this.selectedLetter?.from_address}}</p></div>
         </div>
-        <button class='one_butt end_group' (click)='hideMenuShow()' title="Меню">
+        <button class='one_butt end_group'  title="Меню">
             <span class='la la-ellipsis-h'></span>
           </button>
           <div class="hideMenu" [ngClass]='{visible: visibleMenu}'>
-              <button class='letterMenuButt' (click)='print()'
-              title="Удалить сообщение"
-              >Распечатать</button>
-              <button class='letterMenuButt' (click)='preserv_saver()'>Сохранить в закладках</button>
+              
             </div>
             
             <div class="stick_splitter"></div>
       
-          <button class='one_butt' (click)='closeViewer()'
+          <button class='one_butt' (click)='close_quick_resp()'
           title="Закрыть"
           >
               <span class='la la-close'></span>

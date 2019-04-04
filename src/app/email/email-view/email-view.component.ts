@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck, HostListener, ViewEncapsulation, ElementRef, ViewChild, Inject, OnDestroy,
-  AfterViewInit,
+  AfterViewInit, AfterContentInit,
   ViewChildren} from '@angular/core';
 import { EmailServiceService } from '../email-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -32,6 +32,9 @@ export interface SelectedLetter {
 }
 
 
+
+
+
 @Component({
   selector: 'app-email-view',
   templateUrl: './email-view.component.html',
@@ -43,8 +46,7 @@ export interface SelectedLetter {
 export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('messageContainer')
   messageContainer: ElementRef;
-  @ViewChild('input_cleaner')
-  input_cleaner: ElementRef;
+  @ViewChild('input_cleaner') input_cleaner: ElementRef;
   @ViewChild(PreserverComponent)  preserver_component: PreserverComponent;
 
   visibleMenu = false;
@@ -85,7 +87,10 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
     ) {
     }
 
+
+
   ngOnInit() {
+
 
 
 
@@ -154,7 +159,6 @@ export class EmailViewComponent implements OnInit, DoCheck, OnDestroy {
           }
       });
               }
-
 
 
 
@@ -357,6 +361,10 @@ queryParams: queryParams, replaceUrl: true }); // перехожу по урлу
     window.print();
 }
 
+close_quick_resp() {
+  this.quickResponse_active = false;
+}
+
 preserv_saver() {
   this.preserver_component.save_bookmark();
 }
@@ -469,6 +477,9 @@ cancell_checked(e, index) {
 
   // console.log(this.selectedLetter);
 }
+
+
+
 
 }
 

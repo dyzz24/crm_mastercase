@@ -16,6 +16,8 @@ import { debounceTime } from 'rxjs/operators';
 
 
 
+
+
 @Component({
   selector: 'app-new-message',
   templateUrl: './new-message.component.html',
@@ -80,7 +82,6 @@ export class NewMessageComponent implements OnInit, DoCheck {
     public draft_template_cashes = [];
     public current_sign: any;
     public process_and_sendstate = false;
-    // tslint:disable-next-line:no-unused-expression
     public current_active_sign;
 
 
